@@ -1,4 +1,4 @@
-package org.example.fashion_api.Services.User;
+package org.example.fashion_api.Services.UserService;
 
 import org.example.fashion_api.Models.User.TokenDTO;
 import org.example.fashion_api.Models.User.UserLoginDTO;

@@ -9,8 +9,9 @@ import lombok.*;
 @NoArgsConstructor
 @Builder
 public class TokenDTO {
-    private String accessToken;
 
-    private String refreshToken;
+    private String token;
+
+    private String role;
 
 }

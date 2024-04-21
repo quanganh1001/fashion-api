@@ -1,11 +1,17 @@
 package org.example.fashion_api.Models.ImgProduct;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
-import project.model.Product.Product;
+import lombok.NoArgsConstructor;
+import org.example.fashion_api.Models.Product.Product;
 
 @Data
 @Entity
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @Table(name = "imgs_product")
 public class ImgProduct {
     @Id

@@ -5,12 +5,11 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.example.fashion_api.Enum.RoleEnumDTO;
 
-@Getter
-@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
 @Entity
+@Data
 @Table(name = "accounts")
 public class Account {
     @Id

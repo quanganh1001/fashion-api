@@ -2,10 +2,7 @@ package org.example.fashion_api.Models.Product;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.example.fashion_api.Models.Category.Category;
 import org.example.fashion_api.Models.ImgProduct.ImgProduct;
 import org.example.fashion_api.Models.ProductDetail.ProductDetail;
@@ -13,8 +10,7 @@ import org.example.fashion_api.Models.ProductDetail.ProductDetail;
 import java.util.List;
 
 @Entity
-@Setter
-@Getter
+@Data
 @Table(name = "products")
 @NoArgsConstructor
 @AllArgsConstructor

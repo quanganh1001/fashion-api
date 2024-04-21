@@ -2,10 +2,10 @@
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Máy chủ: localhost
--- Thời gian đã tạo: Th4 21, 2024 lúc 02:46 PM
--- Phiên bản máy phục vụ: 10.4.28-MariaDB
--- Phiên bản PHP: 8.2.4
+-- Máy chủ: 127.0.0.1
+-- Thời gian đã tạo: Th4 21, 2024 lúc 06:35 PM
+-- Phiên bản máy phục vụ: 10.4.32-MariaDB
+-- Phiên bản PHP: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -31,7 +31,7 @@ USE `fashion_api_project`;
 
 CREATE TABLE `accounts` (
   `account_id` int(11) NOT NULL,
-  `user_name` varchar(50) NOT NULL,
+  `username` varchar(50) NOT NULL,
   `password` varchar(255) NOT NULL,
   `name` varchar(255) NOT NULL,
   `email` varchar(55) NOT NULL,
@@ -45,7 +45,7 @@ CREATE TABLE `accounts` (
 -- Đang đổ dữ liệu cho bảng `accounts`
 --
 
-INSERT INTO `accounts` (`account_id`, `user_name`, `password`, `name`, `email`, `phone`, `address`, `role`, `enabled`) VALUES
+INSERT INTO `accounts` (`account_id`, `username`, `password`, `name`, `email`, `phone`, `address`, `role`, `enabled`) VALUES
 (1, 'quanly', '$2a$10$WzsM01uig9/kwbSzenxYXuh9Vcs3VJrB4.CRgsinAsvq7PVRUIZ/e', 'quang anh', 'quanganhnguyen100196@gmail.com', '0364100196', 'h', 'ROLE_MANAGER', b'1'),
 (2, 'nhanvien1', '$2a$10$cIsfc/R8PIsJWzbgolJRheAfJ7hK9hxwxxpqplMP4CSlTBJhcoMk.', 'nhanvien1', 'nhanvien1@gmail.com', '0365151822', 'hanoi', 'ROLE_EMPLOYEE', b'1'),
 (4, 'nhanvien2', '$2a$10$5D2B5O4CmS5RN4VxaTwJXOi9B83aa0lGwWy.sICls9O3LKRgNXyDm', 'quanganh', 'nhanvien2@gmail.com', '0364421123', 'hanoi', 'ROLE_EMPLOYEE', b'1'),
@@ -1684,7 +1684,7 @@ DELIMITER ;
 --
 ALTER TABLE `accounts`
   ADD PRIMARY KEY (`account_id`),
-  ADD UNIQUE KEY `unique_constraint_name` (`user_name`,`phone`,`email`);
+  ADD UNIQUE KEY `unique_constraint_name` (`username`,`phone`,`email`);
 
 --
 -- Chỉ mục cho bảng `categories`

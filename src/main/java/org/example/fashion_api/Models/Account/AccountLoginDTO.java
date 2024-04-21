@@ -1,4 +1,4 @@
-package org.example.fashion_api.Models.User;
+package org.example.fashion_api.Models.Account;
 
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
@@ -11,7 +11,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserLoginDTO {
+public class AccountLoginDTO {
     @NotBlank
     private String username;
 

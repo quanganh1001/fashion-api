@@ -1,4 +1,4 @@
-package org.example.fashion_api.Models.User;
+package org.example.fashion_api.Models.Account;
 
 
 import lombok.*;

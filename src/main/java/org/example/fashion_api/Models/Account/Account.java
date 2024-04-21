@@ -1,4 +1,4 @@
-package org.example.fashion_api.Models.User;
+package org.example.fashion_api.Models.Account;
 
 
 import jakarta.persistence.*;
@@ -12,7 +12,7 @@ import org.example.fashion_api.Enum.RoleEnumDTO;
 @Builder
 @Entity
 @Table(name = "accounts")
-public class User {
+public class Account {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer accountId;

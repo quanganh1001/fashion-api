@@ -1,7 +1,6 @@
-package org.example.fashion_api.Models.User;
+package org.example.fashion_api.Models.Account;
 
 import lombok.*;
-import org.example.fashion_api.Models.User.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -16,21 +15,21 @@ import java.util.List;
 @NoArgsConstructor
 public class UserCustomDetail implements UserDetails {
 
-    private User user;
+    private Account account;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority(user.getRole().name()));
+        return List.of(new SimpleGrantedAuthority(account.getRole().name()));
     }
 
     @Override
     public String getPassword() {
-        return user.getPassword();
+        return account.getPassword();
     }
 
     @Override
     public String getUsername() {
-        return user.getUsername();
+        return account.getUsername();
     }
 
     @Override

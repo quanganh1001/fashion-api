@@ -1,7 +1,7 @@
 package org.example.fashion_api.Services;
 
-import org.example.fashion_api.Models.User.User;
-import org.example.fashion_api.Models.User.UserCustomDetail;
+import org.example.fashion_api.Models.Account.Account;
+import org.example.fashion_api.Models.Account.UserCustomDetail;
 import org.example.fashion_api.Repositories.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -19,7 +19,7 @@ public class UserDetailServiceImpl implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Optional<User> findByUser = userRepo.findByUsername(username);
-        return UserCustomDetail.builder().user(findByUser.get()).build();
+        Optional<Account> findByUser = userRepo.findByUsername(username);
+        return UserCustomDetail.builder().account(findByUser.get()).build();
     }
 }

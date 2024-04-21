@@ -1,9 +1,8 @@
 package org.example.fashion_api.Controllers;
 
-import org.example.fashion_api.Models.User.TokenDTO;
-import org.example.fashion_api.Models.User.User;
-import org.example.fashion_api.Models.User.UserLoginDTO;
-import org.example.fashion_api.Services.UserService.UserService;
+import org.example.fashion_api.Models.Account.TokenDTO;
+import org.example.fashion_api.Models.Account.AccountLoginDTO;
+import org.example.fashion_api.Services.UserService.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,10 +15,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping()
 public class AuthController {
     @Autowired
-    private UserService userService;
+    private UserServiceImpl userService;
 
     @PostMapping("/login")
-    public ResponseEntity<TokenDTO> login(@RequestBody UserLoginDTO loginRequest) {
+    public ResponseEntity<TokenDTO> login(@RequestBody AccountLoginDTO loginRequest) {
         return new ResponseEntity<>(userService.Login(loginRequest), HttpStatus.OK);
     }
 }

@@ -1,4 +1,4 @@
-package org.example.fashion_api.Models.User;
+package org.example.fashion_api.Models.Account;
 
 
 import jakarta.persistence.EnumType;
@@ -9,7 +9,7 @@ import org.example.fashion_api.Enum.RoleEnumDTO;
 
 @AllArgsConstructor
 @Setter
-public class UserRes {
+public class AccountRes {
 
     private String userName;
 

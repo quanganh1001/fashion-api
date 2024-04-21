@@ -1,17 +1,16 @@
-package org.example.fashion_api.Services.JwtService;
+package org.example.fashion_api.Services;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
-import org.example.fashion_api.Models.User.UserCustomDetail;
+import org.example.fashion_api.Models.Account.UserCustomDetail;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import java.security.Key;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 
@@ -32,27 +31,12 @@ public class JwtService {
     }
 
     // Tạo một JWT dựa trên thông tin người dùng
-    public String generateToken(UserCustomDetail userDetails) {
-        return generateToken(new HashMap<>(), userDetails);
-    }
-
-    // Tạo một chuỗi JWT dựa trên các thông tin người dùng
-    public String generateToken(
-            Map<String, Object> extraClaims,
-            UserCustomDetail userCustomDetails
-    ) {
-        return buildToken(extraClaims, userCustomDetails);
-    }
-
-    // Xây dựng chuỗi JWT để bổ xung cho các method khác
-    private String buildToken(
-            Map<String, Object> extraClaims,
-            UserCustomDetail userCustomDetails
-    ) {
+    public String generateToken(Map<String, Object> extraClaims,
+                                UserCustomDetail userCustomDetails) {
         return Jwts
                 .builder()
                 .setClaims(extraClaims)
-                .setSubject(userCustomDetails.getUsername())
+                .setSubject(String.valueOf(userCustomDetails.getAccount().getAccountId()))
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + 86400000))
                 .signWith(getSignInKey(), SignatureAlgorithm.HS256)

@@ -5,9 +5,10 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import org.example.fashion_api.Exception.BadCredentialsException;
+import org.example.fashion_api.Exception.JwtException;
 import org.example.fashion_api.Models.Account.UserCustomDetail;
 import org.example.fashion_api.Services.JwtService.JwtService;
-import org.example.fashion_api.Services.JwtService.JwtServiceImpl;
 import org.example.fashion_api.Services.UserDetailServiceImpl;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -16,6 +17,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
+import java.util.jar.JarException;
 
 @Component
 @RequiredArgsConstructor
@@ -24,7 +26,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private final JwtService jwtService;
 
     private final UserDetailServiceImpl userDetailService;
-
 
 
     @Override
@@ -42,7 +43,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             username = jwtService.extractUsername(jwt);
             if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
                 UserCustomDetail userCustomDetail = (UserCustomDetail) this.userDetailService.loadUserByUsername(username);
-                if (jwtService.isTokenValid(jwt)) {
+                if (jwtService.isTokenValid(jwt,userCustomDetail.getAccount().getAccountId())) {
                     UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
                             userCustomDetail,
                             null,
@@ -54,7 +55,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             }
             filterChain.doFilter(request, response);
         }catch (Exception e){
-            throw new RuntimeException("Unauthorized");
+            throw new JwtException();
         }
 
     }

@@ -7,7 +7,6 @@ import org.springframework.http.HttpStatus;
 
 @Getter
 @Setter
-
 public class AlreadyExistException extends RuntimeException {
     private HttpStatus status;
 

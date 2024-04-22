@@ -1,4 +1,4 @@
-package org.example.fashion_api.Models.Token;
+package org.example.fashion_api.Models.JwtToken;
 
 
 import lombok.*;
@@ -8,7 +8,7 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class TokenRes {
+public class JwtTokenRes {
 
     private String token;
 

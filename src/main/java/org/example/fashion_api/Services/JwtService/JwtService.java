@@ -1,10 +1,12 @@
 package org.example.fashion_api.Services.JwtService;
 
 import io.jsonwebtoken.Claims;
+import jakarta.transaction.Transactional;
+import org.example.fashion_api.Models.Account.AccountLoginDTO;
 import org.example.fashion_api.Models.Account.UserCustomDetail;
+import org.example.fashion_api.Models.JwtToken.JwtTokenRes;
 
 import java.security.Key;
-import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.Map;
 import java.util.function.Function;
@@ -21,10 +23,8 @@ public interface JwtService {
                          UserCustomDetail userCustomDetails);
 
     // Kiểm tra xem một JWT có hợp lệ không
-    boolean isTokenValid(String token);
+    boolean isTokenValid(String token,Long accountId) throws Exception;
 
-    // Kiểm tra token hết hạn hay chưa
-    boolean isTokenExpired(String token);
 
     // Trích xuất thời điểm hết hạn của JWT.
     Date extractExpiration(String token);
@@ -34,4 +34,9 @@ public interface JwtService {
 
     //  Trả về một khóa dùng để ký JWT dựa trên một chuỗi secret key.
     Key getSignInKey();
+
+    @Transactional
+    JwtTokenRes RefreshToken(String refreshToken);
+
+    JwtTokenRes tokenRes(AccountLoginDTO loginRequest);
 }

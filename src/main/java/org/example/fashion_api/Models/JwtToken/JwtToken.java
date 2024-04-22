@@ -1,4 +1,4 @@
-package org.example.fashion_api.Models.Token;
+package org.example.fashion_api.Models.JwtToken;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -6,9 +6,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.example.fashion_api.Models.Account.Account;
-import org.example.fashion_api.Models.Category.Category;
 
-import java.time.LocalDateTime;
 import java.util.Date;
 
 @Data
@@ -16,8 +14,8 @@ import java.util.Date;
 @NoArgsConstructor
 @Builder
 @Entity
-@Table(name = "tokens")
-public class Token {
+@Table(name = "jwt_tokens")
+public class JwtToken {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

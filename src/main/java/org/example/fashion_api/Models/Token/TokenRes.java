@@ -1,4 +1,4 @@
-package org.example.fashion_api.Models.Account;
+package org.example.fashion_api.Models.Token;
 
 
 import lombok.*;
@@ -8,9 +8,11 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class TokenDTO {
+public class TokenRes {
 
     private String token;
+
+    private String refreshToken;
 
     private String role;
 

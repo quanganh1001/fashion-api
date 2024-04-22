@@ -16,7 +16,7 @@ import org.example.fashion_api.Models.Product.Product;
 public class ImgProduct {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer imgId;
+    private Long imgId;
 
     private String fileImg;
 

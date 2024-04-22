@@ -14,7 +14,7 @@ import org.example.fashion_api.Enum.RoleEnumDTO;
 public class Account {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer accountId;
+    private Long accountId;
 
     private String username;
 

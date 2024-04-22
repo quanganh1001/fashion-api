@@ -6,6 +6,8 @@ import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import org.example.fashion_api.Models.Account.UserCustomDetail;
+import org.example.fashion_api.Repositories.TokenRepo;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.security.Key;
@@ -17,6 +19,7 @@ import java.util.function.Function;
 public class JwtServiceImpl implements JwtService{
 
     private static final String SECRET_KEY = "e82c73692e6fa99b1770cfd6605bfc5b9ec3a12b362d9de5459a2612191497c4";
+
 
     // Trích xuất tên người dùng từ một chuỗi JWT.
     @Override
@@ -40,7 +43,7 @@ public class JwtServiceImpl implements JwtService{
                 .setClaims(extraClaims)
                 .setSubject(String.valueOf(userCustomDetails.getAccount().getUsername()))
                 .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + 10000))
+                .setExpiration(new Date(System.currentTimeMillis() + 360000))
                 .signWith(getSignInKey(), SignatureAlgorithm.HS256)
                 .compact();
     }

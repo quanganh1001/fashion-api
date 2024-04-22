@@ -1,7 +1,7 @@
 package org.example.fashion_api.Controllers;
 
-import org.example.fashion_api.Models.Account.TokenDTO;
 import org.example.fashion_api.Models.Account.AccountLoginDTO;
+import org.example.fashion_api.Models.Token.TokenRes;
 import org.example.fashion_api.Services.UserService.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,7 +18,7 @@ public class AuthController {
     private UserServiceImpl userService;
 
     @PostMapping("/login")
-    public ResponseEntity<TokenDTO> login(@RequestBody AccountLoginDTO loginRequest) {
+    public ResponseEntity<TokenRes> login(@RequestBody AccountLoginDTO loginRequest) {
         return new ResponseEntity<>(userService.Login(loginRequest), HttpStatus.OK);
     }
 }

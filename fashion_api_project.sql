@@ -2,10 +2,10 @@
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th4 21, 2024 lúc 06:35 PM
--- Phiên bản máy phục vụ: 10.4.32-MariaDB
--- Phiên bản PHP: 8.2.12
+-- Máy chủ: localhost
+-- Thời gian đã tạo: Th4 22, 2024 lúc 01:29 PM
+-- Phiên bản máy phục vụ: 10.4.28-MariaDB
+-- Phiên bản PHP: 8.2.4
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -1675,6 +1675,29 @@ END
 $$
 DELIMITER ;
 
+-- --------------------------------------------------------
+
+--
+-- Cấu trúc bảng cho bảng `tokens`
+--
+
+CREATE TABLE `tokens` (
+  `id` int(11) NOT NULL,
+  `token` varchar(255) NOT NULL,
+  `expiration_date` datetime NOT NULL,
+  `refresh_token` varchar(255) NOT NULL,
+  `account_id` int(11) NOT NULL,
+  `refresh_expiration_date` datetime NOT NULL,
+  `revoked` tinyint(1) NOT NULL DEFAULT 0
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `tokens`
+--
+
+INSERT INTO `tokens` (`id`, `token`, `expiration_date`, `refresh_token`, `account_id`, `refresh_expiration_date`, `revoked`) VALUES
+(1, 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJxdWFubHkiLCJpYXQiOjE3MTM3ODUzMTcsImV4cCI6MTcxMzc4NTY3N30.CcpHOz_VOhsF-hTDa4vkqowp0vbSHhJizTlq4zCldOE', '2024-04-22 18:34:37', '6b2d7c5a-b13e-4122-bc1d-07bbe18d9b6d', 1, '2024-04-25 18:28:37', 0);
+
 --
 -- Chỉ mục cho các bảng đã đổ
 --
@@ -1723,6 +1746,13 @@ ALTER TABLE `products_detail`
   ADD KEY `grwr` (`product_id`);
 
 --
+-- Chỉ mục cho bảng `tokens`
+--
+ALTER TABLE `tokens`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `account_id` (`account_id`);
+
+--
 -- AUTO_INCREMENT cho các bảng đã đổ
 --
 
@@ -1743,6 +1773,12 @@ ALTER TABLE `imgs_product`
 --
 ALTER TABLE `products_detail`
   MODIFY `product_detail_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=769;
+
+--
+-- AUTO_INCREMENT cho bảng `tokens`
+--
+ALTER TABLE `tokens`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- Các ràng buộc cho các bảng đã đổ
@@ -1772,6 +1808,12 @@ ALTER TABLE `products`
 ALTER TABLE `products_detail`
   ADD CONSTRAINT `gfd` FOREIGN KEY (`color_id`) REFERENCES `colors` (`color_id`),
   ADD CONSTRAINT `grwr` FOREIGN KEY (`product_id`) REFERENCES `products` (`product_id`);
+
+--
+-- Các ràng buộc cho bảng `tokens`
+--
+ALTER TABLE `tokens`
+  ADD CONSTRAINT `tokens_ibfk_1` FOREIGN KEY (`account_id`) REFERENCES `accounts` (`account_id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

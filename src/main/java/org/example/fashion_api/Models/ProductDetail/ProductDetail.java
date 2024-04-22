@@ -11,7 +11,7 @@ import org.example.fashion_api.Models.Product.Product;
 public class ProductDetail {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer productDetailId;
+    private Long productDetailId;
     private String code;
     private Integer quantity;
     private Boolean outOfStock;

@@ -11,4 +11,15 @@ public class GlobalExceptionHandler {
     public ResponseEntity<Object> handleJwtException(JwtException ex) {
         return ResponseEntity.status(ex.getStatus()).body(ex.getMessage());
     }
+
+    @ExceptionHandler(ExpiredJwtException.class)
+    public ResponseEntity<Object> handleExpiredJwtException(ExpiredJwtException ex) {
+        return ResponseEntity.status(ex.getStatus()).body(ex.getMessage());
+    }
+
+    @ExceptionHandler(InvalidTokenException.class)
+    public ResponseEntity<Object> handleInvalidTokenException(InvalidTokenException ex) {
+        return ResponseEntity.status(ex.getStatus()).body(ex.getMessage());
+    }
+
 }

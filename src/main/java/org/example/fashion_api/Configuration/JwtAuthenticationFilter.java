@@ -6,6 +6,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.example.fashion_api.Exception.BadCredentialsException;
+import org.example.fashion_api.Exception.ExpiredJwtException;
+import org.example.fashion_api.Exception.InvalidTokenException;
 import org.example.fashion_api.Exception.JwtException;
 import org.example.fashion_api.Models.Account.UserCustomDetail;
 import org.example.fashion_api.Services.JwtService.JwtService;
@@ -36,14 +38,15 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             return;
         }
 
-        try {
-            final String jwt;
-            final String username;
-            jwt = authHeader.substring(7);
-            username = jwtService.extractUsername(jwt);
-            if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-                UserCustomDetail userCustomDetail = (UserCustomDetail) this.userDetailService.loadUserByUsername(username);
-                if (jwtService.isTokenValid(jwt,userCustomDetail.getAccount().getAccountId())) {
+        final String jwt;
+        final String username;
+        jwt = authHeader.substring(7);
+        username = jwtService.extractUsername(jwt);
+        if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+            UserCustomDetail userCustomDetail = (UserCustomDetail) this.userDetailService.loadUserByUsername(username);
+
+            if (jwtService.isTokenValid(jwt, userCustomDetail.getAccount().getAccountId())) {
+                if (!jwtService.isTokenExpired(jwt, userCustomDetail.getAccount().getAccountId())) {
                     UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
                             userCustomDetail,
                             null,
@@ -51,12 +54,11 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                     );
                     authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                     SecurityContextHolder.getContext().setAuthentication(authenticationToken);
-                }
-            }
-            filterChain.doFilter(request, response);
-        }catch (Exception e){
-            throw new JwtException();
+                } else throw new ExpiredJwtException();
+            } else throw new InvalidTokenException();
         }
+        filterChain.doFilter(request, response);
+
 
     }
 }

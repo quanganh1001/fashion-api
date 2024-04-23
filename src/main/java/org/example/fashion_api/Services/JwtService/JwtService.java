@@ -1,5 +1,6 @@
 package org.example.fashion_api.Services.JwtService;
 
+import com.auth0.jwt.interfaces.DecodedJWT;
 import io.jsonwebtoken.Claims;
 import jakarta.transaction.Transactional;
 import org.example.fashion_api.Models.Account.AccountLoginDTO;
@@ -12,31 +13,29 @@ import java.util.Map;
 import java.util.function.Function;
 
 public interface JwtService {
-    // Trích xuất tên người dùng từ một chuỗi JWT.
-    String extractUsername(String token);
 
-    // Giải quyết thông tin được trích xuất
-    <T> T extractClaim(String token, Function<Claims, T> claimsResolver);
-
-    // Tạo một JWT dựa trên thông tin người dùng
+    //    // Tạo một JWT dựa trên thông tin người dùng
     String generateToken(Map<String, Object> extraClaims,
                          UserCustomDetail userCustomDetails);
 
-    // Kiểm tra xem một JWT có hợp lệ không
-    boolean isTokenValid(String token,Long accountId) throws Exception;
+    //    // Kiểm tra xem một JWT có hợp lệ không
+    boolean isTokenValid(String token, Long accountId);
 
-
-    // Trích xuất thời điểm hết hạn của JWT.
-    Date extractExpiration(String token);
-
-    // Trích xuất tất cả các thông tin từ JWT
-    Claims extractAllClaims(String token);
-
-    //  Trả về một khóa dùng để ký JWT dựa trên một chuỗi secret key.
-    Key getSignInKey();
 
     @Transactional
     JwtTokenRes RefreshToken(String refreshToken);
 
+    //
     JwtTokenRes tokenRes(AccountLoginDTO loginRequest);
+
+    DecodedJWT decodeToken(String token);
+
+    String extractUsername(String token);
+
+    String extractRole(String token);
+
+    Date extractExpiration(String token);
+
+
+    Boolean isTokenExpired(String token,Long accountId);
 }

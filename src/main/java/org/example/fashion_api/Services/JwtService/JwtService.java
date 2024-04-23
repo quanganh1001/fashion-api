@@ -1,16 +1,13 @@
 package org.example.fashion_api.Services.JwtService;
 
 import com.auth0.jwt.interfaces.DecodedJWT;
-import io.jsonwebtoken.Claims;
 import jakarta.transaction.Transactional;
-import org.example.fashion_api.Models.Account.AccountLoginDTO;
-import org.example.fashion_api.Models.Account.UserCustomDetail;
+import org.example.fashion_api.Models.Account.AccountLoginDto;
+import org.example.fashion_api.Models.UserCustomDetail;
 import org.example.fashion_api.Models.JwtToken.JwtTokenRes;
 
-import java.security.Key;
 import java.util.Date;
 import java.util.Map;
-import java.util.function.Function;
 
 public interface JwtService {
 
@@ -26,7 +23,7 @@ public interface JwtService {
     JwtTokenRes RefreshToken(String refreshToken);
 
     //
-    JwtTokenRes tokenRes(AccountLoginDTO loginRequest);
+    JwtTokenRes tokenRes(AccountLoginDto loginRequest);
 
     DecodedJWT decodeToken(String token);
 

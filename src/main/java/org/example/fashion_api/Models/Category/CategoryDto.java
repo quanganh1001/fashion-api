@@ -14,7 +14,6 @@ import java.io.Serializable;
 public class CategoryDto implements Serializable {
     private String catName;
     private String catBackground;
-    private Boolean isCatActive;
     private String catParent;
 
 }

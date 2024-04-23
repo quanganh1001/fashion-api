@@ -1,7 +1,7 @@
 package org.example.fashion_api.Controllers;
 
-import org.example.fashion_api.Models.Category.Category;
 import org.example.fashion_api.Models.Category.CategoryDto;
+import org.example.fashion_api.Models.Category.CategoryRes;
 import org.example.fashion_api.Services.CategoryService.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -22,7 +22,7 @@ public class CategoryController {
     }
 
     @PutMapping("update/{catId}")
-    public CategoryDto updateCategory(@PathVariable("catId") String catId, @RequestBody CategoryDto categoryDto) {
+    public CategoryRes updateCategory(@PathVariable("catId") String catId, @RequestBody CategoryDto categoryDto) {
         return categoryService.save(catId,categoryDto);
     }
 }

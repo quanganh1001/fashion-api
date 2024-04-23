@@ -31,9 +31,9 @@ public class Category {
     @JoinColumn(name = "parent_id")
     private Category catParent;
 
-    @PrePersist
-    public void prePersist() {
-        if (isCatActive == null)
-            isCatActive = true;
-    }
+//    @PrePersist
+//    public void prePersist() {
+//        if (isCatActive == null)
+//            isCatActive = true;
+//    }
 }

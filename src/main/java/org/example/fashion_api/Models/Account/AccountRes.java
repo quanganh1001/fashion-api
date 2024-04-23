@@ -3,15 +3,15 @@ package org.example.fashion_api.Models.Account;
 
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
-import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.Setter;
 import org.example.fashion_api.Enum.RoleEnumDTO;
 
-@AllArgsConstructor
 @Setter
+@Getter
 public class AccountRes {
 
-    private String userName;
+    private String username;
 
     private String name;
 

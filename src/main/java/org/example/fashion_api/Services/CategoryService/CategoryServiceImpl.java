@@ -5,6 +5,7 @@ import org.example.fashion_api.Exception.NotFoundException;
 import org.example.fashion_api.Models.Category.Category;
 import org.example.fashion_api.Models.Category.CategoryDto;
 import org.example.fashion_api.Models.Category.CategoryMapper;
+import org.example.fashion_api.Models.Category.CategoryRes;
 import org.example.fashion_api.Repositories.CategoryRepo;
 import org.hibernate.service.spi.ServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,23 +17,24 @@ import java.util.List;
 public class CategoryServiceImpl implements CategoryService {
     @Autowired
     private CategoryRepo categoryRepo;
+    @Autowired
+    private CategoryMapper categoryMapper;
 
     @Override
     public List<CategoryDto> findAll() {
-        return CategoryMapper.INSTANCE.toDtoList(categoryRepo.findAll());
+        return categoryMapper.toDtoList(categoryRepo.findAll());
     }
 
     @Override
     @Transactional
-    public CategoryDto save(String catId,CategoryDto categoryDto) {
+    public CategoryRes save(String catId, CategoryDto categoryDto) {
         // Chuyển đổi CategoryDto thành Category và lưu vào cơ sở dữ liệu
-        Category category = new Category();
-        category.setCatId(catId);
-        CategoryMapper.INSTANCE.categoryDtoToCategory(categoryDto,category);
-        Category savedCategory = categoryRepo.save(category);
+        Category currentCategory = categoryRepo.findById(catId).orElseThrow(() -> new NotFoundException(catId));
+
+        Category savedCategory = categoryRepo.save(categoryMapper.categoryDtoToCategory(categoryDto,currentCategory));
 
         // Chuyển đổi lại Category đã lưu thành CategoryDto và trả về
-        return CategoryMapper.INSTANCE.categoryToCategoryDto(savedCategory);
+        return categoryMapper.categoryToCategoryRes(savedCategory);
     }
 
     @Override

@@ -1,6 +1,7 @@
-package org.example.fashion_api.Models.Account;
+package org.example.fashion_api.Models;
 
 import lombok.*;
+import org.example.fashion_api.Models.Account.Account;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;

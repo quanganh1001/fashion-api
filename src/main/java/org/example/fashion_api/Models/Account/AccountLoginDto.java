@@ -11,7 +11,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class AccountLoginDTO {
+public class AccountLoginDto {
     @NotBlank
     private String username;
 

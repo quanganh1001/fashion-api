@@ -11,12 +11,12 @@ import org.example.fashion_api.Exception.BadCredentialsException;
 import org.example.fashion_api.Exception.ExpiredJwtException;
 import org.example.fashion_api.Exception.InvalidTokenException;
 import org.example.fashion_api.Models.Account.Account;
-import org.example.fashion_api.Models.Account.AccountLoginDTO;
-import org.example.fashion_api.Models.Account.UserCustomDetail;
+import org.example.fashion_api.Models.Account.AccountLoginDto;
+import org.example.fashion_api.Models.UserCustomDetail;
 import org.example.fashion_api.Models.JwtToken.JwtToken;
 import org.example.fashion_api.Models.JwtToken.JwtTokenRes;
 import org.example.fashion_api.Repositories.JwtTokenRepo;
-import org.example.fashion_api.Repositories.UserRepo;
+import org.example.fashion_api.Repositories.AccountRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -30,7 +30,7 @@ public class JwtServiceImpl implements JwtService {
     @Autowired
     private JwtTokenRepo jwtTokenRepo;
     @Autowired
-    private UserRepo userRepo;
+    private AccountRepo accountRepo;
     private Algorithm algorithm;
 
     @PostConstruct
@@ -95,8 +95,8 @@ public class JwtServiceImpl implements JwtService {
     }
 //
     @Override
-    public JwtTokenRes tokenRes(AccountLoginDTO loginRequest){
-        Account findByAccount = userRepo.findByUsername(loginRequest.getUsername()).orElseThrow(BadCredentialsException::new);
+    public JwtTokenRes tokenRes(AccountLoginDto loginRequest){
+        Account findByAccount = accountRepo.findByUsername(loginRequest.getUsername()).orElseThrow(BadCredentialsException::new);
         String jwtToken = generateToken(new HashMap<>(),new UserCustomDetail(findByAccount));
         String refreshToken = UUID.randomUUID().toString();
         Date refreshExpirationDate = new Date(System.currentTimeMillis() + 10000);

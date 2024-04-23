@@ -3,18 +3,18 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 import org.mapstruct.ReportingPolicy;
-import org.mapstruct.factory.Mappers;
+
 
 import java.util.List;
 
-@Mapper
+@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface CategoryMapper {
-    CategoryMapper INSTANCE = Mappers.getMapper(CategoryMapper.class);
+
 
     @Mapping(target = "catParent.catId", source = "catParent")
     Category categoryDtoToCategory(CategoryDto categoryDto,@MappingTarget Category category);
 
-    CategoryDto categoryToCategoryDto(Category category);
+    CategoryRes categoryToCategoryRes(Category category);
 
     List<CategoryDto> toDtoList(List<Category> categories);
 

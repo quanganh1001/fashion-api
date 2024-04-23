@@ -5,11 +5,9 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
-import org.example.fashion_api.Exception.BadCredentialsException;
 import org.example.fashion_api.Exception.ExpiredJwtException;
 import org.example.fashion_api.Exception.InvalidTokenException;
-import org.example.fashion_api.Exception.JwtException;
-import org.example.fashion_api.Models.Account.UserCustomDetail;
+import org.example.fashion_api.Models.UserCustomDetail;
 import org.example.fashion_api.Services.JwtService.JwtService;
 import org.example.fashion_api.Services.UserDetailServiceImpl;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -19,7 +17,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
-import java.util.jar.JarException;
 
 @Component
 @RequiredArgsConstructor

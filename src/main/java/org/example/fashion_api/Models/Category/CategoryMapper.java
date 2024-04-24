@@ -11,14 +11,16 @@ import java.util.List;
 public interface CategoryMapper {
 
 
+
     @Mapping(target = "catParent.catId", source = "catParent")
     Category categoryDtoToCategory(CategoryDto categoryDto,@MappingTarget Category category);
 
-    CategoryRes categoryToCategoryRes(Category category);
+    CategoryDto categoryToCategoryDto(Category category);
 
     List<CategoryDto> toDtoList(List<Category> categories);
 
     default String map(Category category) {
         return category != null ? category.getCatId() : null;
     }
+
 }

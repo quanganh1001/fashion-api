@@ -19,18 +19,30 @@ public class CloudinaryService {
     public void deleteImageByUrl(String imageUrl) throws IOException {
         String public_id = extractPublicId(imageUrl);
 
-        // Xóa hình ảnh từ Cloudinary bằng URL
-        if (imageUrl.endsWith(".mp4")) {
-            cloudinary.uploader().destroy(public_id, ObjectUtils.asMap("resource_type", "video"));
-        }else {
-            cloudinary.uploader().destroy(public_id, ObjectUtils.emptyMap());
+        if (public_id != null && !public_id.isEmpty()) {
+            // Xóa hình ảnh từ Cloudinary bằng URL
+            if (imageUrl.endsWith(".mp4")) {
+                cloudinary.uploader().destroy(public_id, ObjectUtils.asMap("resource_type", "video"));
+            } else {
+                cloudinary.uploader().destroy(public_id, ObjectUtils.emptyMap());
+            }
         }
     }
 
-    private String extractPublicId(String secureUrl) {
-        int startIndex = secureUrl.lastIndexOf("/") + 1;
-        int endIndex = secureUrl.lastIndexOf(".");
-        return secureUrl.substring(startIndex, endIndex);
+    private String extractPublicId(String imageUrl) {
+        if (imageUrl == null || imageUrl.isEmpty()) {
+            return null;
+        }
+
+        int begin = imageUrl.lastIndexOf("/") + 1;
+        int end = imageUrl.lastIndexOf(".");
+
+        if (begin >= 0 && end >= begin && end <= imageUrl.length()) {
+            return imageUrl.substring(begin, end);
+        } else {
+            // Xử lý trường hợp không hợp lệ nếu cần
+            return null;
+        }
     }
 
     public Map<String, Object> upload(MultipartFile file) throws IOException {

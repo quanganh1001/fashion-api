@@ -16,5 +16,6 @@ public interface AccountMapper {
 
     List<AccountRes> toDtoList(List<Account> accounts);
 
+    Account accountUpdateDtoToAccount(AccountUpdateDto accountUpdateDto, @MappingTarget Account account);
 
 }

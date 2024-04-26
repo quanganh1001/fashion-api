@@ -1,8 +1,8 @@
 package org.example.fashion_api.Services.ProductService;
 
-import org.example.fashion_api.Models.Product.Product;
-import org.example.fashion_api.Models.Product.ProductDTO;
-import org.springframework.stereotype.Service;
+import org.example.fashion_api.Models.Product.CreateProductDto;
+import org.example.fashion_api.Models.Product.ProductRes;
+import org.example.fashion_api.Models.Product.UpdateProductDto;
 
 import java.rmi.AlreadyBoundException;
 import java.util.List;
@@ -10,13 +10,15 @@ import java.util.List;
 
 public interface ProductService {
 
-    List<Product> getAllProducts();
+    List<ProductRes> getAllProducts();
 
-    ProductDTO getProduct(String productId);
+    ProductRes getProduct(String productId);
 
-    ProductDTO updateProduct(String productId, ProductDTO productDTO) throws AlreadyBoundException;
+    ProductRes updateProduct(String productId, UpdateProductDto updateProductDto);
 
     void deleteProduct(String productId);
 
-    ProductDTO addProduct(ProductDTO productDTO);
+    ProductRes addProduct(CreateProductDto createProductDTO);
+
+    Boolean findByImgSizeEnumUrl(String url);
 }

@@ -1,16 +1,14 @@
 package org.example.fashion_api.Services.ProductService;
 
 
+import org.example.fashion_api.Enum.ImgSizeEnumDTO;
 import org.example.fashion_api.Exception.AlreadyExistException;
 import org.example.fashion_api.Exception.NotFoundException;
-import org.example.fashion_api.Models.Product.Product;
-import org.example.fashion_api.Models.Product.ProductDTO;
-import org.example.fashion_api.Models.Product.ProductMapper;
+import org.example.fashion_api.Models.Product.*;
 import org.example.fashion_api.Repositories.ProductRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.rmi.AlreadyBoundException;
 import java.util.List;
 
 @Service
@@ -21,28 +19,30 @@ public class ProductServiceImpl implements ProductService {
     private ProductRepo productRepo;
 
     @Override
-    public List<Product> getAllProducts(){
-        return productRepo.findAll();
+    public List<ProductRes> getAllProducts(){
+        return productMapper.productsToProductRes(productRepo.findAll());
     }
 
     @Override
-    public ProductDTO getProduct(String productId){
-        return productMapper.productToProductDto(productRepo.findById(productId).orElseThrow(() -> new NotFoundException(productId)));
+    public ProductRes getProduct(String productId){
+        return productMapper.productToProductRes(productRepo.findById(productId).orElseThrow(() -> new NotFoundException(productId)));
     }
 
     @Override
-    public ProductDTO updateProduct(String productId, ProductDTO productDTO)  {
+    public ProductRes updateProduct(String productId, UpdateProductDto updateProductDto)  {
         Product currentProduct = productRepo.findById(productId).orElseThrow(()->new NotFoundException(productId));
 
-        if (!productId.equals(productDTO.getProductId()) && productRepo.existsByProductId(productDTO.getProductId())){
-            throw new AlreadyExistException(productDTO.getProductId());
-        } else if (!currentProduct.getProductName().equals(productDTO.getProductName()) && productRepo.existsByProductName(productDTO.getProductName())){
-            throw new AlreadyExistException(productDTO.getProductName());
+        if (!productId.equals(updateProductDto.getProductId()) && productRepo.existsByProductId(updateProductDto.getProductId())){
+            throw new AlreadyExistException(updateProductDto.getProductId());
+        } else if (!currentProduct.getProductName().equals(updateProductDto.getProductName()) && productRepo.existsByProductName(updateProductDto.getProductName())){
+            throw new AlreadyExistException(updateProductDto.getProductName());
         }
 
-        productMapper.productDtoToProduct(productDTO,currentProduct);
-        productRepo.save(currentProduct);
-        return productDTO;
+        Product product = productMapper.updateProductDtoToProduct(updateProductDto,currentProduct);
+
+        productRepo.save(product);
+
+        return productMapper.productToProductRes(currentProduct);
     }
 
     @Override
@@ -52,14 +52,26 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public ProductDTO addProduct(ProductDTO productDTO){
-        if(productRepo.existsByProductId(productDTO.getProductId())){
-            throw new AlreadyExistException(productDTO.getProductId());
-        }else if(productRepo.existsByProductId(productDTO.getProductId())){
-            throw new AlreadyExistException(productDTO.getProductName());
+    public ProductRes addProduct(CreateProductDto createProductDTO){
+        if(productRepo.existsByProductId(createProductDTO.getProductId())){
+            throw new AlreadyExistException(createProductDTO.getProductId());
+        }else if(productRepo.existsByProductId(createProductDTO.getProductId())){
+            throw new AlreadyExistException(createProductDTO.getProductName());
+        }else if(!findByImgSizeEnumUrl(createProductDTO.getImageChooseSize())){
+            throw new AlreadyExistException("Url of image size");
         }
 
-        productRepo.save(productMapper.productDtoToProduct(productDTO,new Product()));
-        return productDTO;
+        Product product = productRepo.save(productMapper.createProductDtoToProduct(createProductDTO,new Product()));
+        return productMapper.productToProductRes(product);
+    }
+
+    @Override
+    public Boolean findByImgSizeEnumUrl(String url){
+        for (ImgSizeEnumDTO size : ImgSizeEnumDTO.values()) {
+            if (size.getUrl().equals(url)) {
+                return true;
+            }
+        }
+        return false;
     }
 }

@@ -1,7 +1,9 @@
 package org.example.fashion_api.Controllers;
 
-import org.example.fashion_api.Models.Product.Product;
-import org.example.fashion_api.Models.Product.ProductDTO;
+import jakarta.validation.Valid;
+import org.example.fashion_api.Models.Product.CreateProductDto;
+import org.example.fashion_api.Models.Product.ProductRes;
+import org.example.fashion_api.Models.Product.UpdateProductDto;
 import org.example.fashion_api.Services.ProductService.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -19,27 +21,27 @@ public class ProductController {
     private ProductService productService;
 
     @GetMapping()
-    public List<Product> getAllProducts(){
+    public List<ProductRes> getAllProducts(){
         return productService.getAllProducts();
     }
 
     @GetMapping("/{productId}")
-    public ProductDTO getProduct(@PathVariable("productId") String productId){
+    public ProductRes getProduct(@PathVariable("productId") String productId){
         return productService.getProduct(productId);
     }
 
     @PostMapping()
-    public ProductDTO addProduct(@RequestBody ProductDTO productDTO){
-        return productService.addProduct(productDTO);
+    public ProductRes addProduct(@Valid @RequestBody CreateProductDto createProductDTO){
+        return productService.addProduct(createProductDTO);
     }
 
     @PutMapping("/{productId}")
-    public ProductDTO updateProduct(@RequestBody ProductDTO productDTO,@PathVariable String productId) throws AlreadyBoundException {
-        return productService.updateProduct(productId,productDTO);
+    public ProductRes updateProduct(@Valid @RequestBody UpdateProductDto updateProductDto, @PathVariable String productId) {
+        return productService.updateProduct(productId, updateProductDto);
     }
 
     @DeleteMapping("/{productId}")
-    public ResponseEntity<String> deleteProduct(@RequestParam String productId){
+    public ResponseEntity<String> deleteProduct(@PathVariable String productId){
         productService.deleteProduct(productId);
         return ResponseEntity.ok("deleted");
     }

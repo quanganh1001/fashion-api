@@ -14,7 +14,7 @@ import java.io.IOException;
 import java.util.List;
 
 @RestController
-@RequestMapping("category")
+@RequestMapping("categories")
 @PreAuthorize("hasAnyRole('MANAGER')")
 public class CategoryController {
     @Autowired

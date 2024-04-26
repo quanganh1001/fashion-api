@@ -8,6 +8,7 @@ import org.example.fashion_api.Models.JwtToken.JwtTokenRes;
 
 import java.util.List;
 
+
 public interface AccountService {
     JwtTokenRes Login(AccountLoginDto user);
 

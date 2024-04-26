@@ -7,6 +7,7 @@ import org.example.fashion_api.Exception.NotFoundException;
 import org.example.fashion_api.Models.Account.*;
 import org.example.fashion_api.Models.JwtToken.JwtTokenRes;
 import org.example.fashion_api.Repositories.AccountRepo;
+import org.example.fashion_api.Services.EmailService;
 import org.example.fashion_api.Services.JwtService.JwtService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -31,6 +32,8 @@ public class AccountServiceImpl implements AccountService {
     private AccountMapper accountMapper;
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
+    @Autowired
+    private EmailService emailService;
 
 
     @Override
@@ -69,6 +72,11 @@ public class AccountServiceImpl implements AccountService {
 
         Account account = accountMapper.accountRegisterDtoToAccount(accountRegisterDto,new Account());
         accountRepo.save(account);
+
+        String content = "Account has been successfully registered!";
+        String subject = "Account has been successfully registered!";
+        emailService.sendEmail(account.getEmail(),subject,content);
+
         return accountMapper.accountEntityToAccountRes(account);
     }
 

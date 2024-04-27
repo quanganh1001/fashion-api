@@ -5,7 +5,7 @@ import jakarta.persistence.ManyToOne;
 import lombok.Data;
 
 @Data
-public class ProductDetailDTO {
+public class ProductDetailRes {
     private String code;
     private Integer quantity;
     private Boolean productDetailActive;

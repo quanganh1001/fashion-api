@@ -1,15 +1,21 @@
 package org.example.fashion_api.Services.ProductService;
 
 
+import jakarta.transaction.Transactional;
 import org.example.fashion_api.Enum.ImgSizeEnumDTO;
 import org.example.fashion_api.Exception.AlreadyExistException;
 import org.example.fashion_api.Exception.NotFoundException;
 import org.example.fashion_api.Models.Product.*;
 import org.example.fashion_api.Repositories.ProductRepo;
+import org.example.fashion_api.Services.CloudinaryService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class ProductServiceImpl implements ProductService {
@@ -17,6 +23,9 @@ public class ProductServiceImpl implements ProductService {
     private ProductMapper productMapper;
     @Autowired
     private ProductRepo productRepo;
+    @Autowired
+    private CloudinaryService cloudinaryService;
+
 
     @Override
     public List<ProductRes> getAllProducts(){
@@ -29,6 +38,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    @Transactional
     public ProductRes updateProduct(String productId, UpdateProductDto updateProductDto)  {
         Product currentProduct = productRepo.findById(productId).orElseThrow(()->new NotFoundException(productId));
 
@@ -73,5 +83,19 @@ public class ProductServiceImpl implements ProductService {
             }
         }
         return false;
+    }
+
+    @Override
+    @Transactional
+    public ResponseEntity<String> updateProductBackground(MultipartFile file, String productId) throws IOException {
+        Product product = productRepo.findById(productId).orElseThrow(() -> new NotFoundException(productId));
+
+        cloudinaryService.deleteImageByUrl(product.getImageBackground());
+
+        Map<String, Object> uploadResult = cloudinaryService.upload(file);
+
+        String imageUrl = uploadResult.get("secure_url").toString();
+        productRepo.updateCatBackground(imageUrl,productId);
+        return ResponseEntity.ok(imageUrl);
     }
 }

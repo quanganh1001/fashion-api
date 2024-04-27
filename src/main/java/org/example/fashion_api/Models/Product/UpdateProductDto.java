@@ -7,7 +7,7 @@ import lombok.*;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class UpdateProductDto {
+public class UpdateProductDto  {
 
     @NotNull
     private String productId;

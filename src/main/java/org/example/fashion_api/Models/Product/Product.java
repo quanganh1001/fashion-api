@@ -15,6 +15,7 @@ import java.util.List;
 @Table(name = "products")
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class Product {
     @Id
     private String productId;

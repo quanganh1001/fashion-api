@@ -36,7 +36,7 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(AlreadyExistException.class)
-    public ResponseEntity<String> handleAccessDeniedException(AlreadyExistException ex) {
+    public ResponseEntity<String> handleAlreadyExistException(AlreadyExistException ex) {
         return ResponseEntity.status(ex.getStatus()).body(ex.getMessage());
     }
 
@@ -44,5 +44,7 @@ public class GlobalExceptionHandler {
     public ResponseEntity<String> handleServiceException(ServiceException ex) {
         return ResponseEntity.status(ex.getStatus()).body(ex.getMessage());
     }
+
+
 
 }

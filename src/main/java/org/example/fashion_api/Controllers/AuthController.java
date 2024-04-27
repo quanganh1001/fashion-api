@@ -18,8 +18,7 @@ public class AuthController {
     private AccountService accountService;
     @Autowired
     private JwtService jwtService;
-    @Autowired
-    private EmailService emailServicel;
+
 
     @PostMapping("/login")
     public ResponseEntity<JwtTokenRes> login(@RequestBody AccountLoginDto loginRequest) {

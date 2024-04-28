@@ -13,4 +13,5 @@ public class NotFoundException extends RuntimeException{
         super(obj + " not found");
         this.status = HttpStatus.NOT_FOUND;
     }
+
 }

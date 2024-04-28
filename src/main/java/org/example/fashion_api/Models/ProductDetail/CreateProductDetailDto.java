@@ -5,21 +5,17 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.validation.constraints.NotNull;
-import lombok.Builder;
-import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
-import org.example.fashion_api.Enum.ImgSizeEnum;
+import lombok.*;
 import org.example.fashion_api.Enum.SizeEnum;
 import org.example.fashion_api.Models.Color.Color;
 import org.example.fashion_api.Models.Product.Product;
 
-import java.io.Serializable;
-
 @Getter
 @Setter
 @Builder
-public class ProductDetailRes {
+@NoArgsConstructor
+@AllArgsConstructor
+public class CreateProductDetailDto {
 
     @NotNull
     private String code;
@@ -28,14 +24,11 @@ public class ProductDetailRes {
     private Integer quantity;
 
     @NotNull
-    private Boolean productDetailActive;
-
-    @Enumerated(EnumType.STRING)
-    private SizeEnum size;
+    private String size;
 
     @NotNull
-    private Product product;
+    private String productId;
 
     @NotNull
-    private Color color;
+    private String colorId;
 }

@@ -4,6 +4,7 @@ import jakarta.validation.Valid;
 import org.example.fashion_api.Models.Product.CreateProductDto;
 import org.example.fashion_api.Models.Product.ProductRes;
 import org.example.fashion_api.Models.Product.UpdateProductDto;
+import org.example.fashion_api.Models.ProductDetail.ProductDetail;
 import org.example.fashion_api.Services.ProductService.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

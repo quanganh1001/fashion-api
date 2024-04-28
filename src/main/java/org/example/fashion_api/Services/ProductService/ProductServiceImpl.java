@@ -2,7 +2,7 @@ package org.example.fashion_api.Services.ProductService;
 
 
 import jakarta.transaction.Transactional;
-import org.example.fashion_api.Enum.ImgSizeEnumDTO;
+import org.example.fashion_api.Enum.ImgSizeEnum;
 import org.example.fashion_api.Exception.AlreadyExistException;
 import org.example.fashion_api.Exception.NotFoundException;
 import org.example.fashion_api.Models.Product.*;
@@ -67,23 +67,12 @@ public class ProductServiceImpl implements ProductService {
             throw new AlreadyExistException(createProductDTO.getProductId());
         }else if(productRepo.existsByProductId(createProductDTO.getProductId())){
             throw new AlreadyExistException(createProductDTO.getProductName());
-        }else if(!findByImgSizeEnumUrl(createProductDTO.getImageChooseSize())){
-            throw new AlreadyExistException("Url of image size");
         }
 
         Product product = productRepo.save(productMapper.createProductDtoToProduct(createProductDTO,new Product()));
         return productMapper.productToProductRes(product);
     }
 
-    @Override
-    public Boolean findByImgSizeEnumUrl(String url){
-        for (ImgSizeEnumDTO size : ImgSizeEnumDTO.values()) {
-            if (size.getUrl().equals(url)) {
-                return true;
-            }
-        }
-        return false;
-    }
 
     @Override
     @Transactional

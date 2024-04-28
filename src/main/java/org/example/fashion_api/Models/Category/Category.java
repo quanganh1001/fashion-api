@@ -23,7 +23,7 @@ public class Category {
     private String catBackground;
     private Boolean isCatActive;
 
-    @OneToMany(mappedBy = "category", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL,orphanRemoval = true)
     @JsonIgnore
     private List<Product> product;
 

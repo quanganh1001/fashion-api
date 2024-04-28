@@ -4,7 +4,7 @@ package org.example.fashion_api.Models.Account;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
-import org.example.fashion_api.Enum.RoleEnumDTO;
+import org.example.fashion_api.Enum.RoleEnum;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -38,14 +38,14 @@ public class Account {
 
     @NotNull
     @Enumerated(EnumType.STRING)
-    private RoleEnumDTO role;
+    private RoleEnum role;
 
     @PrePersist
     public void prePersist() {
         if (enabled == null)
             enabled = true;
         if (role == null){
-            role = RoleEnumDTO.ROLE_CUSTOMER;
+            role = RoleEnum.ROLE_CUSTOMER;
         }
     }
 }

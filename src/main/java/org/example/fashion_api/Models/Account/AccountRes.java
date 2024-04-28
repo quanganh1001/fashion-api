@@ -5,7 +5,7 @@ import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import lombok.Getter;
 import lombok.Setter;
-import org.example.fashion_api.Enum.RoleEnumDTO;
+import org.example.fashion_api.Enum.RoleEnum;
 
 @Setter
 @Getter
@@ -24,6 +24,6 @@ public class AccountRes {
     private Boolean enabled;
 
     @Enumerated(EnumType.STRING)
-    private RoleEnumDTO role;
+    private RoleEnum role;
 
 }

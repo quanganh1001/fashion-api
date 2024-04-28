@@ -4,6 +4,7 @@ package org.example.fashion_api.Services.JwtService;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
+import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import jakarta.annotation.PostConstruct;
 import jakarta.transaction.Transactional;
@@ -49,7 +50,7 @@ public class JwtServiceImpl implements JwtService {
                 .withClaim("username", userCustomDetails.getUsername())
                 .withClaim("role", userCustomDetails.getAccount().getRole().name())
                 .withIssuedAt(new Date(System.currentTimeMillis()))
-                .withExpiresAt(new Date(System.currentTimeMillis()+1000*60*60))
+                .withExpiresAt(new Date(System.currentTimeMillis()+1000 * 60 * 60 * 24))
                 .sign(algorithm);
     }
 //
@@ -99,7 +100,7 @@ public class JwtServiceImpl implements JwtService {
         Account findByAccount = accountRepo.findByUsername(loginRequest.getUsername()).orElseThrow(BadCredentialsException::new);
         String jwtToken = generateToken(new HashMap<>(),new UserCustomDetail(findByAccount));
         String refreshToken = UUID.randomUUID().toString();
-        Date refreshExpirationDate = new Date(System.currentTimeMillis() + 10000);
+        Date refreshExpirationDate = new Date(System.currentTimeMillis() + 1000L * 60 * 60 * 24 * 30);
 
         // Đếm số lượng token hiện có cho accountId
         long tokenCount = jwtTokenRepo.countByAccount_AccountId(findByAccount.getAccountId());
@@ -138,7 +139,11 @@ public class JwtServiceImpl implements JwtService {
 
     @Override
     public String extractUsername(String token){
-        return decodeToken(token).getClaim("username").asString();
+        try {
+            return decodeToken(token).getClaim("username").asString();
+        } catch (JWTVerificationException e) {
+            throw new ExpiredJwtException();
+        }
     }
 
     @Override

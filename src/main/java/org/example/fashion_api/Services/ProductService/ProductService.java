@@ -24,8 +24,6 @@ public interface ProductService {
 
     ProductRes addProduct(CreateProductDto createProductDTO);
 
-    Boolean findByImgSizeEnumUrl(String url);
-
     @Transactional
     ResponseEntity<String> updateProductBackground(MultipartFile file, String ProductId) throws IOException;
 }

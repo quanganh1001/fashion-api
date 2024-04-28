@@ -3,11 +3,12 @@ package org.example.fashion_api.Models.Product;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
-import org.example.fashion_api.Enum.ImgSizeEnumDTO;
+import org.example.fashion_api.Enum.ImgSizeEnum;
 import org.example.fashion_api.Models.Category.Category;
 import org.example.fashion_api.Models.ImgProduct.ImgProduct;
 import org.example.fashion_api.Models.ProductDetail.ProductDetail;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -40,15 +41,18 @@ public class Product {
 
     private String imageBackground;
 
-    private String imageChooseSize;
+    @Enumerated(EnumType.STRING)
+    private ImgSizeEnum imageChooseSize;
 
     private Boolean isProductActive;
 
-    @OneToMany(mappedBy = "product", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
     @JsonIgnore
     private List<ImgProduct> imgProducts;
 
-    @OneToMany(mappedBy = "product", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "product",
+            orphanRemoval = true,
+            cascade = CascadeType.ALL)
     @JsonIgnore
     private List<ProductDetail> productDetails;
 

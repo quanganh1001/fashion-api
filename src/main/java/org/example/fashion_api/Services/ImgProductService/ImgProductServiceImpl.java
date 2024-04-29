@@ -47,8 +47,8 @@ public class ImgProductServiceImpl implements ImgProductService {
     @Override
     public void createImgProduct(String productId, MultipartFile[] files) throws IOException {
         ImgProduct imgProduct = new ImgProduct();
-
         Product product = productRepo.findById(productId).orElseThrow(() -> new NotFoundException("Product"));
+
         for (MultipartFile file : files) {
 
             Map<String, Object> uploadResult = cloudinaryService.upload(file);

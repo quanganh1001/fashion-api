@@ -1,0 +1,57 @@
+version: '2.23.3'
+services:
+  mysql8-container:
+    container_name: mysql8-container-api
+    image: mysql:8.0.2
+    environment:
+      MYSQL_ROOT_PASSWORD: quanganh123
+    ports:
+      - 3306:3306
+    volumes:
+      - ./fashion_api_project.sql:/docker-entrypoint-initdb.d/fashion_api_project.sql
+    networks:
+      - fashion-api-network
+
+  phpmyadmin8-container:
+    image: phpmyadmin/phpmyadmin:latest
+    container_name: phpmyadmin8-container-api
+    depends_on:
+      - mysql8-container
+    ports:
+      - "8100:80"
+    environment:
+      PMA_HOST: mysql8-container-api
+    networks:
+      - fashion-api-network
+
+  redis-container:
+    image: docker.io/redis:7.2.3
+    container_name: redis-container-api
+    ports:
+      - "6379:6379"
+    volumes:
+      - ./redis-data:/data
+    networks:
+      - fashion-api-network
+
+  fashion-spring-boot-container:
+    container_name: fashion-api-spring-container
+    build:
+      context: .
+      dockerfile: ./DockerfileJavaSpring
+    environment:
+      TZ: "Asia/Ho_Chi_Minh"
+    ports:
+      - 8080:8080
+    networks:
+      - fashion-api-network
+
+
+networks:
+  fashion-api-network:
+    driver: bridge
+
+    #  docker-compose -f DockerCompose.yaml up -d
+
+
+

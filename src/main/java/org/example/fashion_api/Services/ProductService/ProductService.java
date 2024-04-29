@@ -1,7 +1,9 @@
 package org.example.fashion_api.Services.ProductService;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import jakarta.transaction.Transactional;
 import org.example.fashion_api.Models.Product.CreateProductDto;
+import org.example.fashion_api.Models.Product.Product;
 import org.example.fashion_api.Models.Product.ProductRes;
 import org.example.fashion_api.Models.Product.UpdateProductDto;
 import org.springframework.http.ResponseEntity;
@@ -14,7 +16,7 @@ import java.util.List;
 
 public interface ProductService {
 
-    List<ProductRes> getAllProducts();
+    List<ProductRes> getAllProducts() throws JsonProcessingException;
 
     ProductRes getProduct(String productId);
 
@@ -26,4 +28,6 @@ public interface ProductService {
 
     @Transactional
     ResponseEntity<String> updateProductBackground(MultipartFile file, String ProductId) throws IOException;
+
+    List<ProductRes> getAllProductsByCategory(String catId) throws JsonProcessingException;
 }

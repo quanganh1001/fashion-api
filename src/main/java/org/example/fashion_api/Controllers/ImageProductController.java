@@ -19,8 +19,7 @@ import java.util.List;
 public class ImageProductController {
     @Autowired
     private ImgProductService imgProductService;
-    @Autowired
-    private ImgProductRepo imgProductRepo;
+
 
     @GetMapping("/{productId}")
     public List<ImgProductRes> getImgProductsByProductId(@PathVariable String productId) {
@@ -28,8 +27,8 @@ public class ImageProductController {
     }
 
     @PostMapping("/{productId}")
-    public ResponseEntity<String> addImgProduct(@PathVariable String productId, MultipartFile[] imgFile) throws IOException {
-        imgProductService.createImgProduct(productId, imgFile);
+    public ResponseEntity<String> addImgProduct(@PathVariable String productId, MultipartFile[] imgFiles) throws IOException {
+        imgProductService.createImgProduct(productId, imgFiles);
         return ResponseEntity.ok("done");
     }
 

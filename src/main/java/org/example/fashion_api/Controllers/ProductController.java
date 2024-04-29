@@ -1,11 +1,14 @@
 package org.example.fashion_api.Controllers;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import jakarta.validation.Valid;
 import org.example.fashion_api.Models.Product.CreateProductDto;
+import org.example.fashion_api.Models.Product.Product;
 import org.example.fashion_api.Models.Product.ProductRes;
 import org.example.fashion_api.Models.Product.UpdateProductDto;
 import org.example.fashion_api.Models.ProductDetail.ProductDetail;
 import org.example.fashion_api.Services.ProductService.ProductService;
+import org.example.fashion_api.Services.RedisService.RedisService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -21,15 +24,23 @@ import java.util.List;
 public class ProductController {
     @Autowired
     private ProductService productService;
+    @Autowired
+    private RedisService redisService;
+
 
     @GetMapping()
-    public List<ProductRes> getAllProducts(){
+    public List<ProductRes> getAllProducts() throws JsonProcessingException {
         return productService.getAllProducts();
     }
 
     @GetMapping("/{productId}")
     public ProductRes getProduct(@PathVariable("productId") String productId){
         return productService.getProduct(productId);
+    }
+
+    @GetMapping("/getByCategory/{catId}")
+    public List<ProductRes> getProductsByCategory(@PathVariable String catId) throws JsonProcessingException {
+        return productService.getAllProductsByCategory(catId);
     }
 
     @PostMapping()

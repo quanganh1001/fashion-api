@@ -5,6 +5,7 @@ import org.mapstruct.Mapper;
 
 import org.mapstruct.MappingTarget;
 import org.mapstruct.ReportingPolicy;
+import org.springframework.data.domain.Page;
 
 import java.util.List;
 
@@ -14,7 +15,8 @@ public interface AccountMapper {
 
     AccountRes accountEntityToAccountRes(Account account);
 
-    List<AccountRes> toDtoList(List<Account> accounts);
+    List<AccountRes> accountsToListAccountRes(List<Account> accounts);
+
 
     Account accountUpdateDtoToAccount(AccountUpdateDto accountUpdateDto, @MappingTarget Account account);
 

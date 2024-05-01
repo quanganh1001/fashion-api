@@ -2,10 +2,7 @@ package org.example.fashion_api.Controllers;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import jakarta.validation.Valid;
-import org.example.fashion_api.Models.Product.CreateProductDto;
-import org.example.fashion_api.Models.Product.Product;
-import org.example.fashion_api.Models.Product.ProductRes;
-import org.example.fashion_api.Models.Product.UpdateProductDto;
+import org.example.fashion_api.Models.Product.*;
 import org.example.fashion_api.Models.ProductDetail.ProductDetail;
 import org.example.fashion_api.Services.ProductService.ProductService;
 import org.example.fashion_api.Services.RedisService.RedisService;
@@ -29,8 +26,10 @@ public class ProductController {
 
 
     @GetMapping()
-    public List<ProductRes> getAllProducts() throws JsonProcessingException {
-        return productService.getAllProducts();
+    public ProductPageRes getAllProducts(@RequestParam(defaultValue = "",required = false) String keyword,
+                                         @RequestParam(defaultValue = "0") int page,
+                                         @RequestParam(defaultValue = "10") int limit) throws JsonProcessingException {
+        return productService.getAllProducts(keyword,page,limit);
     }
 
     @GetMapping("/{productId}")
@@ -39,8 +38,11 @@ public class ProductController {
     }
 
     @GetMapping("/getByCategory/{catId}")
-    public List<ProductRes> getProductsByCategory(@PathVariable String catId) throws JsonProcessingException {
-        return productService.getAllProductsByCategory(catId);
+    public ProductPageRes getProductsByCategory(@RequestParam(defaultValue = "",required = false) String keyword,
+                                                  @RequestParam(defaultValue = "0") int page,
+                                                  @RequestParam(defaultValue = "10") int limit,
+                                                  @PathVariable String catId) throws JsonProcessingException {
+        return productService.getAllProductsByCategory(keyword,page,limit,catId);
     }
 
     @PostMapping()

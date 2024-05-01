@@ -14,6 +14,9 @@ import org.example.fashion_api.Services.CategoryService.CategoryServiceImpl;
 import org.example.fashion_api.Services.CloudinaryService;
 import org.example.fashion_api.Services.RedisService.RedisService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -40,14 +43,26 @@ public class ProductServiceImpl implements ProductService {
 
 
     @Override
-    public List<ProductRes> getAllProducts() throws JsonProcessingException {
-        String redisKey = "getAllProducts() - products";
-        List<Product> products = redisService.getListRedis(redisKey,Product.class);
-        if (products == null){
-            products = productRepo.findAll();
-            redisService.saveRedis(redisKey,products);
+    public ProductPageRes getAllProducts(String keyword,int page, int limit) throws JsonProcessingException {
+        String redisKey = "getAllProducts("+keyword+","+page+","+limit+") - product";
+
+        ProductPageRes productPageRes = redisService.getRedis(redisKey,ProductPageRes.class);
+
+        if (productPageRes == null){
+            PageRequest pageRequest = PageRequest.of(page,limit, Sort.by("product_id").ascending());
+
+            Page<Product> productsPage = productRepo.findAllProductByKey(keyword,pageRequest);
+
+            List<ProductRes> productResList = productMapper.productsToProductRes(productsPage.getContent());
+
+            productPageRes = ProductPageRes.builder()
+                    .productsRes(productResList)
+                    .totalPages(productsPage.getTotalPages())
+                    .build();
+            redisService.saveRedis(redisKey,productPageRes);
         }
-        return productMapper.productsToProductRes(products);
+
+        return productPageRes;
     }
 
     @Override
@@ -80,6 +95,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    @Transactional
     public ProductRes addProduct(CreateProductDto createProductDTO) {
         if (productRepo.existsByProductId(createProductDTO.getProductId())) {
             throw new AlreadyExistException(createProductDTO.getProductId());
@@ -107,26 +123,40 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<ProductRes> getAllProductsByCategory(String catId) throws JsonProcessingException {
-        String redisKey = "productService.getAllProductsByCategory("+catId+") - products";
-        List<Product> products = redisService.getListRedis(redisKey,Product.class);
+    public ProductPageRes getAllProductsByCategory(String keyword,int page,int limit,String catId) throws JsonProcessingException {
+        String redisKey = "productService.getAllProductsByCategory("+keyword+","+page+","+limit+","+catId+") - product";
 
-        if (products == null){
+        ProductPageRes productPageRes = redisService.getRedis(redisKey,ProductPageRes.class);
+
+        if (productPageRes == null){
             List<Product> productList = new ArrayList<>();
+            List<Category> categories = categoryService.CatDescendants(catId, new ArrayList<>());
 
-            List<Category> categories = new ArrayList<>();
 
-            categoryService.CatDescendants(catId, categories);
             categories.add(categoryRepo.findById(catId).orElseThrow(() -> new NotFoundException(catId)));
 
-            categories.forEach(category -> productList.addAll(productRepo.findAllByCategoryCatId(category.getCatId())));
+            PageRequest pageRequest = PageRequest.of(page,limit, Sort.by("product_id").ascending());
 
-            redisService.saveRedis(redisKey,productList);
+            for (Category cat : categories) {
+                Page<Product> productPage = productRepo.findAllByCategoryCatId(cat.getCatId(),keyword,pageRequest);
 
-            return productMapper.productsToProductRes(productList);
+                productList.addAll(productPage.getContent());
+            }
 
+            int totalPage = (int) Math.ceil((double) productList.size() / limit);
+            List<ProductRes> productsRes = productMapper.productsToProductRes(productList);
+
+            productPageRes = ProductPageRes.builder()
+                    .productsRes(productsRes)
+                    .totalPages(totalPage)
+                    .build();
+            redisService.saveRedis(redisKey,productPageRes);
+
+            return productPageRes;
         }
-        return productMapper.productsToProductRes(products);
+
+
+        return productPageRes;
     }
 
 }

@@ -1,12 +1,15 @@
 package org.example.fashion_api.Models.Product;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
+import org.example.fashion_api.Configuration.RedisConfig;
 import org.example.fashion_api.Enum.ImgSizeEnum;
 import org.example.fashion_api.Models.Category.Category;
 import org.example.fashion_api.Models.ImgProduct.ImgProduct;
 import org.example.fashion_api.Models.ProductDetail.ProductDetail;
+import org.example.fashion_api.Models.RedisListener;
 import org.example.fashion_api.Services.RedisService.RedisService;
 
 import java.io.Serializable;
@@ -17,10 +20,10 @@ import java.util.List;
 @Data
 @Table(name = "products")
 @NoArgsConstructor(force = true)
-@RequiredArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Product   {
+@EntityListeners(RedisListener.class)
+public class Product {
     @Id
     private String productId;
 
@@ -49,20 +52,20 @@ public class Product   {
 
     private Boolean isProductActive;
 
-    @OneToMany(mappedBy = "product", cascade = CascadeType.REMOVE,orphanRemoval = true,fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "product", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
     @JsonIgnore
     @ToString.Exclude
     private List<ImgProduct> imgProducts;
 
     @OneToMany(mappedBy = "product",
             orphanRemoval = true,
-            cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+            cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
     @JsonIgnore
     @ToString.Exclude
     private List<ProductDetail> productDetails;
 
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne()
     @JoinColumn(name = "cat_id")
     private Category category;
 
@@ -72,45 +75,7 @@ public class Product   {
             isProductActive = true;
     }
 
-    @Transient
-    @ToString.Exclude
-    final private RedisService redisService;
 
-    @PostPersist
-    public void postPersist( ){
-        assert redisService != null;
-        redisService.clear();
-    }
 
-    @PostUpdate
-    public void postUpdate( ){
-        assert redisService != null;
-        redisService.clear();
-    }
-
-    @PostRemove
-    public void postRemove( ){
-        assert redisService != null;
-        redisService.clear();
-    }
-
-//    @Override
-//    public String toString() {
-//        return "Product{" +
-//                "productId='" + productId + '\'' +
-//                ", productName='" + productName + '\'' +
-//                ", price=" + price +
-//                ", discountPrice=" + discountPrice +
-//                ", discountPercent=" + discountPercent +
-//                ", isDiscount=" + isDiscount +
-//                ", brand='" + brand + '\'' +
-//                ", description='" + description + '\'' +
-//                ", totalSize=" + totalSize +
-//                ", totalColor=" + totalColor +
-//                ", imageBackground='" + imageBackground + '\'' +
-//                ", imageChooseSize=" + imageChooseSize +
-//                ", isProductActive=" + isProductActive +
-//                '}';
-//    }
 }
 

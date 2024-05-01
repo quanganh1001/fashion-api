@@ -25,5 +25,5 @@ public interface CategoryService {
 
     List<CategoryDto> childCategories(String catParentId) throws JsonProcessingException;
 
-    void CatDescendants(String catId, List<Category> allCategory);
+    List<Category> CatDescendants(String catId, List<Category> allCategory);
 }

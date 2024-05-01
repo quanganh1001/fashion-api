@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import org.example.fashion_api.Models.Product.Product;
+import org.example.fashion_api.Models.RedisListener;
 import org.example.fashion_api.Services.RedisService.RedisService;
 
 import java.io.Serializable;
@@ -14,8 +15,8 @@ import java.util.List;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor(force = true)
-@RequiredArgsConstructor
 @Table(name = "categories")
+@EntityListeners(RedisListener.class)
 public class Category   {
     @Id
     private String catId;
@@ -39,24 +40,4 @@ public class Category   {
             isCatActive = true;
     }
 
-    @Transient
-    final private RedisService redisService;
-
-    @PostPersist
-    public void postPersist( ){
-        assert redisService != null;
-        redisService.clear();
-    }
-
-    @PostUpdate
-    public void postUpdate( ){
-        assert redisService != null;
-        redisService.clear();
-    }
-
-    @PostRemove
-    public void postRemove( ){
-        assert redisService != null;
-        redisService.clear();
-    }
 }

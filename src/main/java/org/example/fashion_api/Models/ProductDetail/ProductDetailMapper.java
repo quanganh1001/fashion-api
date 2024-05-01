@@ -17,6 +17,7 @@ public interface ProductDetailMapper {
     ProductDetailRes productDetailToProductDetailRes(ProductDetail productDetail);
 
     @Mapping(target = "product", source = "product")
+    @Mapping(target = "color", source = "color")
     List<ProductDetailRes> productDetailsToProductDetailRes(List<ProductDetail> productDetails);
 
     @Mapping(target = "product.productId", source = "productId")

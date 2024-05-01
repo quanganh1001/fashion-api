@@ -11,6 +11,7 @@ import org.example.fashion_api.Models.JwtToken.JwtTokenRes;
 import org.example.fashion_api.Repositories.AccountRepo;
 import org.example.fashion_api.Services.EmailService;
 import org.example.fashion_api.Services.JwtService.JwtService;
+import org.example.fashion_api.Services.RedisService.RedisService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -41,7 +42,8 @@ public class AccountServiceImpl implements AccountService {
     private BCryptPasswordEncoder passwordEncoder;
     @Autowired
     private EmailService emailService;
-
+    @Autowired
+    private RedisService redisService;
 
     @Override
     public JwtTokenRes Login(AccountLoginDto loginRequest) {
@@ -89,25 +91,28 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public ResponseEntity<?> getAllAccount(String keyword, int page, int limit) {
         try{
-            if (page < 0) {
-                page = 0;
+            String keyRedis = "getAllAccount("+keyword+","+page+","+ limit+") - account";
+
+            AccountPageRes accountPageRes = redisService.getRedis(keyRedis,AccountPageRes.class);
+
+            if (accountPageRes == null){
+                PageRequest pageRequest = PageRequest.of(page,limit, Sort.by("account_id").ascending());
+
+                Page<Account> accountPage = accountRepo.findAllByKeyword(keyword,pageRequest);
+
+                List<AccountRes> accountsRes = accountMapper.accountsToListAccountRes(accountPage.getContent());
+
+                accountPageRes = AccountPageRes
+                        .builder()
+                        .accountsRes(accountsRes)
+                        .totalPages(accountPage.getTotalPages())
+                        .build();
+
+                redisService.saveRedis(keyRedis,accountPageRes);
             }
-            int totalPages = (int) Math.max(accountRepo.count() / limit, 1);
-            if (page >= totalPages) {
-                page = totalPages - 1;
-            }
 
-            PageRequest pageRequest = PageRequest.of(page,limit, Sort.by("account_id").ascending());
 
-            Page<Account> accountResPage = accountRepo.findAllByKeyword(keyword,pageRequest);
-
-            List<AccountRes> accountsRes = accountMapper.accountsToListAccountRes(accountResPage.getContent());
-
-            return ResponseEntity.ok(AccountPageRes
-                    .builder()
-                    .accountsRes(accountsRes)
-                    .totalPages(accountResPage.getTotalPages())
-                    .build());
+            return ResponseEntity.ok(accountPageRes);
         }catch (Exception e){
             return ResponseEntity.badRequest().body(e.getMessage());
         }

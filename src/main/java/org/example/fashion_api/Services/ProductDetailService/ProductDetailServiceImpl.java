@@ -1,9 +1,11 @@
 package org.example.fashion_api.Services.ProductDetailService;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import org.example.fashion_api.Exception.AlreadyExistException;
 import org.example.fashion_api.Exception.NotFoundException;
 import org.example.fashion_api.Models.ProductDetail.*;
 import org.example.fashion_api.Repositories.ProductDetailRepo;
+import org.example.fashion_api.Services.RedisService.RedisService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,10 +18,20 @@ public class ProductDetailServiceImpl implements ProductDetailService{
     private ProductDetailRepo productDetailRepo;
     @Autowired
     private ProductDetailMapper productDetailMapper;
+    @Autowired
+    private RedisService redisService;
 
     @Override
-    public List<ProductDetailRes> findAllProductDetails() {
-        return productDetailMapper.productDetailsToProductDetailRes(productDetailRepo.findAll());
+    public List<ProductDetailRes> findAllProductDetails(String productId) throws JsonProcessingException {
+        String keyRedis = "findAllProductDetails("+productId+")";
+        List<ProductDetail> productDetails = redisService.getListRedis(keyRedis,ProductDetail.class);
+
+        if (productDetails == null) {
+            productDetails = productDetailRepo.findAllByProductProductId(productId);
+
+            redisService.saveRedis(keyRedis,productDetails);
+        }
+        return productDetailMapper.productDetailsToProductDetailRes(productDetails);
     }
 
     @Override

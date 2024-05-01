@@ -52,11 +52,6 @@ public class RedisConfig {
         return objectMapper;
     }
 
-    @Bean
-    public void clearRedisKeys() {
-        redisTemplate().getConnectionFactory().getConnection().flushDb();
-        System.out.println("Tất cả các key trong Redis đã được xóa.");
-    }
 
 
 }

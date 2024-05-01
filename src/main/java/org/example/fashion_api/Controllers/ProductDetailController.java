@@ -1,5 +1,6 @@
 package org.example.fashion_api.Controllers;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import org.example.fashion_api.Models.ProductDetail.CreateProductDetailDto;
 import org.example.fashion_api.Models.ProductDetail.ProductDetailRes;
 import org.example.fashion_api.Models.ProductDetail.UpdateProductDetailDto;
@@ -19,11 +20,9 @@ public class ProductDetailController {
     @Autowired
     private ProductDetailService productDetailService;
 
-
-
     @GetMapping()
-    public List<ProductDetailRes> getProductDetails() {
-        return productDetailService.findAllProductDetails();
+    public List<ProductDetailRes> getAllProductDetails(@RequestParam() String productId) throws JsonProcessingException {
+        return productDetailService.findAllProductDetails(productId);
     }
 
     @GetMapping("/{productDetailId}")

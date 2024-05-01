@@ -34,7 +34,6 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public List<CategoryDto> findAll() throws JsonProcessingException {
-
         String redisKey = "categoryRepo.findAll() - categories";
         List<Category> categories = redisService.getListRedis(redisKey, Category.class);
 
@@ -136,11 +135,12 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public void CatDescendants(String catId, List<Category> allCategory) {
+    public List<Category> CatDescendants(String catId, List<Category> allCategory) {
         List<Category> categories = categoryRepo.findAllByCatParentCatId(catId);
         for (Category child : categories) {
             allCategory.add(child);
             CatDescendants(child.getCatId(), allCategory);
         }
+        return allCategory;
     }
 }

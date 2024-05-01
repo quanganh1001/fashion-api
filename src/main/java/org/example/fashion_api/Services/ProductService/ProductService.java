@@ -2,10 +2,7 @@ package org.example.fashion_api.Services.ProductService;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import jakarta.transaction.Transactional;
-import org.example.fashion_api.Models.Product.CreateProductDto;
-import org.example.fashion_api.Models.Product.Product;
-import org.example.fashion_api.Models.Product.ProductRes;
-import org.example.fashion_api.Models.Product.UpdateProductDto;
+import org.example.fashion_api.Models.Product.*;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -16,7 +13,7 @@ import java.util.List;
 
 public interface ProductService {
 
-    List<ProductRes> getAllProducts() throws JsonProcessingException;
+    ProductPageRes getAllProducts(String keyword, int page, int limit) throws JsonProcessingException;
 
     ProductRes getProduct(String productId);
 
@@ -24,10 +21,11 @@ public interface ProductService {
 
     void deleteProduct(String productId);
 
+    @Transactional
     ProductRes addProduct(CreateProductDto createProductDTO);
 
     @Transactional
     ResponseEntity<String> updateProductBackground(MultipartFile file, String ProductId) throws IOException;
 
-    List<ProductRes> getAllProductsByCategory(String catId) throws JsonProcessingException;
+    ProductPageRes getAllProductsByCategory(String keyword,int page,int limit,String catId) throws JsonProcessingException;
 }

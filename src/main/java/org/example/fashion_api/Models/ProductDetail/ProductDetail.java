@@ -1,17 +1,23 @@
 package org.example.fashion_api.Models.ProductDetail;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
-import lombok.Data;
+import lombok.*;
 import org.example.fashion_api.Enum.SizeEnum;
 import org.example.fashion_api.Models.Color.Color;
 import org.example.fashion_api.Models.Product.Product;
+import org.example.fashion_api.Models.RedisListener;
+import org.example.fashion_api.Services.RedisService.RedisService;
 
+@AllArgsConstructor
+@NoArgsConstructor(force = true)
+@Builder
 @Entity
 @Data
+@EntityListeners(RedisListener.class)
 @Table(name = "products_detail")
 public class ProductDetail {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long productDetailId;
@@ -41,4 +47,5 @@ public class ProductDetail {
         if (productDetailActive == null)
             productDetailActive = true;
     }
+
 }

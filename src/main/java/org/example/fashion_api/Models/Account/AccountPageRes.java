@@ -1,17 +1,19 @@
 package org.example.fashion_api.Models.Account;
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.List;
 
 @Getter
 @Setter
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class AccountPageRes {
 
     private List<AccountRes> accountsRes;
 
     private int totalPages;
+
+
 }

@@ -1,5 +1,6 @@
 package org.example.fashion_api.Controllers;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import jakarta.validation.Valid;
 import org.example.fashion_api.Models.Category.CategoryDto;
 import org.example.fashion_api.Repositories.CategoryRepo;
@@ -21,7 +22,7 @@ public class CategoryController {
     private CategoryService categoryService;
 
     @GetMapping()
-    public List<CategoryDto> getAllCategories() {
+    public List<CategoryDto> getAllCategories() throws JsonProcessingException {
         return categoryService.findAll();
     }
 
@@ -29,6 +30,12 @@ public class CategoryController {
     public CategoryDto getCategory(@PathVariable String catId) {
         return categoryService.findById(catId);
     }
+
+    @GetMapping("/childCategories")
+    public List<CategoryDto> getChildCategories(@RequestParam(value = "catParentId", defaultValue = "") String catParentId) throws JsonProcessingException {
+        return categoryService.childCategories(catParentId);
+    }
+
 
     @PostMapping()
     public CategoryDto addCategory(@Valid @RequestBody CategoryDto categoryDto) {

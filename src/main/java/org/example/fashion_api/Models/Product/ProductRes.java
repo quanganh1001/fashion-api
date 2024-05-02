@@ -1,7 +1,10 @@
 package org.example.fashion_api.Models.Product;
 
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
+import org.example.fashion_api.Enum.ImgSizeEnum;
 
 @Getter
 @Setter
@@ -27,7 +30,8 @@ public class ProductRes {
 
     private String imageBackground;
 
-    private String imageChooseSize;
+    @Enumerated(EnumType.STRING)
+    private ImgSizeEnum imageChooseSize;
 
     private String catId;
 

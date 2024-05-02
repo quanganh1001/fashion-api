@@ -1,12 +1,11 @@
 package org.example.fashion_api.Models.Color;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
+import lombok.*;
+import org.example.fashion_api.Models.ProductDetail.ProductDetail;
+
+import java.util.List;
 
 @Entity
 @Data
@@ -18,4 +17,5 @@ public class Color {
     @Id
     private String colorId;
     private String name;
+
 }

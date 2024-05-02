@@ -4,10 +4,13 @@ package org.example.fashion_api.Models.Account;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
-import org.example.fashion_api.Enum.RoleEnumDTO;
+import org.example.fashion_api.Enum.RoleEnum;
+import org.example.fashion_api.Models.RedisListener;
+import org.example.fashion_api.Services.RedisService.RedisService;
 
 @AllArgsConstructor
-@NoArgsConstructor
+@NoArgsConstructor(force = true)
+@EntityListeners(RedisListener.class)
 @Builder
 @Entity
 @Data
@@ -38,14 +41,15 @@ public class Account {
 
     @NotNull
     @Enumerated(EnumType.STRING)
-    private RoleEnumDTO role;
+    private RoleEnum role;
 
     @PrePersist
     public void prePersist() {
         if (enabled == null)
             enabled = true;
-        if (role == null){
-            role = RoleEnumDTO.ROLE_CUSTOMER;
+        if (role == null) {
+            role = RoleEnum.ROLE_CUSTOMER;
         }
     }
+
 }

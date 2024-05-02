@@ -2,6 +2,7 @@ package org.example.fashion_api.Services.JwtService;
 
 import com.auth0.jwt.interfaces.DecodedJWT;
 import jakarta.transaction.Transactional;
+import org.example.fashion_api.Models.Account.Account;
 import org.example.fashion_api.Models.Account.AccountLoginDto;
 import org.example.fashion_api.Models.UserCustomDetail;
 import org.example.fashion_api.Models.JwtToken.JwtTokenRes;
@@ -14,7 +15,7 @@ public interface JwtService {
 
     //    // Tạo một JWT dựa trên thông tin người dùng
     String generateToken(Map<String, Object> extraClaims,
-                         UserCustomDetail userCustomDetails);
+                         Account account);
 
     //    // Kiểm tra xem một JWT có hợp lệ không
     boolean isTokenValid(String token, Long accountId);
@@ -24,7 +25,7 @@ public interface JwtService {
     JwtTokenRes RefreshToken(String refreshToken);
 
     //
-    JwtTokenRes tokenRes(AccountLoginDto loginRequest);
+    JwtTokenRes tokenRes(Account account);
 
     DecodedJWT decodeToken(String token);
 

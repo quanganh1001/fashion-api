@@ -22,7 +22,7 @@ public class CategoryDto   {
 
     private String catBackground;
 
-    private String catParent;
+    private Category catParent;
 
     @NotNull
     private Boolean isCatActive;

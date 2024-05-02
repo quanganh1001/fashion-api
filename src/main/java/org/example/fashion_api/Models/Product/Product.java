@@ -1,21 +1,28 @@
 package org.example.fashion_api.Models.Product;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
-import org.example.fashion_api.Enum.ImgSizeEnumDTO;
+import org.example.fashion_api.Configuration.RedisConfig;
+import org.example.fashion_api.Enum.ImgSizeEnum;
 import org.example.fashion_api.Models.Category.Category;
 import org.example.fashion_api.Models.ImgProduct.ImgProduct;
 import org.example.fashion_api.Models.ProductDetail.ProductDetail;
+import org.example.fashion_api.Models.RedisListener;
+import org.example.fashion_api.Services.RedisService.RedisService;
 
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Data
 @Table(name = "products")
-@NoArgsConstructor
+@NoArgsConstructor(force = true)
 @AllArgsConstructor
 @Builder
+@EntityListeners(RedisListener.class)
 public class Product {
     @Id
     private String productId;
@@ -40,20 +47,25 @@ public class Product {
 
     private String imageBackground;
 
-    private String imageChooseSize;
+    @Enumerated(EnumType.STRING)
+    private ImgSizeEnum imageChooseSize;
 
     private Boolean isProductActive;
 
-    @OneToMany(mappedBy = "product", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "product", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
     @JsonIgnore
+    @ToString.Exclude
     private List<ImgProduct> imgProducts;
 
-    @OneToMany(mappedBy = "product", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "product",
+            orphanRemoval = true,
+            cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
     @JsonIgnore
+    @ToString.Exclude
     private List<ProductDetail> productDetails;
 
 
-    @ManyToOne
+    @ManyToOne()
     @JoinColumn(name = "cat_id")
     private Category category;
 
@@ -62,6 +74,8 @@ public class Product {
         if (isProductActive == null)
             isProductActive = true;
     }
+
+
 
 }
 

@@ -4,6 +4,7 @@ package org.example.fashion_api.Services.JwtService;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
+import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import jakarta.annotation.PostConstruct;
 import jakarta.transaction.Transactional;
@@ -26,11 +27,12 @@ import java.util.*;
 public class JwtServiceImpl implements JwtService {
 
     private static final String SECRET_KEY = "e82c73692e6fa99b1770cfd6605bfc5b9ec3a12b362d9de5459a2612191497c4";
+
     private static final String issuer = "nguyenquanganh";
+
     @Autowired
     private JwtTokenRepo jwtTokenRepo;
-    @Autowired
-    private AccountRepo accountRepo;
+
     private Algorithm algorithm;
 
     @PostConstruct
@@ -38,22 +40,20 @@ public class JwtServiceImpl implements JwtService {
         algorithm = Algorithm.HMAC256(SECRET_KEY);
     }
 
-//
-//    // Tạo một JWT dựa trên thông tin người dùng
+
     @Override
     public String generateToken(Map<String, Object> extraClaims,
-                                UserCustomDetail userCustomDetails) {
+                                Account account) {
 
         return JWT.create()
                 .withIssuer(issuer)
-                .withClaim("username", userCustomDetails.getUsername())
-                .withClaim("role", userCustomDetails.getAccount().getRole().name())
+                .withClaim("username", account.getUsername())
+                .withClaim("role", account.getRole().name())
                 .withIssuedAt(new Date(System.currentTimeMillis()))
-                .withExpiresAt(new Date(System.currentTimeMillis()+1000*60*60))
+                .withExpiresAt(new Date(System.currentTimeMillis()+1000 * 60 * 60 * 24))
                 .sign(algorithm);
     }
-//
-//    // Kiểm tra xem một JWT có hợp lệ không
+
     @Override
     public boolean isTokenValid(String token, Long accountId) {
         JwtToken tokenRepoByTokenAndAccountId = jwtTokenRepo.findTokenByTokenAndAccount_AccountId(token, accountId);
@@ -72,7 +72,7 @@ public class JwtServiceImpl implements JwtService {
         }
 
         Account account = token.getAccount();
-        String jwtToken = generateToken(new HashMap<>(),new UserCustomDetail(account));
+        String jwtToken = generateToken(new HashMap<>(),account);
         String newRefreshToken = UUID.randomUUID().toString();
         Date newRefreshExpirationDate = new Date(System.currentTimeMillis() + 259200000);
 
@@ -93,29 +93,28 @@ public class JwtServiceImpl implements JwtService {
                 .role(account.getRole().name())
                 .build();
     }
-//
+
     @Override
-    public JwtTokenRes tokenRes(AccountLoginDto loginRequest){
-        Account findByAccount = accountRepo.findByUsername(loginRequest.getUsername()).orElseThrow(BadCredentialsException::new);
-        String jwtToken = generateToken(new HashMap<>(),new UserCustomDetail(findByAccount));
+    public JwtTokenRes tokenRes(Account account){
+        String jwtToken = generateToken(new HashMap<>(),account);
         String refreshToken = UUID.randomUUID().toString();
-        Date refreshExpirationDate = new Date(System.currentTimeMillis() + 10000);
+        Date refreshExpirationDate = new Date(System.currentTimeMillis() + 1000L * 60 * 60 * 24 * 30);
 
         // Đếm số lượng token hiện có cho accountId
-        long tokenCount = jwtTokenRepo.countByAccount_AccountId(findByAccount.getAccountId());
+        long tokenCount = jwtTokenRepo.countByAccount_AccountId(account.getAccountId());
 
         // Kiểm tra nếu số lượng token vượt quá ngưỡng
         int maxTokenCount = 2;
         if (tokenCount >= maxTokenCount) {
             // Lấy danh sách các token cũ nhất cho accountId
-            List<JwtToken> oldestTokens = jwtTokenRepo.findOldestTokensByAccountId(findByAccount.getAccountId(), tokenCount - maxTokenCount + 1);
+            List<JwtToken> oldestTokens = jwtTokenRepo.findOldestTokensByAccountId(account.getAccountId(), tokenCount - maxTokenCount + 1);
 
             // Xóa các token cũ nhất cho accountId
             jwtTokenRepo.deleteAll(oldestTokens);
         }
 
         jwtTokenRepo.save(JwtToken.builder()
-                .account(findByAccount)
+                .account(account)
                 .token(jwtToken)
                 .expirationDate(extractExpiration(jwtToken))
                 .refreshToken(refreshToken)
@@ -125,7 +124,7 @@ public class JwtServiceImpl implements JwtService {
                 .builder()
                 .token(jwtToken)
                 .refreshToken(refreshToken)
-                .role(findByAccount.getRole().name())
+                .role(account.getRole().name())
                 .build();
     }
 
@@ -138,7 +137,11 @@ public class JwtServiceImpl implements JwtService {
 
     @Override
     public String extractUsername(String token){
-        return decodeToken(token).getClaim("username").asString();
+        try {
+            return decodeToken(token).getClaim("username").asString();
+        } catch (JWTVerificationException e) {
+            throw new ExpiredJwtException();
+        }
     }
 
     @Override

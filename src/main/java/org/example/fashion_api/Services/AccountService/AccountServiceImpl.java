@@ -8,6 +8,8 @@ import org.example.fashion_api.Exception.BadCredentialsException;
 import org.example.fashion_api.Exception.NotFoundException;
 import org.example.fashion_api.Models.Account.*;
 import org.example.fashion_api.Models.JwtToken.JwtTokenRes;
+import org.example.fashion_api.Models.MailTemplate;
+import org.example.fashion_api.Producer.MailProducer;
 import org.example.fashion_api.Repositories.AccountRepo;
 import org.example.fashion_api.Services.EmailService;
 import org.example.fashion_api.Services.JwtService.JwtService;
@@ -41,7 +43,7 @@ public class AccountServiceImpl implements AccountService {
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
     @Autowired
-    private EmailService emailService;
+    private MailProducer mailProducer;
     @Autowired
     private RedisService redisService;
 
@@ -139,9 +141,13 @@ public class AccountServiceImpl implements AccountService {
         Account account = accountMapper.accountRegisterDtoToAccount(accountRegisterDto, new Account());
         accountRepo.save(account);
 
-        String content = "Account has been successfully registered!";
-        String subject = "Account has been successfully registered!";
-        emailService.sendEmail(account.getEmail(), subject, content);
+        MailTemplate mailTemplate = MailTemplate.builder()
+                .to(accountRegisterDto.getEmail())
+                .subject("Account has been successfully registered!")
+                .body("Account has been successfully registered!")
+                .build();
+
+        mailProducer.send(mailTemplate);
 
         return accountMapper.accountEntityToAccountRes(account);
     }

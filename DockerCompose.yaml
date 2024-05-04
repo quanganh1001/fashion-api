@@ -46,12 +46,22 @@ services:
     networks:
       - fashion-api-network
 
+  rabbitmq:
+    image: rabbitmq:3.13-management
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    networks:
+      - fashion-api-network
+
 
 networks:
   fashion-api-network:
     driver: bridge
 
     #  docker-compose -f DockerCompose.yaml up -d
+    #  docker run -it --rm --name rabbitmq -p 5672:5672 -p 15672:15672 rabbitmq:3.13-management
+
 
 
 

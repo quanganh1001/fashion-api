@@ -25,7 +25,6 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.text.ParseException;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -49,7 +48,7 @@ public class AccountServiceImpl implements AccountService {
     private RedisService redisService;
 
     @Override
-    public JwtTokenRes Login(AccountLoginDto loginRequest) throws ParseException {
+    public JwtTokenRes Login(AccountLoginDto loginRequest) {
         Optional<Account> optionalAccount = Optional.empty();
         String subject = null;
 

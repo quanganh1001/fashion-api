@@ -7,7 +7,6 @@ import org.example.fashion_api.Models.Account.AccountLoginDto;
 import org.example.fashion_api.Models.UserCustomDetail;
 import org.example.fashion_api.Models.JwtToken.JwtTokenRes;
 
-import java.text.ParseException;
 import java.util.Date;
 import java.util.Map;
 
@@ -20,18 +19,18 @@ public interface JwtService {
     boolean isTokenValid(String token, Long accountId);
 
 
-    @Transactional
-    JwtTokenRes RefreshToken(String refreshToken) throws ParseException;
+    JwtTokenRes RefreshToken(String refreshToken);
 
-    JwtTokenRes tokenRes(Account account) throws ParseException;
+    JwtTokenRes tokenRes(Account account);
+
+    DecodedJWT decodeToken(String token);
+
+    String extractUsername(String token);
+
+    String extractRole(String token);
+
+    Date extractExpiration(String token);
 
 
-    String extractUsername(String token) throws ParseException;
-
-
-
-    Date extractExpiration(String token) throws ParseException;
-
-
-    Boolean isTokenExpired(String token,Long accountId) throws ParseException;
+    Boolean isTokenExpiredInDatabse(String token,Long accountId);
 }

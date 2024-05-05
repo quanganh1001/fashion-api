@@ -5,6 +5,7 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTVerificationException;
+import com.auth0.jwt.exceptions.TokenExpiredException;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import jakarta.annotation.PostConstruct;
 import jakarta.transaction.Transactional;
@@ -20,9 +21,7 @@ import org.example.fashion_api.Repositories.JwtTokenRepo;
 import org.example.fashion_api.Repositories.AccountRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.nimbusds.jwt.SignedJWT;
 
-import java.text.ParseException;
 import java.util.*;
 
 @Service
@@ -38,7 +37,7 @@ public class JwtServiceImpl implements JwtService {
     private Algorithm algorithm;
 
     @PostConstruct
-    protected void init(){
+    protected void init() {
         algorithm = Algorithm.HMAC256(SECRET_KEY);
     }
 
@@ -52,7 +51,7 @@ public class JwtServiceImpl implements JwtService {
                 .withClaim("username", account.getUsername())
                 .withClaim("role", account.getRole().name())
                 .withIssuedAt(new Date(System.currentTimeMillis()))
-                .withExpiresAt(new Date(System.currentTimeMillis()+1000 * 60 * 60 * 24))
+                .withExpiresAt(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 24))
                 .sign(algorithm);
     }
 
@@ -64,19 +63,18 @@ public class JwtServiceImpl implements JwtService {
 
     @Override
     @Transactional
-    public JwtTokenRes RefreshToken(String refreshToken) throws ParseException {
+    public JwtTokenRes RefreshToken(String refreshToken) {
         JwtToken token = jwtTokenRepo.findByRefreshToken(refreshToken);
-        if(token == null) {
+        if (token == null) {
             throw new InvalidTokenException();
-        }
-        else if (token.getRefreshExpirationDate().before(new Date())){
+        } else if (token.getRefreshExpirationDate().before(new Date())) {
             throw new ExpiredJwtException();
         }
 
         Account account = token.getAccount();
-        String jwtToken = generateToken(new HashMap<>(),account);
+        String jwtToken = generateToken(new HashMap<>(), account);
         String newRefreshToken = UUID.randomUUID().toString();
-        Date newRefreshExpirationDate = new Date(System.currentTimeMillis() + 259200000);
+        Date newRefreshExpirationDate = new Date(System.currentTimeMillis() + 1000L * 60 * 60 * 24 * 30);
 
         jwtTokenRepo.save(JwtToken.builder()
                 .id(token.getId())
@@ -97,8 +95,8 @@ public class JwtServiceImpl implements JwtService {
     }
 
     @Override
-    public JwtTokenRes tokenRes(Account account) throws ParseException {
-        String jwtToken = generateToken(new HashMap<>(),account);
+    public JwtTokenRes tokenRes(Account account) {
+        String jwtToken = generateToken(new HashMap<>(), account);
         String refreshToken = UUID.randomUUID().toString();
         Date refreshExpirationDate = new Date(System.currentTimeMillis() + 1000L * 60 * 60 * 24 * 30);
 
@@ -122,32 +120,46 @@ public class JwtServiceImpl implements JwtService {
                 .refreshToken(refreshToken)
                 .refreshExpirationDate(refreshExpirationDate).build());
 
-        return JwtTokenRes
-                .builder()
+        return JwtTokenRes.builder()
                 .token(jwtToken)
                 .refreshToken(refreshToken)
                 .role(account.getRole().name())
                 .build();
     }
 
-
     @Override
-    public String extractUsername(String token) throws ParseException {
-        SignedJWT signedJWT = SignedJWT.parse(token);
-        return signedJWT.getJWTClaimsSet().getClaim("username").toString();
-    }
+    public DecodedJWT decodeToken(String token) {
+        try {
+            JWTVerifier verifier = JWT.require(algorithm).build();
+            return verifier.verify(token);
+        } catch (TokenExpiredException e) {
+            throw new ExpiredJwtException();
+        }
 
-
-    @Override
-    public Date extractExpiration(String token) throws ParseException {
-        SignedJWT signedJWT = SignedJWT.parse(token);
-        return signedJWT.getJWTClaimsSet().getExpirationTime();
     }
 
     @Override
-    public Boolean isTokenExpired(String token,Long accountId) throws ParseException {
+    public String extractUsername(String token) {
+
+        return decodeToken(token).getClaim("username").asString();
+
+
+    }
+
+    @Override
+    public String extractRole(String token) {
+        return decodeToken(token).getClaim("role").asString();
+    }
+
+    @Override
+    public Date extractExpiration(String token) {
+        return decodeToken(token).getExpiresAt();
+    }
+
+    @Override
+    public Boolean isTokenExpiredInDatabse(String token, Long accountId) {
         JwtToken tokenRepoByTokenAndAccountId = jwtTokenRepo.findTokenByTokenAndAccount_AccountId(token, accountId);
-        return extractExpiration(tokenRepoByTokenAndAccountId.getToken()).before(new Date());
+        return tokenRepoByTokenAndAccountId.getExpirationDate().before(new Date());
     }
 }
 

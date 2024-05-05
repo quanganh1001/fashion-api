@@ -23,12 +23,12 @@ public class AuthController {
 
 
     @PostMapping("/login")
-    public ResponseEntity<JwtTokenRes> login(@RequestBody AccountLoginDto loginRequest) throws ParseException {
+    public ResponseEntity<JwtTokenRes> login(@RequestBody AccountLoginDto loginRequest) {
         return new ResponseEntity<>(accountService.Login(loginRequest), HttpStatus.OK);
     }
 
     @PutMapping("/refreshToken")
-    public ResponseEntity<JwtTokenRes> refreshToken(@RequestParam String refreshToken) throws ParseException {
+    public ResponseEntity<JwtTokenRes> refreshToken(@RequestParam String refreshToken)  {
         return new ResponseEntity<>(jwtService.RefreshToken(refreshToken), HttpStatus.OK);
     }
 

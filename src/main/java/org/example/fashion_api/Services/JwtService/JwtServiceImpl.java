@@ -20,7 +20,9 @@ import org.example.fashion_api.Repositories.JwtTokenRepo;
 import org.example.fashion_api.Repositories.AccountRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import com.nimbusds.jwt.SignedJWT;
 
+import java.text.ParseException;
 import java.util.*;
 
 @Service
@@ -62,7 +64,7 @@ public class JwtServiceImpl implements JwtService {
 
     @Override
     @Transactional
-    public JwtTokenRes RefreshToken(String refreshToken){
+    public JwtTokenRes RefreshToken(String refreshToken) throws ParseException {
         JwtToken token = jwtTokenRepo.findByRefreshToken(refreshToken);
         if(token == null) {
             throw new InvalidTokenException();
@@ -95,7 +97,7 @@ public class JwtServiceImpl implements JwtService {
     }
 
     @Override
-    public JwtTokenRes tokenRes(Account account){
+    public JwtTokenRes tokenRes(Account account) throws ParseException {
         String jwtToken = generateToken(new HashMap<>(),account);
         String refreshToken = UUID.randomUUID().toString();
         Date refreshExpirationDate = new Date(System.currentTimeMillis() + 1000L * 60 * 60 * 24 * 30);
@@ -128,34 +130,22 @@ public class JwtServiceImpl implements JwtService {
                 .build();
     }
 
-    @Override
-    public DecodedJWT decodeToken(String token){
-        JWTVerifier verifier = JWT.require(Algorithm.HMAC256(SECRET_KEY)).build();
-        return verifier.verify(token);
 
+    @Override
+    public String extractUsername(String token) throws ParseException {
+        SignedJWT signedJWT = SignedJWT.parse(token);
+        return signedJWT.getJWTClaimsSet().getClaim("username").toString();
+    }
+
+
+    @Override
+    public Date extractExpiration(String token) throws ParseException {
+        SignedJWT signedJWT = SignedJWT.parse(token);
+        return signedJWT.getJWTClaimsSet().getExpirationTime();
     }
 
     @Override
-    public String extractUsername(String token){
-        try {
-            return decodeToken(token).getClaim("username").asString();
-        } catch (JWTVerificationException e) {
-            throw new ExpiredJwtException();
-        }
-    }
-
-    @Override
-    public String extractRole(String token){
-        return decodeToken(token).getClaim("role").asString();
-    }
-
-    @Override
-    public Date extractExpiration(String token){
-        return decodeToken(token).getExpiresAt();
-    }
-
-    @Override
-    public Boolean isTokenExpired(String token,Long accountId){
+    public Boolean isTokenExpired(String token,Long accountId) throws ParseException {
         JwtToken tokenRepoByTokenAndAccountId = jwtTokenRepo.findTokenByTokenAndAccount_AccountId(token, accountId);
         return extractExpiration(tokenRepoByTokenAndAccountId.getToken()).before(new Date());
     }

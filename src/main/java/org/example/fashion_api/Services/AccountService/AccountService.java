@@ -7,11 +7,12 @@ import org.example.fashion_api.Models.Account.AccountUpdateDto;
 import org.example.fashion_api.Models.JwtToken.JwtTokenRes;
 import org.springframework.http.ResponseEntity;
 
+import java.text.ParseException;
 import java.util.List;
 
 
 public interface AccountService {
-    JwtTokenRes Login(AccountLoginDto user);
+    JwtTokenRes Login(AccountLoginDto user) throws ParseException;
 
     ResponseEntity<?> getAllAccount(String keyword, int page, int limit);
 

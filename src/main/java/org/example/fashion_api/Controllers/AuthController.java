@@ -11,6 +11,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.ParseException;
+
 @RestController
 @RequestMapping()
 public class AuthController {
@@ -21,12 +23,12 @@ public class AuthController {
 
 
     @PostMapping("/login")
-    public ResponseEntity<JwtTokenRes> login(@RequestBody AccountLoginDto loginRequest) {
+    public ResponseEntity<JwtTokenRes> login(@RequestBody AccountLoginDto loginRequest) throws ParseException {
         return new ResponseEntity<>(accountService.Login(loginRequest), HttpStatus.OK);
     }
 
     @PutMapping("/refreshToken")
-    public ResponseEntity<JwtTokenRes> refreshToken(@RequestParam String refreshToken) {
+    public ResponseEntity<JwtTokenRes> refreshToken(@RequestParam String refreshToken) throws ParseException {
         return new ResponseEntity<>(jwtService.RefreshToken(refreshToken), HttpStatus.OK);
     }
 

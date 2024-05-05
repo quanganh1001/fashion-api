@@ -7,34 +7,31 @@ import org.example.fashion_api.Models.Account.AccountLoginDto;
 import org.example.fashion_api.Models.UserCustomDetail;
 import org.example.fashion_api.Models.JwtToken.JwtTokenRes;
 
+import java.text.ParseException;
 import java.util.Date;
 import java.util.Map;
 
 
 public interface JwtService {
 
-    //    // Tạo một JWT dựa trên thông tin người dùng
     String generateToken(Map<String, Object> extraClaims,
                          Account account);
 
-    //    // Kiểm tra xem một JWT có hợp lệ không
     boolean isTokenValid(String token, Long accountId);
 
 
     @Transactional
-    JwtTokenRes RefreshToken(String refreshToken);
+    JwtTokenRes RefreshToken(String refreshToken) throws ParseException;
 
-    //
-    JwtTokenRes tokenRes(Account account);
-
-    DecodedJWT decodeToken(String token);
-
-    String extractUsername(String token);
-
-    String extractRole(String token);
-
-    Date extractExpiration(String token);
+    JwtTokenRes tokenRes(Account account) throws ParseException;
 
 
-    Boolean isTokenExpired(String token,Long accountId);
+    String extractUsername(String token) throws ParseException;
+
+
+
+    Date extractExpiration(String token) throws ParseException;
+
+
+    Boolean isTokenExpired(String token,Long accountId) throws ParseException;
 }

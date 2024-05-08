@@ -11,6 +11,7 @@ import org.example.fashion_api.Enum.ImgSizeEnum;
 import org.example.fashion_api.Enum.SizeEnum;
 import org.example.fashion_api.Models.Color.Color;
 import org.example.fashion_api.Models.Product.Product;
+import org.example.fashion_api.Models.Product.ProductRes;
 
 import java.io.Serializable;
 
@@ -20,6 +21,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ProductDetailRes {
+    private Long productDetailId;
 
     private String code;
 
@@ -30,7 +32,7 @@ public class ProductDetailRes {
     @Enumerated(EnumType.STRING)
     private SizeEnum size;
 
-    private Product product;
+    private ProductRes product;
 
     private Color color;
 }

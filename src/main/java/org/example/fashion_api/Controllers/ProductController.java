@@ -3,7 +3,6 @@ package org.example.fashion_api.Controllers;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import jakarta.validation.Valid;
 import org.example.fashion_api.Models.Product.*;
-import org.example.fashion_api.Models.ProductDetail.ProductDetail;
 import org.example.fashion_api.Services.ProductService.ProductService;
 import org.example.fashion_api.Services.RedisService.RedisService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +12,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.util.List;
 
 @RestController
 @PreAuthorize("hasAnyRole('MANAGER')")
@@ -26,10 +24,10 @@ public class ProductController {
 
 
     @GetMapping()
-    public ProductPageRes getAllProducts(@RequestParam(defaultValue = "",required = false) String keyword,
-                                         @RequestParam(defaultValue = "0") int page,
+    public PageProductRes getAllProducts(@RequestParam(defaultValue = "",required = false) String keyword,
+                                         @RequestParam(defaultValue = "1") int page,
                                          @RequestParam(defaultValue = "10") int limit) throws JsonProcessingException {
-        return productService.getAllProducts(keyword,page,limit);
+        return productService.getAllProducts(keyword,page-1,limit);
     }
 
     @GetMapping("/{productId}")
@@ -38,11 +36,11 @@ public class ProductController {
     }
 
     @GetMapping("/getByCategory/{catId}")
-    public ProductPageRes getProductsByCategory(@RequestParam(defaultValue = "",required = false) String keyword,
-                                                  @RequestParam(defaultValue = "0") int page,
-                                                  @RequestParam(defaultValue = "10") int limit,
-                                                  @PathVariable String catId) throws JsonProcessingException {
-        return productService.getAllProductsByCategory(keyword,page,limit,catId);
+    public PageProductRes getProductsByCategory(@RequestParam(defaultValue = "",required = false) String keyword,
+                                                @RequestParam(defaultValue = "1") int page,
+                                                @RequestParam(defaultValue = "10") int limit,
+                                                @PathVariable String catId) throws JsonProcessingException {
+        return productService.getAllProductsByCategory(keyword,page-1,limit,catId);
     }
 
     @PostMapping()

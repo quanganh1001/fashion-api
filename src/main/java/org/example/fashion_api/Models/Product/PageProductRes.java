@@ -1,7 +1,6 @@
 package org.example.fashion_api.Models.Product;
 
 import lombok.*;
-import org.example.fashion_api.Models.Account.AccountRes;
 
 import java.util.List;
 
@@ -10,11 +9,14 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class ProductPageRes {
+public class PageProductRes {
 
     private List<ProductRes> productsRes;
 
     private int totalPages;
 
+    private Long totalProduct;
+
+    private int currenPage;
 
 }

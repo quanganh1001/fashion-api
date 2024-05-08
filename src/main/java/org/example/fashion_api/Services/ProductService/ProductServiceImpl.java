@@ -10,7 +10,6 @@ import org.example.fashion_api.Models.Product.*;
 import org.example.fashion_api.Repositories.CategoryRepo;
 import org.example.fashion_api.Repositories.ProductRepo;
 import org.example.fashion_api.Services.CategoryService.CategoryService;
-import org.example.fashion_api.Services.CategoryService.CategoryServiceImpl;
 import org.example.fashion_api.Services.CloudinaryService;
 import org.example.fashion_api.Services.RedisService.RedisService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,26 +42,29 @@ public class ProductServiceImpl implements ProductService {
 
 
     @Override
-    public ProductPageRes getAllProducts(String keyword,int page, int limit) throws JsonProcessingException {
+    public PageProductRes getAllProducts(String keyword, int page, int limit) throws JsonProcessingException {
         String redisKey = "getAllProducts("+keyword+","+page+","+limit+") - product";
 
-        ProductPageRes productPageRes = redisService.getRedis(redisKey,ProductPageRes.class);
+        PageProductRes pageProductRes = redisService.getRedis(redisKey, PageProductRes.class);
 
-        if (productPageRes == null){
+        if (pageProductRes == null){
             PageRequest pageRequest = PageRequest.of(page,limit, Sort.by("product_id").ascending());
 
             Page<Product> productsPage = productRepo.findAllProductByKey(keyword,pageRequest);
 
             List<ProductRes> productResList = productMapper.productsToProductRes(productsPage.getContent());
 
-            productPageRes = ProductPageRes.builder()
+            var totalProduct = productRepo.count();
+            pageProductRes = PageProductRes.builder()
                     .productsRes(productResList)
+                    .totalProduct(totalProduct)
+                    .currenPage(page+1)
                     .totalPages(productsPage.getTotalPages())
                     .build();
-            redisService.saveRedis(redisKey,productPageRes);
+            redisService.saveRedis(redisKey,pageProductRes);
         }
 
-        return productPageRes;
+        return pageProductRes;
     }
 
     @Override
@@ -123,12 +125,12 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public ProductPageRes getAllProductsByCategory(String keyword,int page,int limit,String catId) throws JsonProcessingException {
+    public PageProductRes getAllProductsByCategory(String keyword, int page, int limit, String catId) throws JsonProcessingException {
         String redisKey = "productService.getAllProductsByCategory("+keyword+","+page+","+limit+","+catId+") - product";
 
-        ProductPageRes productPageRes = redisService.getRedis(redisKey,ProductPageRes.class);
+        PageProductRes pageProductRes = redisService.getRedis(redisKey, PageProductRes.class);
 
-        if (productPageRes == null){
+        if (pageProductRes == null){
             List<Product> productList = new ArrayList<>();
             List<Category> categories = categoryService.CatDescendants(catId, new ArrayList<>());
 
@@ -143,20 +145,24 @@ public class ProductServiceImpl implements ProductService {
                 productList.addAll(productPage.getContent());
             }
 
-            int totalPage = (int) Math.ceil((double) productList.size() / limit);
-            List<ProductRes> productsRes = productMapper.productsToProductRes(productList);
 
-            productPageRes = ProductPageRes.builder()
+            List<ProductRes> productsRes = productMapper.productsToProductRes(productList);
+            var totalProduct = productRepo.count();
+            int totalPage = (int) Math.ceil((double) productsRes.size() / limit);
+
+            pageProductRes = PageProductRes.builder()
                     .productsRes(productsRes)
+                    .totalProduct(totalProduct)
+                    .currenPage(page+1)
                     .totalPages(totalPage)
                     .build();
-            redisService.saveRedis(redisKey,productPageRes);
+            redisService.saveRedis(redisKey, pageProductRes);
 
-            return productPageRes;
+            return pageProductRes;
         }
 
 
-        return productPageRes;
+        return pageProductRes;
     }
 
 }

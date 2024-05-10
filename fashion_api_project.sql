@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th4 29, 2024 lúc 01:36 PM
+-- Thời gian đã tạo: Th5 10, 2024 lúc 05:38 PM
 -- Phiên bản máy phục vụ: 10.4.32-MariaDB
 -- Phiên bản PHP: 8.2.12
 
@@ -20,8 +20,6 @@ SET time_zone = "+00:00";
 --
 -- Cơ sở dữ liệu: `fashion_api_project`
 --
-CREATE DATABASE IF NOT EXISTS `fashion_api_project` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
-USE `fashion_api_project`;
 
 -- --------------------------------------------------------
 
@@ -684,6 +682,317 @@ INSERT INTO `imgs_product` (`img_id`, `product_id`, `file_img`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Cấu trúc bảng cho bảng `invoices`
+--
+
+CREATE TABLE `invoices` (
+  `invoice_id` varchar(8) NOT NULL,
+  `name` varchar(30) DEFAULT NULL,
+  `phone` varchar(15) DEFAULT NULL,
+  `address` text DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp(),
+  `note` varchar(255) DEFAULT NULL,
+  `customer_note` varchar(255) DEFAULT NULL,
+  `account_id` int(11) DEFAULT NULL,
+  `invoice_status` int(1) NOT NULL DEFAULT 1,
+  `total_price` int(20) DEFAULT 0,
+  `shipping_fee` int(11) DEFAULT 0,
+  `total_bill` int(20) DEFAULT 0,
+  `is_paid` bit(1) NOT NULL DEFAULT b'0'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `invoices`
+--
+
+INSERT INTO `invoices` (`invoice_id`, `name`, `phone`, `address`, `created_at`, `note`, `customer_note`, `account_id`, `invoice_status`, `total_price`, `shipping_fee`, `total_bill`, `is_paid`) VALUES
+('41ZSPBHA', 'quang anh', '0365151822', '4dvsdsf', '2024-03-10 21:51:41', '', 'd', 1, 3, 1960000, 20000, 1980000, b'0'),
+('4LFFMS9V', 'quang anh', '0365151822', '4dvsdsf', '2024-02-06 10:31:56', '', 'd', NULL, 1, 50000, 30000, 80000, b'0'),
+('56BKIMXY', 'quang anh', '0365151822', '4dvsdsf', '2024-02-06 10:36:03', '', 'f', NULL, 1, 990000, 0, 990000, b'0'),
+('5CKTNJXP', 'quang anh', '0365151822', '4dvsdsf', '2024-02-18 04:01:34', '', 'd', 1, 1, 990000, 0, 990000, b'1'),
+('5FTZ8G2K', 'nguyễn quang anh', '0365151823', 'số 18 ngõ 222 tựu liệt,thanh trì, hà nội', '2024-02-06 09:58:41', '', 'fsd', 4, 4, 1860000, 10000, 1870000, b'1'),
+('5J8RUFRZ', 'quang anh', '0365151822', '4dvsdsf', '2024-02-06 10:11:44', '', 'fs', NULL, 1, 890000, 0, 890000, b'0'),
+('5RH2CLWH', 'quang anh', '0365151822', '4dvsdsf', '2024-02-07 02:07:28', '', 'sa', 1, 1, 1540000, 0, 1540000, b'0'),
+('6LU8CYHS', 'nguyễn quang anh', '3651518221', 'số 18 ngõ 222 tựu liệt,thanh trì, hà nội', '2024-02-01 20:30:38', '', 'ss', NULL, 1, 990000, 0, 990000, b'0'),
+('7MOJYIGO', 'vcxvx', '33333', 'fsd', '2024-02-06 11:25:48', '', 'sd', NULL, 1, 2350000, 20000, 2370000, b'0'),
+('8XVO3RJ8', 'nguyễn quang anh', '4553333542', 'số 18 ngõ 222 tựu liệt,thanh trì, hà nội', '2024-02-06 09:59:16', '', '', NULL, 1, 990000, 0, 990000, b'1'),
+('98ZCL96V', 'quang anh', '0365151822', '4dvsdsf', '2024-02-06 11:10:23', '', 'd', NULL, 1, 750000, 0, 750000, b'0'),
+('A5K1TOQE', 'gdfgfdg', '3423', 'số 18 ngõ 222 tựu liệt,thanh trì, hà nội', '2024-01-21 09:02:42', '', 'vsd', 1, 2, 3060000, 30000, 3090000, b'0'),
+('AEAXIQS0', 'quang anh', '34232', 'ssd', '2024-01-21 09:42:11', '', 'x', NULL, 0, 990000, 0, NULL, b'0'),
+('B90AZKP8', 'quang anh', '0365151822', '4dvsdsf', '2024-02-06 10:35:18', '', 'f', NULL, 1, 750000, 0, 750000, b'0'),
+('BOXLJSBK', 'quang anh', '0365151822', '4dvsdsf', '2024-02-06 05:24:54', '', 'sd', NULL, 1, 480000, 30000, 510000, b'0'),
+('BSONPNNZ', 'quang anh', '0365151822', '4dvsdsf', '2024-03-31 05:08:22', '', 'gsd', NULL, 1, 500000, 0, 500000, b'1'),
+('CDJBJ419', 'quang anh', '0365151822', '4dvsdsf', '2024-02-06 11:08:30', '', 'd', NULL, 1, 750000, 0, 750000, b'0'),
+('CK0I8M9L', 'quang anh', '0365151822', '4dvsdsf', '2024-02-06 11:04:16', '', 'a', NULL, 1, 750000, 0, 750000, b'0'),
+('CK2RNNXU', 'quang anh', '0365151822', '4dvsdsf', '2024-02-06 08:22:36', '', 'd', NULL, 1, 990000, 0, 990000, b'0'),
+('CQK0DVXD', 'quang anh', '0365151822', '4dvsdsf', '2024-02-06 11:02:44', '', 's', NULL, 1, 990000, 0, 990000, b'0'),
+('CYFRIM6O', 'quang anh', '0365151822', '4dvsdsf', '2024-02-06 09:14:22', '', 's', NULL, 1, 420000, 30000, 450000, b'0'),
+('DMJHRKWM', 'nguyễn quang anh', '3222232', 'số 18 ngõ 222 tựu liệt,thanh trì, hà nội', '2024-01-29 00:06:42', '', 'cs', NULL, 1, 580000, 0, 580000, b'0'),
+('EAEUPXUE', 'quang anh', '0365151822', '4dvsdsf', '2024-02-06 08:23:40', '', 's', NULL, 1, 990000, 0, 990000, b'0'),
+('EIIMQTNF', 'quang anh', '0365151822', '4dvsdsf', '2024-02-06 10:53:16', '', 'd', NULL, 1, 400000, 30000, 430000, b'0'),
+('EXAWZYY2', 'quang anh', '0365151822', '4dvsdsf', '2024-02-06 08:41:14', '', 's', NULL, 1, 990000, 0, 990000, b'0'),
+('EYCDR8PC', 'nguyễn quang anh', '365151822', 'số 18 ngõ 222 tựu liệt,thanh trì, hà nội', '2024-02-06 05:39:32', '                        fsd', NULL, 1, 1, 0, 0, 580000, b'0'),
+('F6GYDSV1', 'nguyễn quang anh', '0365151821', 'số 18 ngõ 222 tựu liệt,thanh trì, hà nội', '2024-03-12 01:44:40', '', NULL, 1, 1, 0, 0, 0, b'0'),
+('GB4ENHC1', 'nguyễn quang anh', '365151822', 'số 18 ngõ 222 tựu liệt,thanh trì, hà nội', '2024-01-21 09:42:11', '', 'dfs', NULL, 0, 1980000, 0, 1980000, b'0'),
+('GCRM2OC5', 'quang anh', '0365151822', '4dvsdsf', '2024-02-06 06:46:00', '', 'sd', NULL, 1, NULL, 30000, 380000, b'0'),
+('GGTWEEBJ', 'quang anh', '0365151822', '4dvsdsf', '2024-02-12 11:45:34', '', 'd', NULL, 1, 200000, 30000, 230000, b'1'),
+('GQ9U9AXK', 'quang anh', '0365151822', '4dvsdsf', '2024-03-12 01:44:12', '', 'fd', NULL, 1, 380000, 0, 380000, b'0'),
+('GWW0LOZ8', 'quang anh', '0365151822', '4dvsdsf', '2024-02-06 11:52:29', '', 'v', NULL, 1, 750000, 0, 750000, b'0'),
+('I1TWS5QJ', 'quang anh', '423432', 'sdf', '2024-01-21 02:18:55', '', 'sd', 1, 1, 550000, 0, NULL, b'0'),
+('I8XDEQJH', 'nguyễn quang anh', '365151822', 'số 18 ngõ 222 tựu liệt,thanh trì, hà nội', '2024-01-21 09:36:57', '', 'sd', 1, 2, 598000, 0, 598000, b'0'),
+('IS8THSPA', 'quang anh', '0365151822', '4dvsdsf', '2024-02-06 09:21:26', '', 'd', 1, 1, 100000, 30000, 130000, b'0'),
+('JDIVW1PL', 'quang anh', '0365151822', '4dvsdsf', '2024-02-06 09:09:54', '', 's', NULL, 1, 500000, 0, 500000, b'0'),
+('JFFE99ZQ', 'quang anh', '0365151822', '4dvsdsf', '2024-02-06 07:31:15', '', 'fd', 1, 1, 1250000, 0, 1250000, b'0'),
+('KT9P9ZMY', 'nguyễn quang anh', '365151822', 'số 18 ngõ 222 tựu liệt,thanh trì, hà nội', '2024-01-21 03:11:15', '', 'dsf', NULL, 1, 4040000, 20000, 4060000, b'0'),
+('KYGSBUBG', 'quang anh', '0365151822', '4dvsdsf', '2024-02-06 10:49:38', '', 'd', NULL, 1, 500000, 0, 500000, b'0'),
+('LUW8V8TY', 'quang anh', '0365151822', '4dvsdsf', '2024-02-06 10:36:40', '', 'd', NULL, 1, 750000, 0, 750000, b'0'),
+('MDXPM23G', 'quang anh', '0365151822', '4dvsdsf', '2024-02-18 02:32:37', 'cvs', NULL, 1, 1, 760000, 10000, 770000, b'0'),
+('MSFDUEXY', 'nguyễn quang anh', '365151822', 'số 18 ngõ 222 tựu liệt,thanh trì, hà nội', '2024-01-21 22:29:08', '', 'sd', 1, 1, 840000, 0, 840000, b'0'),
+('MVNWRADX', 'nhanvien1', '365151822', 'số 18 ngõ 222 tựu liệt,thanh trì, hà nội', '2024-03-12 01:44:12', '                        ', NULL, 2, 5, 0, 0, 0, b'0'),
+('N6VKCD4X', 'quang anh', '0365151822', '4dvsdsf', '2024-02-06 10:54:59', '', 's', NULL, 1, 750000, 0, 750000, b'0'),
+('NHMSP1VU', 'nguyễn quang anh', '0365151822', 'số 18 ngõ 222 tựu liệt,thanh trì, hà nội', '2024-03-12 01:32:47', '', NULL, 1, 1, 0, 0, 0, b'0'),
+('NQHLQRH4', 'quang anh', '0365151822', '4dvsdsf', '2024-03-31 07:55:56', '', NULL, 1, 1, 0, 0, 0, b'0'),
+('NV7CM7AY', 'quang anh', '0365151822', '4dvsdsf', '2024-02-06 10:11:23', '', 'gh', NULL, 1, 750000, 0, 750000, b'0'),
+('OCFAOWMB', 'fsdfsd', '333333', 'vd', '2024-01-21 02:45:14', '', 'd', 1, 1, 1380000, 30000, 1410000, b'0'),
+('OUFWELJT', 'quang anh', '0365151822', '4dvsdsf', '2024-03-12 01:44:12', '', '', NULL, 1, 990000, 0, 990000, b'0'),
+('PPKY3TZA', 'quang anh', '0365151822', '4dvsdsf', '2024-02-06 11:11:02', '', 'g', NULL, 1, 990000, 0, 990000, b'0'),
+('QIPTDMTO', 'nguyễn quang anh', '5342423432', 'số 18 ngõ 222 tựu liệt,thanh trì, hà nội', '2024-03-12 01:44:12', '', '', NULL, 1, 990000, 0, 990000, b'0'),
+('QUZEPN5K', 'quang anh', '0365151822', '4dvsdsf', '2024-02-06 10:57:07', '', 'd', NULL, 1, 750000, 0, 750000, b'0'),
+('ROSWZNSR', 'quang anh', '0365151822', '4dvsdsf', '2024-02-06 06:47:21', '', 'sd', NULL, 1, 380000, 30000, 410000, b'0'),
+('S9BQOPOP', 'quang anh', '0365151822', '4dvsdsf', '2024-02-06 10:26:23', '', 'f', NULL, 1, 750000, 0, 750000, b'0'),
+('SGVWGKLQ', 'quang anh', '0365151822', '4dvsdsf', '2024-02-06 08:22:22', '', 'd', NULL, 1, 990000, 0, 990000, b'0'),
+('SMMKHRU1', 'dfsd', '222222', 'sdf', '2024-01-21 02:17:25', '', 'fds', NULL, 1, 400000, 30000, 430000, b'0'),
+('SNGWGR4V', 'quang anh', '0365151822', '4dvsdsf', '2024-02-08 08:38:43', '', 'd', 1, 1, 750000, 0, 750000, b'0'),
+('SRXO1SSG', 'quang anh', '0365151822', '4dvsdsf', '2024-02-06 10:33:37', '', 'h', NULL, 1, 400000, 30000, 430000, b'0'),
+('T1VCKYYG', 'sser', '44343', 'f', '2024-03-12 01:44:12', 'dfs', NULL, 2, 3, 0, 0, 0, b'0'),
+('TFWOAP9I', 'nguyễn quang anh', '4343222342', 'số 18 ngõ 222 tựu liệt,thanh trì, hà nội', '2024-03-31 04:27:12', '', '', NULL, 1, 1046666, 0, 1046666, b'0'),
+('TGPIGVXB', 'quang anh', '0365151822', '4dvsdsf', '2024-02-06 10:16:29', '', 'd', NULL, 1, 990000, 0, 990000, b'0'),
+('TLSY7TFT', 'dfgdf', '323233232', 'fds', '2024-01-20 01:38:59', '', 'f', NULL, 1, 750000, 0, 750000, b'0'),
+('U0F7TYG1', 'quang anh', '0365151822', '4dvsdsf', '2024-02-06 10:12:03', '', 'vs', NULL, 1, 890000, 0, 890000, b'0'),
+('U7DZUREO', 'quang anh', '0365151822', '4dvsdsf', '2024-02-08 08:39:21', '', 'gd', 1, 1, 500000, 0, 500000, b'0'),
+('UAEZV8YX', 'gdfgfdg', '3423', 'số 18 ngõ 222 tựu liệt,thanh trì, hà nội', '2024-01-20 01:24:41', '', 'vsd', 1, 1, 550000, 30000, 410000, b'0'),
+('UAGHYL6A', 'quang anh', '0365151822', '4dvsdsf', '2024-02-06 10:44:28', '', 'd', NULL, 1, 750000, 0, 750000, b'0'),
+('UZZHM3TR', 'nguyễn quang anh', '333322323', 'số 18 ngõ 222 tựu liệt,thanh trì, hà nội', '2024-01-20 01:28:41', '', 'fs', NULL, 1, 480000, 30000, 510000, b'0'),
+('V2PBUUIU', 'quang anh', '2313121312', '4dvsdsf', '2024-02-18 02:37:22', '', NULL, 1, 1, NULL, 0, NULL, b'0'),
+('VAZZJUMT', 'nguyễn quang anh', '3651518222', 'số 18 ngõ 222 tựu liệt,thanh trì, hà nội', '2024-03-12 01:44:12', '', 'zcx', NULL, 1, 990000, 0, 990000, b'0'),
+('VWQKIORR', 'quang anh', '0365151822', '4dvsdsf', '2024-02-06 11:01:00', '', 's', NULL, 1, 750000, 0, 750000, b'0'),
+('WDVTINII', 'quang anh', '0365151822', '4dvsdsf', '2024-02-08 08:37:52', '', 'sda', 1, 1, 1250000, 0, 1250000, b'0'),
+('WVHNNQAC', 'quang anh', '0365151822', '4dvsdsf', '2024-02-06 06:28:02', '', 'gfd', NULL, 1, 500000, 999999, 1499999, b'0'),
+('X6JPOCJH', 'sdgsd', '345234532', 'cxgdf', '2024-01-21 03:22:04', '', 'df', NULL, 1, 1980000, 0, 1980000, b'0'),
+('XNLM5KBW', 'quang anh', '0365151822', '4dvsdsf', '2024-02-06 10:26:42', '', 'f', NULL, 1, 750000, 0, 750000, b'0'),
+('XRAPWYJI', 'quang anh', '4534543', 'fđ', '2024-01-21 03:02:57', '', 'dgf', 1, 1, 990000, 0, NULL, b'0'),
+('YFJBR6YE', 'quang anh', '0365151822', '4dvsdsf', '2024-02-06 11:55:09', '', 'vd', NULL, 1, 333333, 0, 333333, b'0'),
+('YHNB0POU', 'dsfds', '2312312', 'f', '2024-01-20 01:48:58', '', 's', NULL, 1, 420000, 30000, 450000, b'0'),
+('YIFBIIM3', 'quang anh', '0365151822', '4dvsdsf', '2024-02-06 10:32:38', '', 's', NULL, 1, 990000, 0, 990000, b'0'),
+('YK68ZX7R', 'nguyễn quang anh', '3432224222', 'số 18 ngõ 222 tựu liệt,thanh trì, hà nội', '2024-01-29 05:53:51', '', '', 1, 1, 990000, 0, 990000, b'0'),
+('YTNKBIKE', 'quang anh', '0365151822', '4dvsdsf', '2024-02-06 11:02:44', '', 's', NULL, 1, 990000, 0, 990000, b'0'),
+('YZSGNG1E', 'quang anh', '0365151822', '4dvsdsf', '2024-02-06 09:53:24', '', 'd', 1, 1, 750000, 0, 750000, b'0'),
+('ZUI23NIT', 'nguyễn quang anh', '36515182222', 'số 18 ngõ 222 tựu liệt,thanh trì, hà nội', '2024-01-20 00:42:26', '                        dsf', NULL, 1, 1, 290000, 20000, 890000, b'0');
+
+--
+-- Bẫy `invoices`
+--
+DELIMITER $$
+CREATE TRIGGER `insert_ship` BEFORE INSERT ON `invoices` FOR EACH ROW BEGIN
+SET NEW.total_bill = NEW.total_price + NEW.shipping_fee;
+END
+$$
+DELIMITER ;
+DELIMITER $$
+CREATE TRIGGER `update_ship` BEFORE UPDATE ON `invoices` FOR EACH ROW BEGIN
+IF NEW.shipping_fee != OLD.shipping_fee
+THEN
+SET NEW.total_bill = NEW.total_price + NEW.shipping_fee;
+END IF;
+END
+$$
+DELIMITER ;
+
+-- --------------------------------------------------------
+
+--
+-- Cấu trúc bảng cho bảng `invoices_detail`
+--
+
+CREATE TABLE `invoices_detail` (
+  `detail_id` int(11) NOT NULL,
+  `invoice_id` varchar(8) DEFAULT NULL,
+  `product_detail_id` int(11) DEFAULT NULL,
+  `price` double DEFAULT NULL,
+  `quantity` int(11) DEFAULT NULL,
+  `total_price` int(20) DEFAULT 0
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `invoices_detail`
+--
+
+INSERT INTO `invoices_detail` (`detail_id`, `invoice_id`, `product_detail_id`, `price`, `quantity`, `total_price`) VALUES
+(230, 'EYCDR8PC', 190, 290000, 1, 290000),
+(231, 'ZUI23NIT', 190, 290000, 1, 290000),
+(232, 'MSFDUEXY', 198, 420000, 2, 840000),
+(233, 'I8XDEQJH', 671, 299000, 2, 598000),
+(234, 'A5K1TOQE', 16, 380000, 2, 760000),
+(235, 'EYCDR8PC', 191, 290000, 1, 290000),
+(236, 'UAEZV8YX', 527, 550000, 1, 550000),
+(237, 'OCFAOWMB', 33, 420000, 1, 420000),
+(238, 'UZZHM3TR', 503, 480000, 1, 480000),
+(239, 'TLSY7TFT', 697, 750000, 1, 750000),
+(240, 'SMMKHRU1', 60, 400000, 1, 400000),
+(241, 'YHNB0POU', 86, 420000, 1, 420000),
+(242, 'GB4ENHC1', 691, 990000, 2, 1980000),
+(244, 'KT9P9ZMY', 697, 750000, 2, 1500000),
+(246, '7MOJYIGO', 191, 290000, 2, 580000),
+(247, '7MOJYIGO', 192, 290000, 1, 290000),
+(248, '7MOJYIGO', 614, 380000, 1, 380000),
+(249, '7MOJYIGO', 533, 550000, 1, 550000),
+(251, 'KT9P9ZMY', 527, 550000, 2, 1100000),
+(252, 'I1TWS5QJ', 691, 990000, 1, 990000),
+(253, 'I1TWS5QJ', 527, 550000, 1, 550000),
+(254, 'OCFAOWMB', 442, 480000, 1, 480000),
+(256, 'XRAPWYJI', 691, 990000, 1, 990000),
+(260, 'KT9P9ZMY', 442, 480000, 2, 960000),
+(261, 'KT9P9ZMY', 443, 480000, 1, 480000),
+(262, 'AEAXIQS0', 691, 990000, 1, 990000),
+(263, 'X6JPOCJH', 691, 990000, 2, 1980000),
+(272, 'A5K1TOQE', 442, 480000, 4, 1920000),
+(274, 'A5K1TOQE', 614, 380000, 1, 380000),
+(365, '5FTZ8G2K', 614, 380000, 2, 760000),
+(368, '5FTZ8G2K', 541, 550000, 1, 550000),
+(369, '5FTZ8G2K', 542, 550000, 1, 550000),
+(370, 'DMJHRKWM', 190, 290000, 1, 290000),
+(371, 'DMJHRKWM', 191, 290000, 1, 290000),
+(372, 'YK68ZX7R', 691, 990000, 1, 990000),
+(374, 'QIPTDMTO', 691, 990000, 1, 990000),
+(375, '6LU8CYHS', 691, 990000, 1, 990000),
+(376, 'VAZZJUMT', 691, 990000, 1, 990000),
+(377, '8XVO3RJ8', 691, 990000, 1, 990000),
+(379, 'BOXLJSBK', 502, 480000, 1, 480000),
+(380, 'WVHNNQAC', 522, 500000, 1, 500000),
+(381, 'OUFWELJT', 691, 990000, 1, 990000),
+(382, 'GQ9U9AXK', 16, 380000, 1, 380000),
+(383, 'GCRM2OC5', 573, 350000, 1, 350000),
+(384, 'ROSWZNSR', 16, 380000, 1, 380000),
+(385, 'JFFE99ZQ', 697, 750000, 1, 750000),
+(386, 'JFFE99ZQ', 522, 500000, 1, 500000),
+(387, '5RH2CLWH', 691, 990000, 1, 990000),
+(388, 'YZSGNG1E', 709, 750000, 1, 750000),
+(389, '41ZSPBHA', 692, 990000, 1, 990000),
+(390, 'SGVWGKLQ', 691, 990000, 1, 990000),
+(391, 'CK2RNNXU', 691, 990000, 1, 990000),
+(392, 'EAEUPXUE', 691, 990000, 1, 990000),
+(393, 'EXAWZYY2', 691, 990000, 1, 990000),
+(394, 'JDIVW1PL', 252, 500000, 1, 500000),
+(395, 'CYFRIM6O', 85, 420000, 1, 420000),
+(396, 'IS8THSPA', 687, 50000, 2, 100000),
+(398, 'NV7CM7AY', 697, 750000, 1, 750000),
+(399, '5J8RUFRZ', 713, 890000, 1, 890000),
+(400, 'U0F7TYG1', 713, 890000, 1, 890000),
+(401, 'TGPIGVXB', 691, 990000, 1, 990000),
+(402, 'S9BQOPOP', 709, 750000, 1, 750000),
+(403, 'XNLM5KBW', 709, 750000, 1, 750000),
+(404, '4LFFMS9V', 687, 50000, 1, 50000),
+(405, 'YIFBIIM3', 691, 990000, 1, 990000),
+(406, 'SRXO1SSG', 729, 400000, 1, 400000),
+(407, 'B90AZKP8', 709, 750000, 1, 750000),
+(408, '56BKIMXY', 691, 990000, 1, 990000),
+(409, 'LUW8V8TY', 709, 750000, 1, 750000),
+(410, 'UAGHYL6A', 709, 750000, 1, 750000),
+(411, 'KYGSBUBG', 522, 500000, 1, 500000),
+(412, 'EIIMQTNF', 729, 400000, 1, 400000),
+(413, 'N6VKCD4X', 697, 750000, 1, 750000),
+(414, 'QUZEPN5K', 709, 750000, 1, 750000),
+(415, 'VWQKIORR', 709, 750000, 1, 750000),
+(416, 'CQK0DVXD', 691, 990000, 1, 990000),
+(417, 'YTNKBIKE', 691, 990000, 1, 990000),
+(418, 'CK0I8M9L', 709, 750000, 1, 750000),
+(419, 'CDJBJ419', 697, 750000, 1, 750000),
+(420, '98ZCL96V', 697, 750000, 1, 750000),
+(421, 'PPKY3TZA', 691, 990000, 1, 990000),
+(422, 'YFJBR6YE', 46, 333333, 1, 333333),
+(423, 'GWW0LOZ8', 697, 750000, 1, 750000),
+(424, '5RH2CLWH', 527, 550000, 1, 550000),
+(425, '41ZSPBHA', 82, 420000, 1, 420000),
+(426, 'WDVTINII', 697, 750000, 1, 750000),
+(427, 'WDVTINII', 522, 500000, 1, 500000),
+(428, 'SNGWGR4V', 697, 750000, 1, 750000),
+(429, 'U7DZUREO', 522, 500000, 1, 500000),
+(430, 'GGTWEEBJ', 4, 200000, 1, 200000),
+(432, 'MDXPM23G', 620, 380000, 2, 760000),
+(433, '5CKTNJXP', 695, 990000, 1, 990000),
+(436, '41ZSPBHA', 530, 550000, 1, 550000),
+(443, 'TFWOAP9I', 620, 380000, 1, 380000),
+(444, 'TFWOAP9I', 48, 333333, 2, 666666),
+(445, 'BSONPNNZ', 522, 500000, 1, 500000);
+
+--
+-- Bẫy `invoices_detail`
+--
+DELIMITER $$
+CREATE TRIGGER `delete_invoice_detail` AFTER DELETE ON `invoices_detail` FOR EACH ROW BEGIN
+    UPDATE invoices
+    SET total_price = (
+        SELECT SUM(total_price)
+        FROM invoices_detail
+        WHERE invoice_id = OLD.invoice_id
+    )
+    WHERE invoice_id = OLD.invoice_id;
+    
+    UPDATE invoices
+    SET total_bill = total_price + shipping_fee
+    WHERE invoice_id = OLD.invoice_id;
+END
+$$
+DELIMITER ;
+DELIMITER $$
+CREATE TRIGGER `insert` BEFORE INSERT ON `invoices_detail` FOR EACH ROW BEGIN
+	SET NEW.total_price = NEW.price * NEW.quantity;
+END
+$$
+DELIMITER ;
+DELIMITER $$
+CREATE TRIGGER `insert_invoice_detail` AFTER INSERT ON `invoices_detail` FOR EACH ROW BEGIN
+    UPDATE invoices
+    SET total_price = (
+        SELECT SUM(total_price)
+        FROM invoices_detail
+        WHERE invoice_id = NEW.invoice_id
+    )
+    WHERE invoice_id = NEW.invoice_id;
+    
+    UPDATE invoices
+    SET total_bill = total_price + shipping_fee
+    WHERE invoice_id = NEW.invoice_id;
+END
+$$
+DELIMITER ;
+DELIMITER $$
+CREATE TRIGGER `update` BEFORE UPDATE ON `invoices_detail` FOR EACH ROW BEGIN
+    -- Update the totalPrice in invoice_detail
+    SET NEW.total_price = NEW.price * NEW.quantity;
+END
+$$
+DELIMITER ;
+DELIMITER $$
+CREATE TRIGGER `update_invoice_detail` AFTER UPDATE ON `invoices_detail` FOR EACH ROW BEGIN
+    UPDATE invoices
+    SET total_price = (
+        SELECT SUM(total_price)
+        FROM invoices_detail
+        WHERE invoice_id = NEW.invoice_id
+    )
+    WHERE invoice_id = NEW.invoice_id;
+    
+    UPDATE invoices
+    SET total_bill = total_price + shipping_fee
+    WHERE invoice_id = NEW.invoice_id;
+END
+$$
+DELIMITER ;
+
+-- --------------------------------------------------------
+
+--
 -- Cấu trúc bảng cho bảng `jwt_tokens`
 --
 
@@ -704,8 +1013,8 @@ CREATE TABLE `jwt_tokens` (
 INSERT INTO `jwt_tokens` (`id`, `token`, `expiration_date`, `refresh_token`, `account_id`, `refresh_expiration_date`, `revoked`) VALUES
 (53, 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJuZ3V5ZW5xdWFuZ2FuaCIsInVzZXJuYW1lIjoibmhhbnZpZW4xIiwicm9sZSI6IlJPTEVfRU1QTE9ZRUUiLCJpYXQiOjE3MTM4ODk5NzMsImV4cCI6MTcxMzg5MzU3M30.UghEbLPKZUlWLiTXjqZauOAnIi3hxPHirXkD79ohzGk', '2024-04-24 00:32:53', '4bf80277-d71b-4533-ad94-d2dd16a472aa', 2, '2024-04-23 23:33:03', 0),
 (54, 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJuZ3V5ZW5xdWFuZ2FuaCIsInVzZXJuYW1lIjoibmhhbnZpZW4xIiwicm9sZSI6IlJPTEVfRU1QTE9ZRUUiLCJpYXQiOjE3MTM4OTE2OTEsImV4cCI6MTcxMzg5NTI5MX0.zMzZPWZrUHYOsIauCEH0o9mu8VKGsXtHSaO-TpX2Dbw', '2024-04-24 01:01:31', '9bb3c204-6b55-47f3-bada-ed056704b408', 2, '2024-04-24 00:01:41', 0),
-(84, 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJuZ3V5ZW5xdWFuZ2FuaCIsInVzZXJuYW1lIjoicXVhbmx5Iiwicm9sZSI6IlJPTEVfTUFOQUdFUiIsImlhdCI6MTcxNDM3NTIyMCwiZXhwIjoxNzE0NDYxNjIwfQ.SZXGWqYCfdr8LgPcrKZAo02jFK9xGxkwRS-OZFZqLOY', '2024-04-30 14:20:20', '0527cee0-5d7f-4682-8de5-c9e559bdc04b', 1, '2024-05-29 14:20:20', 0),
-(85, 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJuZ3V5ZW5xdWFuZ2FuaCIsInVzZXJuYW1lIjoicXVhbmx5Iiwicm9sZSI6IlJPTEVfTUFOQUdFUiIsImlhdCI6MTcxNDM3NTMwOSwiZXhwIjoxNzE0NDYxNzA5fQ.9tk28B2jNQP3In14qCECre5A4N7DxuqGPii51itV8vU', '2024-04-30 14:21:49', '9e49c923-8040-4fd9-be27-0427eefea0a6', 1, '2024-05-29 14:21:49', 0);
+(103, 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJuZ3V5ZW5xdWFuZ2FuaCIsInVzZXJuYW1lIjoicXVhbmx5Iiwicm9sZSI6IlJPTEVfTUFOQUdFUiIsImlhdCI6MTcxNTE3Mzc2NywiZXhwIjoxNzE1MjYwMTY3fQ.KvKHFAS8N9a2fWGAEpKB_J_85T-3FwXePSL7J_3p-nk', '2024-05-09 20:09:27', 'eb37e35d-db90-4d0e-8fab-b110f360c777', 1, '2024-06-07 20:09:27', 0),
+(104, 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJuZ3V5ZW5xdWFuZ2FuaCIsInVzZXJuYW1lIjoicXVhbmx5Iiwicm9sZSI6IlJPTEVfTUFOQUdFUiIsImlhdCI6MTcxNTM0MTA2NywiZXhwIjoxNzE1NDI3NDY3fQ.ZGdytCUO5PnhYBRCWua6BLAkDkSzujLqQotO1gFeM54', '2024-05-11 18:37:47', 'cd7cc033-9fe9-4818-9c28-85c31d230dbc', 1, '2024-06-09 18:37:47', 0);
 
 -- --------------------------------------------------------
 
@@ -804,7 +1113,8 @@ INSERT INTO `products` (`product_id`, `product_name`, `cat_id`, `price`, `discou
 ('EWCW007', 'Áo khoác gió 1 lớp mũ liền EWCW007', 'AKG', 50000, NULL, NULL, b'0', 'TORANO', 'Áo khoác gió 1 lớp mũ liền chống nước giá siêu tốt của nhà Torano đã cập bến.\r\n', 4, 3, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711810212/1704189991841_ewcw007-1_c8b1f230ddb2408daa72728d0ecee531_master.jpg.webp', 'IMAGE_5', b'1'),
 ('EWTE003', 'Áo len kẻ ngang cổ tròn 2.EWTE003', 'ALK', 520000, NULL, NULL, b'0', 'TORANO', '', 4, 2, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711810003/1708267758762_ewte003-10_53297045794_o_af9bd1f2fa8246dab498a75b2a976f04_master.jpg.jpg', 'IMAGE_5', b'1'),
 ('EWTW003', 'Áo nỉ trơn basic vải hiệu ứng 3.EWTW003', 'ANT', 380000, NULL, NULL, b'0', 'TORANO', '', 5, 3, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711810052/1707657567773_tw003-bs001-6_53291471625_o_1f620c3d758e41d696fb128d159744a2_master.jpg.webp', 'IMAGE_5', b'1'),
-('test', 'test', 'QJB', 123465, 123456, 0, b'1', 'test', 'test', 0, 0, NULL, 'IMAGE_4', b'1'),
+('test', 'test', 'QJB', 1, 1, 0, b'1', 'test', 'test', 1, 1, NULL, 'IMAGE_4', b'1'),
+('test4', 'test', 'QJB', 123465, 123456, 0, b'1', 'test', 'test', 0, 0, NULL, 'IMAGE_4', b'1'),
 ('TP004', 'Áo polo phối màu color-block 1.TP004', 'PLHT', 450000, NULL, NULL, b'0', 'TORANO', 'Áo polo phối màu color-block TP004', 4, 1, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711811025/tp004_45415f65d7bc4f4c8d52f4893d682a43_master.jpg.webp', 'IMAGE_1', b'1');
 
 --
@@ -1609,7 +1919,9 @@ INSERT INTO `products_detail` (`product_detail_id`, `product_id`, `code`, `color
 (792, 'BI013', 'test', 'BBR', 'SIZE_M', 1, b'1', b'1'),
 (794, 'BI013', 'test2', 'BBR', 'SIZE_M', 1, b'1', b'1'),
 (796, 'BI013', 'test3', 'BBR', 'SIZE_M', 1, b'1', b'1'),
-(799, 'BI013', 'test4', 'BBR', 'SIZE_M', 1, b'1', b'1');
+(799, 'BI013', 'test4', 'BBR', 'SIZE_M', 1, b'1', b'1'),
+(804, 'test', 'test6', 'BL', 'SIZE_M', 1, b'1', b'1'),
+(805, 'test', 'test7', 'BL', 'SIZE_M', 1, b'1', b'1');
 
 --
 -- Bẫy `products_detail`
@@ -1781,13 +2093,13 @@ ALTER TABLE `imgs_product`
 -- AUTO_INCREMENT cho bảng `jwt_tokens`
 --
 ALTER TABLE `jwt_tokens`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=86;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=105;
 
 --
 -- AUTO_INCREMENT cho bảng `products_detail`
 --
 ALTER TABLE `products_detail`
-  MODIFY `product_detail_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=804;
+  MODIFY `product_detail_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=806;
 
 --
 -- Các ràng buộc cho các bảng đã đổ

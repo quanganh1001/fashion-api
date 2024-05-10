@@ -13,6 +13,7 @@ import java.util.List;
 @Mapper(componentModel = "spring",unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface ProductMapper {
 
+    @Mapping(target = "productsDetail", source = "productsDetails")
     List<ProductRes> productsToProductRes(List<Product> products);
 
 

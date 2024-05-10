@@ -2,7 +2,10 @@ package org.example.fashion_api.Services.ProductService;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import jakarta.transaction.Transactional;
-import org.example.fashion_api.Models.Product.*;
+import org.example.fashion_api.Models.Products.CreateProductDto;
+import org.example.fashion_api.Models.Products.PageProductRes;
+import org.example.fashion_api.Models.Products.ProductRes;
+import org.example.fashion_api.Models.Products.UpdateProductDto;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.multipart.MultipartFile;
 

@@ -1,7 +1,7 @@
 package org.example.fashion_api.Controllers;
 
 import jakarta.validation.Valid;
-import org.example.fashion_api.Models.Color.ColorDto;
+import org.example.fashion_api.Models.Colors.ColorDto;
 import org.example.fashion_api.Services.ColorService.ColorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

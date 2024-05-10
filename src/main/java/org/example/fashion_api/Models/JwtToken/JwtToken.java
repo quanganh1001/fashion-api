@@ -5,7 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.example.fashion_api.Models.Account.Account;
+import org.example.fashion_api.Models.Accounts.Account;
 
 import java.util.Date;
 

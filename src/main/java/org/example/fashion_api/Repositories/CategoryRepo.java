@@ -1,6 +1,6 @@
 package org.example.fashion_api.Repositories;
 
-import org.example.fashion_api.Models.Category.Category;
+import org.example.fashion_api.Models.Categories.Category;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;

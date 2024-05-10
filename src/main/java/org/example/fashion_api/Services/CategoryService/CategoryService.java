@@ -1,8 +1,8 @@
 package org.example.fashion_api.Services.CategoryService;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import org.example.fashion_api.Models.Category.Category;
-import org.example.fashion_api.Models.Category.CategoryDto;
+import org.example.fashion_api.Models.Categories.Category;
+import org.example.fashion_api.Models.Categories.CategoryDto;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.multipart.MultipartFile;
 

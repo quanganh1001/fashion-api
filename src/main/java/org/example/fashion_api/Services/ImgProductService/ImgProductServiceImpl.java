@@ -1,21 +1,18 @@
 package org.example.fashion_api.Services.ImgProductService;
 
 import org.example.fashion_api.Exception.NotFoundException;
-import org.example.fashion_api.Models.ImgProduct.ImgProduct;
-import org.example.fashion_api.Models.ImgProduct.ImgProductMapper;
-import org.example.fashion_api.Models.ImgProduct.ImgProductRes;
-import org.example.fashion_api.Models.Product.Product;
-import org.example.fashion_api.Models.ProductDetail.ProductDetailRes;
+import org.example.fashion_api.Models.ImgsProducts.ImgProduct;
+import org.example.fashion_api.Mapper.ImgProductMapper;
+import org.example.fashion_api.Models.ImgsProducts.ImgProductRes;
+import org.example.fashion_api.Models.Products.Product;
 import org.example.fashion_api.Repositories.ImgProductRepo;
 import org.example.fashion_api.Repositories.ProductRepo;
 import org.example.fashion_api.Services.CloudinaryService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 

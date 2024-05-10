@@ -2,8 +2,7 @@ package org.example.fashion_api.Controllers;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import jakarta.validation.Valid;
-import org.example.fashion_api.Models.Category.CategoryDto;
-import org.example.fashion_api.Repositories.CategoryRepo;
+import org.example.fashion_api.Models.Categories.CategoryDto;
 import org.example.fashion_api.Services.CategoryService.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

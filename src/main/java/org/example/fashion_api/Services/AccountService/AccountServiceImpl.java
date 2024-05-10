@@ -2,16 +2,15 @@ package org.example.fashion_api.Services.AccountService;
 
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import org.apache.catalina.User;
 import org.example.fashion_api.Exception.AlreadyExistException;
 import org.example.fashion_api.Exception.BadCredentialsException;
 import org.example.fashion_api.Exception.NotFoundException;
-import org.example.fashion_api.Models.Account.*;
+import org.example.fashion_api.Mapper.AccountMapper;
+import org.example.fashion_api.Models.Accounts.*;
 import org.example.fashion_api.Models.JwtToken.JwtTokenRes;
 import org.example.fashion_api.Models.MailTemplate;
 import org.example.fashion_api.Producer.MailProducer;
 import org.example.fashion_api.Repositories.AccountRepo;
-import org.example.fashion_api.Services.EmailService;
 import org.example.fashion_api.Services.JwtService.JwtService;
 import org.example.fashion_api.Services.RedisService.RedisService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -129,7 +128,7 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public AccountRes getAccount(Long accountId) {
-        return accountMapper.accountEntityToAccountRes(accountRepo.findById(accountId).orElseThrow(() -> new NotFoundException("Account")));
+        return accountMapper.accountEntityToAccountRes(accountRepo.findById(accountId).orElseThrow(() -> new NotFoundException("Accounts")));
     }
 
     @Override
@@ -149,8 +148,8 @@ public class AccountServiceImpl implements AccountService {
 
         MailTemplate mailTemplate = MailTemplate.builder()
                 .to(accountRegisterDto.getEmail())
-                .subject("Account has been successfully registered!")
-                .body("Account has been successfully registered!")
+                .subject("Accounts has been successfully registered!")
+                .body("Accounts has been successfully registered!")
                 .build();
 
         mailProducer.send(mailTemplate);
@@ -161,14 +160,14 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public void deleteAccount(Long accountId) {
-        Account account = accountRepo.findById(accountId).orElseThrow(() -> new NotFoundException("Account"));
+        Account account = accountRepo.findById(accountId).orElseThrow(() -> new NotFoundException("Accounts"));
         accountRepo.delete(account);
     }
 
     @Override
     @Transactional
     public AccountRes updateAccount(Long accountId, AccountUpdateDto dto) {
-        Account account = accountRepo.findById(accountId).orElseThrow(() -> new NotFoundException("Account"));
+        Account account = accountRepo.findById(accountId).orElseThrow(() -> new NotFoundException("Accounts"));
 
         if (!Objects.equals(account.getEmail(), dto.getEmail()) && accountRepo.existsByEmail(dto.getEmail())) {
             throw new AlreadyExistException("Email");

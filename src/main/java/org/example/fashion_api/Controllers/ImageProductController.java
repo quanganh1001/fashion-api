@@ -1,8 +1,7 @@
 package org.example.fashion_api.Controllers;
 
 
-import org.example.fashion_api.Models.ImgProduct.ImgProductRes;
-import org.example.fashion_api.Repositories.ImgProductRepo;
+import org.example.fashion_api.Models.ImgsProducts.ImgProductRes;
 import org.example.fashion_api.Services.ImgProductService.ImgProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

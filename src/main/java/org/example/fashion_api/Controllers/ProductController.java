@@ -2,7 +2,10 @@ package org.example.fashion_api.Controllers;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import jakarta.validation.Valid;
-import org.example.fashion_api.Models.Product.*;
+import org.example.fashion_api.Models.Products.CreateProductDto;
+import org.example.fashion_api.Models.Products.PageProductRes;
+import org.example.fashion_api.Models.Products.ProductRes;
+import org.example.fashion_api.Models.Products.UpdateProductDto;
 import org.example.fashion_api.Services.ProductService.ProductService;
 import org.example.fashion_api.Services.RedisService.RedisService;
 import org.springframework.beans.factory.annotation.Autowired;

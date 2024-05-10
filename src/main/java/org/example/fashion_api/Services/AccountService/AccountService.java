@@ -1,9 +1,9 @@
 package org.example.fashion_api.Services.AccountService;
 
-import org.example.fashion_api.Models.Account.AccountLoginDto;
-import org.example.fashion_api.Models.Account.AccountRegisterDto;
-import org.example.fashion_api.Models.Account.AccountRes;
-import org.example.fashion_api.Models.Account.AccountUpdateDto;
+import org.example.fashion_api.Models.Accounts.AccountLoginDto;
+import org.example.fashion_api.Models.Accounts.AccountRegisterDto;
+import org.example.fashion_api.Models.Accounts.AccountRes;
+import org.example.fashion_api.Models.Accounts.AccountUpdateDto;
 import org.example.fashion_api.Models.JwtToken.JwtTokenRes;
 import org.springframework.http.ResponseEntity;
 

@@ -1,6 +1,6 @@
 package org.example.fashion_api.Services.ColorService;
 
-import org.example.fashion_api.Models.Color.ColorDto;
+import org.example.fashion_api.Models.Colors.ColorDto;
 
 import java.util.List;
 

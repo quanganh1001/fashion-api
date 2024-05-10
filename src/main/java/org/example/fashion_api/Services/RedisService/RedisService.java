@@ -2,7 +2,6 @@ package org.example.fashion_api.Services.RedisService;
 
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import org.example.fashion_api.Models.Category.Category;
 
 
 import java.util.List;

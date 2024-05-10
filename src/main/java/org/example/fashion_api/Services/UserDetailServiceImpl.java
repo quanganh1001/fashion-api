@@ -1,6 +1,6 @@
 package org.example.fashion_api.Services;
 
-import org.example.fashion_api.Models.Account.Account;
+import org.example.fashion_api.Models.Accounts.Account;
 import org.example.fashion_api.Models.UserCustomDetail;
 import org.example.fashion_api.Repositories.AccountRepo;
 import org.springframework.beans.factory.annotation.Autowired;

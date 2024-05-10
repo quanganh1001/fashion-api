@@ -1,16 +1,14 @@
 package org.example.fashion_api.Controllers;
 
 import jakarta.validation.Valid;
-import org.example.fashion_api.Models.Account.AccountRegisterDto;
-import org.example.fashion_api.Models.Account.AccountRes;
-import org.example.fashion_api.Models.Account.AccountUpdateDto;
+import org.example.fashion_api.Models.Accounts.AccountRegisterDto;
+import org.example.fashion_api.Models.Accounts.AccountRes;
+import org.example.fashion_api.Models.Accounts.AccountUpdateDto;
 import org.example.fashion_api.Services.AccountService.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("accounts")

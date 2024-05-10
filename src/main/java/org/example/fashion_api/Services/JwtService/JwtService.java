@@ -1,10 +1,7 @@
 package org.example.fashion_api.Services.JwtService;
 
 import com.auth0.jwt.interfaces.DecodedJWT;
-import jakarta.transaction.Transactional;
-import org.example.fashion_api.Models.Account.Account;
-import org.example.fashion_api.Models.Account.AccountLoginDto;
-import org.example.fashion_api.Models.UserCustomDetail;
+import org.example.fashion_api.Models.Accounts.Account;
 import org.example.fashion_api.Models.JwtToken.JwtTokenRes;
 
 import java.util.Date;

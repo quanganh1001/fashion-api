@@ -1,10 +1,9 @@
 package org.example.fashion_api.Controllers;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import org.example.fashion_api.Models.ProductDetail.CreateProductDetailDto;
-import org.example.fashion_api.Models.ProductDetail.ProductDetailRes;
-import org.example.fashion_api.Models.ProductDetail.UpdateProductDetailDto;
-import org.example.fashion_api.Repositories.ProductDetailRepo;
+import org.example.fashion_api.Models.ProductsDetails.CreateProductDetailDto;
+import org.example.fashion_api.Models.ProductsDetails.ProductDetailRes;
+import org.example.fashion_api.Models.ProductsDetails.UpdateProductDetailDto;
 import org.example.fashion_api.Services.ProductDetailService.ProductDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

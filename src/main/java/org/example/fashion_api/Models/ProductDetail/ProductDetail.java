@@ -1,5 +1,6 @@
 package org.example.fashion_api.Models.ProductDetail;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
@@ -34,7 +35,7 @@ public class ProductDetail {
     @Enumerated(EnumType.STRING)
     private SizeEnum size;
 
-    @ManyToOne
+    @ManyToOne()
     @JoinColumn(name = "product_id")
     private Product product;
 

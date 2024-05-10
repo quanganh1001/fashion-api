@@ -55,6 +55,7 @@ public class Product {
     @OneToMany(mappedBy = "product",
             orphanRemoval = true,
             cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
+    @JsonIgnore
     @ToString.Exclude
     private List<ProductDetail> productsDetails;
 

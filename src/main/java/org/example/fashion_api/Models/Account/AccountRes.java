@@ -11,7 +11,7 @@ import org.example.fashion_api.Enum.RoleEnum;
 @Getter
 public class AccountRes {
 
-    private Long id;
+    private Long accountId;
 
     private String username;
 

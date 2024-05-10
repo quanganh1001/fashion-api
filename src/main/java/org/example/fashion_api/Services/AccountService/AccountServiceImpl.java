@@ -93,28 +93,34 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public ResponseEntity<?> getAllAccount(String keyword, int page, int limit) {
         try{
+            if(page < 0){
+                page = 0;
+            }
             String keyRedis = "getAllAccount("+keyword+","+page+","+ limit+") - account";
 
-            AccountPageRes accountPageRes = redisService.getRedis(keyRedis,AccountPageRes.class);
+            PageAccountRes pageAccountResRes = redisService.getRedis(keyRedis,PageAccountRes.class);
 
-            if (accountPageRes == null){
+            if (pageAccountResRes == null){
                 PageRequest pageRequest = PageRequest.of(page,limit, Sort.by("account_id").ascending());
 
                 Page<Account> accountPage = accountRepo.findAllByKeyword(keyword,pageRequest);
 
                 List<AccountRes> accountsRes = accountMapper.accountsToListAccountRes(accountPage.getContent());
 
-                accountPageRes = AccountPageRes
+                var totalAccount = accountRepo.count();
+                pageAccountResRes = PageAccountRes
                         .builder()
                         .accountsRes(accountsRes)
+                        .currenPage(page+1)
+                        .totalAccount(totalAccount)
                         .totalPages(accountPage.getTotalPages())
                         .build();
 
-                redisService.saveRedis(keyRedis,accountPageRes);
+                redisService.saveRedis(keyRedis,pageAccountResRes);
             }
 
 
-            return ResponseEntity.ok(accountPageRes);
+            return ResponseEntity.ok(pageAccountResRes);
         }catch (Exception e){
             return ResponseEntity.badRequest().body(e.getMessage());
         }

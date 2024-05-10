@@ -3,6 +3,7 @@ package org.example.fashion_api.Models.Account;
 
 import org.mapstruct.Mapper;
 
+import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 import org.mapstruct.ReportingPolicy;
 import org.springframework.data.domain.Page;
@@ -13,6 +14,7 @@ import java.util.List;
 public interface AccountMapper {
     Account accountRegisterDtoToAccount(AccountRegisterDto accountRegisterDto, @MappingTarget Account account);
 
+    @Mapping(target = "accountId", source = "accountId")
     AccountRes accountEntityToAccountRes(Account account);
 
     List<AccountRes> accountsToListAccountRes(List<Account> accounts);

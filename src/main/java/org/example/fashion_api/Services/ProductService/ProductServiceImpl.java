@@ -43,6 +43,10 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public PageProductRes getAllProducts(String keyword, int page, int limit) throws JsonProcessingException {
+        if(page < 0){
+            page = 0;
+        }
+
         String redisKey = "getAllProducts("+keyword+","+page+","+limit+") - product";
 
         PageProductRes pageProductRes = redisService.getRedis(redisKey, PageProductRes.class);

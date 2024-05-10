@@ -9,11 +9,13 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class AccountPageRes {
+public class PageAccountRes {
 
     private List<AccountRes> accountsRes;
 
     private int totalPages;
 
+    private int currenPage;
 
+    private Long totalAccount;
 }

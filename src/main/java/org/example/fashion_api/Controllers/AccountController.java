@@ -23,9 +23,9 @@ public class AccountController {
     @GetMapping()
     @PreAuthorize("hasAnyRole('MANAGER')")
     public ResponseEntity<?> getAllAccount(@RequestParam(defaultValue = "",required = false) String keyword,
-                                          @RequestParam(defaultValue = "0") int page,
+                                          @RequestParam(defaultValue = "1") int page,
                                           @RequestParam(defaultValue = "10") int limit) {
-        return accountService.getAllAccount(keyword,page,limit);
+        return accountService.getAllAccount(keyword,page-1,limit);
     }
 
     @GetMapping("/{accountId}")

@@ -3,6 +3,7 @@ package org.example.fashion_api.Models.ProductDetail;
 
 import org.example.fashion_api.Models.Category.Category;
 import org.example.fashion_api.Models.Product.Product;
+import org.example.fashion_api.Models.Product.ProductRes;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
@@ -14,8 +15,11 @@ import java.util.List;
 public interface ProductDetailMapper {
 
     @Mapping(target = "color", source = "color")
+    @Mapping(target = "product", source = "product")
     ProductDetailRes productDetailToProductDetailRes(ProductDetail productDetail);
 
+    @Mapping(target = "productsDetails",ignore = true)
+    ProductRes productToProductRes(Product product);
 
     List<ProductDetailRes> productDetailsToProductDetailRes(List<ProductDetail> productDetails);
 

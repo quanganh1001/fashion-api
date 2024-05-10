@@ -3,6 +3,8 @@ package org.example.fashion_api.Models.Product;
 
 
 
+import org.example.fashion_api.Models.ProductDetail.ProductDetail;
+import org.example.fashion_api.Models.ProductDetail.ProductDetailRes;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
@@ -18,9 +20,11 @@ public interface ProductMapper {
 
 
     @Mapping(target = "catId", source = "category.catId")
-    @Mapping(target = "productsDetail", source = "productsDetails")
+    @Mapping(target = "productsDetails", source = "productsDetails")
     ProductRes productToProductRes(Product product);
 
+    @Mapping(target = "product",ignore = true)
+    ProductDetailRes productDetailToProductDetailRes(ProductDetail productDetail);
 
     @Mapping(target = "category.catId", source = "catId")
     Product createProductDtoToProduct(CreateProductDto createProductDTO, @MappingTarget Product product);

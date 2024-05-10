@@ -32,6 +32,8 @@ public class ProductDetailRes {
     @Enumerated(EnumType.STRING)
     private SizeEnum size;
 
-
     private Color color;
+
+    private ProductRes product;
+
 }

@@ -51,7 +51,8 @@ public class ProductDetailServiceImpl implements ProductDetailService{
 
     @Override
     public ProductDetailRes updateProductDetail(Long productDetailId, UpdateProductDetailDto dto){
-        ProductDetail currenProductDetail = productDetailRepo.findByCode(dto.getCode());
+        ProductDetail currenProductDetail = productDetailRepo.findById(productDetailId).orElseThrow(()-> new NotFoundException(productDetailId.toString()));
+
         if(!Objects.equals(productDetailId, currenProductDetail.getProductDetailId()) && productDetailRepo.existsByCode(dto.getCode())){
             throw new AlreadyExistException(dto.getCode());
         }

@@ -35,7 +35,7 @@ public class ProductDetail {
     @Enumerated(EnumType.STRING)
     private SizeEnum size;
 
-    @ManyToOne()
+    @ManyToOne
     @JoinColumn(name = "product_id")
     private Product product;
 

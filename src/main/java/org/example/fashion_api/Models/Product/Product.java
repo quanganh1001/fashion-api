@@ -9,6 +9,7 @@ import org.example.fashion_api.Models.ImgProduct.ImgProduct;
 import org.example.fashion_api.Models.ProductDetail.ProductDetail;
 import org.example.fashion_api.Models.RedisListener;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -57,7 +58,7 @@ public class Product {
             cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
     @JsonIgnore
     @ToString.Exclude
-    private List<ProductDetail> productsDetails;
+    private List<ProductDetail> productsDetails = new ArrayList<>();
 
 
     @ManyToOne()

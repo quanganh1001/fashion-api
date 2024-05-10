@@ -12,6 +12,7 @@ import java.util.List;
 
 @Getter
 @Setter
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class ProductRes {
@@ -45,5 +46,5 @@ public class ProductRes {
 
     private Boolean isProductActive;
 
-    private List<ProductDetailRes> productsDetail = new ArrayList<>();
+    private List<ProductDetailRes> productsDetails;
 }

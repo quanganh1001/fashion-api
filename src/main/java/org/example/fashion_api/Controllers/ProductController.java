@@ -27,9 +27,9 @@ public class ProductController {
 
     @GetMapping()
     public ProductPageRes getAllProducts(@RequestParam(defaultValue = "",required = false) String keyword,
-                                         @RequestParam(defaultValue = "0") int page,
+                                         @RequestParam(defaultValue = "1") int page,
                                          @RequestParam(defaultValue = "10") int limit) throws JsonProcessingException {
-        return productService.getAllProducts(keyword,page,limit);
+        return productService.getAllProducts(keyword,page-1,limit);
     }
 
     @GetMapping("/{productId}")

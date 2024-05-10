@@ -1,4 +1,4 @@
-package org.example.fashion_api.Configuration;
+package org.example.fashion_api.Configurations;
 
 import com.cloudinary.Cloudinary;
 import org.springframework.context.annotation.Bean;

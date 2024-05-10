@@ -41,6 +41,28 @@ services:
       dockerfile: ./DockerfileJavaSpring
     environment:
       TZ: "Asia/Ho_Chi_Minh"
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql8-container-api:3306/fashion_api_project?useSSL=false&serverTimezone=UTC
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: quanganh123
+      SPRING_DATASOURCE_DRIVER_CLASS_NAME: com.mysql.cj.jdbc.Driver
+      SPRING_JPA_DATABASE_PLATFORM: org.hibernate.dialect.MySQL8Dialect
+      SPRING_DATA_REDIS_HOST: redis-container-api
+      SPRING_DATA_REDIS_PORT: 6379
+      SPRING_CACHE_REDIS_CACHE_NULL_VALUES: true
+      SPRING_RABBITMQ_HOST: rabbitmq
+      SPRING_RABBITMQ_PORT: 5672
+      SPRING_RABBITMQ_USERNAME: guest
+      SPRING_RABBITMQ_PASSWORD: guest
+      SPRING_MAIL_HOST: smtp.gmail.com
+      SPRING_MAIL_PORT: 587
+      SPRING_MAIL_USERNAME: quanganhnguyen100196@gmail.com
+      SPRING_MAIL_PASSWORD: xoje kkze axwa zzni
+      RABBITMQ_MAIL_EXCHANGE: mail.exchange
+      RABBITMQ_MAIL_QUEUE: mail.queue
+      RABBITMQ_MAIL_KEY: mail.routingKey
+      RABBITMQ_DEAD_LETTER_EXCHANGE: dead_letter.exchange
+      RABBITMQ_DEAD_LETTER_QUEUE: dead_letter.queue
+      RABBITMQ_DEAD_LETTER_KEY: dead_letter.key
     ports:
       - 8080:8080
     networks:
@@ -54,13 +76,12 @@ services:
     networks:
       - fashion-api-network
 
-
 networks:
   fashion-api-network:
     driver: bridge
 
+
     #  docker-compose -f DockerCompose.yaml up -d
-    #  docker run -it --rm --name rabbitmq -p 5672:5672 -p 15672:15672 rabbitmq:3.13-management
 
 
 

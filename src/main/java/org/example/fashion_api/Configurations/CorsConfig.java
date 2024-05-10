@@ -1,4 +1,4 @@
-package org.example.fashion_api.Configuration;
+package org.example.fashion_api.Configurations;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

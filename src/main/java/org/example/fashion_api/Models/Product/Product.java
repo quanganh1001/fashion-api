@@ -1,19 +1,14 @@
 package org.example.fashion_api.Models.Product;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
-import org.example.fashion_api.Configuration.RedisConfig;
 import org.example.fashion_api.Enum.ImgSizeEnum;
 import org.example.fashion_api.Models.Category.Category;
 import org.example.fashion_api.Models.ImgProduct.ImgProduct;
 import org.example.fashion_api.Models.ProductDetail.ProductDetail;
 import org.example.fashion_api.Models.RedisListener;
-import org.example.fashion_api.Services.RedisService.RedisService;
 
-import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity

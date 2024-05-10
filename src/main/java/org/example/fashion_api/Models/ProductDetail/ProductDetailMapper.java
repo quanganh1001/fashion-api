@@ -14,6 +14,7 @@ import java.util.List;
 public interface ProductDetailMapper {
 
     @Mapping(target = "product", source = "product")
+    @Mapping(target = "productDetailId", source = "productDetailId")
     ProductDetailRes productDetailToProductDetailRes(ProductDetail productDetail);
 
     @Mapping(target = "product", source = "product")

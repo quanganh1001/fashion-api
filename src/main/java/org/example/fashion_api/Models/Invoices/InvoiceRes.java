@@ -48,7 +48,7 @@ public class InvoiceRes {
 
     private LocalDateTime createdAt;
 
-    private AccountRes account;
+    private Long accountId;
 
     private List<InvoiceDetailRes> invoicesDetails;
 }

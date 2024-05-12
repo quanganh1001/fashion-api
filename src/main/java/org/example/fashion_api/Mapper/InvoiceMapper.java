@@ -16,20 +16,12 @@ import org.mapstruct.ReportingPolicy;
 
 import java.util.List;
 
-@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
+@Mapper(componentModel = "spring",uses = {InvoiceDetailMapper.class}, unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface InvoiceMapper {
     List<InvoiceRes> toResList(List<Invoice> invoices);
 
     @Mapping(target = "invoicesDetails", source = "invoicesDetails")
+    @Mapping(target = "accountId", source = "account.accountId")
     InvoiceRes invoiceToInvoiceRes(Invoice invoice);
 
-    @Mapping(target = "invoice",ignore = true)
-    InvoiceDetailRes invoiceDetailToInvoiceDetailRes(InvoiceDetail invoiceDetail);
-
-    @Mapping(target = "product", source = "product")
-    ProductDetailRes productDetailToProductDetailRes(ProductDetail productDetail);
-
-    @Mapping(target = "catId",source = "category.catId")
-    @Mapping(target = "productsDetails", ignore = true)
-    ProductRes productToProductRes(Product product);
 }

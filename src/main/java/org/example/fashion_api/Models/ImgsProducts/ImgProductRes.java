@@ -10,6 +10,6 @@ public class ImgProductRes {
 
     private String fileImg;
     
-    private Product productId;
+    private String productId;
 
 }

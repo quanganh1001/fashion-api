@@ -16,7 +16,7 @@ import org.mapstruct.ReportingPolicy;
 
 import java.util.List;
 
-@Mapper(componentModel = "spring",unmappedTargetPolicy = ReportingPolicy.IGNORE)
+@Mapper(componentModel = "spring",uses = {ProductDetailMapper.class},unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface ProductMapper {
 
 
@@ -27,8 +27,6 @@ public interface ProductMapper {
     @Mapping(target = "productsDetails", source = "productsDetails")
     ProductRes productToProductRes(Product product);
 
-    @Mapping(target = "product",ignore = true)
-    ProductDetailRes productDetailToProductDetailRes(ProductDetail productDetail);
 
     @Mapping(target = "category.catId", source = "catId")
     Product createProductDtoToProduct(CreateProductDto createProductDTO, @MappingTarget Product product);

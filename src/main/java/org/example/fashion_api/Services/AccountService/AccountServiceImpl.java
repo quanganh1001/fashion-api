@@ -104,6 +104,7 @@ public class AccountServiceImpl implements AccountService {
             if(page < 0){
                 page = 0;
             }
+            
             String keyRedis = "getAllAccount("+keyword+","+page+","+ limit+") - account";
 
             PageAccountRes pageAccountResRes = redisService.getRedis(keyRedis,PageAccountRes.class);

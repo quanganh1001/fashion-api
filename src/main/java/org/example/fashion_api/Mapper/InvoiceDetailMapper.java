@@ -6,23 +6,25 @@ import org.example.fashion_api.Models.Invoices.Invoice;
 import org.example.fashion_api.Models.Invoices.InvoiceRes;
 import org.example.fashion_api.Models.InvoicesDetails.InvoiceDetail;
 import org.example.fashion_api.Models.InvoicesDetails.InvoiceDetailRes;
+import org.example.fashion_api.Models.Products.Product;
+import org.example.fashion_api.Models.Products.ProductRes;
+import org.example.fashion_api.Models.ProductsDetails.ProductDetail;
+import org.example.fashion_api.Models.ProductsDetails.ProductDetailRes;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.ReportingPolicy;
 
 import java.util.List;
 
-@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
+@Mapper(componentModel = "spring",uses = {ProductDetailMapper.class}, unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface InvoiceDetailMapper {
 
 
     List<InvoiceDetailRes> toResList(List<InvoiceDetail> invoiceDetails);
 
-    @Mapping(target = "invoice", source = "invoice")
+    @Mapping(target = "invoiceId", source = "invoice.invoiceId")
+    @Mapping(target = "productName", source = "productDetail.product.productName")
+    @Mapping(target = "code", source = "productDetail.code")
     InvoiceDetailRes invoiceDetailToInvoiceDetailRes(InvoiceDetail invoiceDetails);
-
-
-    @Mapping(target = "invoicesDetails", ignore = true)
-    InvoiceRes invoiceToInvoiceRes(Invoice invoice);
 
 }

@@ -3,8 +3,10 @@ package org.example.fashion_api.Models.Invoices;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import lombok.*;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.example.fashion_api.Enum.InvoiceStatusEnum;
 import org.example.fashion_api.Models.Accounts.Account;
 import org.example.fashion_api.Models.InvoicesDetails.InvoiceDetail;
@@ -37,27 +39,39 @@ public class Invoice {
 
     private String customerNote;
 
-    private Long totalPrice;
+    @NotNull
+    private Long totalPrice = 0L;
 
-    private Long shippingFee;
+    @NotNull
+    private Long shippingFee = 0L;
 
+    @NotNull
     private Long totalBill;
 
-    private Boolean isPaid;
+    private Boolean isPaid = Boolean.FALSE;
 
-    private InvoiceStatusEnum invoiceStatus;
+    private InvoiceStatusEnum invoiceStatus = InvoiceStatusEnum.NEW;
 
     @Temporal(TemporalType.TIMESTAMP)
-    private LocalDateTime createdAt;
+    private LocalDateTime createdAt = LocalDateTime.now();
 
     @ManyToOne
     @JoinColumn(name = "account_id")
     private Account account;
 
-    @OneToMany(mappedBy = "invoice",
-            orphanRemoval = true,
-            cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "invoice", orphanRemoval = true, cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
     @JsonIgnore
     @ToString.Exclude
     private List<InvoiceDetail> invoicesDetails = new ArrayList<>();
+
+
+    @PrePersist
+    public void prePersist() {
+        if (invoiceId == null)
+            invoiceId = RandomStringUtils.randomAlphanumeric(8).toUpperCase();
+
+        totalBill = totalPrice + shippingFee;
+
+    }
+
 }

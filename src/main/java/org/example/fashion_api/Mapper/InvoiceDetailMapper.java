@@ -5,6 +5,7 @@ import org.example.fashion_api.Models.Colors.ColorDto;
 import org.example.fashion_api.Models.Invoices.Invoice;
 import org.example.fashion_api.Models.Invoices.InvoiceRes;
 import org.example.fashion_api.Models.InvoicesDetails.InvoiceDetail;
+import org.example.fashion_api.Models.InvoicesDetails.InvoiceDetailDto;
 import org.example.fashion_api.Models.InvoicesDetails.InvoiceDetailRes;
 import org.example.fashion_api.Models.Products.Product;
 import org.example.fashion_api.Models.Products.ProductRes;
@@ -12,6 +13,7 @@ import org.example.fashion_api.Models.ProductsDetails.ProductDetail;
 import org.example.fashion_api.Models.ProductsDetails.ProductDetailRes;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.MappingTarget;
 import org.mapstruct.ReportingPolicy;
 
 import java.util.List;

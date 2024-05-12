@@ -31,8 +31,6 @@ public class Product {
 
     private Integer discountPercent;
 
-    private Boolean isDiscount;
-
     private String brand;
 
     private String description;

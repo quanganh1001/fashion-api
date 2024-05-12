@@ -77,5 +77,4 @@ public class ProductController {
         return productDetailService.findAllProductDetails(productId);
     }
 
-
 }

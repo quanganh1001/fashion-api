@@ -25,8 +25,6 @@ public class ProductRes {
 
     private Long discountPercent;
 
-    private Boolean isDiscount;
-
     private String brand;
 
     private String description;

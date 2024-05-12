@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.example.fashion_api.Models.Invoices.Invoice;
 import org.example.fashion_api.Models.ProductsDetails.ProductDetail;
 
@@ -18,8 +19,11 @@ public class InvoiceDetail {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long detailId;
+
     private Long price;
+
     private Integer quantity;
+
     private Long totalPrice;
 
     @ManyToOne
@@ -29,4 +33,15 @@ public class InvoiceDetail {
     @ManyToOne
     @JoinColumn(name = "invoice_id")
     private Invoice invoice;
+
+    @PrePersist
+    public void prePersist() {
+        totalPrice = price * quantity;
+
+    }
+
+    @PreUpdate
+    public void preUpdate() {
+        totalPrice = price * quantity;
+    }
 }

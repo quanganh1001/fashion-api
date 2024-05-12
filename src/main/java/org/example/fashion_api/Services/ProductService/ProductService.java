@@ -29,4 +29,5 @@ public interface ProductService {
     ResponseEntity<String> updateProductBackground(MultipartFile file, String ProductId) throws IOException;
 
     PageProductRes getAllProductsByCategory(String keyword, int page, int limit, String catId) throws JsonProcessingException;
+
 }

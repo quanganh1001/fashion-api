@@ -7,4 +7,8 @@ import java.util.List;
 
 public interface InvoiceDetailRepo extends JpaRepository<InvoiceDetail,Long> {
     List<InvoiceDetail> findAllByInvoiceInvoiceId(String invoiceId);
+
+    InvoiceDetail findByInvoiceInvoiceIdAndProductDetailProductDetailId(String invoiceId,Long productDetailId);
+
+
 }

@@ -1,6 +1,9 @@
 package org.example.fashion_api.Services.InvoiceService;
 
+import jakarta.transaction.Transactional;
+import org.example.fashion_api.Exception.NotFoundException;
 import org.example.fashion_api.Mapper.InvoiceMapper;
+import org.example.fashion_api.Models.Invoices.CreateInvoiceDto;
 import org.example.fashion_api.Models.Invoices.Invoice;
 import org.example.fashion_api.Models.Invoices.InvoiceRes;
 import org.example.fashion_api.Models.Invoices.PageInvoiceRes;
@@ -34,13 +37,39 @@ public class InvoiceServiceImpl implements InvoiceService {
 
         var totalInvoices = invoiceRepo.count();
 
-        var pageInvoiceRes = PageInvoiceRes.builder()
+        return PageInvoiceRes.builder()
                                             .currentPage(page+1)
                                             .totalPages(pageInvoices.getTotalPages())
                                             .totalInvoices(totalInvoices)
                                             .invoices(invoicesRes)
                                             .build();
-
-        return pageInvoiceRes;
     }
+
+    @Override
+    public InvoiceRes createInvoice(CreateInvoiceDto createInvoiceDto){
+        Invoice invoice = invoiceMapper.createInvoiceToInvoice(createInvoiceDto,new Invoice());
+
+        Invoice newInvoice = invoiceRepo.save(invoice);
+
+        return invoiceMapper.invoiceToInvoiceRes(newInvoice);
+    }
+
+    @Override
+    public InvoiceRes getById(String invoiceId) {
+        return invoiceMapper.invoiceToInvoiceRes(invoiceRepo.findById(invoiceId)
+                .orElseThrow(()->new NotFoundException("Invoice not found")));
+    }
+
+    @Override
+    public void updateShippingFee(String invoiceId, Long shippingFee) {
+        Invoice invoice = invoiceRepo.findById(invoiceId).orElseThrow(()->new NotFoundException("Invoice not found"));
+
+        invoice.setShippingFee(shippingFee);
+
+        invoice.setTotalBill(invoice.getTotalPrice() + shippingFee);
+
+        invoiceRepo.save(invoice);
+
+    }
+
 }

@@ -2,6 +2,7 @@ package org.example.fashion_api.Mapper;
 
 import org.example.fashion_api.Models.Colors.Color;
 import org.example.fashion_api.Models.Colors.ColorDto;
+import org.example.fashion_api.Models.Invoices.CreateInvoiceDto;
 import org.example.fashion_api.Models.Invoices.Invoice;
 import org.example.fashion_api.Models.Invoices.InvoiceRes;
 import org.example.fashion_api.Models.InvoicesDetails.InvoiceDetail;
@@ -12,6 +13,7 @@ import org.example.fashion_api.Models.ProductsDetails.ProductDetail;
 import org.example.fashion_api.Models.ProductsDetails.ProductDetailRes;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.MappingTarget;
 import org.mapstruct.ReportingPolicy;
 
 import java.util.List;
@@ -24,4 +26,6 @@ public interface InvoiceMapper {
     @Mapping(target = "accountId", source = "account.accountId")
     InvoiceRes invoiceToInvoiceRes(Invoice invoice);
 
+    @Mapping(target = "account.accountId",source = "accountId")
+    Invoice createInvoiceToInvoice(CreateInvoiceDto createInvoiceDto,@MappingTarget Invoice invoice);
 }

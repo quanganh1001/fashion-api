@@ -26,4 +26,11 @@ public class InvoiceController {
         return invoiceService.getAllInvoices(keyword, page, pageSize);
     }
 
+
+    @GetMapping("{invoiceId}")
+    public PageInvoiceRes findById(@RequestParam(defaultValue = "1") int page,
+                                  @RequestParam(defaultValue = "10") int pageSize,
+                                  @RequestParam(defaultValue = "") String keyword){
+        return invoiceService.getAllInvoices(keyword, page, pageSize);
+    }
 }

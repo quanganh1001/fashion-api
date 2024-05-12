@@ -1,9 +1,7 @@
 package org.example.fashion_api.Services.AccountService;
 
-import org.example.fashion_api.Models.Accounts.AccountLoginDto;
-import org.example.fashion_api.Models.Accounts.AccountRegisterDto;
-import org.example.fashion_api.Models.Accounts.AccountRes;
-import org.example.fashion_api.Models.Accounts.AccountUpdateDto;
+import jakarta.transaction.Transactional;
+import org.example.fashion_api.Models.Accounts.*;
 import org.example.fashion_api.Models.JwtToken.JwtTokenRes;
 import org.springframework.http.ResponseEntity;
 
@@ -19,7 +17,13 @@ public interface AccountService {
 
     void deleteAccount(Long accountId);
 
-    AccountRes updateAccount(Long accountId, AccountUpdateDto dto);
+    ResponseEntity<AccountRes> updateAccount(Long accountId, AccountUpdateDto dto);
 
+    void changePass(Long accountId,ChangePassDto changePassDto);
 
+    @Transactional
+    void resetPass(String email);
+
+    @Transactional
+    void Logout(String token);
 }

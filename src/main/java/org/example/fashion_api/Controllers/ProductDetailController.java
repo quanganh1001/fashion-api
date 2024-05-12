@@ -19,10 +19,6 @@ public class ProductDetailController {
     @Autowired
     private ProductDetailService productDetailService;
 
-    @GetMapping()
-    public List<ProductDetailRes> getAllProductDetails(@RequestParam() String productId) throws JsonProcessingException {
-        return productDetailService.findAllProductDetails(productId);
-    }
 
     @GetMapping("/{productDetailId}")
     public ProductDetailRes getProductDetail(@PathVariable Long productDetailId) {

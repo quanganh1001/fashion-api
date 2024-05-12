@@ -6,6 +6,8 @@ import org.example.fashion_api.Models.Products.CreateProductDto;
 import org.example.fashion_api.Models.Products.PageProductRes;
 import org.example.fashion_api.Models.Products.ProductRes;
 import org.example.fashion_api.Models.Products.UpdateProductDto;
+import org.example.fashion_api.Models.ProductsDetails.ProductDetailRes;
+import org.example.fashion_api.Services.ProductDetailService.ProductDetailService;
 import org.example.fashion_api.Services.ProductService.ProductService;
 import org.example.fashion_api.Services.RedisService.RedisService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.List;
 
 @RestController
 @PreAuthorize("hasAnyRole('MANAGER')")
@@ -23,7 +26,7 @@ public class ProductController {
     @Autowired
     private ProductService productService;
     @Autowired
-    private RedisService redisService;
+    private ProductDetailService productDetailService;
 
 
     @GetMapping()
@@ -68,4 +71,11 @@ public class ProductController {
         return productService.updateProductBackground(file,productId);
 
     }
+
+    @GetMapping("/{productId}/productsDetail")
+    public List<ProductDetailRes> getAllProductDetails(@PathVariable("productId") String productId) throws JsonProcessingException {
+        return productDetailService.findAllProductDetails(productId);
+    }
+
+
 }

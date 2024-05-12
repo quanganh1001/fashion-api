@@ -2,15 +2,19 @@ package org.example.fashion_api.Services.AccountService;
 
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.example.fashion_api.Exception.AlreadyExistException;
 import org.example.fashion_api.Exception.BadCredentialsException;
 import org.example.fashion_api.Exception.NotFoundException;
 import org.example.fashion_api.Mapper.AccountMapper;
 import org.example.fashion_api.Models.Accounts.*;
+import org.example.fashion_api.Models.JwtToken.JwtToken;
 import org.example.fashion_api.Models.JwtToken.JwtTokenRes;
 import org.example.fashion_api.Models.MailTemplate;
 import org.example.fashion_api.Producer.MailProducer;
 import org.example.fashion_api.Repositories.AccountRepo;
+import org.example.fashion_api.Repositories.JwtTokenRepo;
+import org.example.fashion_api.Services.EmailService;
 import org.example.fashion_api.Services.JwtService.JwtService;
 import org.example.fashion_api.Services.RedisService.RedisService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,9 +22,12 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -45,6 +52,8 @@ public class AccountServiceImpl implements AccountService {
     private MailProducer mailProducer;
     @Autowired
     private RedisService redisService;
+    @Autowired
+    private JwtTokenRepo jwtTokenRepo;
 
     @Override
     public JwtTokenRes Login(AccountLoginDto loginRequest) {
@@ -166,7 +175,7 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     @Transactional
-    public AccountRes updateAccount(Long accountId, AccountUpdateDto dto) {
+    public ResponseEntity<AccountRes> updateAccount(Long accountId, AccountUpdateDto dto) {
         Account account = accountRepo.findById(accountId).orElseThrow(() -> new NotFoundException("Accounts"));
 
         if (!Objects.equals(account.getEmail(), dto.getEmail()) && accountRepo.existsByEmail(dto.getEmail())) {
@@ -177,6 +186,73 @@ public class AccountServiceImpl implements AccountService {
 
         accountRepo.save(accountMapper.accountUpdateDtoToAccount(dto, account));
 
-        return accountMapper.accountEntityToAccountRes(account);
+        return ResponseEntity.ok(accountMapper.accountEntityToAccountRes(account));
+    }
+
+    @Transactional
+    @Override
+    public void changePass(Long accountId, ChangePassDto changePassDto) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        if(authentication != null && authentication.isAuthenticated()){
+            String userName = authentication.getName();
+
+            Account account = accountRepo.findByUsername(userName).orElseThrow(()-> new NotFoundException("Accounts"));
+
+            if(Objects.equals(accountId, account.getAccountId())){
+
+                accountRepo.changePassword(accountId, passwordEncoder.encode(changePassDto.getNewPass()));
+
+                MailTemplate mailTemplate = MailTemplate.builder()
+                        .to(account.getEmail())
+                        .subject("Password changed successfully!")
+                        .body("Password changed successfully!")
+                        .build();
+                mailProducer.send(mailTemplate);
+            }else {
+                throw new AccessDeniedException(" Access Denied");
+            }
+        }else
+            throw new AccessDeniedException(" Access Denied");
+    }
+
+    @Transactional
+    @Override
+    public void resetPass(String email){
+        Account account = accountRepo.findByEmail(email).orElseThrow(()-> new NotFoundException("Email"));
+
+        String newPass = RandomStringUtils.randomAlphanumeric(6);
+
+        accountRepo.changePassword(account.getAccountId(), passwordEncoder.encode(newPass));
+
+        MailTemplate mailTemplate = MailTemplate.builder()
+                .to(account.getEmail())
+                .subject("Password changed successfully!")
+                .body("Your new Password is: "+ newPass)
+                .build();
+        mailProducer.send(mailTemplate);
+    }
+
+    @Transactional
+    @Override
+    public void Logout(String token){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        if(authentication != null && authentication.isAuthenticated()){
+
+            String userName = authentication.getName();
+
+            Account account = accountRepo.findByUsername(userName).orElseThrow(()-> new NotFoundException("Accounts"));
+
+            JwtToken jwtToken = jwtTokenRepo.findByToken(token);
+
+            if (jwtToken !=null && Objects.equals(jwtToken.getAccount().getAccountId(), account.getAccountId())){
+                jwtTokenRepo.delete(jwtToken);
+            }
+
+        }
+        SecurityContextHolder.clearContext();
+
+
     }
 }

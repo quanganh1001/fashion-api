@@ -16,4 +16,6 @@ public interface JwtTokenRepo extends JpaRepository<JwtToken,Long> {
 
     @Query(value = "SELECT * FROM jwt_tokens WHERE account_id = :accountId ORDER BY expiration_date ASC LIMIT :limit", nativeQuery = true)
     List<JwtToken> findOldestTokensByAccountId(@Param("accountId") Long accountId, @Param("limit") long limit);
+
+    JwtToken findByToken(String token);
 }

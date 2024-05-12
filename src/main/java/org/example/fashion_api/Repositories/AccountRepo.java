@@ -4,6 +4,7 @@ import org.example.fashion_api.Models.Accounts.Account;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
@@ -26,4 +27,8 @@ public interface AccountRepo extends JpaRepository<Account, Long> {
                                             "OR LOWER(email) LIKE LOWER(CONCAT('%', :keyword, '%')) " +
                                             "OR LOWER(phone) LIKE LOWER(CONCAT('%', :keyword, '%'))", nativeQuery = true)
     Page<Account> findAllByKeyword(@Param("keyword") String keyword, PageRequest pageable);
+
+    @Modifying
+    @Query(value = "UPDATE accounts SET password = :newPass WHERE account_id = :accountId",nativeQuery = true)
+    void changePassword(@Param("accountId") Long accountId, @Param("newPass") String newPass);
 }

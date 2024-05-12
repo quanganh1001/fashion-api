@@ -4,6 +4,7 @@ import jakarta.validation.Valid;
 import org.example.fashion_api.Models.Accounts.AccountRegisterDto;
 import org.example.fashion_api.Models.Accounts.AccountRes;
 import org.example.fashion_api.Models.Accounts.AccountUpdateDto;
+import org.example.fashion_api.Models.Accounts.ChangePassDto;
 import org.example.fashion_api.Services.AccountService.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -46,7 +47,21 @@ public class AccountController {
 
     @PutMapping("/{accountId}")
     @PreAuthorize("#accountId == authentication.principal.account.accountId or hasAnyRole('MANAGER')")
-    public AccountRes updateAccount(@PathVariable("accountId") Long accountId,@Valid @RequestBody AccountUpdateDto accountUpdateDto) {
+    public ResponseEntity<AccountRes> updateAccount(@PathVariable("accountId") Long accountId,@Valid @RequestBody AccountUpdateDto accountUpdateDto) {
         return accountService.updateAccount(accountId,accountUpdateDto);
     }
+
+    @PutMapping("/{accountId}/changePage")
+    public ResponseEntity<String> changePage(@PathVariable("accountId") Long accountId,@Valid @RequestBody ChangePassDto changePassDto) {
+        accountService.changePass(accountId,changePassDto);
+        return ResponseEntity.ok("Password changed successfully");
+    }
+
+    @PutMapping("/resetPass")
+    public ResponseEntity<String> resetPass(String email) {
+        accountService.resetPass(email);
+        return ResponseEntity.ok("New password has been sent to registered email");
+    }
+
+
 }

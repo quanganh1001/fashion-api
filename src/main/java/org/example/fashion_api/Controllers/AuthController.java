@@ -7,10 +7,11 @@ import org.example.fashion_api.Services.AccountService.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping()
+@RequestMapping("/auth")
 public class AuthController {
     @Autowired
     private AccountService accountService;
@@ -21,6 +22,12 @@ public class AuthController {
     @PostMapping("/login")
     public ResponseEntity<JwtTokenRes> login(@RequestBody AccountLoginDto loginRequest) {
         return new ResponseEntity<>(accountService.Login(loginRequest), HttpStatus.OK);
+    }
+
+    @DeleteMapping("/logout")
+    public ResponseEntity<String> logout(String token) {
+        accountService.Logout(token);
+        return ResponseEntity.ok("Logout successful");
     }
 
     @PutMapping("/refreshToken")

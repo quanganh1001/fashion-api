@@ -12,9 +12,9 @@ public class CreateProductDto {
     private String productName;
 
     @NotNull
-    private Integer price;
+    private Long price;
 
-    private Integer discountPrice;
+    private Long discountPrice;
 
     @NotNull
     private String brand;

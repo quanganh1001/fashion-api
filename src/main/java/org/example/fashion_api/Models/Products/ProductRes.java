@@ -19,11 +19,11 @@ public class ProductRes {
 
     private String productName;
 
-    private Integer price;
+    private Long price;
 
-    private Integer discountPrice;
+    private Long discountPrice;
 
-    private Integer discountPercent;
+    private Long discountPercent;
 
     private Boolean isDiscount;
 

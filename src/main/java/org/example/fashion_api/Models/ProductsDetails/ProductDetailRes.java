@@ -3,6 +3,7 @@ package org.example.fashion_api.Models.ProductsDetails;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import lombok.*;
+import org.example.fashion_api.Enum.ImgSizeEnum;
 import org.example.fashion_api.Enum.SizeEnum;
 import org.example.fashion_api.Models.Colors.Color;
 import org.example.fashion_api.Models.Products.ProductRes;
@@ -24,8 +25,19 @@ public class ProductDetailRes {
     @Enumerated(EnumType.STRING)
     private SizeEnum size;
 
-    private Color color;
+    private String color;
 
-    private ProductRes product;
+    private String productName;
+
+    private Long price;
+
+    private Long discountPrice;
+
+    private int discountPercent;
+
+    private String imageBackground;
+
+    @Enumerated(EnumType.STRING)
+    private ImgSizeEnum imageChooseSize;
 
 }

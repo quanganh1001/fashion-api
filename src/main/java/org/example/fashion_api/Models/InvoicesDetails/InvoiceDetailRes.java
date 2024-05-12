@@ -22,7 +22,10 @@ public class InvoiceDetailRes {
 
     private Long totalPrice;
 
-    private ProductDetailRes productDetail;
+    private String code;
 
-    private InvoiceRes invoice;
+    private String productName;
+
+    private String invoiceId;
+
 }

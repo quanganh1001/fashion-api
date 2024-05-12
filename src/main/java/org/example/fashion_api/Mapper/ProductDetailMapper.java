@@ -17,14 +17,17 @@ import java.util.List;
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface ProductDetailMapper {
 
-    @Mapping(target = "color", source = "color")
-    @Mapping(target = "product", source = "product")
+    @Mapping(target = "color", source = "color.name")
+    @Mapping(target = "price", source = "product.price")
+    @Mapping(target = "discountPrice", source = "product.discountPrice")
+    @Mapping(target = "discountPercent", source = "product.discountPercent")
+    @Mapping(target = "imageBackground", source = "product.imageBackground")
+    @Mapping(target = "productName", source = "product.productName")
     ProductDetailRes productDetailToProductDetailRes(ProductDetail productDetail);
 
-    @Mapping(target = "productsDetails",ignore = true)
-    ProductRes productToProductRes(Product product);
 
     List<ProductDetailRes> productDetailsToProductDetailRes(List<ProductDetail> productDetails);
+
 
     @Mapping(target = "product.productId", source = "productId")
     @Mapping(target = "color.colorId", source = "colorId")

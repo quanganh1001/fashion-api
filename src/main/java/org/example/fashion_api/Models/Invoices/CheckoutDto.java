@@ -32,11 +32,7 @@ public class CheckoutDto {
 
     private String customerNote;
 
-    private Long totalPrice;
-
     private Long shippingFee;
-
-    private Long totalBill;
 
     private Long accountId;
 

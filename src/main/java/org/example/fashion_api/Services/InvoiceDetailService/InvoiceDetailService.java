@@ -13,4 +13,6 @@ public interface InvoiceDetailService {
     InvoiceDetailRes createInvoiceDetail(String invoiceId, Long productDetailId);
 
     void changeQuantity(Long invoiceDetailId, int quantity);
+
+    void deleteInvoiceDetail(Long invoiceDetailId);
 }

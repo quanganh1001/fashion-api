@@ -31,4 +31,10 @@ public class InvoiceDetailController {
         invoiceDetailService.changeQuantity(invoiceDetailId,quantity);
         return ResponseEntity.ok("Change quantity successfully");
     }
+
+    @DeleteMapping("/{invoiceDetailId}")
+    public ResponseEntity<String> deleteInvoiceDetail(@PathVariable Long invoiceDetailId){
+        invoiceDetailService.deleteInvoiceDetail(invoiceDetailId);
+        return ResponseEntity.ok("Delete successfully");
+    }
 }

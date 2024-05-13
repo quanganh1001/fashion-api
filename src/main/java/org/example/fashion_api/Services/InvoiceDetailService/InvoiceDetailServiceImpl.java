@@ -79,4 +79,10 @@ public class InvoiceDetailServiceImpl implements InvoiceDetailService{
 
         invoiceDetailRepo.save(invoiceDetail);
     }
+
+    @Override
+    public void deleteInvoiceDetail(Long invoiceDetailId) {
+        invoiceDetailRepo.findById(invoiceDetailId).orElseThrow(()->new NotFoundException("Invoice detail not found"));
+        invoiceDetailRepo.deleteById(invoiceDetailId);
+    }
 }

@@ -40,10 +40,10 @@ public class Invoice {
     private String customerNote;
 
     @NotNull
-    private Long totalPrice = 0L;
+    private Long totalPrice;
 
     @NotNull
-    private Long shippingFee = 0L;
+    private Long shippingFee;
 
     @NotNull
     private Long totalBill;
@@ -67,6 +67,9 @@ public class Invoice {
 
     @PrePersist
     public void prePersist() {
+        if(totalPrice == null)
+            totalPrice = 0L;
+
         if (invoiceId == null)
             invoiceId = RandomStringUtils.randomAlphanumeric(8).toUpperCase();
 

@@ -1,17 +1,21 @@
 package org.example.fashion_api.Controllers;
 
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
+import org.apache.http.HttpRequest;
+import org.apache.http.client.methods.HttpTrace;
+import org.example.fashion_api.Exception.NotFoundException;
 import org.example.fashion_api.Models.Colors.ColorDto;
-import org.example.fashion_api.Models.Invoices.CheckoutDto;
-import org.example.fashion_api.Models.Invoices.CreateInvoiceDto;
-import org.example.fashion_api.Models.Invoices.InvoiceRes;
-import org.example.fashion_api.Models.Invoices.PageInvoiceRes;
+import org.example.fashion_api.Models.Invoices.*;
+import org.example.fashion_api.Models.InvoicesDetails.InvoiceDetail;
 import org.example.fashion_api.Models.InvoicesDetails.InvoiceDetailDto;
 import org.example.fashion_api.Models.InvoicesDetails.InvoiceDetailRes;
+import org.example.fashion_api.Repositories.InvoiceRepo;
 import org.example.fashion_api.Services.ColorService.ColorService;
 import org.example.fashion_api.Services.InvoiceDetailService.InvoiceDetailService;
 import org.example.fashion_api.Services.InvoiceService.InvoiceService;
+import org.example.fashion_api.Services.VnpayService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -27,12 +31,16 @@ public class InvoiceController {
     private InvoiceService invoiceService;
     @Autowired
     private InvoiceDetailService invoiceDetailService;
+    @Autowired
+    private VnpayService vnpayService;
+    @Autowired
+    private InvoiceRepo invoiceRepo;
 
     @GetMapping()
     public ResponseEntity<PageInvoiceRes> findAll(@RequestParam(defaultValue = "1") int page,
                                   @RequestParam(defaultValue = "10") int pageSize,
                                   @RequestParam(defaultValue = "") String keyword){
-        return ResponseEntity.ok(invoiceService.getAllInvoices(keyword, page, pageSize));
+        return ResponseEntity.ok(invoiceService.getAllInvoices(keyword, page-1, pageSize));
     }
 
     @GetMapping("{invoiceId}")
@@ -64,8 +72,28 @@ public class InvoiceController {
 
 
 
-//    @PostMapping()
-//    public ResponseEntity<String> checkout(CheckoutDto checkoutDto){
-//        checkoutDto.
-//    }
+    @PostMapping("/checkout")
+    public ResponseEntity<String> checkout(HttpServletRequest http, @RequestBody CheckoutDto checkoutDto){
+
+        CreateInvoiceDto createInvoiceDto = CreateInvoiceDto.builder()
+                .accountId(checkoutDto.getAccountId())
+                .address(checkoutDto.getAddress())
+                .phone(checkoutDto.getPhone())
+                .name(checkoutDto.getName())
+                .customerNote(checkoutDto.getCustomerNote())
+                .shippingFee(checkoutDto.getShippingFee())
+                .build();
+        InvoiceRes invoiceRes = invoiceService.createInvoice(createInvoiceDto);
+
+        for (InvoiceDetailDto invoiceDetail: checkoutDto.getInvoicesDetails()){
+            createInvoiceDetail(invoiceRes.getInvoiceId(),invoiceDetail.getProductDetailId());
+        }
+
+        Invoice invoice = invoiceRepo.findById(invoiceRes.getInvoiceId())
+                .orElseThrow(()->new NotFoundException("Invoice not found"));
+
+        String vnpayUrl = vnpayService.createPaymentUrl(http,invoiceRes.getInvoiceId(),invoice.getTotalBill());
+
+        return ResponseEntity.ok(vnpayUrl);
+    }
 }

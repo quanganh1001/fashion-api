@@ -1,9 +1,7 @@
 package org.example.fashion_api.Services.InvoiceService;
 
-import org.example.fashion_api.Models.Invoices.CreateInvoiceDto;
-import org.example.fashion_api.Models.Invoices.Invoice;
-import org.example.fashion_api.Models.Invoices.InvoiceRes;
-import org.example.fashion_api.Models.Invoices.PageInvoiceRes;
+import jakarta.servlet.http.HttpServletRequest;
+import org.example.fashion_api.Models.Invoices.*;
 import org.mapstruct.MappingTarget;
 
 public interface InvoiceService {
@@ -16,4 +14,7 @@ public interface InvoiceService {
 
     void updateShippingFee(String invoiceId, Long shippingFee);
 
+    void deleteInvoice(String invoiceId);
+
+    String checkout(HttpServletRequest http, CheckoutDto checkoutDto);
 }

@@ -1,13 +1,14 @@
 package org.example.fashion_api.Services.InvoiceService;
 
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.transaction.Transactional;
 import org.example.fashion_api.Exception.NotFoundException;
 import org.example.fashion_api.Mapper.InvoiceMapper;
-import org.example.fashion_api.Models.Invoices.CreateInvoiceDto;
-import org.example.fashion_api.Models.Invoices.Invoice;
-import org.example.fashion_api.Models.Invoices.InvoiceRes;
-import org.example.fashion_api.Models.Invoices.PageInvoiceRes;
+import org.example.fashion_api.Models.Invoices.*;
+import org.example.fashion_api.Models.InvoicesDetails.InvoiceDetailDto;
 import org.example.fashion_api.Repositories.InvoiceRepo;
+import org.example.fashion_api.Services.InvoiceDetailService.InvoiceDetailService;
+import org.example.fashion_api.Services.VnpayService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -22,6 +23,10 @@ public class InvoiceServiceImpl implements InvoiceService {
     private InvoiceRepo invoiceRepo;
     @Autowired
     private InvoiceMapper invoiceMapper;
+    @Autowired
+    private InvoiceDetailService invoiceDetailService;
+    @Autowired
+    private VnpayService vnpayService;
 
     @Override
     public PageInvoiceRes getAllInvoices(String keyword, int page, int pageSize) {
@@ -69,6 +74,36 @@ public class InvoiceServiceImpl implements InvoiceService {
         invoice.setTotalBill(invoice.getTotalPrice() + shippingFee);
 
         invoiceRepo.save(invoice);
+
+    }
+
+    @Override
+    @Transactional
+    public void deleteInvoice(String invoiceId) {
+        Invoice invoice = invoiceRepo.findById(invoiceId).orElseThrow(()->new NotFoundException("Invoice not found"));
+        invoiceRepo.delete(invoice);
+    }
+
+    @Override
+    public String checkout(HttpServletRequest http, CheckoutDto checkoutDto) {
+        CreateInvoiceDto createInvoiceDto = CreateInvoiceDto.builder()
+                .accountId(checkoutDto.getAccountId())
+                .address(checkoutDto.getAddress())
+                .phone(checkoutDto.getPhone())
+                .name(checkoutDto.getName())
+                .customerNote(checkoutDto.getCustomerNote())
+                .shippingFee(checkoutDto.getShippingFee())
+                .build();
+        InvoiceRes invoiceRes = createInvoice(createInvoiceDto);
+
+        for (InvoiceDetailDto invoiceDetail: checkoutDto.getInvoicesDetails()){
+            invoiceDetailService.createInvoiceDetail(invoiceRes.getInvoiceId(),invoiceDetail.getProductDetailId());
+        }
+
+        Invoice invoice = invoiceRepo.findById(invoiceRes.getInvoiceId())
+                .orElseThrow(()->new NotFoundException("Invoice not found"));
+
+        return vnpayService.createPaymentUrl(http,invoiceRes.getInvoiceId(),invoice.getTotalBill());
 
     }
 

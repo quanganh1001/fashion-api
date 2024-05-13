@@ -31,10 +31,7 @@ public class InvoiceController {
     private InvoiceService invoiceService;
     @Autowired
     private InvoiceDetailService invoiceDetailService;
-    @Autowired
-    private VnpayService vnpayService;
-    @Autowired
-    private InvoiceRepo invoiceRepo;
+
 
     @GetMapping()
     public ResponseEntity<PageInvoiceRes> findAll(@RequestParam(defaultValue = "1") int page,
@@ -70,29 +67,15 @@ public class InvoiceController {
         return ResponseEntity.ok("Updated shipping fee successfully");
     }
 
-
+    @DeleteMapping("/{invoiceId}")
+    public ResponseEntity<String> deleteInvoice(@PathVariable String invoiceId){
+        invoiceService.deleteInvoice(invoiceId);
+        return ResponseEntity.ok("Invoice deleted successfully");
+    }
 
     @PostMapping("/checkout")
     public ResponseEntity<String> checkout(HttpServletRequest http, @RequestBody CheckoutDto checkoutDto){
-
-        CreateInvoiceDto createInvoiceDto = CreateInvoiceDto.builder()
-                .accountId(checkoutDto.getAccountId())
-                .address(checkoutDto.getAddress())
-                .phone(checkoutDto.getPhone())
-                .name(checkoutDto.getName())
-                .customerNote(checkoutDto.getCustomerNote())
-                .shippingFee(checkoutDto.getShippingFee())
-                .build();
-        InvoiceRes invoiceRes = invoiceService.createInvoice(createInvoiceDto);
-
-        for (InvoiceDetailDto invoiceDetail: checkoutDto.getInvoicesDetails()){
-            createInvoiceDetail(invoiceRes.getInvoiceId(),invoiceDetail.getProductDetailId());
-        }
-
-        Invoice invoice = invoiceRepo.findById(invoiceRes.getInvoiceId())
-                .orElseThrow(()->new NotFoundException("Invoice not found"));
-
-        String vnpayUrl = vnpayService.createPaymentUrl(http,invoiceRes.getInvoiceId(),invoice.getTotalBill());
+        String vnpayUrl = invoiceService.checkout(http,checkoutDto);
 
         return ResponseEntity.ok(vnpayUrl);
     }

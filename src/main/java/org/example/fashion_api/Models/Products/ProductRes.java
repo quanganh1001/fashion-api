@@ -14,8 +14,9 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ProductRes {
+    private Long id;
 
-    private String productId;
+    private String productCode;
 
     private String productName;
 
@@ -40,7 +41,7 @@ public class ProductRes {
 
     private Integer totalColor;
 
-    private Boolean isProductActive;
+    private Boolean isActivated;
 
     private List<ProductDetailRes> productsDetails;
 }

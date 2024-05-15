@@ -3,6 +3,7 @@ package org.example.fashion_api.Models.Categories;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
+import org.example.fashion_api.Models.BaseEntity;
 import org.example.fashion_api.Models.Products.Product;
 import org.example.fashion_api.Models.RedisListener;
 
@@ -15,14 +16,17 @@ import java.util.List;
 @NoArgsConstructor(force = true)
 @Table(name = "categories")
 @EntityListeners(RedisListener.class)
-public class Category   {
-    @Id
-    private String catId;
-    private String catName;
-    private String catBackground;
-    private Boolean isCatActive;
+public class Category extends BaseEntity {
 
-    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL,orphanRemoval = true,fetch = FetchType.LAZY)
+    private String categoryCode;
+
+    private String catName;
+
+    private String catBackground;
+
+    private Boolean isActivated = Boolean.TRUE;
+
+    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     @JsonIgnore
     @ToString.Exclude
     private List<Product> product;
@@ -32,10 +36,6 @@ public class Category   {
     private Category catParent;
 
 
-    @PrePersist
-    public void prePersist() {
-        if (isCatActive == null)
-            isCatActive = true;
-    }
+
 
 }

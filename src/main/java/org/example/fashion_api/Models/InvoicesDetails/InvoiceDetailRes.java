@@ -14,7 +14,7 @@ import org.example.fashion_api.Models.ProductsDetails.ProductDetailRes;
 @NoArgsConstructor
 public class InvoiceDetailRes {
 
-    private Long detailId;
+    private Long id;
 
     private Long price;
 

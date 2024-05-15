@@ -23,9 +23,9 @@ public interface InvoiceMapper {
     List<InvoiceRes> toResList(List<Invoice> invoices);
 
     @Mapping(target = "invoicesDetails", source = "invoicesDetails")
-    @Mapping(target = "accountId", source = "account.accountId")
+    @Mapping(target = "accountId", source = "account.id")
     InvoiceRes invoiceToInvoiceRes(Invoice invoice);
 
-    @Mapping(target = "account.accountId",source = "accountId")
+    @Mapping(target = "account.id",source = "accountId")
     Invoice createInvoiceToInvoice(CreateInvoiceDto createInvoiceDto,@MappingTarget Invoice invoice);
 }

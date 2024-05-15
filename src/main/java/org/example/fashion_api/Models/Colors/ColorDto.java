@@ -10,7 +10,7 @@ import lombok.Setter;
 @Builder
 public class ColorDto {
     @NotNull
-    private String colorId;
+    private String colorCode;
 
     @NotNull
     private String name;

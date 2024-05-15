@@ -10,7 +10,7 @@ import lombok.*;
 public class UpdateProductDto  {
 
     @NotNull
-    private String productId;
+    private String productCode;
 
     @NotNull
     private String productName;
@@ -31,5 +31,5 @@ public class UpdateProductDto  {
     private String catId;
 
     @NotNull
-    private Boolean isProductActive;
+    private Boolean isActivated;
 }

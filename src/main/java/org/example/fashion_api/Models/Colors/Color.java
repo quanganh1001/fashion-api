@@ -2,6 +2,7 @@ package org.example.fashion_api.Models.Colors;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.example.fashion_api.Models.BaseEntity;
 
 @Entity
 @Data
@@ -9,9 +10,10 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "colors")
-public class Color {
-    @Id
-    private String colorId;
+public class Color extends BaseEntity {
+
+    private String colorCode;
+
     private String name;
 
 }

@@ -16,18 +16,19 @@ public interface ProductService {
 
     PageProductRes getAllProducts(String keyword, int page, int limit) throws JsonProcessingException;
 
-    ProductRes getProduct(String productId);
+    ProductRes getProduct(Long productId);
 
-    ProductRes updateProduct(String productId, UpdateProductDto updateProductDto);
+    @Transactional
+    ProductRes updateProduct(Long productId, UpdateProductDto updateProductDto);
 
     void deleteProduct(String productId);
 
     @Transactional
     ProductRes addProduct(CreateProductDto createProductDTO);
 
+
     @Transactional
-    ResponseEntity<String> updateProductBackground(MultipartFile file, String ProductId) throws IOException;
+    ResponseEntity<String> updateProductBackground(MultipartFile file, Long productId) throws IOException;
 
-    PageProductRes getAllProductsByCategory(String keyword, int page, int limit, String catId) throws JsonProcessingException;
-
+    PageProductRes getAllProductsByCategory(String keyword, int page, int limit, Long catId) throws JsonProcessingException;
 }

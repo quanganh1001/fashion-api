@@ -11,7 +11,7 @@ import java.util.List;
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface ImgProductMapper {
 
-    @Mapping(target = "productId",source = "product.productId")
+    @Mapping(target = "productId",source = "product.id")
     ImgProductRes imgProductToImgProductRes(ImgProduct imgProduct);
 
     List<ImgProductRes> toImgProductList(List<ImgProduct> imgProductList);

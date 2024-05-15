@@ -10,5 +10,5 @@ public interface ProductDetailRepo extends JpaRepository<ProductDetail, Long> {
 
     ProductDetail findByCode(String code);
 
-    List<ProductDetail> findAllByProductProductId(String productId);
+    List<ProductDetail> findAllByProductId(String productId);
 }

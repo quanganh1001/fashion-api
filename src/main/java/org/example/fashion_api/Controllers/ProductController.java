@@ -45,7 +45,7 @@ public class ProductController {
     public PageProductRes getProductsByCategory(@RequestParam(defaultValue = "",required = false) String keyword,
                                                 @RequestParam(defaultValue = "1") int page,
                                                 @RequestParam(defaultValue = "10") int limit,
-                                                @PathVariable String catId) throws JsonProcessingException {
+                                                @PathVariable Long catId) throws JsonProcessingException {
         return productService.getAllProductsByCategory(keyword,page-1,limit,catId);
     }
 
@@ -55,7 +55,8 @@ public class ProductController {
     }
 
     @PutMapping("/{productId}")
-    public ProductRes updateProduct(@Valid @RequestBody UpdateProductDto updateProductDto, @PathVariable String productId) {
+    public ProductRes updateProduct(@Valid @RequestBody UpdateProductDto updateProductDto,
+                                    @PathVariable Long productId) {
         return productService.updateProduct(productId, updateProductDto);
     }
 

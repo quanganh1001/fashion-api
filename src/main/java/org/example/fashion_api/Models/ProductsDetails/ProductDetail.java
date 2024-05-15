@@ -26,7 +26,7 @@ public class ProductDetail {
 
     private Boolean outOfStock;
 
-    private Boolean productDetailActive;
+    private Boolean isActivated = Boolean.TRUE;
 
     @NotNull
     @Enumerated(EnumType.STRING)
@@ -40,10 +40,6 @@ public class ProductDetail {
     @JoinColumn(name = "color_id")
     private Color color;
 
-    @PrePersist
-    public void prePersist() {
-        if (productDetailActive == null)
-            productDetailActive = true;
-    }
+
 
 }

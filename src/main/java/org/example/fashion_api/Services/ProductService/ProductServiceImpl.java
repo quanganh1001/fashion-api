@@ -73,19 +73,26 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public ProductRes getProduct(String productId) {
+    public ProductRes getProduct(Long productId) {
         return productMapper.productToProductRes(productRepo.findById(productId).orElseThrow(() -> new NotFoundException(productId)));
     }
 
     @Override
     @Transactional
-    public ProductRes updateProduct(String productId, UpdateProductDto updateProductDto) {
+    public ProductRes updateProduct(Long productId, UpdateProductDto updateProductDto) {
         Product currentProduct = productRepo.findById(productId).orElseThrow(() -> new NotFoundException(productId));
 
         if (!productId.equals(updateProductDto.getProductId()) && productRepo.existsByProductId(updateProductDto.getProductId())) {
             throw new AlreadyExistException(updateProductDto.getProductId());
         } else if (!currentProduct.getProductName().equals(updateProductDto.getProductName()) && productRepo.existsByProductName(updateProductDto.getProductName())) {
             throw new AlreadyExistException(updateProductDto.getProductName());
+        }
+
+        if (!currentProduct.getCategory().getCatId().equals(updateProductDto.getCatId())) {
+            Category newCategory = categoryRepo.findById(updateProductDto.getCatId())
+                    .orElseThrow(() -> new NotFoundException(updateProductDto.getCatId()));
+
+            currentProduct.setCategory(newCategory);
         }
 
         Product product = productMapper.updateProductDtoToProduct(updateProductDto, currentProduct);
@@ -117,20 +124,20 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     @Transactional
-    public ResponseEntity<String> updateProductBackground(MultipartFile file, String productId) throws IOException {
-        Product product = productRepo.findById(productId).orElseThrow(() -> new NotFoundException(productId));
+    public ResponseEntity<String> updateProductBackground(MultipartFile file, Long productId) throws IOException {
+        Product product = productRepo.findById(productId).orElseThrow(() -> new NotFoundException("Product not found"));
 
         cloudinaryService.deleteImageByUrl(product.getImageBackground());
 
         Map<String, Object> uploadResult = cloudinaryService.upload(file);
 
         String imageUrl = uploadResult.get("secure_url").toString();
-        productRepo.updateCatBackground(imageUrl, productId);
+        productRepo.updateProductBackground(imageUrl, productId);
         return ResponseEntity.ok(imageUrl);
     }
 
     @Override
-    public PageProductRes getAllProductsByCategory(String keyword, int page, int limit, String catId) throws JsonProcessingException {
+    public PageProductRes getAllProductsByCategory(String keyword, int page, int limit, Long catId) throws JsonProcessingException {
         String redisKey = "productService.getAllProductsByCategory("+keyword+","+page+","+limit+","+catId+") - product";
 
         PageProductRes pageProductRes = redisService.getRedis(redisKey, PageProductRes.class);
@@ -140,12 +147,12 @@ public class ProductServiceImpl implements ProductService {
             List<Category> categories = categoryService.CatDescendants(catId, new ArrayList<>());
 
 
-            categories.add(categoryRepo.findById(catId).orElseThrow(() -> new NotFoundException(catId)));
+            categories.add(categoryRepo.findById(catId).orElseThrow(() -> new NotFoundException(catId.toString())));
 
             PageRequest pageRequest = PageRequest.of(page,limit, Sort.by("product_id").ascending());
 
             for (Category cat : categories) {
-                Page<Product> productPage = productRepo.findAllByCategoryCatId(cat.getCatId(),keyword,pageRequest);
+                Page<Product> productPage = productRepo.findAllByCategoryCatId(cat.getId(),keyword,pageRequest);
 
                 productList.addAll(productPage.getContent());
             }

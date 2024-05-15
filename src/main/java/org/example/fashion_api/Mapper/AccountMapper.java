@@ -17,7 +17,7 @@ import java.util.List;
 public interface AccountMapper {
     Account accountRegisterDtoToAccount(AccountRegisterDto accountRegisterDto, @MappingTarget Account account);
 
-    @Mapping(target = "accountId", source = "accountId")
+    @Mapping(target = "id", source = "id")
     AccountRes accountEntityToAccountRes(Account account);
 
     List<AccountRes> accountsToListAccountRes(List<Account> accounts);

@@ -83,7 +83,7 @@ public class AccountServiceImpl implements AccountService {
             throw new BadCredentialsException();
         }
 
-        if (!existingAccount.getEnabled()) {
+        if (!existingAccount.getIsActivated()) {
             throw new BadCredentialsException();
         }
 
@@ -200,7 +200,7 @@ public class AccountServiceImpl implements AccountService {
 
             Account account = accountRepo.findByUsername(userName).orElseThrow(()-> new NotFoundException("Accounts"));
 
-            if(Objects.equals(accountId, account.getAccountId())){
+            if(Objects.equals(accountId, account.getId())){
 
                 accountRepo.changePassword(accountId, passwordEncoder.encode(changePassDto.getNewPass()));
 
@@ -224,7 +224,7 @@ public class AccountServiceImpl implements AccountService {
 
         String newPass = RandomStringUtils.randomAlphanumeric(6);
 
-        accountRepo.changePassword(account.getAccountId(), passwordEncoder.encode(newPass));
+        accountRepo.changePassword(account.getId(), passwordEncoder.encode(newPass));
 
         MailTemplate mailTemplate = MailTemplate.builder()
                 .to(account.getEmail())
@@ -247,7 +247,7 @@ public class AccountServiceImpl implements AccountService {
 
             JwtToken jwtToken = jwtTokenRepo.findByToken(token);
 
-            if (jwtToken !=null && Objects.equals(jwtToken.getAccount().getAccountId(), account.getAccountId())){
+            if (jwtToken !=null && Objects.equals(jwtToken.getAccount().getId(), account.getId())){
                 jwtTokenRepo.delete(jwtToken);
             }
 

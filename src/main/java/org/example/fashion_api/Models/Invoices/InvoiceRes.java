@@ -23,8 +23,9 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class InvoiceRes {
+    private Long id;
 
-    private String invoiceId;
+    private String invoiceCode;
 
     private String name;
 

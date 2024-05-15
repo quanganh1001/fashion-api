@@ -3,7 +3,7 @@ package org.example.fashion_api.Services.CategoryService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import org.example.fashion_api.Models.Categories.Category;
 import org.example.fashion_api.Models.Categories.CategoryDto;
-import org.springframework.http.ResponseEntity;
+import org.example.fashion_api.Models.Categories.CategoryRes;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -11,19 +11,19 @@ import java.util.List;
 
 
 public interface CategoryService {
-    List<CategoryDto> findAll() throws JsonProcessingException;
+    List<CategoryRes> findAll() throws JsonProcessingException;
 
-    CategoryDto save(String catId, CategoryDto categoryDto);
+    CategoryRes save(Long catId, CategoryDto categoryDto);
 
-    void delete(String catId) throws IOException;
+    void delete(Long id) throws IOException;
 
-    CategoryDto findById(String catId);
+    CategoryRes findById(Long id);
 
-    CategoryDto addCategory(CategoryDto categoryDto);
+    CategoryRes addCategory(CategoryDto categoryDto);
 
-    ResponseEntity<String> updateCatBackground(MultipartFile files, String catId) throws IOException;
+    String updateCatBackground(MultipartFile files, Long id) throws IOException;
 
-    List<CategoryDto> childCategories(String catParentId) throws JsonProcessingException;
+    List<CategoryRes> childCategories(Long catParentId) throws JsonProcessingException;
 
-    List<Category> CatDescendants(String catId, List<Category> allCategory);
+    List<Category> CatDescendants(Long id, List<Category> allCategory);
 }

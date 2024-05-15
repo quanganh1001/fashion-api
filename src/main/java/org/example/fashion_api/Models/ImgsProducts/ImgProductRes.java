@@ -6,7 +6,7 @@ import org.example.fashion_api.Models.Products.Product;
 @Data
 public class ImgProductRes {
 
-    private Long imgId;
+    private Long id;
 
     private String fileImg;
     

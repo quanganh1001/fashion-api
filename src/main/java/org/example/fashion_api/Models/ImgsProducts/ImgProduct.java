@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.example.fashion_api.Models.BaseEntity;
 import org.example.fashion_api.Models.Products.Product;
 
 @Data
@@ -13,10 +14,7 @@ import org.example.fashion_api.Models.Products.Product;
 @AllArgsConstructor
 @Builder
 @Table(name = "imgs_product")
-public class ImgProduct {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long imgId;
+public class ImgProduct extends BaseEntity {
 
     private String fileImg;
 

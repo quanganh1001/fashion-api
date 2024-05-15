@@ -5,8 +5,9 @@ import lombok.*;
 
 @Data
 public class CreateProductDto {
+
     @NotNull
-    private String productId;
+    private String productCode;
 
     @NotNull
     private String productName;

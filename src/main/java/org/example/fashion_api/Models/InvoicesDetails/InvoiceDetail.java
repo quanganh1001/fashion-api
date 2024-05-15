@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.apache.commons.lang3.RandomStringUtils;
+import org.example.fashion_api.Models.BaseEntity;
 import org.example.fashion_api.Models.Invoices.Invoice;
 import org.example.fashion_api.Models.ProductsDetails.ProductDetail;
 
@@ -15,10 +16,7 @@ import org.example.fashion_api.Models.ProductsDetails.ProductDetail;
 @AllArgsConstructor
 @Builder
 @Table(name = "invoices_detail")
-public class InvoiceDetail {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long detailId;
+public class InvoiceDetail extends BaseEntity {
 
     private Long price;
 

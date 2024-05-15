@@ -11,7 +11,7 @@ import org.example.fashion_api.Enum.RoleEnum;
 @Getter
 public class AccountRes {
 
-    private Long accountId;
+    private Long id;
 
     private String username;
 
@@ -23,7 +23,7 @@ public class AccountRes {
 
     private String address;
 
-    private Boolean enabled;
+    private Boolean isActivated;
 
     @Enumerated(EnumType.STRING)
     private RoleEnum role;

@@ -7,11 +7,11 @@ import org.example.fashion_api.Exception.NotFoundException;
 import org.example.fashion_api.Models.Categories.Category;
 import org.example.fashion_api.Models.Categories.CategoryDto;
 import org.example.fashion_api.Mapper.CategoryMapper;
+import org.example.fashion_api.Models.Categories.CategoryRes;
 import org.example.fashion_api.Repositories.CategoryRepo;
 import org.example.fashion_api.Services.CloudinaryService;
 import org.example.fashion_api.Services.RedisService.RedisService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -33,7 +33,7 @@ public class CategoryServiceImpl implements CategoryService {
 
 
     @Override
-    public List<CategoryDto> findAll() throws JsonProcessingException {
+    public List<CategoryRes> findAll() throws JsonProcessingException {
         String redisKey = "categoryRepo.findAll() - categories";
         List<Category> categories = redisService.getListRedis(redisKey, Category.class);
 
@@ -47,60 +47,55 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     @Transactional
-    public CategoryDto save(String catId, CategoryDto categoryDto) {
+    public CategoryRes save(Long catId, CategoryDto categoryDto) {
 
-        Category currentCategory = categoryRepo.findById(catId).orElseThrow(() -> new NotFoundException(catId));
+        Category currentCategory = categoryRepo.findById(catId).orElseThrow(() -> new NotFoundException(catId.toString()));
 
-        if (!Objects.equals(categoryDto.getCatId(), catId) && categoryRepo.existsById(categoryDto.getCatId())) {
-            throw new AlreadyExistException(categoryDto.getCatId());
+        if (!Objects.equals(categoryDto.getCategoryCode(), currentCategory.getCategoryCode())
+                && categoryRepo.existsByCategoryCode(categoryDto.getCategoryCode())) {
+            throw new AlreadyExistException(categoryDto.getCategoryCode());
         } else if (!Objects.equals(categoryDto.getCatName(), currentCategory.getCatName()) && categoryRepo.existsByCatName(categoryDto.getCatName())) {
             throw new AlreadyExistException(categoryDto.getCatName());
         }
 
-
-        Category category = categoryMapper.categoryDtoToCategory(categoryDto, currentCategory);
-        if (categoryDto.getCatParent() == null) {
-            category.setCatParent(null);
-        }
+        Category category = categoryMapper.categoryDtoToCategory(categoryDto, new Category());
 
         categoryRepo.save(category);
 
-        return categoryMapper.categoryToCategoryDto(currentCategory);
+        return categoryMapper.categoryToCategoryRes(currentCategory);
     }
 
     @Override
-    public void delete(String catId) throws IOException {
-        Category category = categoryRepo.findById(catId).orElseThrow(() -> new NotFoundException(catId));
+    public void delete(Long catId) throws IOException {
+        Category category = categoryRepo.findById(catId).orElseThrow(() -> new NotFoundException(catId.toString()));
         categoryRepo.delete(category);
         cloudinaryService.deleteImageByUrl(category.getCatBackground());
     }
 
     @Override
-    public CategoryDto findById(String catId) {
-        return categoryMapper.categoryToCategoryDto(categoryRepo.findById(catId).orElseThrow(() -> new NotFoundException("Category")));
+    public CategoryRes findById(Long catId) {
+        return categoryMapper.categoryToCategoryRes(categoryRepo.findById(catId).orElseThrow(() -> new NotFoundException(
+                "Category")));
     }
 
     @Override
-    public CategoryDto addCategory(CategoryDto categoryDto) {
-        if (categoryRepo.existsById(categoryDto.getCatId())) {
-            throw new AlreadyExistException(categoryDto.getCatId());
+    public CategoryRes addCategory(CategoryDto categoryDto) {
+        if (categoryRepo.existsByCategoryCode(categoryDto.getCategoryCode())) {
+            throw new AlreadyExistException(categoryDto.getCategoryCode());
         } else if (categoryRepo.existsByCatName(categoryDto.getCatName())) {
             throw new AlreadyExistException(categoryDto.getCatName());
         }
 
-        Category category = categoryMapper.categoryDtoToCategory(categoryDto, new Category());
-        if (categoryDto.getCatParent() == null) {
-            category.setCatParent(null);
-        }
-        categoryRepo.save(category);
-        return categoryDto;
+        Category category= categoryRepo.save(categoryMapper.categoryDtoToCategory(categoryDto, new Category()));
+
+        return categoryMapper.categoryToCategoryRes(category);
 
     }
 
     @Override
     @Transactional
-    public ResponseEntity<String> updateCatBackground(MultipartFile file, String catId) throws IOException {
-        Category category = categoryRepo.findById(catId).orElseThrow(() -> new NotFoundException(catId));
+    public String updateCatBackground(MultipartFile file, Long catId) throws IOException {
+        Category category = categoryRepo.findById(catId).orElseThrow(() -> new NotFoundException(catId.toString()));
 
         cloudinaryService.deleteImageByUrl(category.getCatBackground());
 
@@ -108,22 +103,22 @@ public class CategoryServiceImpl implements CategoryService {
 
         String imageUrl = uploadResult.get("secure_url").toString();
         categoryRepo.updateCatBackground(imageUrl, catId);
-        return ResponseEntity.ok(imageUrl);
+        return imageUrl;
     }
 
     @Override
-    public List<CategoryDto> childCategories(String catParentId) throws JsonProcessingException {
+    public List<CategoryRes> childCategories(Long catParentId) throws JsonProcessingException {
         String redisKey = "childCategories("+catParentId+") - category";
         List<Category> categories = redisService.getListRedis(redisKey, Category.class);
         if (categories == null){
 
             List<Category> childCategories;
 
-            if (!catParentId.isEmpty()) {
-                childCategories = categoryRepo.findAllByCatParentCatId(catParentId);
+            if (catParentId != null) {
+                childCategories = categoryRepo.findAllByCatParentId(catParentId);
 
             } else {
-                childCategories = categoryRepo.findAllByCatParentCatId(null);
+                childCategories = categoryRepo.findAllByCatParentId(null);
             }
             redisService.saveRedis(redisKey, childCategories);
             return categoryMapper.toDtoList(childCategories);
@@ -135,12 +130,14 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public List<Category> CatDescendants(String catId, List<Category> allCategory) {
-        List<Category> categories = categoryRepo.findAllByCatParentCatId(catId);
+    public List<Category> CatDescendants(Long id, List<Category> allCategory) {
+        List<Category> categories = categoryRepo.findAllByCatParentId(id);
         for (Category child : categories) {
             allCategory.add(child);
-            CatDescendants(child.getCatId(), allCategory);
+            CatDescendants(child.getId(), allCategory);
         }
         return allCategory;
     }
+
+
 }

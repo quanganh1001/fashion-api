@@ -19,10 +19,15 @@ public class JwtToken {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private String token;
+
     private Date expirationDate;
+
     private String refreshToken;
+
     private Date refreshExpirationDate;
+
     private Boolean revoked;
 
     @OneToOne

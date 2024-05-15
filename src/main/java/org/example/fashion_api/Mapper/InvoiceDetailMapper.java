@@ -21,10 +21,9 @@ import java.util.List;
 @Mapper(componentModel = "spring",uses = {ProductDetailMapper.class}, unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface InvoiceDetailMapper {
 
-
     List<InvoiceDetailRes> toResList(List<InvoiceDetail> invoiceDetails);
 
-    @Mapping(target = "invoiceId", source = "invoice.invoiceId")
+    @Mapping(target = "invoiceIdId", source = "invoice.id")
     @Mapping(target = "productName", source = "productDetail.product.productName")
     @Mapping(target = "code", source = "productDetail.code")
     InvoiceDetailRes invoiceDetailToInvoiceDetailRes(InvoiceDetail invoiceDetails);

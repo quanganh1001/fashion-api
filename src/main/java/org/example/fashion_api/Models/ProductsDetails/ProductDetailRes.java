@@ -14,13 +14,13 @@ import org.example.fashion_api.Models.Products.ProductRes;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ProductDetailRes {
-    private Long productDetailId;
+    private Long id;
 
     private String code;
 
     private Integer quantity;
 
-    private Boolean productDetailActive;
+    private Boolean isActivated;
 
     @Enumerated(EnumType.STRING)
     private SizeEnum size;

@@ -29,11 +29,11 @@ public interface ProductDetailMapper {
     List<ProductDetailRes> productDetailsToProductDetailRes(List<ProductDetail> productDetails);
 
 
-    @Mapping(target = "product.productId", source = "productId")
-    @Mapping(target = "color.colorId", source = "colorId")
+    @Mapping(target = "product.id", source = "productId")
+    @Mapping(target = "color.id", source = "colorId")
     ProductDetail createProductDetailToProductDetail(CreateProductDetailDto createProductDetailDto, @MappingTarget ProductDetail productDetail);
 
-    @Mapping(target = "product.productId", source = "productId")
-    @Mapping(target = "color.colorId", source = "colorId")
+    @Mapping(target = "product.id", source = "productId")
+    @Mapping(target = "color.id", source = "colorId")
     ProductDetail updateProductDetailToProductDetail(UpdateProductDetailDto updateProductDetailDto, @MappingTarget ProductDetail productDetail);
 }

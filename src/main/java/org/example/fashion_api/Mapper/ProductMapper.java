@@ -23,18 +23,14 @@ public interface ProductMapper {
     List<ProductRes> productsToProductRes(List<Product> products);
 
 
-    @Mapping(target = "catId", source = "category.catId")
+    @Mapping(target = "catId", source = "category.id")
     @Mapping(target = "productsDetails", source = "productsDetails")
     ProductRes productToProductRes(Product product);
 
 
-    @Mapping(target = "category.catId", source = "catId")
+    @Mapping(target = "category.id", source = "catId")
     Product createProductDtoToProduct(CreateProductDto createProductDTO, @MappingTarget Product product);
 
-    default String map(Product product) {
-        return product != null ? product.getCategory().getCatId() : null;
-    }
-
-    @Mapping(target = "category.catId", source = "catId")
+    @Mapping(target = "category.id", source = "catId")
     Product updateProductDtoToProduct(UpdateProductDto updateProductDto, @MappingTarget Product product);
 }

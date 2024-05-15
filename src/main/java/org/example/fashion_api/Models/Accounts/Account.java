@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import org.example.fashion_api.Enum.RoleEnum;
+import org.example.fashion_api.Models.BaseEntity;
 import org.example.fashion_api.Models.RedisListener;
 
 @AllArgsConstructor
@@ -14,10 +15,7 @@ import org.example.fashion_api.Models.RedisListener;
 @Entity
 @Data
 @Table(name = "accounts")
-public class Account {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long accountId;
+public class Account extends BaseEntity {
 
     @NotNull
     private String username;
@@ -35,20 +33,11 @@ public class Account {
 
     private String address;
 
-    @NotNull
-    private Boolean enabled;
+    private Boolean isActivated = Boolean.TRUE;
 
     @NotNull
     @Enumerated(EnumType.STRING)
-    private RoleEnum role;
+    private RoleEnum role = RoleEnum.ROLE_CUSTOMER;
 
-    @PrePersist
-    public void prePersist() {
-        if (enabled == null)
-            enabled = true;
-        if (role == null) {
-            role = RoleEnum.ROLE_CUSTOMER;
-        }
-    }
 
 }

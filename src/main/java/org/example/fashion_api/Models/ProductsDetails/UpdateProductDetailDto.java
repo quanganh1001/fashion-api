@@ -17,7 +17,7 @@ public class UpdateProductDetailDto {
     private Integer quantity;
 
     @NotNull
-    private Boolean productDetailActive;
+    private Boolean isActivated;
 
     @NotNull
     private String size;

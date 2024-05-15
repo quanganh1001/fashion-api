@@ -9,6 +9,7 @@ import lombok.*;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.example.fashion_api.Enum.InvoiceStatusEnum;
 import org.example.fashion_api.Models.Accounts.Account;
+import org.example.fashion_api.Models.BaseEntity;
 import org.example.fashion_api.Models.InvoicesDetails.InvoiceDetail;
 import org.example.fashion_api.Models.ProductsDetails.ProductDetail;
 
@@ -22,9 +23,9 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 @Table(name = "invoices")
-public class Invoice {
-    @Id
-    private String invoiceId;
+public class Invoice extends BaseEntity {
+
+    private String invoiceCode;
 
     @NotBlank(message = "Tên không được để trống")
     private String name;
@@ -52,14 +53,13 @@ public class Invoice {
 
     private InvoiceStatusEnum invoiceStatus = InvoiceStatusEnum.NEW;
 
-    @Temporal(TemporalType.TIMESTAMP)
-    private LocalDateTime createdAt = LocalDateTime.now();
+    private Boolean isDeleted = Boolean.FALSE;
 
     @ManyToOne
     @JoinColumn(name = "account_id")
     private Account account;
 
-    @OneToMany(mappedBy = "invoice", orphanRemoval = true, cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "invoice", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
     @JsonIgnore
     @ToString.Exclude
     private List<InvoiceDetail> invoicesDetails = new ArrayList<>();
@@ -70,8 +70,8 @@ public class Invoice {
         if(totalPrice == null)
             totalPrice = 0L;
 
-        if (invoiceId == null)
-            invoiceId = RandomStringUtils.randomAlphanumeric(8).toUpperCase();
+        if (invoiceCode == null)
+            invoiceCode = RandomStringUtils.randomAlphanumeric(8).toUpperCase();
 
         totalBill = totalPrice + shippingFee;
 

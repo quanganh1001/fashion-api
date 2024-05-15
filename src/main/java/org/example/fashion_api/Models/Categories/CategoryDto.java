@@ -13,17 +13,13 @@ import lombok.NoArgsConstructor;
 public class CategoryDto   {
 
     @NotNull
-    private String catId;
+    private String categoryCode;
 
     @NotNull
     private String catName;
 
     private String catBackground;
 
-    private Category catParent;
-
-    @NotNull
-    private Boolean isCatActive;
-
+    private String catParent;
 
 }

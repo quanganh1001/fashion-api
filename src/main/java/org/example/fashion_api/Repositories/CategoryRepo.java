@@ -9,13 +9,16 @@ import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
-public interface CategoryRepo extends JpaRepository<Category,String> {
+public interface CategoryRepo extends JpaRepository<Category,Long> {
     Boolean existsByCatName(String catName);
 
-    @Modifying
-    @Query(value = "UPDATE categories SET cat_background = :urlImage WHERE cat_id = :catId",
-            nativeQuery = true)
-    void updateCatBackground(@Param("urlImage") String urlImage, @Param("catId") String catId);
+    Boolean existsByCategoryCode(String categoryCode);
 
-    List<Category> findAllByCatParentCatId(String catId);
+    @Modifying
+    @Query(value = "UPDATE categories SET cat_background = :urlImage WHERE id = :catId",
+            nativeQuery = true)
+    void updateCatBackground(@Param("urlImage") String urlImage, @Param("catId") Long catId);
+
+    List<Category> findAllByCatParentId(Long catId);
+
 }

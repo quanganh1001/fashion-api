@@ -3,6 +3,7 @@ package org.example.fashion_api.Controllers;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import jakarta.validation.Valid;
 import org.example.fashion_api.Models.Categories.CategoryDto;
+import org.example.fashion_api.Models.Categories.CategoryRes;
 import org.example.fashion_api.Services.CategoryService.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -21,41 +22,43 @@ public class CategoryController {
     private CategoryService categoryService;
 
     @GetMapping()
-    public List<CategoryDto> getAllCategories() throws JsonProcessingException {
-        return categoryService.findAll();
+    public ResponseEntity<List<CategoryRes>> getAllCategories() throws JsonProcessingException {
+        return ResponseEntity.ok(categoryService.findAll());
     }
 
     @GetMapping("/{catId}")
-    public CategoryDto getCategory(@PathVariable String catId) {
-        return categoryService.findById(catId);
+    public ResponseEntity<CategoryRes> getCategory(@PathVariable Long catId) {
+        return ResponseEntity.ok(categoryService.findById(catId));
     }
 
     @GetMapping("/childCategories")
-    public List<CategoryDto> getChildCategories(@RequestParam(value = "catParentId", defaultValue = "") String catParentId) throws JsonProcessingException {
-        return categoryService.childCategories(catParentId);
+    public ResponseEntity<List<CategoryRes>> getChildCategories(@RequestParam(value = "catParentId",
+            defaultValue = "") Long catParentId) throws JsonProcessingException {
+        return ResponseEntity.ok(categoryService.childCategories(catParentId));
     }
 
 
     @PostMapping()
-    public CategoryDto addCategory(@Valid @RequestBody CategoryDto categoryDto) {
-        return categoryService.addCategory(categoryDto);
+    public ResponseEntity<CategoryRes> addCategory(@Valid @RequestBody CategoryDto categoryDto) {
+        return ResponseEntity.ok(categoryService.addCategory(categoryDto));
     }
 
     @PutMapping("update/{catId}")
-    public CategoryDto updateCategory(@PathVariable("catId") String catId,@Valid @RequestBody CategoryDto categoryDto) {
-        return categoryService.save(catId,categoryDto);
+    public ResponseEntity<CategoryRes> updateCategory(@PathVariable("catId") Long catId,
+                                                      @Valid @RequestBody CategoryDto categoryDto) {
+        return ResponseEntity.ok(categoryService.save(catId,categoryDto));
     }
 
     @DeleteMapping("/{catId}")
-    public ResponseEntity<String> deleteCategory(@PathVariable("catId") String catId) throws IOException {
+    public ResponseEntity<String> deleteCategory(@PathVariable("catId") Long catId) throws IOException {
         categoryService.delete(catId);
         return ResponseEntity.ok("Deleted Category");
     }
 
     @PostMapping("/upBackgroundImgCategory")
     public ResponseEntity<String> upBackgroundImg(@RequestParam("file") MultipartFile file,
-                                                             @RequestParam("catId") String catId) throws IOException {
-        return categoryService.updateCatBackground(file,catId);
+                                                             @RequestParam("catId") Long catId) throws IOException {
+        return ResponseEntity.ok(categoryService.updateCatBackground(file,catId));
 
     }
 

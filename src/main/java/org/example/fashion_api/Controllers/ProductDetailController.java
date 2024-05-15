@@ -14,7 +14,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/productsDetail")
-@PreAuthorize("hasAnyRole('MANAGER')")
 public class ProductDetailController {
     @Autowired
     private ProductDetailService productDetailService;
@@ -25,16 +24,19 @@ public class ProductDetailController {
         return productDetailService.getProductDetail(productDetailId);
     }
 
+    @PreAuthorize("hasAnyRole('MANAGER')")
     @PostMapping()
     public ProductDetailRes createProductDetail(@RequestBody CreateProductDetailDto createProductDetailDto) {
         return productDetailService.createProductDetail(createProductDetailDto);
     }
 
+    @PreAuthorize("hasAnyRole('MANAGER')")
     @PutMapping("/{productDetailId}")
     public ProductDetailRes updateProductDetail(@PathVariable Long productDetailId, @RequestBody UpdateProductDetailDto updateProductDetailDto) {
         return productDetailService.updateProductDetail(productDetailId, updateProductDetailDto);
     }
 
+    @PreAuthorize("hasAnyRole('MANAGER')")
     @DeleteMapping("/{productDetailId}")
     public ResponseEntity<String> deleteProductDetail(@PathVariable Long productDetailId) {
         productDetailService.deleteProductDetail(productDetailId);

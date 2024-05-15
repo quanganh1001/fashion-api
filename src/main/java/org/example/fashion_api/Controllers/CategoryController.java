@@ -16,7 +16,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("categories")
-@PreAuthorize("hasAnyRole('MANAGER')")
 public class CategoryController {
     @Autowired
     private CategoryService categoryService;
@@ -38,26 +37,30 @@ public class CategoryController {
     }
 
 
+    @PreAuthorize("hasAnyRole('MANAGER')")
     @PostMapping()
     public ResponseEntity<CategoryRes> addCategory(@Valid @RequestBody CategoryDto categoryDto) {
         return ResponseEntity.ok(categoryService.addCategory(categoryDto));
     }
 
+    @PreAuthorize("hasAnyRole('MANAGER')")
     @PutMapping("update/{catId}")
     public ResponseEntity<CategoryRes> updateCategory(@PathVariable("catId") Long catId,
                                                       @Valid @RequestBody CategoryDto categoryDto) {
         return ResponseEntity.ok(categoryService.save(catId,categoryDto));
     }
 
+    @PreAuthorize("hasAnyRole('MANAGER')")
     @DeleteMapping("/{catId}")
     public ResponseEntity<String> deleteCategory(@PathVariable("catId") Long catId) throws IOException {
         categoryService.delete(catId);
         return ResponseEntity.ok("Deleted Category");
     }
 
-    @PostMapping("/upBackgroundImgCategory")
+    @PreAuthorize("hasAnyRole('MANAGER')")
+    @PostMapping("/upBackgroundImgCategory/{catId}")
     public ResponseEntity<String> upBackgroundImg(@RequestParam("file") MultipartFile file,
-                                                             @RequestParam("catId") Long catId) throws IOException {
+                                                             @PathVariable Long catId) throws IOException {
         return ResponseEntity.ok(categoryService.updateCatBackground(file,catId));
 
     }

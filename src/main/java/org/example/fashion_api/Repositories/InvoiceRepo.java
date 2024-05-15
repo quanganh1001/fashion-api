@@ -12,7 +12,7 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 
 public interface InvoiceRepo extends JpaRepository<Invoice,Long> {
-    Page<Invoice> findAllByPhoneContainingIgnoreCaseOrInvoiceIdContainingIgnoreCase(String keyword, String keyword2, PageRequest pageRequest);
+    Page<Invoice> findAllByPhoneContainingIgnoreCaseOrInvoiceCodeContainingIgnoreCaseAndIsDeletedFalse(String keyword, String keyword2, PageRequest pageRequest);
 
     @Modifying
     @Query(value = "UPDATE invoices SET is_paid = TRUE WHERE invoice_id = :invoiceId",

@@ -3,6 +3,7 @@ package org.example.fashion_api.Services;
 
 
 import jakarta.servlet.http.HttpServletRequest;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.example.fashion_api.Configurations.VnpayConfig;
 import org.springframework.stereotype.Service;
 import java.net.URLEncoder;
@@ -12,7 +13,7 @@ import java.util.*;
 
 @Service
 public class VnpayService {
-    public String createPaymentUrl(HttpServletRequest http,String invoiceId,Long totalBill)   {
+    public String createPaymentUrl(HttpServletRequest http,Long invoiceId,Long totalBill)   {
 
 
         Map<String, String> vnp_Params = new HashMap<>();
@@ -21,7 +22,7 @@ public class VnpayService {
         vnp_Params.put("vnp_TmnCode", VnpayConfig.vnp_TmnCode);
         vnp_Params.put("vnp_Amount", String.valueOf(totalBill*100));
         vnp_Params.put("vnp_CurrCode", "VND");
-        vnp_Params.put("vnp_TxnRef", invoiceId);
+        vnp_Params.put("vnp_TxnRef", invoiceId + RandomStringUtils.randomAlphanumeric(5).toUpperCase());
         vnp_Params.put("vnp_OrderInfo", "Thanh toan don hang:" + invoiceId);
         vnp_Params.put("vnp_OrderType", "other");
         vnp_Params.put("vnp_Locale", "vn");

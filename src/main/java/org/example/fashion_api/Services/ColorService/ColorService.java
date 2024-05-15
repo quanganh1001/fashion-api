@@ -9,5 +9,5 @@ public interface ColorService {
 
     ColorDto createColor(ColorDto colorDto);
 
-    void deleteColor(String colorId);
+    void deleteColor(Long colorId);
 }

@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import org.example.fashion_api.Enum.SizeEnum;
+import org.example.fashion_api.Models.BaseEntity;
 import org.example.fashion_api.Models.Colors.Color;
 import org.example.fashion_api.Models.Products.Product;
 import org.example.fashion_api.Models.RedisListener;
@@ -15,10 +16,7 @@ import org.example.fashion_api.Models.RedisListener;
 @Data
 @EntityListeners(RedisListener.class)
 @Table(name = "products_detail")
-public class ProductDetail {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long productDetailId;
+public class ProductDetail extends BaseEntity {
 
     private String code;
 

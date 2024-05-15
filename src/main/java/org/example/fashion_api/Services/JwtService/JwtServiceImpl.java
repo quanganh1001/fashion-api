@@ -52,7 +52,7 @@ public class JwtServiceImpl implements JwtService {
 
     @Override
     public boolean isTokenValid(String token, Long accountId) {
-        JwtToken tokenRepoByTokenAndAccountId = jwtTokenRepo.findTokenByTokenAndAccount_AccountId(token, accountId);
+        JwtToken tokenRepoByTokenAndAccountId = jwtTokenRepo.findTokenByTokenAndAccount_Id(token, accountId);
         return tokenRepoByTokenAndAccountId != null;
     }
 
@@ -96,13 +96,13 @@ public class JwtServiceImpl implements JwtService {
         Date refreshExpirationDate = new Date(System.currentTimeMillis() + 1000L * 60 * 60 * 24 * 30);
 
         // Đếm số lượng token hiện có cho accountId
-        long tokenCount = jwtTokenRepo.countByAccount_AccountId(account.getAccountId());
+        long tokenCount = jwtTokenRepo.countByAccount_Id(account.getId());
 
         // Kiểm tra nếu số lượng token vượt quá ngưỡng
         int maxTokenCount = 2;
         if (tokenCount >= maxTokenCount) {
             // Lấy danh sách các token cũ nhất cho accountId
-            List<JwtToken> oldestTokens = jwtTokenRepo.findOldestTokensByAccountId(account.getAccountId(), tokenCount - maxTokenCount + 1);
+            List<JwtToken> oldestTokens = jwtTokenRepo.findOldestTokensByAccountId(account.getId(), tokenCount - maxTokenCount + 1);
 
             // Xóa các token cũ nhất cho accountId
             jwtTokenRepo.deleteAll(oldestTokens);
@@ -135,10 +135,7 @@ public class JwtServiceImpl implements JwtService {
 
     @Override
     public String extractUsername(String token) {
-
         return decodeToken(token).getClaim("username").asString();
-
-
     }
 
     @Override
@@ -153,7 +150,7 @@ public class JwtServiceImpl implements JwtService {
 
     @Override
     public Boolean isTokenExpiredInDatabse(String token, Long accountId) {
-        JwtToken tokenRepoByTokenAndAccountId = jwtTokenRepo.findTokenByTokenAndAccount_AccountId(token, accountId);
+        JwtToken tokenRepoByTokenAndAccountId = jwtTokenRepo.findTokenByTokenAndAccount_Id(token, accountId);
         return tokenRepoByTokenAndAccountId.getExpirationDate().before(new Date());
     }
 }

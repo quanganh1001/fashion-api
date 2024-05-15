@@ -22,4 +22,5 @@ public class CategoryDto   {
 
     private String catParent;
 
+    private Boolean isActivated = true;
 }

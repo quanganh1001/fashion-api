@@ -11,7 +11,7 @@ import org.springframework.data.repository.query.Param;
 
 public interface ProductRepo extends JpaRepository<Product,Long> {
 
-    boolean existsById(Long productId);
+    Boolean existsByProductCode(String productCode);
 
     Boolean existsByProductName(String productName);
 
@@ -22,12 +22,13 @@ public interface ProductRepo extends JpaRepository<Product,Long> {
 
 
     @Query(value = "SELECT * FROM products WHERE cat_id = :catId AND (LOWER(product_name) LIKE LOWER(CONCAT('%', :keyword, '%')) " +
-            "OR LOWER(product_id) LIKE LOWER(CONCAT('%', :keyword, '%')))  ", nativeQuery = true)
+            "OR LOWER(product_code LIKE LOWER(CONCAT('%', :keyword, '%'))) ) ", nativeQuery = true)
     Page<Product> findAllByCategoryCatId(@Param("catId") Long catId,@Param("keyword") String keyword, PageRequest pageRequest);
 
 
     @Query(value = "SELECT * FROM products WHERE LOWER(product_name) LIKE LOWER(CONCAT('%', :keyword, '%')) " +
-            "OR LOWER(product_id) LIKE LOWER(CONCAT('%', :keyword, '%')) ", nativeQuery = true)
+            "OR LOWER(product_code) LIKE LOWER(CONCAT('%', :keyword, '%')) ", nativeQuery = true)
     Page<Product> findAllProductByKey(@Param("keyword") String keyword, PageRequest pageRequest);
+
 
 }

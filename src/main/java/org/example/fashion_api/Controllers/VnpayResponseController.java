@@ -28,7 +28,8 @@ public class VnpayResponseController {
 
     @GetMapping("/vnpay/response")
     @Transactional
-    public ResponseEntity<String> getVnpayResponse(HttpServletRequest request) throws BadRequest, UnsupportedEncodingException {
+    public ResponseEntity<String> getVnpayResponse(HttpServletRequest request)  {
+
         Map fields = new HashMap();
         for (Enumeration<String> params = request.getParameterNames(); params.hasMoreElements(); ) {
             String fieldName = URLEncoder.encode((String) params.nextElement(), StandardCharsets.US_ASCII);
@@ -37,7 +38,6 @@ public class VnpayResponseController {
                 fields.put(fieldName, fieldValue);
             }
         }
-
 
         String vnp_SecureHash = request.getParameter("vnp_SecureHash");
 
@@ -53,15 +53,22 @@ public class VnpayResponseController {
             throw new BadRequestException("Signature doesn't match");
         }
 
-        String invoiceId = request.getParameter("vnp_TxnRef");
+        //get invoiceId
+        String vnp_TxnRef = request.getParameter("vnp_TxnRef");
+        String invoiceId = vnp_TxnRef.substring(0, vnp_TxnRef.length() - 5);
+
 
 
         if ("00".equals(request.getParameter("vnp_ResponseCode"))) {
+            //if payment success -> change status invoice
             invoiceRepo.changeStatusIsPaid(invoiceId);
+
             return ResponseEntity.ok("Payment Success!");
 
         }
-        invoiceRepo.deleteById(invoiceId);
+
+        //if payment fail -> delete invoice
+        invoiceRepo.deleteById(Long.parseLong(invoiceId));
         throw new BadRequestException("Payment failed");
 
 

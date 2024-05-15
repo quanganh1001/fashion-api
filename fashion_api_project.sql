@@ -2,10 +2,10 @@
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Máy chủ: localhost
--- Thời gian đã tạo: Th5 15, 2024 lúc 01:43 PM
--- Phiên bản máy phục vụ: 10.4.28-MariaDB
--- Phiên bản PHP: 8.2.4
+-- Máy chủ: 127.0.0.1
+-- Thời gian đã tạo: Th5 15, 2024 lúc 05:18 PM
+-- Phiên bản máy phục vụ: 10.4.32-MariaDB
+-- Phiên bản PHP: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -53,7 +53,7 @@ INSERT INTO `accounts` (`id`, `username`, `password`, `name`, `email`, `phone`, 
 (4, 'nhanvien2', '$2a$10$5D2B5O4CmS5RN4VxaTwJXOi9B83aa0lGwWy.sICls9O3LKRgNXyDm', 'quanganh', 'nhanvien2@gmail.com', '0364421123', 'hanoi', 'ROLE_EMPLOYEE', b'1', '2024-05-14 10:45:53', '2024-05-14 10:45:53'),
 (8, 'nhanvien3', '$2a$10$Eh581hpIm67HRwTrHJDpi.iNlHtcbYIBOy313HikKSFJQ4BUPycNu', 'nhanvien3', 'nhanvien3@gmail.com', '0312646431', 'hanoi', 'ROLE_EMPLOYEE', b'1', '2024-05-14 10:45:53', '2024-05-14 10:45:53'),
 (14, 'khachhang', '$2a$10$txuPDKVLcA7VGk5x9L8NfuLd2GcUeNAxRzZGl/pWgQl.LpFdcA8QK', 'khách hàng', 'khachhang@gmail.com', '0364431132', 'hanoi', 'ROLE_CUSTOMER', b'1', '2024-05-14 10:45:53', '2024-05-14 10:45:53'),
-(27, 'test', '$2a$10$XxAI/.unxYZtuYaCUmSQyucyMCSLjzzi82.XSyVlY/Rz2jd2IS/q6', 'name', 'test2@gmail.com', '012345789', 'test', 'ROLE_CUSTOMER', b'1', '2024-05-14 10:45:53', '2024-05-14 10:45:53');
+(28, 'test', '$2a$10$D1u7SGmapXHoWW/5FV.8heroRTJA16m74nl7R7NV2zc8.FJnzj3/y', 'name', 'test2@gmail.com', '012345789', 'test', 'ROLE_CUSTOMER', b'1', '2024-05-15 14:24:38', '2024-05-15 14:28:13');
 
 -- --------------------------------------------------------
 
@@ -117,7 +117,8 @@ INSERT INTO `categories` (`id`, `category_code`, `cat_name`, `parent_id`, `cat_b
 (123, 'SMT', 'Sơ mi trơn', 118, NULL, b'1', '2024-05-14 10:46:05', '2024-05-14 10:46:05'),
 (124, 'THUN', 'Áo thun', 96, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711887206/weftgxxcytuuh11xtpj8.webp', b'1', '2024-05-14 10:46:05', '2024-05-14 10:46:05'),
 (125, 'TIH', 'Thun in hình', 124, NULL, b'1', '2024-05-14 10:46:05', '2024-05-14 10:46:05'),
-(126, 'TT', 'Tank top', 124, NULL, b'1', '2024-05-14 10:46:05', '2024-05-14 10:46:05');
+(126, 'TT', 'Tank top', 124, NULL, b'1', '2024-05-14 10:46:05', '2024-05-14 10:46:05'),
+(129, 'test3', 'test3', NULL, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1715784103/holi9tkqgb70mqqm4thy.jpg', b'1', '2024-05-15 14:40:00', '2024-05-15 14:41:47');
 
 -- --------------------------------------------------------
 
@@ -952,8 +953,10 @@ CREATE TABLE `jwt_tokens` (
 INSERT INTO `jwt_tokens` (`id`, `token`, `expiration_date`, `refresh_token`, `account_id`, `refresh_expiration_date`, `revoked`, `created_at`, `updated_at`) VALUES
 (53, 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJuZ3V5ZW5xdWFuZ2FuaCIsInVzZXJuYW1lIjoibmhhbnZpZW4xIiwicm9sZSI6IlJPTEVfRU1QTE9ZRUUiLCJpYXQiOjE3MTM4ODk5NzMsImV4cCI6MTcxMzg5MzU3M30.UghEbLPKZUlWLiTXjqZauOAnIi3hxPHirXkD79ohzGk', '2024-04-24 00:32:53', '4bf80277-d71b-4533-ad94-d2dd16a472aa', 2, '2024-04-23 23:33:03', 0, '2024-05-14 10:47:28', '2024-05-14 10:47:28'),
 (54, 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJuZ3V5ZW5xdWFuZ2FuaCIsInVzZXJuYW1lIjoibmhhbnZpZW4xIiwicm9sZSI6IlJPTEVfRU1QTE9ZRUUiLCJpYXQiOjE3MTM4OTE2OTEsImV4cCI6MTcxMzg5NTI5MX0.zMzZPWZrUHYOsIauCEH0o9mu8VKGsXtHSaO-TpX2Dbw', '2024-04-24 01:01:31', '9bb3c204-6b55-47f3-bada-ed056704b408', 2, '2024-04-24 00:01:41', 0, '2024-05-14 10:47:28', '2024-05-14 10:47:28'),
-(110, 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJuZ3V5ZW5xdWFuZ2FuaCIsInVzZXJuYW1lIjoicXVhbmx5Iiwicm9sZSI6IlJPTEVfTUFOQUdFUiIsImlhdCI6MTcxNTY3NjU0MCwiZXhwIjoxNzE1NzYyOTQwfQ.2wdWjoSuEOrZizHJWVjXBc33fb6tqI7n_z1NS2k6dPo', '2024-05-15 15:49:00', '2400aead-272a-4235-bb27-c888891381af', 1, '2024-06-13 15:49:00', 0, '2024-05-14 10:47:28', '2024-05-14 10:47:28'),
-(111, 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJuZ3V5ZW5xdWFuZ2FuaCIsInVzZXJuYW1lIjoicXVhbmx5Iiwicm9sZSI6IlJPTEVfTUFOQUdFUiIsImlhdCI6MTcxNTY3NjYzNCwiZXhwIjoxNzE1NzYzMDM0fQ.RJIiejAmwcnr3BMdqKvpqP7E-hf06QdWXOl7bd929_o', '2024-05-15 15:50:34', 'ed640f98-ad2e-4909-ad78-05193aafa766', 1, '2024-06-13 15:50:34', 0, '2024-05-14 10:47:28', '2024-05-14 10:47:28');
+(115, 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJuZ3V5ZW5xdWFuZ2FuaCIsInVzZXJuYW1lIjoicXVhbmx5Iiwicm9sZSI6IlJPTEVfTUFOQUdFUiIsImlhdCI6MTcxNTc4MjM4MCwiZXhwIjoxNzE1ODY4NzgwfQ.vakwGuGyPnKXPE3vGylMolHLn7i1QvsfRYlOuMb3ZnM', '2024-05-16 21:13:00', '46f78908-332d-4221-9cbd-104acc889bbc', 1, '2024-06-14 21:13:00', 0, '2024-05-15 14:13:00', '2024-05-15 14:13:00'),
+(118, 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJuZ3V5ZW5xdWFuZ2FuaCIsInVzZXJuYW1lIjoidGVzdCIsInJvbGUiOiJST0xFX0NVU1RPTUVSIiwiaWF0IjoxNzE1NzgzMjE1LCJleHAiOjE3MTU4Njk2MTV9.IVbTZvuMjeMTAakiIWRmh_XX7ZUkKLvljAZaVj_fnPE', '2024-05-16 21:26:55', '86e28236-b3de-4631-b4a0-a187e0b86dba', 28, '2024-06-14 21:26:55', 0, '2024-05-15 14:26:55', '2024-05-15 14:26:55'),
+(119, 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJuZ3V5ZW5xdWFuZ2FuaCIsInVzZXJuYW1lIjoidGVzdCIsInJvbGUiOiJST0xFX0NVU1RPTUVSIiwiaWF0IjoxNzE1NzgzMjc1LCJleHAiOjE3MTU4Njk2NzV9.H7L5O3EI5bYE0oQ9ndqjlCgHzRROuZ_QjUKJ0fdr9pM', '2024-05-16 21:27:55', 'a634a324-4258-4e04-b1b3-cce1a6e478b8', 28, '2024-06-14 21:27:55', 0, '2024-05-15 14:27:55', '2024-05-15 14:27:55'),
+(120, 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJuZ3V5ZW5xdWFuZ2FuaCIsInVzZXJuYW1lIjoicXVhbmx5Iiwicm9sZSI6IlJPTEVfTUFOQUdFUiIsImlhdCI6MTcxNTc4MzMxNSwiZXhwIjoxNzE1ODY5NzE1fQ.SbdkB4nDtrwuXAucjnCZyoBwiuKkeu8MEWf-lESVDmM', '2024-05-16 21:28:35', 'ae4528cb-eb92-4f03-8ba7-f2b6dfad2559', 1, '2024-06-14 21:28:35', 0, '2024-05-15 14:28:35', '2024-05-15 14:28:35');
 
 -- --------------------------------------------------------
 
@@ -1064,7 +1067,7 @@ INSERT INTO `products` (`id`, `product_code`, `product_name`, `cat_id`, `price`,
 --
 
 CREATE TABLE `products_detail` (
-  `product_detail_id` int(11) NOT NULL,
+  `id` int(11) NOT NULL,
   `product_id` int(11) DEFAULT NULL,
   `code` varchar(30) DEFAULT NULL,
   `color_id` varchar(5) NOT NULL,
@@ -1080,7 +1083,7 @@ CREATE TABLE `products_detail` (
 -- Đang đổ dữ liệu cho bảng `products_detail`
 --
 
-INSERT INTO `products_detail` (`product_detail_id`, `product_id`, `code`, `color_id`, `size`, `quantity`, `out_of_stock`, `is_activated`, `created_at`, `updated_at`) VALUES
+INSERT INTO `products_detail` (`id`, `product_id`, `code`, `color_id`, `size`, `quantity`, `out_of_stock`, `is_activated`, `created_at`, `updated_at`) VALUES
 (1, 51, 'ESTP03872PE00SB_BL-S', 'BL', 'SIZE_S', 0, b'0', b'1', '2024-05-14 10:47:45', '2024-05-14 10:47:45'),
 (2, 51, 'ESTP03872PE00SB_BL-M', 'BL', 'SIZE_M', 0, b'0', b'1', '2024-05-14 10:47:45', '2024-05-14 10:47:45'),
 (3, 51, 'ESTP03872PE00SB_BL-L', 'BL', 'SIZE_L', 0, b'0', b'1', '2024-05-14 10:47:45', '2024-05-14 10:47:45'),
@@ -1521,7 +1524,7 @@ INSERT INTO `products_detail` (`product_detail_id`, `product_id`, `code`, `color
 (486, 9, 'DABK90801CT00SB_NV-33', 'NV', 'SIZE_33', 999, b'1', b'1', '2024-05-14 10:47:45', '2024-05-14 10:47:45'),
 (487, 9, 'DABK90801CT00SB_LG-32', 'LG', 'SIZE_32', 999, b'1', b'1', '2024-05-14 10:47:45', '2024-05-14 10:47:45'),
 (488, 9, 'DABK90801CT00SB_LG-33', 'LG', 'SIZE_33', 999, b'1', b'1', '2024-05-14 10:47:45', '2024-05-14 10:47:45');
-INSERT INTO `products_detail` (`product_detail_id`, `product_id`, `code`, `color_id`, `size`, `quantity`, `out_of_stock`, `is_activated`, `created_at`, `updated_at`) VALUES
+INSERT INTO `products_detail` (`id`, `product_id`, `code`, `color_id`, `size`, `quantity`, `out_of_stock`, `is_activated`, `created_at`, `updated_at`) VALUES
 (489, 9, 'DABK90801CT00SB_LG-31', 'LG', 'SIZE_31', 0, b'0', b'1', '2024-05-14 10:47:45', '2024-05-14 10:47:45'),
 (490, 9, 'DABK90801CT00SB_LG-30', 'LG', 'SIZE_30', 999, b'1', b'1', '2024-05-14 10:47:45', '2024-05-14 10:47:45'),
 (491, 9, 'DABK90801CT00SB_LG-29', 'LG', 'SIZE_29', 999, b'1', b'1', '2024-05-14 10:47:45', '2024-05-14 10:47:45'),
@@ -1867,7 +1870,7 @@ ALTER TABLE `products`
 -- Chỉ mục cho bảng `products_detail`
 --
 ALTER TABLE `products_detail`
-  ADD PRIMARY KEY (`product_detail_id`),
+  ADD PRIMARY KEY (`id`),
   ADD KEY `product_id` (`product_id`);
 
 --
@@ -1878,13 +1881,13 @@ ALTER TABLE `products_detail`
 -- AUTO_INCREMENT cho bảng `accounts`
 --
 ALTER TABLE `accounts`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
 -- AUTO_INCREMENT cho bảng `categories`
 --
 ALTER TABLE `categories`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=127;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=130;
 
 --
 -- AUTO_INCREMENT cho bảng `colors`
@@ -1914,7 +1917,7 @@ ALTER TABLE `invoices_detail`
 -- AUTO_INCREMENT cho bảng `jwt_tokens`
 --
 ALTER TABLE `jwt_tokens`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=112;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=121;
 
 --
 -- AUTO_INCREMENT cho bảng `products`
@@ -1926,7 +1929,7 @@ ALTER TABLE `products`
 -- AUTO_INCREMENT cho bảng `products_detail`
 --
 ALTER TABLE `products_detail`
-  MODIFY `product_detail_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=806;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=806;
 
 --
 -- Các ràng buộc cho các bảng đã đổ
@@ -1955,7 +1958,7 @@ ALTER TABLE `invoices`
 --
 ALTER TABLE `invoices_detail`
   ADD CONSTRAINT `invoices_detail_ibfk_1` FOREIGN KEY (`invoice_id`) REFERENCES `invoices` (`id`),
-  ADD CONSTRAINT `invoices_detail_ibfk_2` FOREIGN KEY (`product_detail_id`) REFERENCES `products_detail` (`product_detail_id`);
+  ADD CONSTRAINT `invoices_detail_ibfk_2` FOREIGN KEY (`product_detail_id`) REFERENCES `products_detail` (`id`);
 
 --
 -- Các ràng buộc cho bảng `jwt_tokens`

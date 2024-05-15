@@ -28,8 +28,8 @@ public class ImgProductServiceImpl implements ImgProductService {
     private ProductRepo productRepo;
 
     @Override
-    public List<ImgProductRes> imgProductByProductId(String productId) {
-        List<ImgProduct> imgProducts = imgProductRepo.findAllByProductProductId(productId);
+    public List<ImgProductRes> imgProductByProductId(Long productId) {
+        List<ImgProduct> imgProducts = imgProductRepo.findAllByProductId(productId);
         return imgProductMapper.toImgProductList(imgProducts);
     }
 
@@ -37,15 +37,17 @@ public class ImgProductServiceImpl implements ImgProductService {
     public void deleteImgProduct(Long id) throws IOException {
         ImgProduct imgProduct = imgProductRepo.findById(id).orElseThrow(() -> new NotFoundException("Image"));
         imgProductRepo.delete(imgProduct);
-
+        // delete from cloud
         cloudinaryService.deleteImageByUrl(imgProduct.getFileImg());
     }
 
     @Override
-    public void createImgProduct(String productId, MultipartFile[] files) throws IOException {
+    public void createImgProduct(Long productId, MultipartFile[] files) throws IOException {
         ImgProduct imgProduct = new ImgProduct();
+
         Product product = productRepo.findById(productId).orElseThrow(() -> new NotFoundException("Product"));
 
+        //add all imgage to cloud and db
         for (MultipartFile file : files) {
 
             Map<String, Object> uploadResult = cloudinaryService.upload(file);

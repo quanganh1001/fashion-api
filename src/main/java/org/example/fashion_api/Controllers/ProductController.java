@@ -20,13 +20,13 @@ import java.io.IOException;
 import java.util.List;
 
 @RestController
-@PreAuthorize("hasAnyRole('MANAGER')")
 @RequestMapping("/products")
 public class ProductController {
     @Autowired
     private ProductService productService;
     @Autowired
     private ProductDetailService productDetailService;
+
 
 
     @GetMapping()
@@ -37,7 +37,7 @@ public class ProductController {
     }
 
     @GetMapping("/{productId}")
-    public ProductRes getProduct(@PathVariable("productId") String productId){
+    public ProductRes getProduct(@PathVariable("productId") Long productId){
         return productService.getProduct(productId);
     }
 
@@ -49,32 +49,36 @@ public class ProductController {
         return productService.getAllProductsByCategory(keyword,page-1,limit,catId);
     }
 
+    @PreAuthorize("hasAnyRole('MANAGER')")
     @PostMapping()
     public ProductRes addProduct(@Valid @RequestBody CreateProductDto createProductDTO){
         return productService.addProduct(createProductDTO);
     }
 
+    @PreAuthorize("hasAnyRole('MANAGER')")
     @PutMapping("/{productId}")
     public ProductRes updateProduct(@Valid @RequestBody UpdateProductDto updateProductDto,
                                     @PathVariable Long productId) {
         return productService.updateProduct(productId, updateProductDto);
     }
 
+    @PreAuthorize("hasAnyRole('MANAGER')")
     @DeleteMapping("/{productId}")
-    public ResponseEntity<String> deleteProduct(@PathVariable String productId){
+    public ResponseEntity<String> deleteProduct(@PathVariable Long productId){
         productService.deleteProduct(productId);
         return ResponseEntity.ok("deleted");
     }
 
+    @PreAuthorize("hasAnyRole('MANAGER')")
     @PostMapping("/updateProductBackground")
     public ResponseEntity<String> updateProductBackground(@RequestParam("file") MultipartFile file,
-                                                  @RequestParam("productId") String productId) throws IOException {
+                                                  @RequestParam("productId") Long productId) throws IOException {
         return productService.updateProductBackground(file,productId);
 
     }
 
     @GetMapping("/{productId}/productsDetail")
-    public List<ProductDetailRes> getAllProductDetails(@PathVariable("productId") String productId) throws JsonProcessingException {
+    public List<ProductDetailRes> getAllProductDetailsByProductId(@PathVariable("productId") Long productId) throws JsonProcessingException {
         return productDetailService.findAllProductDetails(productId);
     }
 

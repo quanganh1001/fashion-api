@@ -6,9 +6,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface InvoiceDetailRepo extends JpaRepository<InvoiceDetail,Long> {
-    List<InvoiceDetail> findAllByInvoiceInvoiceId(String invoiceId);
+    List<InvoiceDetail> findAllByInvoiceId(Long invoiceId);
 
-    InvoiceDetail findByInvoiceInvoiceIdAndProductDetailProductDetailId(String invoiceId,Long productDetailId);
+    InvoiceDetail findByInvoiceIdAndProductDetailId(Long invoiceId,Long productDetailId);
 
 
 }

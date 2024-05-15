@@ -34,9 +34,13 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public List<CategoryRes> findAll() throws JsonProcessingException {
+
         String redisKey = "categoryRepo.findAll() - categories";
+
+        //get redis
         List<Category> categories = redisService.getListRedis(redisKey, Category.class);
 
+        // if redis with redis key = null -> create redis
         if (categories == null) {
             categories = categoryRepo.findAll();
             redisService.saveRedis(redisKey, categories);
@@ -51,6 +55,7 @@ public class CategoryServiceImpl implements CategoryService {
 
         Category currentCategory = categoryRepo.findById(catId).orElseThrow(() -> new NotFoundException(catId.toString()));
 
+        //check exist by category code and category name
         if (!Objects.equals(categoryDto.getCategoryCode(), currentCategory.getCategoryCode())
                 && categoryRepo.existsByCategoryCode(categoryDto.getCategoryCode())) {
             throw new AlreadyExistException(categoryDto.getCategoryCode());
@@ -58,17 +63,22 @@ public class CategoryServiceImpl implements CategoryService {
             throw new AlreadyExistException(categoryDto.getCatName());
         }
 
-        Category category = categoryMapper.categoryDtoToCategory(categoryDto, new Category());
+        currentCategory = categoryMapper.categoryDtoToCategory(categoryDto, currentCategory);
+        if (categoryDto.getCatParent() == null) {
+            currentCategory.setCatParent(null);
+        }
 
-        categoryRepo.save(category);
+        Category category = categoryRepo.save(currentCategory);
 
-        return categoryMapper.categoryToCategoryRes(currentCategory);
+        return categoryMapper.categoryToCategoryRes(category);
     }
 
     @Override
     public void delete(Long catId) throws IOException {
         Category category = categoryRepo.findById(catId).orElseThrow(() -> new NotFoundException(catId.toString()));
+
         categoryRepo.delete(category);
+
         cloudinaryService.deleteImageByUrl(category.getCatBackground());
     }
 
@@ -80,15 +90,25 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public CategoryRes addCategory(CategoryDto categoryDto) {
+
+        //check exist by category code and category name
         if (categoryRepo.existsByCategoryCode(categoryDto.getCategoryCode())) {
+
             throw new AlreadyExistException(categoryDto.getCategoryCode());
+
         } else if (categoryRepo.existsByCatName(categoryDto.getCatName())) {
+
             throw new AlreadyExistException(categoryDto.getCatName());
         }
 
-        Category category= categoryRepo.save(categoryMapper.categoryDtoToCategory(categoryDto, new Category()));
+        Category category = categoryMapper.categoryDtoToCategory(categoryDto, new Category());
+        if (categoryDto.getCatParent() == null) {
+            category.setCatParent(null);
+        }
 
-        return categoryMapper.categoryToCategoryRes(category);
+        Category newCategory = categoryRepo.save(category);
+
+        return categoryMapper.categoryToCategoryRes(newCategory);
 
     }
 
@@ -102,14 +122,21 @@ public class CategoryServiceImpl implements CategoryService {
         Map<String, Object> uploadResult = cloudinaryService.upload(file);
 
         String imageUrl = uploadResult.get("secure_url").toString();
+
         categoryRepo.updateCatBackground(imageUrl, catId);
+
         return imageUrl;
     }
 
     @Override
     public List<CategoryRes> childCategories(Long catParentId) throws JsonProcessingException {
+
         String redisKey = "childCategories("+catParentId+") - category";
+
+        //get redis
         List<Category> categories = redisService.getListRedis(redisKey, Category.class);
+
+        // if redis with redis key = null -> create redis
         if (categories == null){
 
             List<Category> childCategories;
@@ -120,6 +147,7 @@ public class CategoryServiceImpl implements CategoryService {
             } else {
                 childCategories = categoryRepo.findAllByCatParentId(null);
             }
+
             redisService.saveRedis(redisKey, childCategories);
             return categoryMapper.toDtoList(childCategories);
         }
@@ -131,7 +159,9 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public List<Category> CatDescendants(Long id, List<Category> allCategory) {
+
         List<Category> categories = categoryRepo.findAllByCatParentId(id);
+        // get all child category of child category
         for (Category child : categories) {
             allCategory.add(child);
             CatDescendants(child.getId(), allCategory);

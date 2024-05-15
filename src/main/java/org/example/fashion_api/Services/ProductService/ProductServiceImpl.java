@@ -48,18 +48,21 @@ public class ProductServiceImpl implements ProductService {
             page = 0;
         }
 
+        // create redis key
         String redisKey = "getAllProducts("+keyword+","+page+","+limit+") - product";
 
+        // get redis
         PageProductRes pageProductRes = redisService.getRedis(redisKey, PageProductRes.class);
 
+        // if redis with redis key = null -> create redis
         if (pageProductRes == null){
-            PageRequest pageRequest = PageRequest.of(page,limit, Sort.by("product_id").ascending());
+            PageRequest pageRequest = PageRequest.of(page,limit, Sort.by("id").ascending());
 
             Page<Product> productsPage = productRepo.findAllProductByKey(keyword,pageRequest);
 
             List<ProductRes> productResList = productMapper.productsToProductRes(productsPage.getContent());
 
-            var totalProduct = productRepo.count();
+            var totalProduct = Integer.parseInt(String.valueOf(productsPage.getTotalElements()));
             pageProductRes = PageProductRes.builder()
                     .productsRes(productResList)
                     .totalProduct(totalProduct)
@@ -74,50 +77,49 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public ProductRes getProduct(Long productId) {
-        return productMapper.productToProductRes(productRepo.findById(productId).orElseThrow(() -> new NotFoundException(productId)));
+        return productMapper.productToProductRes(productRepo.findById(productId).orElseThrow(() -> new NotFoundException("product")));
     }
 
     @Override
     @Transactional
     public ProductRes updateProduct(Long productId, UpdateProductDto updateProductDto) {
-        Product currentProduct = productRepo.findById(productId).orElseThrow(() -> new NotFoundException(productId));
+        Product currentProduct = productRepo.findById(productId).orElseThrow(() -> new NotFoundException("product"));
 
-        if (!productId.equals(updateProductDto.getProductId()) && productRepo.existsByProductId(updateProductDto.getProductId())) {
-            throw new AlreadyExistException(updateProductDto.getProductId());
+        // check code and name exist
+        if (!currentProduct.getProductCode().equals(updateProductDto.getProductCode()) && productRepo.existsByProductCode(updateProductDto.getProductCode())) {
+            throw new AlreadyExistException(updateProductDto.getProductCode());
         } else if (!currentProduct.getProductName().equals(updateProductDto.getProductName()) && productRepo.existsByProductName(updateProductDto.getProductName())) {
             throw new AlreadyExistException(updateProductDto.getProductName());
         }
 
-        if (!currentProduct.getCategory().getCatId().equals(updateProductDto.getCatId())) {
-            Category newCategory = categoryRepo.findById(updateProductDto.getCatId())
-                    .orElseThrow(() -> new NotFoundException(updateProductDto.getCatId()));
 
-            currentProduct.setCategory(newCategory);
-        }
+        Product product = productRepo.save(productMapper.updateProductDtoToProduct(updateProductDto, currentProduct));
 
-        Product product = productMapper.updateProductDtoToProduct(updateProductDto, currentProduct);
 
-        productRepo.save(product);
 
-        return productMapper.productToProductRes(currentProduct);
+        return productMapper.productToProductRes(product);
     }
 
     @Override
-    public void deleteProduct(String productId) {
-        Product currentProduct = productRepo.findById(productId).orElseThrow(() -> new NotFoundException(productId));
+    public void deleteProduct(Long productId) {
+        Product currentProduct = productRepo.findById(productId).orElseThrow(() -> new NotFoundException("Product"));
         productRepo.delete(currentProduct);
     }
 
     @Override
     @Transactional
     public ProductRes addProduct(CreateProductDto createProductDTO) {
-        if (productRepo.existsByProductId(createProductDTO.getProductId())) {
-            throw new AlreadyExistException(createProductDTO.getProductId());
-        } else if (productRepo.existsByProductId(createProductDTO.getProductId())) {
+
+        // check code and name exist
+        if (productRepo.existsByProductCode(createProductDTO.getProductCode())) {
+            throw new AlreadyExistException(createProductDTO.getProductCode());
+        } else if (productRepo.existsByProductName(createProductDTO.getProductName())) {
             throw new AlreadyExistException(createProductDTO.getProductName());
         }
 
+        // save product
         Product product = productRepo.save(productMapper.createProductDtoToProduct(createProductDTO, new Product()));
+
         return productMapper.productToProductRes(product);
     }
 
@@ -127,21 +129,30 @@ public class ProductServiceImpl implements ProductService {
     public ResponseEntity<String> updateProductBackground(MultipartFile file, Long productId) throws IOException {
         Product product = productRepo.findById(productId).orElseThrow(() -> new NotFoundException("Product not found"));
 
+        // delete old image in cloud
         cloudinaryService.deleteImageByUrl(product.getImageBackground());
 
+        // add new image in cloud
         Map<String, Object> uploadResult = cloudinaryService.upload(file);
 
+
+        //save to db
         String imageUrl = uploadResult.get("secure_url").toString();
+
         productRepo.updateProductBackground(imageUrl, productId);
+
         return ResponseEntity.ok(imageUrl);
     }
 
     @Override
     public PageProductRes getAllProductsByCategory(String keyword, int page, int limit, Long catId) throws JsonProcessingException {
+
         String redisKey = "productService.getAllProductsByCategory("+keyword+","+page+","+limit+","+catId+") - product";
 
+        // get redis
         PageProductRes pageProductRes = redisService.getRedis(redisKey, PageProductRes.class);
 
+        // if redis with key = null -> create redis
         if (pageProductRes == null){
             List<Product> productList = new ArrayList<>();
             List<Category> categories = categoryService.CatDescendants(catId, new ArrayList<>());
@@ -149,7 +160,7 @@ public class ProductServiceImpl implements ProductService {
 
             categories.add(categoryRepo.findById(catId).orElseThrow(() -> new NotFoundException(catId.toString())));
 
-            PageRequest pageRequest = PageRequest.of(page,limit, Sort.by("product_id").ascending());
+            PageRequest pageRequest = PageRequest.of(page,limit, Sort.by("id").ascending());
 
             for (Category cat : categories) {
                 Page<Product> productPage = productRepo.findAllByCategoryCatId(cat.getId(),keyword,pageRequest);
@@ -157,9 +168,9 @@ public class ProductServiceImpl implements ProductService {
                 productList.addAll(productPage.getContent());
             }
 
-
+            // convert to PageDto
             List<ProductRes> productsRes = productMapper.productsToProductRes(productList);
-            var totalProduct = productRepo.count();
+            var totalProduct = productList.size();
             int totalPage = (int) Math.ceil((double) productsRes.size() / limit);
 
             pageProductRes = PageProductRes.builder()

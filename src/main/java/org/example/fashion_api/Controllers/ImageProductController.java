@@ -14,24 +14,24 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/imgProducts")
-@PreAuthorize("hasAnyRole('MANAGER')")
 public class ImageProductController {
     @Autowired
     private ImgProductService imgProductService;
 
 
     @GetMapping("/{productId}")
-    public List<ImgProductRes> getImgProductsByProductId(@PathVariable String productId) {
+    public List<ImgProductRes> getImgProductsByProductId(@PathVariable Long productId) {
         return imgProductService.imgProductByProductId(productId);
     }
 
+    @PreAuthorize("hasAnyRole('MANAGER')")
     @PostMapping("/{productId}")
-    public ResponseEntity<String> addImgProduct(@PathVariable String productId, MultipartFile[] imgFiles) throws IOException {
+    public ResponseEntity<String> addImgProduct(@PathVariable Long productId, MultipartFile[] imgFiles) throws IOException {
         imgProductService.createImgProduct(productId, imgFiles);
         return ResponseEntity.ok("done");
     }
 
-
+    @PreAuthorize("hasAnyRole('MANAGER')")
     @DeleteMapping("/{imgProductId}")
     public ResponseEntity<String> deleteImgProductById(@PathVariable Long imgProductId) throws IOException {
         imgProductService.deleteImgProduct(imgProductId);

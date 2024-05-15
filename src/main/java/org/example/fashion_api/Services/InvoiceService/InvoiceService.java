@@ -10,11 +10,11 @@ public interface InvoiceService {
 
     InvoiceRes createInvoice(CreateInvoiceDto createInvoiceDto);
 
-    InvoiceRes getById(String invoiceId);
+    InvoiceRes getById(Long invoiceId);
 
-    void updateShippingFee(String invoiceId, Long shippingFee);
+    void updateShippingFee(Long invoiceId, Long shippingFee);
 
-    void deleteInvoice(String invoiceId);
+    void deleteInvoice(Long invoiceId);
 
     String checkout(HttpServletRequest http, CheckoutDto checkoutDto);
 }

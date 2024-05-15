@@ -16,7 +16,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("invoicesDetail")
-@PreAuthorize("hasAnyRole('MANAGER')")
+@PreAuthorize("hasAnyRole('MANAGER','EMPLOYEE')")
 public class InvoiceDetailController {
     @Autowired
     private InvoiceDetailService invoiceDetailService;

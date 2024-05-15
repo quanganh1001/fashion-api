@@ -29,6 +29,6 @@ public interface AccountRepo extends JpaRepository<Account, Long> {
     Page<Account> findAllByKeyword(@Param("keyword") String keyword, PageRequest pageable);
 
     @Modifying
-    @Query(value = "UPDATE accounts SET password = :newPass WHERE account_id = :accountId",nativeQuery = true)
+    @Query(value = "UPDATE accounts SET password = :newPass WHERE id = :accountId",nativeQuery = true)
     void changePassword(@Param("accountId") Long accountId, @Param("newPass") String newPass);
 }

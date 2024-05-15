@@ -30,29 +30,29 @@ public class InvoiceServiceImpl implements InvoiceService {
 
     @Override
     public PageInvoiceRes getAllInvoices(String keyword, int page, int pageSize) {
-        if(page < 0){
+        if (page < 0) {
             page = 0;
         }
 
-        PageRequest pageRequest = PageRequest.of(page,pageSize, Sort.by("createdAt").ascending());
+        PageRequest pageRequest = PageRequest.of(page, pageSize, Sort.by("createdAt").ascending());
 
-        Page<Invoice> pageInvoices = invoiceRepo.findAllByPhoneContainingIgnoreCaseOrInvoiceIdContainingIgnoreCase(keyword,keyword,pageRequest);
+        Page<Invoice> pageInvoices = invoiceRepo.findAllByPhoneContainingIgnoreCaseOrInvoiceCodeContainingIgnoreCaseAndIsDeletedFalse(keyword, keyword, pageRequest);
 
         List<InvoiceRes> invoicesRes = invoiceMapper.toResList(pageInvoices.getContent());
 
         var totalInvoices = invoiceRepo.count();
 
         return PageInvoiceRes.builder()
-                                            .currentPage(page+1)
-                                            .totalPages(pageInvoices.getTotalPages())
-                                            .totalInvoices(totalInvoices)
-                                            .invoices(invoicesRes)
-                                            .build();
+                .currentPage(page + 1)
+                .totalPages(pageInvoices.getTotalPages())
+                .totalInvoices(totalInvoices)
+                .invoices(invoicesRes)
+                .build();
     }
 
     @Override
-    public InvoiceRes createInvoice(CreateInvoiceDto createInvoiceDto){
-        Invoice invoice = invoiceMapper.createInvoiceToInvoice(createInvoiceDto,new Invoice());
+    public InvoiceRes createInvoice(CreateInvoiceDto createInvoiceDto) {
+        Invoice invoice = invoiceMapper.createInvoiceToInvoice(createInvoiceDto, new Invoice());
 
         Invoice newInvoice = invoiceRepo.save(invoice);
 
@@ -60,14 +60,14 @@ public class InvoiceServiceImpl implements InvoiceService {
     }
 
     @Override
-    public InvoiceRes getById(String invoiceId) {
+    public InvoiceRes getById(Long invoiceId) {
         return invoiceMapper.invoiceToInvoiceRes(invoiceRepo.findById(invoiceId)
-                .orElseThrow(()->new NotFoundException("Invoice not found")));
+                .orElseThrow(() -> new NotFoundException("Invoice")));
     }
 
     @Override
-    public void updateShippingFee(String invoiceId, Long shippingFee) {
-        Invoice invoice = invoiceRepo.findById(invoiceId).orElseThrow(()->new NotFoundException("Invoice not found"));
+    public void updateShippingFee(Long invoiceId, Long shippingFee) {
+        Invoice invoice = invoiceRepo.findById(invoiceId).orElseThrow(() -> new NotFoundException("Invoice"));
 
         invoice.setShippingFee(shippingFee);
 
@@ -79,8 +79,8 @@ public class InvoiceServiceImpl implements InvoiceService {
 
     @Override
     @Transactional
-    public void deleteInvoice(String invoiceId) {
-        Invoice invoice = invoiceRepo.findById(invoiceId).orElseThrow(()->new NotFoundException("Invoice not found"));
+    public void deleteInvoice(Long invoiceId) {
+        Invoice invoice = invoiceRepo.findById(invoiceId).orElseThrow(() -> new NotFoundException("Invoice"));
         invoiceRepo.delete(invoice);
     }
 
@@ -96,14 +96,14 @@ public class InvoiceServiceImpl implements InvoiceService {
                 .build();
         InvoiceRes invoiceRes = createInvoice(createInvoiceDto);
 
-        for (InvoiceDetailDto invoiceDetail: checkoutDto.getInvoicesDetails()){
-            invoiceDetailService.createInvoiceDetail(invoiceRes.getInvoiceId(),invoiceDetail.getProductDetailId());
+        for (InvoiceDetailDto invoiceDetail : checkoutDto.getInvoicesDetails()) {
+            invoiceDetailService.createInvoiceDetail(invoiceRes.getId(), invoiceDetail.getProductDetailId());
         }
 
-        Invoice invoice = invoiceRepo.findById(invoiceRes.getInvoiceId())
-                .orElseThrow(()->new NotFoundException("Invoice not found"));
+        Invoice invoice = invoiceRepo.findById(invoiceRes.getId())
+                .orElseThrow(() -> new NotFoundException("Invoice"));
 
-        return vnpayService.createPaymentUrl(http,invoiceRes.getInvoiceId(),invoice.getTotalBill());
+        return vnpayService.createPaymentUrl(http, invoiceRes.getId(), invoice.getTotalBill());
 
     }
 

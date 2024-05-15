@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.example.fashion_api.Exception.AlreadyExistException;
 import org.example.fashion_api.Exception.BadCredentialsException;
+import org.example.fashion_api.Exception.BadRequestException;
 import org.example.fashion_api.Exception.NotFoundException;
 import org.example.fashion_api.Mapper.AccountMapper;
 import org.example.fashion_api.Models.Accounts.*;
@@ -14,7 +15,6 @@ import org.example.fashion_api.Models.MailTemplate;
 import org.example.fashion_api.Producer.MailProducer;
 import org.example.fashion_api.Repositories.AccountRepo;
 import org.example.fashion_api.Repositories.JwtTokenRepo;
-import org.example.fashion_api.Services.EmailService;
 import org.example.fashion_api.Services.JwtService.JwtService;
 import org.example.fashion_api.Services.RedisService.RedisService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,7 +39,8 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class AccountServiceImpl implements AccountService {
 
-    private final AuthenticationManager authenticationManager;
+    @Autowired
+    private AuthenticationManager authenticationManager;
     @Autowired
     private JwtService jwtService;
     @Autowired
@@ -100,19 +101,19 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public ResponseEntity<?> getAllAccount(String keyword, int page, int limit) {
-        try{
-            if(page < 0){
+        try {
+            if (page < 0) {
                 page = 0;
             }
-            
-            String keyRedis = "getAllAccount("+keyword+","+page+","+ limit+") - account";
 
-            PageAccountRes pageAccountResRes = redisService.getRedis(keyRedis,PageAccountRes.class);
+            String keyRedis = "getAllAccount(" + keyword + "," + page + "," + limit + ") - account";
 
-            if (pageAccountResRes == null){
-                PageRequest pageRequest = PageRequest.of(page,limit, Sort.by("account_id").ascending());
+            PageAccountRes pageAccountResRes = redisService.getRedis(keyRedis, PageAccountRes.class);
 
-                Page<Account> accountPage = accountRepo.findAllByKeyword(keyword,pageRequest);
+            if (pageAccountResRes == null) {
+                PageRequest pageRequest = PageRequest.of(page, limit, Sort.by("id").ascending());
+
+                Page<Account> accountPage = accountRepo.findAllByKeyword(keyword, pageRequest);
 
                 List<AccountRes> accountsRes = accountMapper.accountsToListAccountRes(accountPage.getContent());
 
@@ -120,17 +121,17 @@ public class AccountServiceImpl implements AccountService {
                 pageAccountResRes = PageAccountRes
                         .builder()
                         .accountsRes(accountsRes)
-                        .currenPage(page+1)
+                        .currenPage(page + 1)
                         .totalAccount(totalAccount)
                         .totalPages(accountPage.getTotalPages())
                         .build();
 
-                redisService.saveRedis(keyRedis,pageAccountResRes);
+                redisService.saveRedis(keyRedis, pageAccountResRes);
             }
 
 
             return ResponseEntity.ok(pageAccountResRes);
-        }catch (Exception e){
+        } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
 
@@ -143,6 +144,7 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public AccountRes registerAccount(AccountRegisterDto accountRegisterDto) {
+        // check exist
         if (accountRepo.existsByUsername(accountRegisterDto.getUsername())) {
             throw new AlreadyExistException("Username");
         } else if (accountRepo.existsByEmail(accountRegisterDto.getEmail())) {
@@ -153,9 +155,11 @@ public class AccountServiceImpl implements AccountService {
 
         accountRegisterDto.setPassword(passwordEncoder.encode(accountRegisterDto.getPassword()));
 
+        // save db
         Account account = accountMapper.accountRegisterDtoToAccount(accountRegisterDto, new Account());
         accountRepo.save(account);
 
+        // send mail to user
         MailTemplate mailTemplate = MailTemplate.builder()
                 .to(accountRegisterDto.getEmail())
                 .subject("Accounts has been successfully registered!")
@@ -178,7 +182,7 @@ public class AccountServiceImpl implements AccountService {
     @Transactional
     public ResponseEntity<AccountRes> updateAccount(Long accountId, AccountUpdateDto dto) {
         Account account = accountRepo.findById(accountId).orElseThrow(() -> new NotFoundException("Accounts"));
-
+        // check exist
         if (!Objects.equals(account.getEmail(), dto.getEmail()) && accountRepo.existsByEmail(dto.getEmail())) {
             throw new AlreadyExistException("Email");
         } else if (!Objects.equals(account.getPhone(), dto.getPhone()) && accountRepo.existsByPhone(dto.getPhone())) {
@@ -193,67 +197,74 @@ public class AccountServiceImpl implements AccountService {
     @Transactional
     @Override
     public void changePass(Long accountId, ChangePassDto changePassDto) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
-        if(authentication != null && authentication.isAuthenticated()){
-            String userName = authentication.getName();
+        //check auth
+        Account account = getAccountIdFromAuthentication();
 
-            Account account = accountRepo.findByUsername(userName).orElseThrow(()-> new NotFoundException("Accounts"));
+        if (Objects.equals(accountId, account.getId())) {
 
-            if(Objects.equals(accountId, account.getId())){
+            accountRepo.changePassword(accountId, passwordEncoder.encode(changePassDto.getNewPass()));
 
-                accountRepo.changePassword(accountId, passwordEncoder.encode(changePassDto.getNewPass()));
 
-                MailTemplate mailTemplate = MailTemplate.builder()
-                        .to(account.getEmail())
-                        .subject("Password changed successfully!")
-                        .body("Password changed successfully!")
-                        .build();
-                mailProducer.send(mailTemplate);
-            }else {
-                throw new AccessDeniedException(" Access Denied");
-            }
-        }else
+            MailTemplate mailTemplate = MailTemplate.builder()
+                    .to(account.getEmail())
+                    .subject("Password changed successfully!")
+                    .body("Password changed successfully!")
+                    .build();
+            mailProducer.send(mailTemplate);
+        } else
             throw new AccessDeniedException(" Access Denied");
     }
 
     @Transactional
     @Override
-    public void resetPass(String email){
-        Account account = accountRepo.findByEmail(email).orElseThrow(()-> new NotFoundException("Email"));
+    public void resetPass(String email) {
+        Account account = accountRepo.findByEmail(email).orElseThrow(() -> new NotFoundException("Email"));
 
         String newPass = RandomStringUtils.randomAlphanumeric(6);
 
         accountRepo.changePassword(account.getId(), passwordEncoder.encode(newPass));
 
+        // send password to mail of user
         MailTemplate mailTemplate = MailTemplate.builder()
                 .to(account.getEmail())
                 .subject("Password changed successfully!")
-                .body("Your new Password is: "+ newPass)
+                .body("Your new Password is: " + newPass)
                 .build();
         mailProducer.send(mailTemplate);
     }
 
     @Transactional
     @Override
-    public void Logout(String token){
+    public void Logout(String token) {
+
+        // check auth
+        Account account = getAccountIdFromAuthentication();
+
+        JwtToken jwtToken = jwtTokenRepo.findByToken(token);
+
+        if (jwtToken != null && Objects.equals(jwtToken.getAccount().getId(), account.getId())) {
+            jwtTokenRepo.delete(jwtToken);
+        }else {
+            throw new BadRequestException("Token not found");
+        }
+
+
+        SecurityContextHolder.clearContext();
+    }
+
+    @Override
+    public Account getAccountIdFromAuthentication() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
-        if(authentication != null && authentication.isAuthenticated()){
+        if (authentication != null && authentication.isAuthenticated()) {
 
             String userName = authentication.getName();
 
-            Account account = accountRepo.findByUsername(userName).orElseThrow(()-> new NotFoundException("Accounts"));
-
-            JwtToken jwtToken = jwtTokenRepo.findByToken(token);
-
-            if (jwtToken !=null && Objects.equals(jwtToken.getAccount().getId(), account.getId())){
-                jwtTokenRepo.delete(jwtToken);
-            }
-
+            return accountRepo.findByUsername(userName).orElseThrow(() ->  new AccessDeniedException(" Access Denied"));
         }
-        SecurityContextHolder.clearContext();
-
-
+        throw new AccessDeniedException(" Access Denied");
     }
+
+
 }

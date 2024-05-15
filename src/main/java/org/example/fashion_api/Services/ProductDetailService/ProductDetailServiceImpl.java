@@ -23,12 +23,12 @@ public class ProductDetailServiceImpl implements ProductDetailService{
     private RedisService redisService;
 
     @Override
-    public List<ProductDetailRes> findAllProductDetails(String productId) throws JsonProcessingException {
+    public List<ProductDetailRes> findAllProductDetails(Long productId) throws JsonProcessingException {
         String keyRedis = "findAllProductDetails("+productId+")";
         List<ProductDetail> productDetails = redisService.getListRedis(keyRedis,ProductDetail.class);
 
         if (productDetails == null) {
-            productDetails = productDetailRepo.findAllByProductProductId(productId);
+            productDetails = productDetailRepo.findAllByProductId(productId);
 
             redisService.saveRedis(keyRedis,productDetails);
         }
@@ -54,7 +54,7 @@ public class ProductDetailServiceImpl implements ProductDetailService{
     public ProductDetailRes updateProductDetail(Long productDetailId, UpdateProductDetailDto dto){
         ProductDetail currenProductDetail = productDetailRepo.findById(productDetailId).orElseThrow(()-> new NotFoundException(productDetailId.toString()));
 
-        if(!Objects.equals(productDetailId, currenProductDetail.getProductDetailId()) && productDetailRepo.existsByCode(dto.getCode())){
+        if(!Objects.equals(productDetailId, currenProductDetail.getId()) && productDetailRepo.existsByCode(dto.getCode())){
             throw new AlreadyExistException(dto.getCode());
         }
 

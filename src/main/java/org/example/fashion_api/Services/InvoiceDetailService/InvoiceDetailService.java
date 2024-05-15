@@ -6,11 +6,11 @@ import java.util.List;
 
 public interface InvoiceDetailService {
 
-    List<InvoiceDetailRes> getAllInvoicesDetailsByInvoice(String invoiceId);
+    List<InvoiceDetailRes> getAllInvoicesDetailsByInvoice(Long invoiceId);
 
     InvoiceDetailRes getById(Long invoiceDetailId);
 
-    InvoiceDetailRes createInvoiceDetail(String invoiceId, Long productDetailId);
+    InvoiceDetailRes createInvoiceDetail(Long invoiceId, Long productDetailId);
 
     void changeQuantity(Long invoiceDetailId, int quantity);
 

@@ -23,7 +23,7 @@ public interface InvoiceDetailMapper {
 
     List<InvoiceDetailRes> toResList(List<InvoiceDetail> invoiceDetails);
 
-    @Mapping(target = "invoiceIdId", source = "invoice.id")
+    @Mapping(target = "invoiceId", source = "invoice.id")
     @Mapping(target = "productName", source = "productDetail.product.productName")
     @Mapping(target = "code", source = "productDetail.code")
     InvoiceDetailRes invoiceDetailToInvoiceDetailRes(InvoiceDetail invoiceDetails);

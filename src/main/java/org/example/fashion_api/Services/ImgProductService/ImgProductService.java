@@ -7,9 +7,9 @@ import java.io.IOException;
 import java.util.List;
 
 public interface ImgProductService {
-    List<ImgProductRes> imgProductByProductId(String productId);
+    List<ImgProductRes> imgProductByProductId(Long productId);
 
     void deleteImgProduct(Long id) throws IOException;
 
-    void createImgProduct(String productId, MultipartFile[] file) throws IOException;
+    void createImgProduct(Long productId, MultipartFile[] file) throws IOException;
 }

@@ -26,4 +26,6 @@ public interface AccountService {
 
     @Transactional
     void Logout(String token);
+
+    Account getAccountIdFromAuthentication();
 }

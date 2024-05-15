@@ -27,8 +27,8 @@ public class InvoiceDetailServiceImpl implements InvoiceDetailService{
     private ProductDetailRepo productDetailRepo;
 
     @Override
-    public List<InvoiceDetailRes> getAllInvoicesDetailsByInvoice(String invoiceId){
-        return invoiceDetailMapper.toResList(invoiceDetailRepo.findAllByInvoiceInvoiceId(invoiceId));
+    public List<InvoiceDetailRes> getAllInvoicesDetailsByInvoice(Long invoiceId){
+        return invoiceDetailMapper.toResList(invoiceDetailRepo.findAllByInvoiceId(invoiceId));
     }
 
     @Override
@@ -38,21 +38,21 @@ public class InvoiceDetailServiceImpl implements InvoiceDetailService{
     }
 
     @Override
-    public InvoiceDetailRes createInvoiceDetail(String invoiceId, Long productDetailId) {
+    public InvoiceDetailRes createInvoiceDetail(Long invoiceId, Long productDetailId) {
         Invoice invoice = invoiceRepo.findById(invoiceId).orElseThrow(()
                 ->new NotFoundException("Invoice not found"));
 
         ProductDetail productDetail = productDetailRepo.findById(productDetailId).orElseThrow(()
                 ->new NotFoundException("Product detail not found"));
 
-        InvoiceDetail invoiceDetail = invoiceDetailRepo.findByInvoiceInvoiceIdAndProductDetailProductDetailId(invoiceId,productDetailId);
+        InvoiceDetail invoiceDetail = invoiceDetailRepo.findByInvoiceIdAndProductDetailId(invoiceId,productDetailId);
 
         if (invoiceDetail != null){
-
+            // quantity +1
             invoiceDetail.setQuantity(invoiceDetail.getQuantity()+1);
 
         }else {
-
+            // create invoice detail
             Long price = productDetail.getProduct().getDiscountPrice() == null
                     ? productDetail.getProduct().getPrice()
                     : productDetail.getProduct().getDiscountPrice();
@@ -73,7 +73,7 @@ public class InvoiceDetailServiceImpl implements InvoiceDetailService{
     @Override
     @Transactional
     public void changeQuantity(Long invoiceDetailId, int quantity) {
-        InvoiceDetail invoiceDetail = invoiceDetailRepo.findById(invoiceDetailId).orElseThrow(()->new NotFoundException("Invoice not found"));
+        InvoiceDetail invoiceDetail = invoiceDetailRepo.findById(invoiceDetailId).orElseThrow(()->new NotFoundException("Invoice"));
 
         invoiceDetail.setQuantity(quantity);
 
@@ -83,7 +83,7 @@ public class InvoiceDetailServiceImpl implements InvoiceDetailService{
     @Override
     @Transactional
     public void deleteInvoiceDetail(Long invoiceDetailId) {
-        InvoiceDetail invoiceDetail = invoiceDetailRepo.findById(invoiceDetailId).orElseThrow(()->new NotFoundException("Invoice detail not found"));
+        InvoiceDetail invoiceDetail = invoiceDetailRepo.findById(invoiceDetailId).orElseThrow(()->new NotFoundException("Invoice detail"));
         invoiceDetailRepo.delete(invoiceDetail);
     }
 }

@@ -21,7 +21,7 @@ public interface ProductService {
     @Transactional
     ProductRes updateProduct(Long productId, UpdateProductDto updateProductDto);
 
-    void deleteProduct(String productId);
+    void deleteProduct(Long productId);
 
     @Transactional
     ProductRes addProduct(CreateProductDto createProductDTO);

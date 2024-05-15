@@ -12,7 +12,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("colors")
-@PreAuthorize("hasAnyRole('MANAGER')")
 public class ColorController {
     @Autowired
     private ColorService colorService;
@@ -22,13 +21,15 @@ public class ColorController {
         return colorService.findAll();
     }
 
+    @PreAuthorize("hasAnyRole('MANAGER')")
     @PostMapping()
     public ColorDto createColor(@Valid @RequestBody ColorDto colorDto){
         return colorService.createColor(colorDto);
     }
 
+    @PreAuthorize("hasAnyRole('MANAGER')")
     @DeleteMapping("/{colorId}")
-    public ResponseEntity<String> deleteColor(@PathVariable String colorId){
+    public ResponseEntity<String> deleteColor(@PathVariable Long colorId){
         colorService.deleteColor(colorId);
         return ResponseEntity.ok("Deleted");
     }

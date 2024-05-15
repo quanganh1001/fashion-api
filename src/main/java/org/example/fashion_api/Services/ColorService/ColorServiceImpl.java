@@ -26,8 +26,10 @@ public class ColorServiceImpl implements ColorService {
 
     @Override
     public ColorDto createColor(@Valid ColorDto colorDto){
-        if (colorRepo.existsById(colorDto.getColorId())){
-            throw new AlreadyExistException(colorDto.getColorId());
+
+        // check exist by color code
+        if (colorRepo.existsByColorCode(colorDto.getColorCode())){
+            throw new AlreadyExistException(colorDto.getColorCode());
         }
 
         Color color = colorMapper.colorDtoToColor(colorDto);
@@ -38,8 +40,8 @@ public class ColorServiceImpl implements ColorService {
     }
 
     @Override
-    public void deleteColor(String colorId){
-        Color color = colorRepo.findById(colorId).orElseThrow(()-> new NotFoundException(colorId));
+    public void deleteColor(Long colorId){
+        Color color = colorRepo.findById(colorId).orElseThrow(()-> new NotFoundException("color"));
         colorRepo.delete(color);
     }
 }

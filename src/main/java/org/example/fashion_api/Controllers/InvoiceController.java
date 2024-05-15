@@ -25,14 +25,13 @@ import java.util.List;
 
 @RestController
 @RequestMapping("invoices")
-@PreAuthorize("hasAnyRole('MANAGER')")
 public class InvoiceController {
     @Autowired
     private InvoiceService invoiceService;
     @Autowired
     private InvoiceDetailService invoiceDetailService;
 
-
+    @PreAuthorize("hasAnyRole('MANAGER','EMPLOYEE')")
     @GetMapping()
     public ResponseEntity<PageInvoiceRes> findAll(@RequestParam(defaultValue = "1") int page,
                                   @RequestParam(defaultValue = "10") int pageSize,
@@ -40,38 +39,44 @@ public class InvoiceController {
         return ResponseEntity.ok(invoiceService.getAllInvoices(keyword, page-1, pageSize));
     }
 
+    @PreAuthorize("hasAnyRole('MANAGER','EMPLOYEE')")
     @GetMapping("{invoiceId}")
-    public ResponseEntity<InvoiceRes> findById(@PathVariable String invoiceId){
+    public ResponseEntity<InvoiceRes> findById(@PathVariable Long invoiceId){
         return ResponseEntity.ok(invoiceService.getById(invoiceId));
     }
 
+    @PreAuthorize("hasAnyRole('MANAGER','EMPLOYEE')")
     @GetMapping("{invoiceId}/invoicesDetail")
-    public ResponseEntity<List<InvoiceDetailRes>> findInvoiceDetailByInvoiceId(@PathVariable String invoiceId){
+    public ResponseEntity<List<InvoiceDetailRes>> findInvoiceDetailByInvoiceId(@PathVariable Long invoiceId){
         return ResponseEntity.ok(invoiceDetailService.getAllInvoicesDetailsByInvoice(invoiceId));
     }
 
+    @PreAuthorize("hasAnyRole('MANAGER','EMPLOYEE')")
     @PostMapping
     public ResponseEntity<InvoiceRes> createInvoice(@Valid @RequestBody CreateInvoiceDto createInvoiceDto){
         return ResponseEntity.ok(invoiceService.createInvoice(createInvoiceDto));
     }
 
+    @PreAuthorize("hasAnyRole('MANAGER','EMPLOYEE')")
     @PostMapping("/{invoiceId}/createInvoiceDetail")
-    public ResponseEntity<InvoiceDetailRes> createInvoiceDetail(@PathVariable String invoiceId,Long productDetailId) {
+    public ResponseEntity<InvoiceDetailRes> createInvoiceDetail(@PathVariable Long invoiceId,Long productDetailId) {
         return ResponseEntity.ok(invoiceDetailService.createInvoiceDetail(invoiceId,productDetailId));
     }
 
-
+    @PreAuthorize("hasAnyRole('MANAGER','EMPLOYEE')")
     @PostMapping("/{invoiceId}/updateShippingFee")
-    public ResponseEntity<String> updateShippingFee(@PathVariable String invoiceId, Long shippingFee){
+    public ResponseEntity<String> updateShippingFee(@PathVariable Long invoiceId, Long shippingFee){
         invoiceService.updateShippingFee(invoiceId,shippingFee);
         return ResponseEntity.ok("Updated shipping fee successfully");
     }
 
+    @PreAuthorize("hasAnyRole('MANAGER')")
     @DeleteMapping("/{invoiceId}")
-    public ResponseEntity<String> deleteInvoice(@PathVariable String invoiceId){
+    public ResponseEntity<String> deleteInvoice(@PathVariable Long invoiceId){
         invoiceService.deleteInvoice(invoiceId);
         return ResponseEntity.ok("Invoice deleted successfully");
     }
+
 
     @PostMapping("/checkout")
     public ResponseEntity<String> checkout(HttpServletRequest http, @RequestBody CheckoutDto checkoutDto){

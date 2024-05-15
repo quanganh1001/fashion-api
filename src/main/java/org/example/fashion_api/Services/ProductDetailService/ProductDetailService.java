@@ -8,7 +8,8 @@ import org.example.fashion_api.Models.ProductsDetails.UpdateProductDetailDto;
 import java.util.List;
 
 public interface ProductDetailService {
-    List<ProductDetailRes> findAllProductDetails(String productId) throws JsonProcessingException;
+
+    List<ProductDetailRes> findAllProductDetails(Long productId) throws JsonProcessingException;
 
     ProductDetailRes getProductDetail(Long id);
 

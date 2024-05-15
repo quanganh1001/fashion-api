@@ -11,12 +11,12 @@ import java.util.List;
 @AllArgsConstructor
 public class PageProductRes {
 
-    private List<ProductRes> productsRes;
-
     private int totalPages;
 
-    private Long totalProduct;
+    private int totalProduct;
 
     private int currenPage;
+
+    private List<ProductRes> productsRes;
 
 }

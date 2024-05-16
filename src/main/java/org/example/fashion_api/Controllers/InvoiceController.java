@@ -79,11 +79,17 @@ public class InvoiceController {
 
 
     @PostMapping("/checkout")
-    public ResponseEntity<String> checkout(HttpServletRequest http, @RequestBody CheckoutDto checkoutDto){
+    public ResponseEntity<String> checkout(HttpServletRequest http,@Valid @RequestBody CheckoutDto checkoutDto){
         String vnpayUrl = invoiceService.checkout(http,checkoutDto);
 
         return ResponseEntity.ok(vnpayUrl);
     }
 
+    @PreAuthorize("hasAnyRole('MANAGER','EMPLOYEE')")
+    @PutMapping("/{invoiceId}")
+    public ResponseEntity<InvoiceRes> checkout(@PathVariable Long invoiceId,@Valid @RequestBody UpdateInvoiceDto updateInvoiceDto){
+
+        return ResponseEntity.ok(invoiceService.updateInvoice(invoiceId,updateInvoiceDto));
+    }
 
 }

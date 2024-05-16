@@ -3,6 +3,7 @@ package org.example.fashion_api.Services.AccountService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.RandomStringUtils;
+import org.example.fashion_api.Enum.RoleEnum;
 import org.example.fashion_api.Exception.AlreadyExistException;
 import org.example.fashion_api.Exception.BadCredentialsException;
 import org.example.fashion_api.Exception.BadRequestException;
@@ -181,6 +182,7 @@ public class AccountServiceImpl implements AccountService {
     @Override
     @Transactional
     public ResponseEntity<AccountRes> updateAccount(Long accountId, AccountUpdateDto dto) {
+
         Account account = accountRepo.findById(accountId).orElseThrow(() -> new NotFoundException("Accounts"));
         // check exist
         if (!Objects.equals(account.getEmail(), dto.getEmail()) && accountRepo.existsByEmail(dto.getEmail())) {
@@ -199,7 +201,7 @@ public class AccountServiceImpl implements AccountService {
     public void changePass(Long accountId, ChangePassDto changePassDto) {
 
         //check auth
-        Account account = getAccountIdFromAuthentication();
+        Account account = this.getAccountFromAuthentication();
 
         if (Objects.equals(accountId, account.getId())) {
 
@@ -239,7 +241,7 @@ public class AccountServiceImpl implements AccountService {
     public void Logout(String token) {
 
         // check auth
-        Account account = getAccountIdFromAuthentication();
+        Account account = this.getAccountFromAuthentication();
 
         JwtToken jwtToken = jwtTokenRepo.findByToken(token);
 
@@ -254,7 +256,7 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public Account getAccountIdFromAuthentication() {
+    public Account getAccountFromAuthentication() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
         if (authentication != null && authentication.isAuthenticated()) {
@@ -264,6 +266,14 @@ public class AccountServiceImpl implements AccountService {
             return accountRepo.findByUsername(userName).orElseThrow(() ->  new AccessDeniedException(" Access Denied"));
         }
         throw new AccessDeniedException(" Access Denied");
+    }
+
+
+    @Override
+    @Transactional
+    public void updateRole(Long accountId, RoleEnum role) {
+        accountRepo.setRole(accountId,role.name());
+        redisService.clear();
     }
 
 

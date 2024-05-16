@@ -2,8 +2,9 @@ package org.example.fashion_api.Controllers;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import jakarta.validation.Valid;
-import org.example.fashion_api.Models.Categories.CategoryDto;
+import org.example.fashion_api.Models.Categories.CreateCategoryDto;
 import org.example.fashion_api.Models.Categories.CategoryRes;
+import org.example.fashion_api.Models.Categories.UpdateCategoryDto;
 import org.example.fashion_api.Services.CategoryService.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -39,15 +40,15 @@ public class CategoryController {
 
     @PreAuthorize("hasAnyRole('MANAGER')")
     @PostMapping()
-    public ResponseEntity<CategoryRes> addCategory(@Valid @RequestBody CategoryDto categoryDto) {
-        return ResponseEntity.ok(categoryService.addCategory(categoryDto));
+    public ResponseEntity<CategoryRes> addCategory(@Valid @RequestBody CreateCategoryDto createCategoryDto) {
+        return ResponseEntity.ok(categoryService.addCategory(createCategoryDto));
     }
 
     @PreAuthorize("hasAnyRole('MANAGER')")
     @PutMapping("update/{catId}")
     public ResponseEntity<CategoryRes> updateCategory(@PathVariable("catId") Long catId,
-                                                      @Valid @RequestBody CategoryDto categoryDto) {
-        return ResponseEntity.ok(categoryService.save(catId,categoryDto));
+                                                      @Valid @RequestBody UpdateCategoryDto updateCategoryDto) {
+        return ResponseEntity.ok(categoryService.save(catId, updateCategoryDto));
     }
 
     @PreAuthorize("hasAnyRole('MANAGER')")

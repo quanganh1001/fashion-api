@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.example.fashion_api.Enum.RoleEnum;
 
 @Getter
 @Setter
@@ -25,4 +26,5 @@ public class AccountUpdateDto {
 
     @NotBlank
     private String address;
+
 }

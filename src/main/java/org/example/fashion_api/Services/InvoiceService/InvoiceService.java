@@ -17,4 +17,6 @@ public interface InvoiceService {
     void deleteInvoice(Long invoiceId);
 
     String checkout(HttpServletRequest http, CheckoutDto checkoutDto);
+
+    InvoiceRes updateInvoice(Long invoiceId, UpdateInvoiceDto updateInvoiceDto);
 }

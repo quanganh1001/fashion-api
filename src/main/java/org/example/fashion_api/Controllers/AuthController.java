@@ -2,7 +2,6 @@ package org.example.fashion_api.Controllers;
 
 import jakarta.validation.Valid;
 import org.example.fashion_api.Mapper.AccountMapper;
-import org.example.fashion_api.Mapper.AccountMapperImpl;
 import org.example.fashion_api.Models.Accounts.AccountLoginDto;
 import org.example.fashion_api.Models.Accounts.AccountRegisterDto;
 import org.example.fashion_api.Models.Accounts.AccountRes;
@@ -12,7 +11,6 @@ import org.example.fashion_api.Services.AccountService.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -56,6 +54,6 @@ public class AuthController {
     @GetMapping("/checkAuth")
     public ResponseEntity<AccountRes> checkAuth() {
 
-        return ResponseEntity.ok(accountMapper.accountEntityToAccountRes(accountService.getAccountIdFromAuthentication()));
+        return ResponseEntity.ok(accountMapper.accountEntityToAccountRes(accountService.getAccountFromAuthentication()));
     }
 }

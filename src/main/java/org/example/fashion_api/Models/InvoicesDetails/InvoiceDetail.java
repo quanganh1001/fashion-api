@@ -35,7 +35,6 @@ public class InvoiceDetail extends BaseEntity {
     @PrePersist
     public void prePersist() {
         totalPrice = price * quantity;
-
     }
 
     @PreUpdate

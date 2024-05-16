@@ -2,6 +2,7 @@ package org.example.fashion_api.Controllers;
 
 import jakarta.validation.Valid;
 import org.example.fashion_api.Models.Colors.ColorDto;
+import org.example.fashion_api.Models.Colors.ColorRes;
 import org.example.fashion_api.Services.ColorService.ColorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -17,13 +18,13 @@ public class ColorController {
     private ColorService colorService;
 
     @GetMapping()
-    public List<ColorDto> findAll(){
+    public List<ColorRes> findAll(){
         return colorService.findAll();
     }
 
     @PreAuthorize("hasAnyRole('MANAGER')")
     @PostMapping()
-    public ColorDto createColor(@Valid @RequestBody ColorDto colorDto){
+    public ColorRes createColor(@Valid @RequestBody ColorDto colorDto){
         return colorService.createColor(colorDto);
     }
 

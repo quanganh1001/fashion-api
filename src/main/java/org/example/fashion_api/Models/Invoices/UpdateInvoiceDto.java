@@ -14,8 +14,6 @@ import org.example.fashion_api.Enum.InvoiceStatusEnum;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UpdateInvoiceDto {
-    @NotNull
-    private String invoiceCode;
 
     @NotBlank(message = "Tên không được để trống")
     private String name;
@@ -28,20 +26,9 @@ public class UpdateInvoiceDto {
 
     private String note;
 
-    private String customerNote;
+    @NotNull
+    private Boolean isPaid;
 
     @NotNull
-    private Long totalPrice;
-
-    @NotNull
-    private Long shippingFee;
-
-    @NotNull
-    private Long totalBill;
-
-    private Boolean isPaid = Boolean.FALSE;
-
-    private InvoiceStatusEnum invoiceStatus = InvoiceStatusEnum.NEW;
-
-    private Boolean isDeleted = Boolean.FALSE;
+    private InvoiceStatusEnum invoiceStatus;
 }

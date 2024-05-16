@@ -13,7 +13,7 @@ public interface ProductDetailService {
 
     ProductDetailRes getProductDetail(Long id);
 
-    ProductDetailRes createProductDetail(CreateProductDetailDto createProductDetailDto);
+    void createProductDetail(CreateProductDetailDto createProductDetailDto);
 
     ProductDetailRes updateProductDetail(Long productDetailId, UpdateProductDetailDto dto);
 

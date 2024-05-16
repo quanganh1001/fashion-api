@@ -1,6 +1,8 @@
 package org.example.fashion_api.Controllers;
 
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
+import org.example.fashion_api.Enum.RoleEnum;
 import org.example.fashion_api.Models.Accounts.AccountRegisterDto;
 import org.example.fashion_api.Models.Accounts.AccountRes;
 import org.example.fashion_api.Models.Accounts.AccountUpdateDto;
@@ -39,7 +41,7 @@ public class AccountController {
             return ResponseEntity.ok("Deleted");
     }
 
-    @PreAuthorize("hasAnyRole('MANAGER')")
+    @PreAuthorize("#accountId == authentication.principal.account.Id or hasAnyRole('MANAGER')")
     @PutMapping("/{accountId}")
     public ResponseEntity<AccountRes> updateAccount(@PathVariable("accountId") Long accountId,@Valid @RequestBody AccountUpdateDto accountUpdateDto) {
         return accountService.updateAccount(accountId,accountUpdateDto);
@@ -50,6 +52,13 @@ public class AccountController {
     public ResponseEntity<String> changePass(@PathVariable("accountId") Long accountId,@Valid @RequestBody ChangePassDto changePassDto) {
         accountService.changePass(accountId,changePassDto);
         return ResponseEntity.ok("Password changed successfully");
+    }
+
+    @PreAuthorize("hasAnyRole('MANAGER')")
+    @PutMapping("/{accountId}/updateRole")
+    public ResponseEntity<String> updateRole(@PathVariable("accountId") Long accountId,@RequestBody RoleEnum role) {
+        accountService.updateRole(accountId,role);
+        return ResponseEntity.ok("Successfully");
     }
 
 }

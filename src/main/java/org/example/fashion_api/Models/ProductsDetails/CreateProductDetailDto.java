@@ -20,8 +20,8 @@ public class CreateProductDetailDto {
     private String size;
 
     @NotNull
-    private String productId;
+    private Long productId;
 
     @NotNull
-    private String colorId;
+    private Long colorId;
 }

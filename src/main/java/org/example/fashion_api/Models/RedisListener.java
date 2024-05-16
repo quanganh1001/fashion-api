@@ -1,9 +1,6 @@
 package org.example.fashion_api.Models;
 
-import jakarta.persistence.PostPersist;
-import jakarta.persistence.PostRemove;
-import jakarta.persistence.PostUpdate;
-import jakarta.persistence.Transient;
+import jakarta.persistence.*;
 import lombok.RequiredArgsConstructor;
 import lombok.ToString;
 import org.example.fashion_api.Services.RedisService.RedisService;
@@ -19,7 +16,7 @@ public class RedisListener {
         redisService.clear();
     }
 
-    @PostUpdate
+    @PreUpdate
     public <T> void postUpdate(T object) {
         redisService.clear();
     }

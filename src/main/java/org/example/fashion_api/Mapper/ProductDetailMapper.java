@@ -1,6 +1,7 @@
 package org.example.fashion_api.Mapper;
 
 
+import org.example.fashion_api.Models.Colors.Color;
 import org.example.fashion_api.Models.Products.Product;
 import org.example.fashion_api.Models.Products.ProductRes;
 import org.example.fashion_api.Models.ProductsDetails.CreateProductDetailDto;
@@ -33,7 +34,7 @@ public interface ProductDetailMapper {
     @Mapping(target = "color.id", source = "colorId")
     ProductDetail createProductDetailToProductDetail(CreateProductDetailDto createProductDetailDto, @MappingTarget ProductDetail productDetail);
 
-    @Mapping(target = "product.id", source = "productId")
+
     @Mapping(target = "color.id", source = "colorId")
     ProductDetail updateProductDetailToProductDetail(UpdateProductDetailDto updateProductDetailDto, @MappingTarget ProductDetail productDetail);
 }

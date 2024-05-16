@@ -22,8 +22,6 @@ public class ProductDetail extends BaseEntity {
 
     private Integer quantity;
 
-    private Boolean outOfStock;
-
     private Boolean isActivated = Boolean.TRUE;
 
     @NotNull

@@ -23,8 +23,5 @@ public class UpdateProductDetailDto {
     private String size;
 
     @NotNull
-    private String productId;
-
-    @NotNull
-    private String colorId;
+    private Long colorId;
 }

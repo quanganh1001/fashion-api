@@ -20,20 +20,21 @@ public class ProductDetailController {
 
 
     @GetMapping("/{productDetailId}")
-    public ProductDetailRes getProductDetail(@PathVariable Long productDetailId) {
-        return productDetailService.getProductDetail(productDetailId);
+    public ResponseEntity<ProductDetailRes> getProductDetail(@PathVariable Long productDetailId) {
+        return ResponseEntity.ok(productDetailService.getProductDetail(productDetailId));
     }
 
     @PreAuthorize("hasAnyRole('MANAGER')")
     @PostMapping()
-    public ProductDetailRes createProductDetail(@RequestBody CreateProductDetailDto createProductDetailDto) {
-        return productDetailService.createProductDetail(createProductDetailDto);
+    public ResponseEntity<String> createProductDetail(@RequestBody CreateProductDetailDto createProductDetailDto) {
+        productDetailService.createProductDetail(createProductDetailDto);
+        return ResponseEntity.ok("Product detail created");
     }
 
     @PreAuthorize("hasAnyRole('MANAGER')")
     @PutMapping("/{productDetailId}")
-    public ProductDetailRes updateProductDetail(@PathVariable Long productDetailId, @RequestBody UpdateProductDetailDto updateProductDetailDto) {
-        return productDetailService.updateProductDetail(productDetailId, updateProductDetailDto);
+    public ResponseEntity<ProductDetailRes> updateProductDetail(@PathVariable Long productDetailId, @RequestBody UpdateProductDetailDto updateProductDetailDto) {
+        return ResponseEntity.ok(productDetailService.updateProductDetail(productDetailId, updateProductDetailDto));
     }
 
     @PreAuthorize("hasAnyRole('MANAGER')")

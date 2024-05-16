@@ -1,5 +1,6 @@
 package org.example.fashion_api.Repositories;
 
+import org.example.fashion_api.Enum.RoleEnum;
 import org.example.fashion_api.Models.Accounts.Account;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -31,4 +32,8 @@ public interface AccountRepo extends JpaRepository<Account, Long> {
     @Modifying
     @Query(value = "UPDATE accounts SET password = :newPass WHERE id = :accountId",nativeQuery = true)
     void changePassword(@Param("accountId") Long accountId, @Param("newPass") String newPass);
+
+    @Modifying
+    @Query(value = "UPDATE accounts SET role = :role WHERE id = :accountId",nativeQuery = true)
+    void setRole(@Param("accountId") Long accountId,@Param("role") String role);
 }

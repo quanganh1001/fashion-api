@@ -5,9 +5,10 @@ import jakarta.transaction.Transactional;
 import org.example.fashion_api.Exception.AlreadyExistException;
 import org.example.fashion_api.Exception.NotFoundException;
 import org.example.fashion_api.Models.Categories.Category;
-import org.example.fashion_api.Models.Categories.CategoryDto;
+import org.example.fashion_api.Models.Categories.CreateCategoryDto;
 import org.example.fashion_api.Mapper.CategoryMapper;
 import org.example.fashion_api.Models.Categories.CategoryRes;
+import org.example.fashion_api.Models.Categories.UpdateCategoryDto;
 import org.example.fashion_api.Repositories.CategoryRepo;
 import org.example.fashion_api.Services.CloudinaryService;
 import org.example.fashion_api.Services.RedisService.RedisService;
@@ -51,22 +52,20 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     @Transactional
-    public CategoryRes save(Long catId, CategoryDto categoryDto) {
+    public CategoryRes save(Long catId, UpdateCategoryDto updateCategoryDto) {
 
         Category currentCategory = categoryRepo.findById(catId).orElseThrow(() -> new NotFoundException(catId.toString()));
 
         //check exist by category code and category name
-        if (!Objects.equals(categoryDto.getCategoryCode(), currentCategory.getCategoryCode())
-                && categoryRepo.existsByCategoryCode(categoryDto.getCategoryCode())) {
-            throw new AlreadyExistException(categoryDto.getCategoryCode());
-        } else if (!Objects.equals(categoryDto.getCatName(), currentCategory.getCatName()) && categoryRepo.existsByCatName(categoryDto.getCatName())) {
-            throw new AlreadyExistException(categoryDto.getCatName());
+        if (!Objects.equals(updateCategoryDto.getCategoryCode(), currentCategory.getCategoryCode())
+                && categoryRepo.existsByCategoryCode(updateCategoryDto.getCategoryCode())) {
+            throw new AlreadyExistException(updateCategoryDto.getCategoryCode());
+        } else if (!Objects.equals(updateCategoryDto.getCatName(), currentCategory.getCatName()) && categoryRepo.existsByCatName(updateCategoryDto.getCatName())) {
+            throw new AlreadyExistException(updateCategoryDto.getCatName());
         }
 
-        currentCategory = categoryMapper.categoryDtoToCategory(categoryDto, currentCategory);
-        if (categoryDto.getCatParent() == null) {
-            currentCategory.setCatParent(null);
-        }
+        currentCategory = categoryMapper.updateCategoryDtoToCategory(updateCategoryDto, currentCategory);
+
 
         Category category = categoryRepo.save(currentCategory);
 
@@ -89,20 +88,20 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public CategoryRes addCategory(CategoryDto categoryDto) {
+    public CategoryRes addCategory(CreateCategoryDto createCategoryDto) {
 
         //check exist by category code and category name
-        if (categoryRepo.existsByCategoryCode(categoryDto.getCategoryCode())) {
+        if (categoryRepo.existsByCategoryCode(createCategoryDto.getCategoryCode())) {
 
-            throw new AlreadyExistException(categoryDto.getCategoryCode());
+            throw new AlreadyExistException(createCategoryDto.getCategoryCode());
 
-        } else if (categoryRepo.existsByCatName(categoryDto.getCatName())) {
+        } else if (categoryRepo.existsByCatName(createCategoryDto.getCatName())) {
 
-            throw new AlreadyExistException(categoryDto.getCatName());
+            throw new AlreadyExistException(createCategoryDto.getCatName());
         }
 
-        Category category = categoryMapper.categoryDtoToCategory(categoryDto, new Category());
-        if (categoryDto.getCatParent() == null) {
+        Category category = categoryMapper.createCategoryDtoToCategory(createCategoryDto, new Category());
+        if (createCategoryDto.getCatParent() == null) {
             category.setCatParent(null);
         }
 
@@ -124,6 +123,9 @@ public class CategoryServiceImpl implements CategoryService {
         String imageUrl = uploadResult.get("secure_url").toString();
 
         categoryRepo.updateCatBackground(imageUrl, catId);
+
+        // delete cache redis
+        redisService.clear();
 
         return imageUrl;
     }

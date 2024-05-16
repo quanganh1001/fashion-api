@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class CategoryDto   {
+public class UpdateCategoryDto   {
 
     @NotNull
     private String categoryCode;
@@ -20,7 +20,6 @@ public class CategoryDto   {
 
     private String catBackground;
 
-    private String catParent;
-
-    private Boolean isActivated = true;
+    @NotNull
+    private Boolean isActivated;
 }

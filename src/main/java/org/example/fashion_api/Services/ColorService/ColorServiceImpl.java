@@ -6,6 +6,7 @@ import org.example.fashion_api.Exception.NotFoundException;
 import org.example.fashion_api.Models.Colors.Color;
 import org.example.fashion_api.Models.Colors.ColorDto;
 import org.example.fashion_api.Mapper.ColorMapper;
+import org.example.fashion_api.Models.Colors.ColorRes;
 import org.example.fashion_api.Repositories.ColorRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,23 +21,21 @@ public class ColorServiceImpl implements ColorService {
     private ColorMapper colorMapper;
 
     @Override
-    public List<ColorDto> findAll(){
+    public List<ColorRes> findAll(){
         return colorMapper.toDtoList(colorRepo.findAll());
     }
 
     @Override
-    public ColorDto createColor(@Valid ColorDto colorDto){
+    public ColorRes createColor(@Valid ColorDto colorDto){
 
         // check exist by color code
         if (colorRepo.existsByColorCode(colorDto.getColorCode())){
             throw new AlreadyExistException(colorDto.getColorCode());
         }
 
-        Color color = colorMapper.colorDtoToColor(colorDto);
+        Color color = colorRepo.save(colorMapper.colorDtoToColor(colorDto));
 
-        colorRepo.save(color);
-
-        return colorDto;
+        return colorMapper.colorToColorRes(color);
     }
 
     @Override

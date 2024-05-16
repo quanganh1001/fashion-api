@@ -28,8 +28,5 @@ public class UpdateProductDto  {
     private String imageChooseSize;
 
     @NotNull
-    private String catId;
-
-    @NotNull
     private Boolean isActivated;
 }

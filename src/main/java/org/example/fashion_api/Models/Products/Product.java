@@ -58,8 +58,7 @@ public class Product extends BaseEntity {
     private List<ImgProduct> imgProducts;
 
     @OneToMany(mappedBy = "product",
-            orphanRemoval = true,
-            cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
+            cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonIgnore
     @ToString.Exclude
     private List<ProductDetail> productsDetails = new ArrayList<>();

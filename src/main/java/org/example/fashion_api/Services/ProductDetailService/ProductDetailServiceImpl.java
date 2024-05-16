@@ -45,9 +45,11 @@ public class ProductDetailServiceImpl implements ProductDetailService{
         if (productDetailRepo.existsByCode(dto.getCode())){
             throw new AlreadyExistException(dto.getCode());
         }
-        ProductDetail productDetail = productDetailMapper.createProductDetailToProductDetail(dto,new ProductDetail());
-        productDetailRepo.save(productDetail);
-        return productDetailMapper.productDetailToProductDetailRes(productDetail);
+        ProductDetail productDetail = productDetailMapper.createProductDetailToProductDetail(dto,
+                new ProductDetail());
+
+        ProductDetail newProductDetail = productDetailRepo.save(productDetail);
+        return productDetailMapper.productDetailToProductDetailRes(newProductDetail);
     }
 
     @Override

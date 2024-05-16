@@ -97,7 +97,7 @@ public class InvoiceServiceImpl implements InvoiceService {
         InvoiceRes invoiceRes = createInvoice(createInvoiceDto);
 
         for (InvoiceDetailDto invoiceDetail : checkoutDto.getInvoicesDetails()) {
-            invoiceDetailService.createInvoiceDetail(invoiceRes.getId(), invoiceDetail.getProductDetailId());
+            invoiceDetailService.createInvoiceDetail(invoiceRes.getId(), invoiceDetail.getId());
         }
 
         Invoice invoice = invoiceRepo.findById(invoiceRes.getId())

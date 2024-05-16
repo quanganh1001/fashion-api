@@ -12,7 +12,7 @@ import org.example.fashion_api.Models.ProductsDetails.ProductDetail;
 @NoArgsConstructor
 @Builder
 public class InvoiceDetailDto {
-    private Long productDetailId;
+    private Long id;
 
     private Integer quantity;
 

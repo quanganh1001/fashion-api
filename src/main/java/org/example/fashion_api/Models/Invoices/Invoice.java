@@ -24,16 +24,16 @@ import java.util.List;
 @Builder
 @Table(name = "invoices")
 public class Invoice extends BaseEntity {
-
+    @NotNull
     private String invoiceCode;
 
-    @NotBlank(message = "Tên không được để trống")
+    @NotNull
     private String name;
 
-    @Pattern(regexp = "^[0-9]{10}$", message = "Số điện thoại không đúng")
+    @NotNull
     private String phone;
 
-    @NotBlank(message = "Địa chỉ không được để trống")
+    @NotNull
     private String address;
 
     private String note;

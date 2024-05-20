@@ -5,6 +5,7 @@ import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.apache.http.HttpRequest;
 import org.apache.http.client.methods.HttpTrace;
+import org.example.fashion_api.Enum.InvoiceStatusEnum;
 import org.example.fashion_api.Exception.NotFoundException;
 import org.example.fashion_api.Models.Colors.ColorDto;
 import org.example.fashion_api.Models.Invoices.*;
@@ -86,10 +87,19 @@ public class InvoiceController {
     }
 
     @PreAuthorize("hasAnyRole('MANAGER','EMPLOYEE')")
-    @PutMapping("/{invoiceId}")
-    public ResponseEntity<InvoiceRes> checkout(@PathVariable Long invoiceId,@Valid @RequestBody UpdateInvoiceDto updateInvoiceDto){
-
-        return ResponseEntity.ok(invoiceService.updateInvoice(invoiceId,updateInvoiceDto));
+    @PutMapping("/{invoiceId}/updateStatus")
+    public ResponseEntity<String> updateStatus(@PathVariable Long invoiceId,
+                                              @RequestBody InvoiceStatusEnum statusEnum){
+        invoiceService.updateStatus(invoiceId,statusEnum);
+        return ResponseEntity.ok("Updated status successfully");
     }
 
+
+    @PreAuthorize("hasAnyRole('MANAGER','EMPLOYEE')")
+    @PutMapping("/{invoiceId}")
+    public ResponseEntity<InvoiceRes> updateInvoice(@PathVariable Long invoiceId,
+                                               @Valid @RequestBody UpdateInvoiceDto dto){
+        ;
+        return ResponseEntity.ok(invoiceService.updateInvoice(invoiceId,dto));
+    }
 }

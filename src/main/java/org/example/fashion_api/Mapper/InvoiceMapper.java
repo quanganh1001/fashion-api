@@ -5,6 +5,7 @@ import org.example.fashion_api.Models.Colors.ColorDto;
 import org.example.fashion_api.Models.Invoices.CreateInvoiceDto;
 import org.example.fashion_api.Models.Invoices.Invoice;
 import org.example.fashion_api.Models.Invoices.InvoiceRes;
+import org.example.fashion_api.Models.Invoices.UpdateInvoiceDto;
 import org.example.fashion_api.Models.InvoicesDetails.InvoiceDetail;
 import org.example.fashion_api.Models.InvoicesDetails.InvoiceDetailRes;
 import org.example.fashion_api.Models.Products.Product;
@@ -28,4 +29,7 @@ public interface InvoiceMapper {
 
     @Mapping(target = "account.id",source = "accountId")
     Invoice createInvoiceToInvoice(CreateInvoiceDto createInvoiceDto,@MappingTarget Invoice invoice);
+
+    @Mapping(target = "account.id",source = "accountId")
+    Invoice updateInvoiceToInvoice(UpdateInvoiceDto updateInvoiceDto, @MappingTarget Invoice invoice);
 }

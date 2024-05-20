@@ -15,8 +15,12 @@ public interface InvoiceRepo extends JpaRepository<Invoice,Long> {
     Page<Invoice> findAllByPhoneContainingIgnoreCaseOrInvoiceCodeContainingIgnoreCaseAndIsDeletedFalse(String keyword, String keyword2, PageRequest pageRequest);
 
     @Modifying
-    @Query(value = "UPDATE invoices SET is_paid = TRUE WHERE invoice_id = :invoiceId",
+    @Query(value = "UPDATE invoices SET is_paid = TRUE WHERE id = :invoiceId",
             nativeQuery = true)
-    void changeStatusIsPaid(@Param("invoiceId") String invoiceId);
+    void changeStatusIsPaid(@Param("invoiceId") Long invoiceId);
 
+    @Modifying
+    @Query(value = "UPDATE invoices SET invoice_status = :status WHERE id = :invoiceId",
+            nativeQuery = true)
+    void changeStatusInvoice(@Param("invoiceId") Long invoiceId);
 }

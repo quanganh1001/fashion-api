@@ -109,41 +109,61 @@ public class InvoiceServiceImpl implements InvoiceService {
 
     }
 
+
     @Override
-    public InvoiceRes updateInvoice(Long invoiceId, UpdateInvoiceDto updateInvoiceDto) {
+    @Transactional
+    public void updateStatus(Long invoiceId, InvoiceStatusEnum status) {
         Invoice currentInvoice = invoiceRepo.findById(invoiceId).orElseThrow(() -> new NotFoundException("Invoice"));
 
         // CANCEL or NEW cannot update to DELIVERING,SUCCESS,RETURN
         if ((currentInvoice.getInvoiceStatus() == InvoiceStatusEnum.CANCEL
-             || currentInvoice.getInvoiceStatus() == InvoiceStatusEnum.NEW)
-            && updateInvoiceDto.getInvoiceStatus().getValue() >= 4) {
-            throw new BadRequestException("Status" +currentInvoice.getInvoiceStatus()+" cannot update to" + updateInvoiceDto.getInvoiceStatus());
+                || currentInvoice.getInvoiceStatus() == InvoiceStatusEnum.NEW)
+                && status.getValue() >= 4) {
+            throw new BadRequestException("Status" + currentInvoice.getInvoiceStatus() + " cannot update to" + status);
         }
 
         // ORDER_CREATED cannot update to SUCCESS,RETURN
         if (currentInvoice.getInvoiceStatus() == InvoiceStatusEnum.ORDER_CREATED
-             && updateInvoiceDto.getInvoiceStatus().getValue() >= 5) {
-            throw new BadRequestException("Status" +currentInvoice.getInvoiceStatus()+" cannot update to" + updateInvoiceDto.getInvoiceStatus());
+                && status.getValue() >= 5) {
+            throw new BadRequestException("Status" + currentInvoice.getInvoiceStatus() + " cannot update to" + status);
         }
 
         // DELIVERING cannot update to CANCEL,ORDER_CREATED,NEW
         if (currentInvoice.getInvoiceStatus() == InvoiceStatusEnum.DELIVERING
-                && updateInvoiceDto.getInvoiceStatus().getValue() <= 3){
-            throw new BadRequestException("Status" +currentInvoice.getInvoiceStatus()+" cannot update to" + updateInvoiceDto.getInvoiceStatus());
+                && status.getValue() <= 3) {
+            throw new BadRequestException("Status" + currentInvoice.getInvoiceStatus() + " cannot update to" + status);
         }
 
         // SUCCESS cannot update status
         if (currentInvoice.getInvoiceStatus() == InvoiceStatusEnum.SUCCESS
-                && updateInvoiceDto.getInvoiceStatus().getValue() != 6){
-            throw new BadRequestException("Status" +currentInvoice.getInvoiceStatus()+" cannot update to" + updateInvoiceDto.getInvoiceStatus());
+                && status.getValue() != 6) {
+            throw new BadRequestException("Status" + currentInvoice.getInvoiceStatus() + " cannot update to" + status);
         }
 
         // RETURN cannot update status
         if (currentInvoice.getInvoiceStatus() == InvoiceStatusEnum.RETURN
-                && updateInvoiceDto.getInvoiceStatus().getValue() != 6){
-            throw new BadRequestException("Status" +currentInvoice.getInvoiceStatus()+" cannot update to" + updateInvoiceDto.getInvoiceStatus());
+                && status.getValue() != 6) {
+            throw new BadRequestException("Status" + currentInvoice.getInvoiceStatus() + " cannot update to" + status);
         }
 
-
+        invoiceRepo.changeStatusInvoice(invoiceId);
 
     }
+
+    @Override
+    public InvoiceRes updateInvoice(Long invoiceId, UpdateInvoiceDto dto) {
+        Invoice currentInvoice = invoiceRepo.findById(invoiceId).orElseThrow(() -> new NotFoundException("Invoice"));
+
+        if ((currentInvoice.getInvoiceStatus() == InvoiceStatusEnum.SUCCESS)
+            || currentInvoice.getInvoiceStatus() == InvoiceStatusEnum.DELIVERING
+            || currentInvoice.getInvoiceStatus() == InvoiceStatusEnum.RETURN
+            || currentInvoice.getInvoiceStatus() == InvoiceStatusEnum.ORDER_CREATED){
+            throw new BadRequestException("Status" + currentInvoice.getInvoiceStatus() + " cannot update invoice");
+        }
+
+         
+
+        Invoice invoice =invoiceRepo.save(invoiceMapper.updateInvoiceToInvoice(dto, currentInvoice));
+        return invoiceMapper.invoiceToInvoiceRes(invoice);
+    }
+}

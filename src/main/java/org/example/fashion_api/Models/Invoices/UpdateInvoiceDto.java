@@ -31,4 +31,7 @@ public class UpdateInvoiceDto {
 
     @NotNull
     private InvoiceStatusEnum invoiceStatus;
+
+    @NotNull
+    private Long accountId;
 }

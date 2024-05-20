@@ -61,7 +61,7 @@ public class VnpayResponseController {
 
         if ("00".equals(request.getParameter("vnp_ResponseCode"))) {
             //if payment success -> change status invoice
-            invoiceRepo.changeStatusIsPaid(invoiceId);
+            invoiceRepo.changeStatusIsPaid(Long.parseLong(invoiceId));
 
             return ResponseEntity.ok("Payment Success!");
 

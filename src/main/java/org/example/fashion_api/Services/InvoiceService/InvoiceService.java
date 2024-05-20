@@ -1,6 +1,7 @@
 package org.example.fashion_api.Services.InvoiceService;
 
 import jakarta.servlet.http.HttpServletRequest;
+import org.example.fashion_api.Enum.InvoiceStatusEnum;
 import org.example.fashion_api.Models.Invoices.*;
 import org.mapstruct.MappingTarget;
 
@@ -18,5 +19,7 @@ public interface InvoiceService {
 
     String checkout(HttpServletRequest http, CheckoutDto checkoutDto);
 
-    InvoiceRes updateInvoice(Long invoiceId, UpdateInvoiceDto updateInvoiceDto);
+    void updateStatus(Long invoiceId, InvoiceStatusEnum status);
+
+    InvoiceRes updateInvoice(Long invoiceId, UpdateInvoiceDto dto);
 }

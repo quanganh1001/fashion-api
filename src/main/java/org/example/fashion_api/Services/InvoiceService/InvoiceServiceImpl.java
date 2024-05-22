@@ -146,7 +146,7 @@ public class InvoiceServiceImpl implements InvoiceService {
             throw new BadRequestException("Status" + currentInvoice.getInvoiceStatus() + " cannot update to" + status);
         }
 
-        invoiceRepo.changeStatusInvoice(invoiceId);
+        invoiceRepo.changeStatusInvoice(invoiceId,status.getValue());
 
     }
 
@@ -158,13 +158,12 @@ public class InvoiceServiceImpl implements InvoiceService {
             || currentInvoice.getInvoiceStatus() == InvoiceStatusEnum.DELIVERING
             || currentInvoice.getInvoiceStatus() == InvoiceStatusEnum.RETURN
             || currentInvoice.getInvoiceStatus() == InvoiceStatusEnum.ORDER_CREATED){
-            throw new BadRequestException("Status" + currentInvoice.getInvoiceStatus() + " cannot update invoice");
+            throw new BadRequestException("Status " + currentInvoice.getInvoiceStatus() + " cannot update invoice");
         }
 
          
 
-        Invoice invoice =invoiceRepo.save(
-                .updateInvoiceToInvoice(dto, currentInvoice));
+        Invoice invoice =invoiceRepo.save(invoiceMapper.updateInvoiceToInvoice(dto, currentInvoice));
         return invoiceMapper.invoiceToInvoiceRes(invoice);
     }
 }

@@ -27,11 +27,5 @@ public class UpdateInvoiceDto {
     private String note;
 
     @NotNull
-    private Boolean isPaid;
-
-    @NotNull
-    private InvoiceStatusEnum invoiceStatus;
-
-    @NotNull
     private Long accountId;
 }

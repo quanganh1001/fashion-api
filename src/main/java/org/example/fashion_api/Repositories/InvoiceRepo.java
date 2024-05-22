@@ -22,5 +22,5 @@ public interface InvoiceRepo extends JpaRepository<Invoice,Long> {
     @Modifying
     @Query(value = "UPDATE invoices SET invoice_status = :status WHERE id = :invoiceId",
             nativeQuery = true)
-    void changeStatusInvoice(@Param("invoiceId") Long invoiceId);
+    void changeStatusInvoice(@Param("invoiceId") Long invoiceId,@Param("status") int status);
 }

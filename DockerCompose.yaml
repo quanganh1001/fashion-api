@@ -12,17 +12,17 @@ services:
     networks:
       - fashion-api-network
 
-  phpmyadmin8-container:
-    image: phpmyadmin/phpmyadmin:latest
-    container_name: phpmyadmin8-container-api
-    depends_on:
-      - mysql8-container
-    ports:
-      - "8100:80"
-    environment:
-      PMA_HOST: mysql8-container-api
-    networks:
-      - fashion-api-network
+#  phpmyadmin8-container:
+#    image: phpmyadmin/phpmyadmin:latest
+#    container_name: phpmyadmin8-container-api
+#    depends_on:
+#      - mysql8-container
+#    ports:
+#      - "8100:80"
+#    environment:
+#      PMA_HOST: mysql8-container-api
+#    networks:
+#      - fashion-api-network
 
   redis-container:
     image: docker.io/redis:7.2.3

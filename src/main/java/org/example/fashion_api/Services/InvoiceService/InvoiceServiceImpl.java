@@ -163,7 +163,8 @@ public class InvoiceServiceImpl implements InvoiceService {
 
          
 
-        Invoice invoice =invoiceRepo.save(invoiceMapper.updateInvoiceToInvoice(dto, currentInvoice));
+        Invoice invoice =invoiceRepo.save(
+                .updateInvoiceToInvoice(dto, currentInvoice));
         return invoiceMapper.invoiceToInvoiceRes(invoice);
     }
 }

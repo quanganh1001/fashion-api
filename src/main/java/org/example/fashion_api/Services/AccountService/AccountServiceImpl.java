@@ -240,12 +240,9 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public void Logout(String token) {
 
-        // check auth
-        Account account = this.getAccountFromAuthentication();
-
         JwtToken jwtToken = jwtTokenRepo.findByToken(token);
 
-        if (jwtToken != null && Objects.equals(jwtToken.getAccount().getId(), account.getId())) {
+        if (jwtToken != null ) {
             jwtTokenRepo.delete(jwtToken);
         }else {
             throw new BadRequestException("Token not found");

@@ -4,6 +4,7 @@
 # Hướng dẫn sử dụng:
   - Clone dự án từ github về: git clone https://github.com/quanganh1001/fashion-api.git
   - Chạy dự án trên Docker: docker-compose -f DockerCompose.yaml up -d
+  - Test api bằng Swagger: http://localhost:8080/swagger-ui/index.html
     
 # Tài khoản đăng nhập:
   - Admin:

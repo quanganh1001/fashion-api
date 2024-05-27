@@ -36,7 +36,7 @@ public class AuthController {
     }
 
     @PutMapping("/refreshToken")
-    public ResponseEntity<JwtTokenRes> refreshToken(@RequestParam String refreshToken)  {
+    public ResponseEntity<JwtTokenRes> refreshToken( String refreshToken)  {
         return new ResponseEntity<>(jwtService.RefreshToken(refreshToken), HttpStatus.OK);
     }
 

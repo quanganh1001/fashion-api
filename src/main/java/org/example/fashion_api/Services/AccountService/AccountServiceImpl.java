@@ -273,5 +273,12 @@ public class AccountServiceImpl implements AccountService {
         redisService.clear();
     }
 
+    @Override
+    public AccountRes getCurrentAccount() {
+        Account account = getAccountFromAuthentication();
+
+        return accountMapper.accountEntityToAccountRes(account);
+    }
+
 
 }

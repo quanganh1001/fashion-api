@@ -28,7 +28,13 @@ public class AccountController {
         return accountService.getAllAccount(keyword,page-1,limit);
     }
 
-    @PreAuthorize("#accountId == authentication.principal.account.Id or hasAnyRole('MANAGER')")
+
+    @GetMapping("/current")
+    public AccountRes getCurrentAccount() {
+        return accountService.getCurrentAccount();
+    }
+
+    @PreAuthorize("hasAnyRole('MANAGER')")
     @GetMapping("/{accountId}")
     public AccountRes getAccount(@PathVariable("accountId") Long accountId) {
         return accountService.getAccount(accountId);

@@ -8,13 +8,13 @@
     
 # Tài khoản đăng nhập:
   - Admin:
-    + username: quanly
+    + username: 0364100196 / quanganhnguyen100196@gmail.com
     + pass: 123456
   - Nhân viên:
-    + username: nhanvien1
+    + username: 0365151822 / nhanvien1@gmail.com
     + pass: 123456
   - Khách hàng:
-    + username: khachhang
+    + username: 0364431132 / khachhang@gmail.com
     + pass: 123456
       
 # Các entity

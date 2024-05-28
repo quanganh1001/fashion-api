@@ -7,10 +7,12 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.example.fashion_api.Exception.ExpiredJwtException;
 import org.example.fashion_api.Exception.InvalidTokenException;
+import org.example.fashion_api.Exception.JwtException;
 import org.example.fashion_api.Models.UserCustomDetail;
 import org.example.fashion_api.Services.JwtService.JwtService;
 import org.example.fashion_api.Services.UserDetailServiceImpl;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
@@ -39,8 +41,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         final String jwt;
         final String username;
         jwt = authHeader.substring(7);
-        username = jwtService.extractUsername(jwt);
+
         try {
+            username = jwtService.extractUsername(jwt);
             if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
                 UserCustomDetail userCustomDetail = (UserCustomDetail) this.userDetailService.loadUserByUsername(username);
 
@@ -55,12 +58,18 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                         SecurityContextHolder.getContext().setAuthentication(authenticationToken);
                     } else throw new ExpiredJwtException();
                 } else throw new InvalidTokenException();
-            }
+            }else throw new InvalidTokenException();
         }catch (ExpiredJwtException  e){
             response.sendError(e.getStatus().value(), e.getMessage());
             return;
         }catch (InvalidTokenException  e){
             response.sendError(e.getStatus().value(), e.getMessage());
+            return;
+        }catch (JwtException  e){
+            response.sendError(e.getStatus().value(), e.getMessage());
+            return;
+        }catch (Exception e){
+            response.sendError(HttpStatus.UNAUTHORIZED.value(), e.getMessage());
             return;
         }
         filterChain.doFilter(request, response);

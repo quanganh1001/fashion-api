@@ -36,4 +36,8 @@ public interface AccountRepo extends JpaRepository<Account, Long> {
     @Modifying
     @Query(value = "UPDATE accounts SET role = :role WHERE id = :accountId",nativeQuery = true)
     void setRole(@Param("accountId") Long accountId,@Param("role") String role);
+
+    @Modifying
+    @Query(value = "UPDATE accounts SET is_activated = :status WHERE id = :accountId",nativeQuery = true)
+    void handleActivateStatus(@Param("accountId") Long accountId,@Param("status") Boolean status);
 }

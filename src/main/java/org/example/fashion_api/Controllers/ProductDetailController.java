@@ -1,6 +1,7 @@
 package org.example.fashion_api.Controllers;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import io.swagger.v3.oas.annotations.Operation;
 import org.example.fashion_api.Models.ProductsDetails.CreateProductDetailDto;
 import org.example.fashion_api.Models.ProductsDetails.ProductDetailRes;
 import org.example.fashion_api.Models.ProductsDetails.UpdateProductDetailDto;
@@ -19,11 +20,13 @@ public class ProductDetailController {
     private ProductDetailService productDetailService;
 
 
+    @Operation(summary = "get product detail")
     @GetMapping("/{productDetailId}")
     public ResponseEntity<ProductDetailRes> getProductDetail(@PathVariable Long productDetailId) {
         return ResponseEntity.ok(productDetailService.getProductDetail(productDetailId));
     }
 
+    @Operation(summary = "create product detail (role MANAGER)")
     @PreAuthorize("hasAnyRole('MANAGER')")
     @PostMapping()
     public ResponseEntity<String> createProductDetail(@RequestBody CreateProductDetailDto createProductDetailDto) {
@@ -31,12 +34,14 @@ public class ProductDetailController {
         return ResponseEntity.ok("Product detail created");
     }
 
+    @Operation(summary = "update product detail (role MANAGER)")
     @PreAuthorize("hasAnyRole('MANAGER')")
     @PutMapping("/{productDetailId}")
     public ResponseEntity<ProductDetailRes> updateProductDetail(@PathVariable Long productDetailId, @RequestBody UpdateProductDetailDto updateProductDetailDto) {
         return ResponseEntity.ok(productDetailService.updateProductDetail(productDetailId, updateProductDetailDto));
     }
 
+    @Operation(summary = "delete product detail (role MANAGER)")
     @PreAuthorize("hasAnyRole('MANAGER')")
     @DeleteMapping("/{productDetailId}")
     public ResponseEntity<String> deleteProductDetail(@PathVariable Long productDetailId) {

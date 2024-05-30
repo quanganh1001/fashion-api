@@ -58,5 +58,10 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(ex.getStatus()).body(ex.getMessage());
     }
 
+    @ExceptionHandler(AccountIsNotActivatedException.class)
+    public ResponseEntity<String> AccountIsNotActivatedException(AccountIsNotActivatedException ex) {
+        return ResponseEntity.status(ex.getStatus()).body(ex.getMessage());
+    }
+
 
 }

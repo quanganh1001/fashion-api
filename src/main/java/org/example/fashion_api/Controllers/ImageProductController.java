@@ -1,6 +1,7 @@
 package org.example.fashion_api.Controllers;
 
 
+import io.swagger.v3.oas.annotations.Operation;
 import org.example.fashion_api.Models.ImgsProducts.ImgProductRes;
 import org.example.fashion_api.Services.ImgProductService.ImgProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,12 +19,13 @@ public class ImageProductController {
     @Autowired
     private ImgProductService imgProductService;
 
-
+    @Operation(summary = "get image by productId")
     @GetMapping("/{productId}")
     public List<ImgProductRes> getImgProductsByProductId(@PathVariable Long productId) {
         return imgProductService.imgProductByProductId(productId);
     }
 
+    @Operation(summary = "create image (role MANAGER)")
     @PreAuthorize("hasAnyRole('MANAGER')")
     @PostMapping("/{productId}")
     public ResponseEntity<String> addImgProduct(@PathVariable Long productId, MultipartFile[] imgFiles) throws IOException {
@@ -31,6 +33,8 @@ public class ImageProductController {
         return ResponseEntity.ok("done");
     }
 
+
+    @Operation(summary = "delete image (role MANAGER)")
     @PreAuthorize("hasAnyRole('MANAGER')")
     @DeleteMapping("/{imgProductId}")
     public ResponseEntity<String> deleteImgProductById(@PathVariable Long imgProductId) throws IOException {

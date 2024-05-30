@@ -4,10 +4,7 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.example.fashion_api.Enum.RoleEnum;
-import org.example.fashion_api.Exception.AlreadyExistException;
-import org.example.fashion_api.Exception.BadCredentialsException;
-import org.example.fashion_api.Exception.BadRequestException;
-import org.example.fashion_api.Exception.NotFoundException;
+import org.example.fashion_api.Exception.*;
 import org.example.fashion_api.Mapper.AccountMapper;
 import org.example.fashion_api.Models.Accounts.*;
 import org.example.fashion_api.Models.JwtToken.JwtToken;
@@ -86,7 +83,7 @@ public class AccountServiceImpl implements AccountService {
         }
 
         if (!existingAccount.getIsActivated()) {
-            throw new BadCredentialsException();
+            throw new AccountIsNotActivatedException();
         }
 
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
@@ -278,6 +275,20 @@ public class AccountServiceImpl implements AccountService {
         Account account = getAccountFromAuthentication();
 
         return accountMapper.accountEntityToAccountRes(account);
+    }
+
+    @Override
+    @Transactional
+    public Boolean activatedAccount(Long accountId) {
+        Account account = accountRepo.findById(accountId).orElseThrow(() -> new NotFoundException("Accounts"));
+
+        Boolean handleActivateStatus = !account.getIsActivated();
+
+        accountRepo.handleActivateStatus(accountId,handleActivateStatus);
+
+        redisService.clear();
+
+        return handleActivateStatus;
     }
 
 

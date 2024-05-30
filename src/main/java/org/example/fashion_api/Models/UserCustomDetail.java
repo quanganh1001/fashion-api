@@ -50,6 +50,6 @@ public class UserCustomDetail implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return true;
+        return account.getIsActivated();
     }
 }

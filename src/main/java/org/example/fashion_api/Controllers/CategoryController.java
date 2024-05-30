@@ -1,6 +1,7 @@
 package org.example.fashion_api.Controllers;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import org.example.fashion_api.Models.Categories.CreateCategoryDto;
 import org.example.fashion_api.Models.Categories.CategoryRes;
@@ -21,29 +22,33 @@ public class CategoryController {
     @Autowired
     private CategoryService categoryService;
 
+    @Operation(summary = "get all categories")
     @GetMapping()
     public ResponseEntity<List<CategoryRes>> getAllCategories() throws JsonProcessingException {
         return ResponseEntity.ok(categoryService.findAll());
     }
 
+    @Operation(summary = "get category by Id")
     @GetMapping("/{catId}")
     public ResponseEntity<CategoryRes> getCategory(@PathVariable Long catId) {
         return ResponseEntity.ok(categoryService.findById(catId));
     }
 
+    @Operation(summary = "get child categories")
     @GetMapping("/childCategories")
     public ResponseEntity<List<CategoryRes>> getChildCategories(@RequestParam(value = "catParentId",
             defaultValue = "") Long catParentId) throws JsonProcessingException {
         return ResponseEntity.ok(categoryService.childCategories(catParentId));
     }
 
-
+    @Operation(summary = "create category (role MANAGER)")
     @PreAuthorize("hasAnyRole('MANAGER')")
     @PostMapping()
     public ResponseEntity<CategoryRes> addCategory(@Valid @RequestBody CreateCategoryDto createCategoryDto) {
         return ResponseEntity.ok(categoryService.addCategory(createCategoryDto));
     }
 
+    @Operation(summary = "update category (role MANAGER)")
     @PreAuthorize("hasAnyRole('MANAGER')")
     @PutMapping("update/{catId}")
     public ResponseEntity<CategoryRes> updateCategory(@PathVariable("catId") Long catId,
@@ -51,6 +56,7 @@ public class CategoryController {
         return ResponseEntity.ok(categoryService.save(catId, updateCategoryDto));
     }
 
+    @Operation(summary = "delete category (role MANAGER)")
     @PreAuthorize("hasAnyRole('MANAGER')")
     @DeleteMapping("/{catId}")
     public ResponseEntity<String> deleteCategory(@PathVariable("catId") Long catId) throws IOException {
@@ -58,6 +64,8 @@ public class CategoryController {
         return ResponseEntity.ok("Deleted Category");
     }
 
+
+    @Operation(summary = "update image background category (role MANAGER)")
     @PreAuthorize("hasAnyRole('MANAGER')")
     @PostMapping("/upBackgroundImgCategory/{catId}")
     public ResponseEntity<String> upBackgroundImg(@RequestParam("file") MultipartFile file,

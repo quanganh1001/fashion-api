@@ -40,6 +40,7 @@ public class SecurityConfig {
     public UserDetailsService userDetailsService() {
         return subject -> {
             Optional<Account> accountByPhone = accountRepo.findByPhone(subject);
+
             if (accountByPhone.isPresent()){
                 return new UserCustomDetail(accountByPhone.get());
             }
@@ -79,6 +80,7 @@ public class SecurityConfig {
                         sessionManager -> sessionManager.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(authenticationProvider())
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
+
         ;
 
         return http.build();

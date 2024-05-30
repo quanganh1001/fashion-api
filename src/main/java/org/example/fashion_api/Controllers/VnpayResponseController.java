@@ -1,20 +1,18 @@
 package org.example.fashion_api.Controllers;
 
-
-import com.cloudinary.api.exceptions.BadRequest;
+import io.swagger.annotations.Api;
+import io.swagger.v3.oas.annotations.Hidden;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.transaction.Transactional;
 import org.example.fashion_api.Configurations.VnpayConfig;
 import org.example.fashion_api.Exception.BadRequestException;
-import org.example.fashion_api.Exception.NotFoundException;
-import org.example.fashion_api.Models.Invoices.Invoice;
 import org.example.fashion_api.Repositories.InvoiceRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.io.UnsupportedEncodingException;
+
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.Enumeration;
@@ -27,6 +25,7 @@ public class VnpayResponseController {
     private InvoiceRepo invoiceRepo;
 
     @GetMapping("/vnpay/response")
+    @Hidden
     @Transactional
     public ResponseEntity<String> getVnpayResponse(HttpServletRequest request)  {
 

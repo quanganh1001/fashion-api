@@ -34,4 +34,6 @@ public interface AccountService {
     void updateRole(Long accountId, RoleEnum role);
 
     AccountRes getCurrentAccount();
+
+    Boolean activatedAccount(Long accountId);
 }

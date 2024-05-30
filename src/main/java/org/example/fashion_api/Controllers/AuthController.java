@@ -1,5 +1,6 @@
 package org.example.fashion_api.Controllers;
 
+import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import org.example.fashion_api.Mapper.AccountMapper;
 import org.example.fashion_api.Models.Accounts.AccountLoginDto;
@@ -25,32 +26,39 @@ public class AuthController {
 
 
     @PostMapping("/login")
+    @Operation(summary = "Login", description = "This is a login API")
     public ResponseEntity<JwtTokenRes> login(@Valid @RequestBody AccountLoginDto loginRequest) {
         return new ResponseEntity<>(accountService.Login(loginRequest), HttpStatus.OK);
     }
 
     @DeleteMapping("/logout")
+    @Operation(summary = "Logout", description = "This is a logout API")
     public ResponseEntity<String> logout(String token) {
         accountService.Logout(token);
         return ResponseEntity.ok("Logout successful");
     }
 
+    @Operation(summary = "refresh token")
     @PutMapping("/refreshToken")
     public ResponseEntity<JwtTokenRes> refreshToken( String refreshToken)  {
         return new ResponseEntity<>(jwtService.RefreshToken(refreshToken), HttpStatus.OK);
     }
 
+    @Operation(summary = "register")
     @PostMapping("/register")
     public ResponseEntity<AccountRes> registerAccount(@Valid @RequestBody AccountRegisterDto accountRegisterDto) {
         return ResponseEntity.ok(accountService.registerAccount(accountRegisterDto));
     }
 
+    @Operation(summary = "reset pass")
     @PutMapping("/resetPass")
     public ResponseEntity<String> resetPass(String email) {
         accountService.resetPass(email);
         return ResponseEntity.ok("New password has been sent to registered email");
     }
 
+
+    @Operation(summary = "test auth")
     @GetMapping("/checkAuth")
     public ResponseEntity<AccountRes> checkAuth() {
 

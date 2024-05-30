@@ -8,7 +8,9 @@ import org.example.fashion_api.Exception.NotFoundException;
 import org.example.fashion_api.Mapper.InvoiceMapper;
 import org.example.fashion_api.Models.Invoices.*;
 import org.example.fashion_api.Models.InvoicesDetails.InvoiceDetailDto;
+import org.example.fashion_api.Models.ProductsDetails.ProductDetail;
 import org.example.fashion_api.Repositories.InvoiceRepo;
+import org.example.fashion_api.Repositories.ProductDetailRepo;
 import org.example.fashion_api.Services.InvoiceDetailService.InvoiceDetailService;
 import org.example.fashion_api.Services.VnpayService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +31,8 @@ public class InvoiceServiceImpl implements InvoiceService {
     private InvoiceDetailService invoiceDetailService;
     @Autowired
     private VnpayService vnpayService;
+    @Autowired
+    private ProductDetailRepo productDetailRepo;
 
     @Override
     public PageInvoiceRes getAllInvoices(String keyword, int page, int pageSize) {
@@ -98,14 +102,18 @@ public class InvoiceServiceImpl implements InvoiceService {
                 .build();
         InvoiceRes invoiceRes = createInvoice(createInvoiceDto);
 
+        long totalPrice = 0;
+
         for (InvoiceDetailDto invoiceDetail : checkoutDto.getInvoicesDetails()) {
-            invoiceDetailService.createInvoiceDetail(invoiceRes.getId(), invoiceDetail.getId());
+            ProductDetail productDetail = productDetailRepo.findById(invoiceDetail.getProductDetailId()).orElseThrow(() -> new NotFoundException("Product"));
+
+            totalPrice += (productDetail.getProduct().getPrice() * invoiceDetail.getQuantity());
+
+            invoiceDetailService.createInvoiceDetail(invoiceRes.getId(), invoiceDetail.getProductDetailId());
         }
 
-        Invoice invoice = invoiceRepo.findById(invoiceRes.getId())
-                .orElseThrow(() -> new NotFoundException("Invoice"));
 
-        return vnpayService.createPaymentUrl(http, invoiceRes.getId(), invoice.getTotalBill());
+        return vnpayService.createPaymentUrl(http, invoiceRes.getId(), totalPrice + checkoutDto.getShippingFee());
 
     }
 

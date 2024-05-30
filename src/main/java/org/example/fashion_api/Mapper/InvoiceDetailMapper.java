@@ -28,4 +28,5 @@ public interface InvoiceDetailMapper {
     @Mapping(target = "code", source = "productDetail.code")
     InvoiceDetailRes invoiceDetailToInvoiceDetailRes(InvoiceDetail invoiceDetails);
 
+
 }

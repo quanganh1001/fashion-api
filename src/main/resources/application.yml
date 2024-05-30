@@ -1,0 +1,68 @@
+spring:
+  # Use for localhost
+#    datasource:
+#      url: jdbc:mysql://${MYSQL_LOCAL_HOST}:3306/${MYSQL_DATABASE}
+#      username: ${MYSQL_USERNAME}
+#      password: ""
+#    data:
+#      redis:
+#        host: ${REDIS_LOCAL_HOST}
+#        port: ${REDIS_PORT}
+#        cache-null-values: true
+#    rabbitmq:
+#      host: ${RABBITMQ_LOCAL_HOST}
+#      port: ${RABBITMQ_PORT}
+#      username: ${RABBITMQ_USERNAME}
+#      password: ${RABBITMQ_PASSWORD}
+
+  ##################################
+  ##################################
+
+  # Use for docker
+  datasource:
+      url: jdbc:mysql://${MYSQL_HOST}:3306/${MYSQL_DATABASE}?useSSL=false&serverTimezone=UTC
+      username: ${MYSQL_USERNAME}
+      password: ${MYSQL_PASSWORD}
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      jpa:
+      database-platform: org.hibernate.dialect.MySQL8Dialect
+
+  data:
+      redis:
+        host: ${REDIS_HOST}
+        port: ${REDIS_PORT}
+        cache-null-values: true
+
+  rabbitmq:
+      host: ${RABBITMQ_HOST}
+      port: ${RABBITMQ_PORT}
+      username: ${RABBITMQ_USERNAME}
+      password: ${RABBITMQ_PASSWORD}
+
+  ##################################
+  ##################################
+
+mail:
+      host: ${SPRING_MAIL_HOST}
+      port: ${SPRING_MAIL_PORT}
+      username: ${SPRING_MAIL_USERNAME}
+      password: ${SPRING_MAIL_PASSWORD}
+      properties:
+        mail:
+          smtp:
+            auth: true
+            starttls:
+              enable: true
+
+rabbitmq:
+    mail:
+      exchange: ${RABBITMQ_MAIL_EXCHANGE}
+      queue: ${RABBITMQ_MAIL_QUEUE}
+      key: ${RABBITMQ_MAIL_KEY}
+
+    dead_letter:
+      exchange: ${RABBITMQ_DEAD_LETTER_EXCHANGE}
+      queue: ${RABBITMQ_DEAD_LETTER_QUEUE}
+      key: ${RABBITMQ_DEAD_LETTER_KEY}
+
+

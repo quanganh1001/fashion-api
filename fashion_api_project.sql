@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th5 16, 2024 lúc 06:29 PM
+-- Thời gian đã tạo: Th5 30, 2024 lúc 05:11 PM
 -- Phiên bản máy phục vụ: 10.4.32-MariaDB
 -- Phiên bản PHP: 8.2.12
 
@@ -797,7 +797,7 @@ INSERT INTO `invoices` (`id`, `invoice_code`, `name`, `phone`, `address`, `note`
 (72, 'WDVTINII', 'quang anh', '0365151822', '4dvsdsf', '', 'sda', 1, 1250000, 0, 1250000, b'0', '2024-05-14 10:47:02', '2024-05-14 11:16:14', 0, 1),
 (73, 'WQKH3LAS', 'string', '1362370307', 'string', 'string', 'string', 1, 0, 0, 0, b'0', '2024-05-14 10:47:02', '2024-05-14 11:16:14', 0, 1),
 (74, 'WVHNNQAC', 'quang anh', '0365151822', '4dvsdsf', '', 'gfd', 1, 500000, 999999, 1499999, b'0', '2024-05-14 10:47:02', '2024-05-14 11:16:14', 0, 1),
-(75, 'X6JPOCJH', 'sdgsd', '0999999999', 'cxgdf', '', 'df', 1, 8060000, 20000, 8080000, b'0', '2024-05-14 10:47:02', '2024-05-14 11:16:14', 0, 1),
+(75, 'X6JPOCJH', 'string', '4019020703', 'string', 'string', 'df', 0, 6840000, 20000, 6860000, b'0', '2024-05-14 10:47:02', '2024-05-22 14:49:07', 0, 1),
 (76, 'XNLM5KBW', 'quang anh', '0365151822', '4dvsdsf', '', 'f', 1, 750000, 0, 750000, b'0', '2024-05-14 10:47:02', '2024-05-14 11:16:14', 0, 1),
 (77, 'XRAPWYJI', 'quang anh', '0999999999', 'fđ', '', 'dgf', 1, 990000, 0, NULL, b'0', '2024-05-14 10:47:02', '2024-05-14 11:16:14', 0, 1),
 (78, 'YFJBR6YE', 'quang anh', '0365151822', '4dvsdsf', '', 'vd', 1, 333333, 0, 333333, b'0', '2024-05-14 10:47:02', '2024-05-14 11:16:14', 0, 1),
@@ -856,7 +856,6 @@ INSERT INTO `invoices_detail` (`id`, `invoice_id`, `product_detail_id`, `price`,
 (260, 39, 442, 480000, 2, 960000, '2024-05-14 10:47:14', '2024-05-14 10:47:14'),
 (261, 39, 443, 480000, 1, 480000, '2024-05-14 10:47:14', '2024-05-14 10:47:14'),
 (262, 14, 691, 990000, 1, 990000, '2024-05-14 10:47:14', '2024-05-14 10:47:14'),
-(263, 75, 691, 990000, 2, 1980000, '2024-05-14 10:47:14', '2024-05-14 10:47:14'),
 (272, 13, 442, 480000, 4, 1920000, '2024-05-14 10:47:14', '2024-05-14 10:47:14'),
 (274, 13, 614, 380000, 1, 380000, '2024-05-14 10:47:14', '2024-05-14 10:47:14'),
 (365, 5, 614, 380000, 2, 760000, '2024-05-14 10:47:14', '2024-05-14 10:47:14'),
@@ -928,7 +927,9 @@ INSERT INTO `invoices_detail` (`id`, `invoice_id`, `product_detail_id`, `price`,
 (445, 17, 522, 500000, 1, 500000, '2024-05-14 10:47:14', '2024-05-14 10:47:14'),
 (446, 75, 613, 380000, 2, 760000, '2024-05-14 10:47:14', '2024-05-14 10:47:14'),
 (447, 75, 614, 380000, 1, 380000, '2024-05-14 10:47:14', '2024-05-14 10:47:14'),
-(448, 75, 615, 380000, 13, 4940000, '2024-05-14 10:47:14', '2024-05-14 10:47:14');
+(448, 75, 615, 380000, 13, 4940000, '2024-05-14 10:47:14', '2024-05-14 10:47:14'),
+(453, 75, 655, 380000, 1, 380000, '2024-05-22 14:41:41', '2024-05-22 14:41:41'),
+(454, 75, 654, 380000, 1, 380000, '2024-05-22 14:49:07', '2024-05-22 14:49:07');
 
 --
 -- Bẫy `invoices_detail`
@@ -939,7 +940,7 @@ CREATE TRIGGER `delete_invoice_detail` AFTER DELETE ON `invoices_detail` FOR EAC
     SET total_price = (
         SELECT COALESCE(SUM(total_price), 0)
         FROM invoices_detail
-        WHERE id = OLD.id
+        WHERE invoice_id = OLD.invoice_id
     )
     WHERE id = OLD.invoice_id;
     
@@ -955,9 +956,9 @@ DELIMITER $$
 CREATE TRIGGER `insert_invoice_detail` AFTER INSERT ON `invoices_detail` FOR EACH ROW BEGIN
     UPDATE invoices
     SET total_price = (
-        SELECT SUM(total_price)
+        SELECT COALESCE(SUM(total_price), 0)
         FROM invoices_detail
-        WHERE id = NEW.id
+       	WHERE invoice_id = NEW.invoice_id
     )
     WHERE id = NEW.invoice_id;
     
@@ -969,12 +970,13 @@ $$
 DELIMITER ;
 DELIMITER $$
 CREATE TRIGGER `update_invoice_detail` AFTER UPDATE ON `invoices_detail` FOR EACH ROW BEGIN
-     UPDATE invoices
-    SET total_price = (
-        SELECT COALESCE(SUM(total_price), 0)
+    UPDATE invoices
+    	SET total_price = (
+        SELECT 
+        COALESCE(SUM(invoices_detail.total_price),0)
         FROM invoices_detail
-        WHERE id = NEW.id
-    )
+        WHERE invoice_id = NEW.invoice_id
+    	)
     WHERE id = NEW.invoice_id;
     
     UPDATE invoices
@@ -1011,8 +1013,8 @@ INSERT INTO `jwt_tokens` (`id`, `token`, `expiration_date`, `refresh_token`, `ac
 (54, 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJuZ3V5ZW5xdWFuZ2FuaCIsInVzZXJuYW1lIjoibmhhbnZpZW4xIiwicm9sZSI6IlJPTEVfRU1QTE9ZRUUiLCJpYXQiOjE3MTM4OTE2OTEsImV4cCI6MTcxMzg5NTI5MX0.zMzZPWZrUHYOsIauCEH0o9mu8VKGsXtHSaO-TpX2Dbw', '2024-04-24 01:01:31', '9bb3c204-6b55-47f3-bada-ed056704b408', 2, '2024-04-24 00:01:41', 0, '2024-05-14 10:47:28', '2024-05-14 10:47:28'),
 (118, 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJuZ3V5ZW5xdWFuZ2FuaCIsInVzZXJuYW1lIjoidGVzdCIsInJvbGUiOiJST0xFX0NVU1RPTUVSIiwiaWF0IjoxNzE1NzgzMjE1LCJleHAiOjE3MTU4Njk2MTV9.IVbTZvuMjeMTAakiIWRmh_XX7ZUkKLvljAZaVj_fnPE', '2024-05-16 21:26:55', '86e28236-b3de-4631-b4a0-a187e0b86dba', 28, '2024-06-14 21:26:55', 0, '2024-05-15 14:26:55', '2024-05-15 14:26:55'),
 (119, 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJuZ3V5ZW5xdWFuZ2FuaCIsInVzZXJuYW1lIjoidGVzdCIsInJvbGUiOiJST0xFX0NVU1RPTUVSIiwiaWF0IjoxNzE1NzgzMjc1LCJleHAiOjE3MTU4Njk2NzV9.H7L5O3EI5bYE0oQ9ndqjlCgHzRROuZ_QjUKJ0fdr9pM', '2024-05-16 21:27:55', 'a634a324-4258-4e04-b1b3-cce1a6e478b8', 28, '2024-06-14 21:27:55', 0, '2024-05-15 14:27:55', '2024-05-15 14:27:55'),
-(120, 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJuZ3V5ZW5xdWFuZ2FuaCIsInVzZXJuYW1lIjoicXVhbmx5Iiwicm9sZSI6IlJPTEVfTUFOQUdFUiIsImlhdCI6MTcxNTc4MzMxNSwiZXhwIjoxNzE1ODY5NzE1fQ.SbdkB4nDtrwuXAucjnCZyoBwiuKkeu8MEWf-lESVDmM', '2024-05-16 21:28:35', 'ae4528cb-eb92-4f03-8ba7-f2b6dfad2559', 1, '2024-06-14 21:28:35', 0, '2024-05-15 14:28:35', '2024-05-15 14:28:35'),
-(121, 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJuZ3V5ZW5xdWFuZ2FuaCIsInVzZXJuYW1lIjoicXVhbmx5Iiwicm9sZSI6IlJPTEVfTUFOQUdFUiIsImlhdCI6MTcxNTg2OTg2NCwiZXhwIjoxNzE1OTU2MjY0fQ.ITGMcAPbWy7iOWHdlrd8hE6g42nIJFF-0epIZbwavrE', '2024-05-17 21:31:04', '3f8a1b62-0c61-4f18-aa5f-2416decc8db5', 1, '2024-06-15 21:31:04', 0, '2024-05-16 14:31:04', '2024-05-16 14:31:04');
+(126, 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJuZ3V5ZW5xdWFuZ2FuaCIsInVzZXJuYW1lIjoicXVhbmx5Iiwicm9sZSI6IlJPTEVfTUFOQUdFUiIsImlhdCI6MTcxNzA3OTgyNSwiZXhwIjoxNzE3MTY2MjI1fQ.UHXNpVJdCLtF94HAp-yeUOSz46HFMpBFTDx8oa37GVs', '2024-05-31 21:37:05', '4171ab78-e542-4e03-b1d6-8f6e841dbe84', 1, '2024-06-29 21:37:05', 0, '2024-05-30 14:37:05', '2024-05-30 14:37:05'),
+(127, 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJuZ3V5ZW5xdWFuZ2FuaCIsInVzZXJuYW1lIjoicXVhbmx5Iiwicm9sZSI6IlJPTEVfTUFOQUdFUiIsImlhdCI6MTcxNzA4MDU0MCwiZXhwIjoxNzE3MTY2OTQwfQ.zIrR2sETMrOD0vL4ZPb9spZGzNvXl3oKRD58hq_qkJk', '2024-05-31 21:49:00', '7b658e4d-7791-4353-811c-d6146ad47077', 1, '2024-06-29 21:49:00', 0, '2024-05-30 14:49:00', '2024-05-30 14:49:00');
 
 -- --------------------------------------------------------
 
@@ -1024,7 +1026,7 @@ CREATE TABLE `products` (
   `id` int(11) NOT NULL,
   `product_code` varchar(15) NOT NULL,
   `product_name` varchar(100) DEFAULT NULL,
-  `cat_id` varchar(10) DEFAULT NULL,
+  `cat_id` int(11) NOT NULL,
   `price` int(11) DEFAULT NULL,
   `discount_price` int(11) DEFAULT NULL,
   `discount_percent` int(11) DEFAULT NULL,
@@ -1044,77 +1046,77 @@ CREATE TABLE `products` (
 --
 
 INSERT INTO `products` (`id`, `product_code`, `product_name`, `cat_id`, `price`, `discount_price`, `discount_percent`, `brand`, `description`, `total_size`, `total_color`, `image_background`, `image_choose_size`, `is_activated`, `created_at`, `updated_at`) VALUES
-(1, 'BI013', '423423', '114', 380000, NULL, NULL, 'TORANO', '', 6, 7, 'https://res.cloudinary.com/dmmvhjl0m/video/upload/v1711858413/tvzzpjqeocumuaszfpxt.mp4', 'IMAGE_4', b'1', '2024-05-14 10:47:36', '2024-05-14 10:47:36'),
-(2, 'CABJ003', 'Quần Jeans rách Slim CABJ003', '109', 550000, NULL, NULL, 'TORANO', 'Quần Jeans rách Slim CABJ003\r\n', 5, 1, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711810773/1702810774291_cabj003_75aa0eb2e3ef4d7cb175dcef6ceae9cf_master.jpg.webp', 'IMAGE_4', b'1', '2024-05-14 10:47:36', '2024-05-14 10:47:36'),
-(3, 'DABJ004', 'Quần Jeans basic Slim DABJ004', '108', 550000, NULL, NULL, 'TORANO', 'Quần Jeans basic Slim CABJ004/2\r\n', 5, 1, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711810701/1702810004163_52706071935_8966d1e12f_o_a66489be76c949d791609a08ca73993f_master.jpg.webp', 'IMAGE_4', b'1', '2024-05-14 10:47:36', '2024-05-14 10:47:36'),
-(4, 'DABJ010', 'Quần Jeans basic Slim DABJ010', '108', 550000, NULL, NULL, 'TORANO', 'Quần Jeans basic Slim CABJ010/2', 5, 1, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711810727/1702810256808_52169110354_87bd6ccaa0_o_abf9f4cabd204376b1d1cba50d2deec9_master.jpg.webp', 'IMAGE_4', b'1', '2024-05-14 10:47:36', '2024-05-14 10:47:36'),
-(5, 'DABJ903', 'Quần Jeans basic Slim DABJ903', '108', 550000, NULL, NULL, 'TORANO', 'Quần Jeans basic Slim DABJ903\r\n', 5, 1, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711810748/1702810455348_dabj903_bf925f25f2c244aeb43a9c4430f64ef8_master.jpg.webp', 'IMAGE_4', b'1', '2024-05-14 10:47:36', '2024-05-14 10:47:36'),
-(6, 'DABJ904', 'Quần Jeans rách Slim DABJ904', '109', 550000, NULL, NULL, 'TORANO', 'Quần Jeans rách Slim DABJ904\r\n', 5, 1, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711810794/1702810960863_20230209_2nqi04eclesynryo_614790fe9b5a479095c6726ef90f2df7_master.jpg.jpg', 'IMAGE_4', b'1', '2024-05-14 10:47:36', '2024-05-14 10:47:36'),
-(7, 'DABJ908', 'Quần Jeans rách Slim 1.DABJ908', '109', 550000, NULL, NULL, 'TORANO', '', 5, 1, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711810768/1702810648513_bj908-2_53198051989_o_d8c0aeb3be18470c95b4e19e4481b38d_master.jpg.webp', 'IMAGE_4', b'1', '2024-05-14 10:47:36', '2024-05-14 10:47:36'),
-(8, 'DABK906', 'Quần kaki dài basic cạp tender túi lé DABK906', '110', 500000, NULL, NULL, 'TORANO', '', 5, 4, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711810591/1702808414194_dabk906-1_6be1255f7e6b427094e410388cb5f6a1_master.jpg.webp', 'IMAGE_4', b'1', '2024-05-14 10:47:36', '2024-05-14 10:47:36'),
-(9, 'DABK908', 'Quần kaki dài basic DABK908', '110', 500000, NULL, NULL, 'TORANO', '', 5, 4, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711810628/1702808850360_tp038---bk908-_20__de063447c1d34cf0a62c34b18ed2ffe6_master.jpg.webp', 'IMAGE_4', b'1', '2024-05-14 10:47:36', '2024-05-14 10:47:36'),
-(10, 'DATB416', 'Sơ mi dài tay kẻ Checkerboard 2.DATB416', '122', 480000, NULL, NULL, 'TORANO', '', 5, 1, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711810249/1703435106886_52695741049_ab53170a62_o_d4d8d423351a4330b41d0fc19ade0513_master.jpg.webp', 'IMAGE_2', b'1', '2024-05-14 10:47:36', '2024-05-14 10:47:36'),
-(11, 'DATB614', 'Áo sơ mi dài tay trơn Bamboo 4.DATB614', '123', 450000, NULL, NULL, 'TORANO', '', 5, 4, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711810494/1702806015812_52660558534_e1239eeb1b_o_786802e53d3843e19392b3f4e5199c71_master.jpg.webp', 'IMAGE_2', b'1', '2024-05-14 10:47:36', '2024-05-14 10:47:36'),
-(12, 'DATB920', 'Áo sơ mi dài tay trơn Bamboo 4.DATB920', '123', 42000, NULL, NULL, 'TORANO', '', 5, 4, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711810527/1702806426640_untitled_design__5__5744f2809b2c4d3499ef8f70899e3c18_master.jpg.webp', 'IMAGE_2', b'1', '2024-05-14 10:47:36', '2024-05-14 10:47:36'),
-(13, 'DSTP611', 'Áo polo trơn bo kẻ DSTP611', '98', 333333, NULL, NULL, 'Torano', '', 4, 1, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711811554/tp611_59ea616328234a9b969ce2d1c48c482f_master.jpg.webp', 'IMAGE_1', b'1', '2024-05-14 10:47:36', '2024-05-14 10:47:36'),
-(14, 'DSTP650', 'Áo Polo monogram TRN DSTP650', '100', 450000, NULL, NULL, 'TORANO', 'Áo Polo monogram TRN 1.DSTP650', 4, 1, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711811057/4_485c2d0480d84e4b983817d401d0c65d_master.jpg.jpg', 'IMAGE_1', b'1', '2024-05-14 10:47:36', '2024-05-14 10:47:36'),
-(15, 'DSTP903', 'Áo polo can phối Horizontal Color Scheme DSTP903', '99', 420000, 290000, 31, 'TORANO', '', 4, 2, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711811223/dstp903_52866905251_o_735380510ed1481090a9d817d712432b_master.jpg.webp', 'IMAGE_1', b'1', '2024-05-14 10:47:36', '2024-05-14 10:47:36'),
-(16, 'DWBS012', 'Quần nỉ trơn Basic 4.DWBS012', '111', 380000, 299000, 21, 'TORANO', '', 4, 3, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711810234/1703928526228_bs012-1_52615553322_o_0d15a75065ed4bf59b9e03ecded5d334_master.jpg.webp', 'IMAGE_4', b'1', '2024-05-14 10:47:36', '2024-05-14 10:47:36'),
-(17, 'DWCT001', 'Áo khoác 2 lớp dạ cổ bomber 3.DWCT001', '87', 990000, NULL, NULL, 'TORANO', '', 4, 2, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711810200/1704190979928_ct001_51762266972_o_9bee17ad6de44acca391c7ad9847bf08_master.jpg.webp', 'IMAGE_5', b'1', '2024-05-14 10:47:36', '2024-05-14 10:47:36'),
-(18, 'DWCT004', 'Áo khoác 2 lớp dạ cổ cao 2.DWCT004', '88', 750000, NULL, NULL, 'TORANO', '', 4, 2, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711810186/1704191300176_ct004-2_52410023919_o_fe0e3f9c03f642cf9309596415dc2278_master.jpg.webp', 'IMAGE_5', b'1', '2024-05-14 10:47:36', '2024-05-14 10:47:36'),
-(19, 'DWCU007', 'Áo khoác 2 lớp lót lông cổ bomber 2.DWCU007', '87', 750000, NULL, NULL, 'TORANO', '', 4, 2, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711810174/1704191606465_20220929_eflqusorg4g4ku3umeps5z9r_389f739d70b645d8a1d6a49d9b745c7b_compact.jpg.webp', 'IMAGE_5', b'1', '2024-05-14 10:47:36', '2024-05-14 10:47:36'),
-(20, 'EABT019', 'Quần âu slim-fit cạp trơn EABT019', '105', 500000, NULL, NULL, 'TORANO', '', 5, 4, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711810674/1702809800334_tb041---bt019-_14__13addb6f4b634d3bb1df83649ff1fdde_master.jpg.webp', 'IMAGE_3', b'1', '2024-05-14 10:47:36', '2024-05-14 10:47:36'),
-(21, 'EABT021', 'Quần âu slim-fit điều chỉnh cạp trơn 1.EABT021', '105', 480000, NULL, NULL, 'TORANO', '', 5, 1, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711810647/1702809333060_eabt021-4_52951993446_o_0d23aa6812b3462cb69bdc6b19240434_master.jpg.webp', 'IMAGE_3', b'1', '2024-05-14 10:47:36', '2024-05-14 10:47:36'),
-(22, 'EATB003', 'Sơ mi dài tay kẻ Checkerboard 3.EATB003', '122', 520000, NULL, NULL, 'TORANO', '', 5, 3, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711810577/1702807767115_eatb003-1_4b6bae1705b84deabfa237c94373b36e_master.jpg.webp', 'IMAGE_2', b'1', '2024-05-14 10:47:36', '2024-05-14 10:47:36'),
-(23, 'EATB006', 'Sơ mi dài tay đũi 5.EATB006', '119', 480000, NULL, NULL, 'TORANO', 'Sơ mi dài tay nam vải đũi cao cấp thấm hút mồ hôi và thoáng mát\r\n', 5, 4, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711810553/1702806927321_eatb006-1_802efda9723841d59eb56fabb46d7b22_master.jpg.webp', 'IMAGE_2', b'1', '2024-05-14 10:47:36', '2024-05-14 10:47:36'),
-(24, 'ESBI006', 'Quần short đũi basic phối dây dệt gấu quần ESBI006', '114', 380000, NULL, NULL, 'TORANO', 'Quần short đũi nam basic phối dây dệt gấu quần. Chất đũi cao cấp mềm mịn, không bai xù và hạn chế nhăn nhàu. Vải thoáng mát thấm hút mồ hôi tốt và nhanh khô.\r\n', 5, 5, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711810389/1702815216177_esbi006-1_405724795b8f4f22867f345eaab26319_master.jpg.webp', 'IMAGE_4', b'1', '2024-05-14 10:47:36', '2024-05-14 10:47:36'),
-(25, 'ESBK002', 'Quần short kaki basic, gấp LV bọc viền dây dệt sườn ESBK002', '117', 380000, NULL, NULL, 'TORANO', '', 5, 4, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711810325/1702813549148_52933853176_7967f42e52_o_208bdabebdb14986a84a5ed6be961474_master.jpg.webp', 'IMAGE_4', b'1', '2024-05-14 10:47:36', '2024-05-14 10:47:36'),
-(26, 'ESBK007', 'Quần short kaki phối chun cạp 3.ESBK007', '117', 400000, NULL, NULL, 'TORANO', '', 5, 3, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711810284/1702812911838_b_d29e6bdf78d04be1aa1575b44e69b2fb_master.jpg.webp', 'IMAGE_4', b'1', '2024-05-14 10:47:36', '2024-05-14 10:47:36'),
-(27, 'ESBW004', 'Quần short gió cạp thường vải hiệu ứng 3.ESBW004', '116', 350000, NULL, NULL, 'TORANO', '', 4, 3, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711810853/1702812478091_esbw004-12_52899473574_o_36fe3a92153a417b89b69bf2ce2d1490_master.jpg.webp', 'IMAGE_4', b'1', '2024-05-14 10:47:36', '2024-05-14 10:47:36'),
-(28, 'ESBW005', 'Short gió cạp phối chun, in logo mép quần 2.ESBW005', '116', 320000, NULL, NULL, 'TORANO', '', 4, 2, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711810827/1702812110775_4268bd5eeb3e637ed3b_master.jpg.webp', 'IMAGE_4', b'1', '2024-05-14 10:47:36', '2024-05-14 10:47:36'),
-(29, 'ESTA003', 'Áo tanktop in họa tiết Tents 2. ESTA003', '126', 300000, NULL, NULL, 'TORANO', '', 4, 2, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711810974/1702701667271_eata003-1_c8e90efa55944401946efba4f0ae02bf_master.jpg.webp', 'IMAGE_1', b'1', '2024-05-14 10:47:36', '2024-05-14 10:47:36'),
-(30, 'ESTA005', 'Áo Tanktop họa tiết in Wild Sool 1.ESTA005', '126', 250000, NULL, NULL, 'TORANO', '', 4, 1, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711810961/1702702646831_eata005-2_ef46f711d4734ba6a8be08d07f8f3567_master.jpg.webp', 'IMAGE_1', b'1', '2024-05-14 10:47:36', '2024-05-14 10:47:36'),
-(31, 'ESTA006', 'Áo tanktop họa tiết in Shoes ESTA006', '126', 250000, NULL, NULL, 'TORANO', '', 4, 1, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711810985/1702700896477_esta006-1_2a8dce82b88d4fd798c0434cf9bed833_master.jpg.webp', 'IMAGE_1', b'1', '2024-05-14 10:47:36', '2024-05-14 10:47:36'),
-(32, 'ESTA010', 'Áo Tanktop họa tiết Defeat ESTA010', '126', 250000, NULL, NULL, 'TORANO', 'Áo tanktop nam cá tính, năng động mặc cực thoải mái. Mẫu áo ba lỗ nam trẻ trung với 2 màu dễ mặc.\r\n', 4, 1, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711810015/1702537484269_esta010-1_ad9f734ad81a4f339a557960d10dd7f5_master.jpg.webp', 'IMAGE_1', b'1', '2024-05-14 10:47:36', '2024-05-14 10:47:36'),
-(33, 'ESTB026', 'Sơ mi ngắn tay đũi ESTB026', '119', 450000, NULL, NULL, 'TORANO', '', 6, 5, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711810474/1702803942386_estb026-11_52822828632_o_fb5c8442ec4146618cca5021c9f98643_master.jpg.webp', 'IMAGE_2', b'1', '2024-05-14 10:47:36', '2024-05-14 10:47:36'),
-(34, 'ESTB030', 'Sơ mi ngắn tay trơn Bamboo ESTB030', '123', 400000, NULL, NULL, 'TORANO', '', 5, 2, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711810115/1704715289535_eatb030-3_f4f3649109194318999a3e984bbd30f3_master.jpg.webp', 'IMAGE_2', b'1', '2024-05-14 10:47:36', '2024-05-14 10:47:36'),
-(35, 'ESTP001', 'Áo polo họa tiết in tràn ESTP001', '100', 420000, NULL, NULL, 'TORANO', '', 4, 1, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711811327/7_9bc29d0a14064c70aca802cc201f2750_master.jpg.webp', 'IMAGE_1', b'1', '2024-05-14 10:47:36', '2024-05-14 10:47:36'),
-(36, 'ESTP005', 'Áo polo trơn bo kẻ, logo cánh tay ESTP005', '98', 420000, NULL, NULL, 'TORANO', 'Áo polo trơn bo kẻ, logo cánh tay ESTP005', 4, 1, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711811464/estp005_52833497146_o_19f6e6d8b44947d4bcd7461012e1e40d_master.jpg.jpg', 'IMAGE_1', b'1', '2024-05-14 10:47:36', '2024-05-14 10:47:36'),
-(37, 'ESTP007', 'Áo Polo can phối 3 màu ESTP007', '99', 420000, NULL, NULL, 'TORANO', 'Áo polo nam cao cấp đẹp, tôn dáng. Chất vải dệt mềm, dày dặn không bai xù nhăn nhàu', 4, 2, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711811282/52898691562_67c82c3ca7_o_9da334afa0244604bf21a0d59cf2a7f2_master.jpg.webp', 'IMAGE_1', b'1', '2024-05-14 10:47:36', '2024-05-14 10:47:36'),
-(38, 'ESTP010', 'Áo polo trơn bo kẻ ESTP010', '98', 400000, NULL, NULL, 'TORANO', '', 5, 3, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711811545/tp010---bk603-_8__b6487398009b4c6eaa1950ee0f26e718_master.jpg.webp', 'IMAGE_1', b'1', '2024-05-14 10:47:36', '2024-05-14 10:47:36'),
-(39, 'ESTP012', 'Áo Polo kẻ dệt ngang 1.ESTP012', '101', 500000, NULL, NULL, 'TORANO', '', 4, 1, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711811086/tp012_0d295f194e3f4f0eab7eede288c3a7c5_master.jpg.webp', 'IMAGE_1', b'1', '2024-05-14 10:47:36', '2024-05-14 10:47:36'),
-(40, 'ESTP014', 'Áo Polo kẻ dệt ngang 1.ESTP014', '101', 500000, NULL, NULL, 'TORANO', '', 4, 1, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711811112/estp014_f4dabbabbe0346598163050a85b06f1a_master.jpg.webp', 'IMAGE_1', b'1', '2024-05-14 10:47:36', '2024-05-14 10:47:36'),
-(41, 'ESTP015', 'Áo polo can phối Horizontal Color Scheme 1.ESTP015', '99', 450000, NULL, NULL, 'TORANO', '', 4, 1, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711811242/estp015_a0e07e027c614085b06c261c289544ab_master.jpg.webp', 'IMAGE_1', b'1', '2024-05-14 10:47:36', '2024-05-14 10:47:36'),
-(42, 'ESTP017', 'Áo polo can phối Horizontal Color Scheme ESTP017', '99', 420000, NULL, NULL, 'TORANO', '', 4, 1, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711811175/52985905053_bdeffa314e_o_aa67bed06deb439399cc2046790f8c59_master.jpg.jpg', 'IMAGE_1', b'1', '2024-05-14 10:47:36', '2024-05-14 10:47:36'),
-(43, 'ESTP018', 'Áo polo can phối, thêu logo ngực ESTP018', '99', 420000, NULL, NULL, 'TORANO', 'Áo polo can phối, thêu logo ngực ESTP018', 4, 1, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711811140/tp018_0691972d076d4071a4fee5291912df9e_master.jpg.webp', 'IMAGE_1', b'1', '2024-05-14 10:47:36', '2024-05-14 10:47:36'),
-(44, 'ESTP020', 'Áo Polo can phối 3 màu ESTP020', '99', 450000, NULL, NULL, 'TORANO', '', 4, 1, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711811280/tp020---bk001-_10__b44a6900b6934440ad797f313b2cdd9a_master.jpg.webp', 'IMAGE_1', b'1', '2024-05-14 10:47:36', '2024-05-14 10:47:36'),
-(45, 'ESTP021', 'Áo polo can phối, thêu logo ngực ESTP021', '99', 550000, 450000, 18, 'TORANO', '', 4, 1, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711811124/estp021-2_7b1e8ac1a10c4163bf199b7b89332d81_master.jpg.webp', 'IMAGE_1', b'1', '2024-05-14 10:47:36', '2024-05-14 10:47:36'),
-(46, 'ESTP022', 'Áo polo can phối vai ESTP022', '99', 450000, NULL, NULL, 'TORANO', 'Áo polo nam cao cấp đẹp, tôn dáng. Chất vải dệt mềm, dày dặn không bai xù nhăn nhàu', 5, 2, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711811171/52901478774_f103d7180e_o_6ec337721b6d4a8bae3c2626bca7d037_master.jpg.webp', 'IMAGE_1', b'1', '2024-05-14 10:47:36', '2024-05-14 10:47:36'),
-(47, 'ESTP023', 'Áo Polo can phối họa tiết TRN ESTP023', '99', 420000, NULL, NULL, 'TORANO', 'Áo Polo can phối họa tiết nam phong cách trẻ trung và lịch lãm thích hợp với mọi dáng người.', 4, 1, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711811255/1_4554a899fc974e40bc58638b060b31ee_master.jpg.webp', 'IMAGE_1', b'1', '2024-05-14 10:47:36', '2024-05-14 10:47:36'),
-(48, 'ESTP028', 'Áo polo trơn bo kẻ cổ V, in logo ngực ESTP028', '98', 420000, NULL, NULL, 'TORANO', '', 5, 4, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711811570/tp028---bk004-_11__9246a1d8b0184518abd852704bd4fa02_master.jpg.webp', 'IMAGE_1', b'1', '2024-05-14 10:47:36', '2024-05-14 10:47:36'),
-(49, 'ESTP032', 'Áo polo trơn bo kẻ ESTP032', '98', 400000, NULL, NULL, 'TORANO', '', 4, 3, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711811526/estp032-3_f94042405af64ca581ca72c753b53b51_master.jpg.webp', 'IMAGE_1', b'1', '2024-05-14 10:47:36', '2024-05-14 10:47:36'),
-(50, 'ESTP033', 'Áo polo trơn bo kẻ phối viền cổ ESTP033', '98', 420000, NULL, NULL, 'TORANO', 'Áo polo trơn bo kẻ phối viền cổ cao cấp', 4, 1, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711811351/m1t1_9a04e0331596472281861b7f44cc3ca2_master.jpg.webp', 'IMAGE_1', b'1', '2024-05-14 10:47:36', '2024-05-14 10:47:36'),
-(51, 'ESTP038', 'Áo Polo trơn basic đen thêu logo ngực ESTP038', '102', 330000, 200000, 39, 'TORANO', 'Áo Polo trơn TORANO cổ bẻ tay ngắn trơn, bo kẻ nhiều màu ESTP038 chính là item hoàn hảo dễ mặc dễ phối đồ cho cả nam và nữ. Khám phá ngay!!!\r\n\r\n+ Chất vải có độ co giãn tốt, thoáng khí và không phai màu.\r\n\r\n+60% Poly +35% cotton +5% Spandex\r\n\r\n+ Thấm hút mồ hôi tối đa và thoải mái khi vận động\r\n\r\n+ Thiết kế Slimfit vừa vặn tôn dáng\r\n\r\n+ Phù hợp với đi làm, đi học, đi chơi, hẹn hò, du lịch...\r\n\r\n+ Áo có 4 size : S – M –L – XL\r\n\r\nHướng dẫn sử dụng và bảo quản:\r\n\r\n+ Giặt ở nhiệt độ bình thường, với đồ có màu tương tự.\r\n\r\n+ Không được dùng hóa chất tẩy.\r\n\r\n+ Hạn chế sử dụng máy sấy và ủi ở nhiệt độ thích hợp.\r\n\r\n+ Lộn mặt trái khi phơi tránh bị phai màu\r\n\r\nChính sách và điều kiện đổi trả của TORANO:\r\n\r\n+ Cam kết chất lượng và mẫu mã sản phẩm giống với hình ảnh.\r\n\r\n+ Cam kết được đổi trả hàng trong vòng 7 ngày.\r\n\r\n+ Hàng phải còn nguyên tem mác và chưa qua sử dụng\r\n\r\n+ Sản phẩm bị lỗi do vận chuyển và do nhà sản xuất', 5, 1, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711811636/tp038-1.jpeg.webp', 'IMAGE_1', b'1', '2024-05-14 10:47:36', '2024-05-14 10:47:36'),
-(52, 'ESTP041', 'Áo Polo trơn hiệu ứng ESTP041', '102', 450000, NULL, NULL, 'TORANO', 'Áo polo nam cao cấp chống nhăn nhàu đang hot tại Torano', 4, 5, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711811461/estp041-16_4cb9d42d84e7436884bd3f4e648621ed_master.jpg.webp', 'IMAGE_1', b'1', '2024-05-14 10:47:36', '2024-05-14 10:47:36'),
-(53, 'ESTP042', 'Áo Polo trơn vải lục giác kèm logo ngực ESTP042', '102', 380000, 349000, 8, 'TORANO', 'Mẫu áo polo chất liệu cải tiến thế hệ mới mang lại cho các anh sự thoải mái cũng như vẻ ngoài lịch sự và đầy nam tính.', 5, 9, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711811418/tp042---bk004-_9__2efe604ac9324e06841cf8edc590e169_master.jpg.webp', 'IMAGE_1', b'1', '2024-05-14 10:47:36', '2024-05-14 10:47:36'),
-(54, 'ESTP047', 'Áo Polo len bo kẻ cổ 2.ESTP047', '98', 500000, NULL, NULL, 'TORANO', 'Áo polo len bo kẻ nam cao cấp chính hãng Torano. Chất vải len dệt chắc chắn, không xù và dão.', 4, 2, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711811054/5_66590d1cba6041359e8a89a1c7e0feb5_master.jpg.webp', 'IMAGE_1', b'1', '2024-05-14 10:47:36', '2024-05-14 10:47:36'),
-(55, 'ESTP060', 'Áo Polo can phối 2 màu ESTP060', '99', 420000, NULL, NULL, 'TORANO', 'Áo polo nam cao cấp đẹp, tôn dáng. Chất vải dệt mềm, dày dặn không bai xù nhăn nhàu', 4, 2, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711811325/3_a6cdb2c46dd543fd9507418aef06c558_master.jpg.webp', 'IMAGE_1', b'1', '2024-05-14 10:47:36', '2024-05-14 10:47:36'),
-(56, 'ESTP067', 'Áo Polo trơn bo kẻ cổ ESTP067', '98', 380000, NULL, NULL, 'TORANO', '', 5, 3, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711811574/tp067---bk004-_16__bc6a55b32ddb4d94bc5c0fa5a7997db4_master.jpg.webp', 'IMAGE_1', b'1', '2024-05-14 10:47:36', '2024-05-14 10:47:36'),
-(57, 'ESTP074', 'Áo Polo trơn bo kẻ ESTP074', '98', 420000, NULL, NULL, 'TORANO', 'Áo Polo nam trơn bo kẻ cao cấp phong cách trẻ trung và lịch lãm thích hợp với mọi dáng người.', 4, 2, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711811013/1701361255452_1_50f16dbd5df34aa3acc99865b4820084_master.jpg.webp', 'IMAGE_1', b'1', '2024-05-14 10:47:36', '2024-05-14 10:47:36'),
-(58, 'ESTS021', 'Áo T shirt họa tiết in Color scheme ESTS021', '125', 300000, NULL, NULL, 'TORANO', '', 4, 2, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711810897/1702717756318_ests021_64a34ff68d6d4857bae234b1364576fc_master.jpg.webp', 'IMAGE_1', b'1', '2024-05-14 10:47:36', '2024-05-14 10:47:36'),
-(59, 'ESTS036', 'Áo T shirt họa tiết in Anxiety Disorders 2.ESTS036', '125', 300000, NULL, NULL, 'TORANO', '', 4, 2, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711810443/1702802725844_52932058522_9aba18e17a_o_e54f4d9597d9417c80ecba97a29c218c_master.jpg.webp', 'IMAGE_1', b'1', '2024-05-14 10:47:36', '2024-05-14 10:47:36'),
-(60, 'ESTS038', 'Áo T shirt họa tiết in Vagabond 2.ESTS038', '125', 300000, NULL, NULL, 'TORANO', '', 4, 2, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711810394/1702802210675_52933043930_8da87d7a6c_o_1af3f2feba9545f8be8a0a196b8b2567_master.jpg.jpg.webp', 'IMAGE_1', b'1', '2024-05-14 10:47:36', '2024-05-14 10:47:36'),
-(61, 'ESTS040', 'Áo T shirt họa tiết in Smithereens 2.ESTS040', '125', 300000, NULL, NULL, 'TORANO', '', 4, 2, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711810947/1702703208795_ests040-2_52988193045_o_8fd6a00033484ba78cd9122314ac7912_master.jpg.webp', 'IMAGE_1', b'1', '2024-05-14 10:47:36', '2024-05-14 10:47:36'),
-(62, 'ESTS044', 'Áo T shirt họa tiết in monogram TRN 1.ESTS044', '125', 300000, NULL, NULL, 'TORANO', '', 4, 1, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711810918/1702717326862_ests044-3_52952396788_o_5673812b89994da69cfc7ad22ca9677e_master.jpg.webp', 'IMAGE_1', b'1', '2024-05-14 10:47:36', '2024-05-14 10:47:36'),
-(63, 'ESTS046', 'Áo T shirt họa tiết in hình Intense ESTS046', '125', 300000, NULL, NULL, 'TORANO', '', 4, 1, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711810418/1702802457873_52932806289_bc52c62c78_o_f52bd9c5a85245f994c7648225599922_master.jpg.webp', 'IMAGE_1', b'1', '2024-05-14 10:47:36', '2024-05-14 10:47:36'),
-(64, 'EWBS001', 'Quần nỉ trơn basic vải hiệu ứng 3.EWBS001', '111', 400000, NULL, NULL, 'TORANO', '', 4, 3, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711810132/1704251898000_tw003-bs001-3_53291377849_o_110158d740fc40de9fceb818bda1132b_master.jpg.webp', 'IMAGE_5', b'1', '2024-05-14 10:47:36', '2024-05-14 10:47:36'),
-(65, 'EWCL003', 'Áo khoác 2 lớp da lộn basic 1.EWCL003', '87', 890000, NULL, NULL, 'TORANO', '', 4, 1, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711810171/1704250844877_ewcl003-7_53376839244_o_be698d6fa9ab4f78bf2132679fc67647_master.jpg.webp', 'IMAGE_5', b'1', '2024-05-14 10:47:36', '2024-05-14 10:47:36'),
-(66, 'EWCP002', 'Áo khoác Hooded Puffer 4.EWCP002', '90', 1200000, NULL, NULL, 'TORANO', '', 4, 3, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711810156/1704251255837_ewcp002-30_53376967025_o_d452a9fe67ca4f9b9803a72fa15b64fd_master.jpg.webp', 'IMAGE_5', b'1', '2024-05-14 10:47:36', '2024-05-14 10:47:36'),
-(67, 'EWCW007', 'Áo khoác gió 1 lớp mũ liền EWCW007', '89', 50000, NULL, NULL, 'TORANO', 'Áo khoác gió 1 lớp mũ liền chống nước giá siêu tốt của nhà Torano đã cập bến.\r\n', 4, 3, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711810212/1704189991841_ewcw007-1_c8b1f230ddb2408daa72728d0ecee531_master.jpg.webp', 'IMAGE_5', b'1', '2024-05-14 10:47:36', '2024-05-14 10:47:36'),
-(68, 'EWTE003', 'Áo len kẻ ngang cổ tròn 2.EWTE003', '91', 520000, NULL, NULL, 'TORANO', '', 4, 2, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711810003/1708267758762_ewte003-10_53297045794_o_af9bd1f2fa8246dab498a75b2a976f04_master.jpg.jpg', 'IMAGE_5', b'1', '2024-05-14 10:47:36', '2024-05-14 10:47:36'),
-(69, 'EWTW003', 'Áo nỉ trơn basic vải hiệu ứng 3.EWTW003', '95', 380000, NULL, NULL, 'TORANO', '', 5, 3, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711810052/1707657567773_tw003-bs001-6_53291471625_o_1f620c3d758e41d696fb128d159744a2_master.jpg.webp', 'IMAGE_5', b'1', '2024-05-14 10:47:36', '2024-05-14 10:47:36'),
-(70, 'test', 'test', '108', 1, 1, 0, 'test', 'test', 1, 1, NULL, 'IMAGE_4', b'1', '2024-05-14 10:47:36', '2024-05-14 10:47:36'),
-(71, 'TP004', 'Áo polo phối màu color-block 1.TP004', '100', 450000, NULL, NULL, 'TORANO', 'Áo polo phối màu color-block TP004', 4, 1, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711811025/tp004_45415f65d7bc4f4c8d52f4893d682a43_master.jpg.webp', 'IMAGE_1', b'1', '2024-05-14 10:47:36', '2024-05-14 10:47:36');
+(1, 'BI013', '423423', 114, 380000, NULL, NULL, 'TORANO', '', 6, 7, 'https://res.cloudinary.com/dmmvhjl0m/video/upload/v1711858413/tvzzpjqeocumuaszfpxt.mp4', 'IMAGE_4', b'1', '2024-05-14 10:47:36', '2024-05-14 10:47:36'),
+(2, 'CABJ003', 'Quần Jeans rách Slim CABJ003', 109, 550000, NULL, NULL, 'TORANO', 'Quần Jeans rách Slim CABJ003\r\n', 5, 1, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711810773/1702810774291_cabj003_75aa0eb2e3ef4d7cb175dcef6ceae9cf_master.jpg.webp', 'IMAGE_4', b'1', '2024-05-14 10:47:36', '2024-05-14 10:47:36'),
+(3, 'DABJ004', 'Quần Jeans basic Slim DABJ004', 108, 550000, NULL, NULL, 'TORANO', 'Quần Jeans basic Slim CABJ004/2\r\n', 5, 1, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711810701/1702810004163_52706071935_8966d1e12f_o_a66489be76c949d791609a08ca73993f_master.jpg.webp', 'IMAGE_4', b'1', '2024-05-14 10:47:36', '2024-05-14 10:47:36'),
+(4, 'DABJ010', 'Quần Jeans basic Slim DABJ010', 108, 550000, NULL, NULL, 'TORANO', 'Quần Jeans basic Slim CABJ010/2', 5, 1, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711810727/1702810256808_52169110354_87bd6ccaa0_o_abf9f4cabd204376b1d1cba50d2deec9_master.jpg.webp', 'IMAGE_4', b'1', '2024-05-14 10:47:36', '2024-05-14 10:47:36'),
+(5, 'DABJ903', 'Quần Jeans basic Slim DABJ903', 108, 550000, NULL, NULL, 'TORANO', 'Quần Jeans basic Slim DABJ903\r\n', 5, 1, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711810748/1702810455348_dabj903_bf925f25f2c244aeb43a9c4430f64ef8_master.jpg.webp', 'IMAGE_4', b'1', '2024-05-14 10:47:36', '2024-05-14 10:47:36'),
+(6, 'DABJ904', 'Quần Jeans rách Slim DABJ904', 109, 550000, NULL, NULL, 'TORANO', 'Quần Jeans rách Slim DABJ904\r\n', 5, 1, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711810794/1702810960863_20230209_2nqi04eclesynryo_614790fe9b5a479095c6726ef90f2df7_master.jpg.jpg', 'IMAGE_4', b'1', '2024-05-14 10:47:36', '2024-05-14 10:47:36'),
+(7, 'DABJ908', 'Quần Jeans rách Slim 1.DABJ908', 109, 550000, NULL, NULL, 'TORANO', '', 5, 1, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711810768/1702810648513_bj908-2_53198051989_o_d8c0aeb3be18470c95b4e19e4481b38d_master.jpg.webp', 'IMAGE_4', b'1', '2024-05-14 10:47:36', '2024-05-14 10:47:36'),
+(8, 'DABK906', 'Quần kaki dài basic cạp tender túi lé DABK906', 110, 500000, NULL, NULL, 'TORANO', '', 5, 4, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711810591/1702808414194_dabk906-1_6be1255f7e6b427094e410388cb5f6a1_master.jpg.webp', 'IMAGE_4', b'1', '2024-05-14 10:47:36', '2024-05-14 10:47:36'),
+(9, 'DABK908', 'Quần kaki dài basic DABK908', 110, 500000, NULL, NULL, 'TORANO', '', 5, 4, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711810628/1702808850360_tp038---bk908-_20__de063447c1d34cf0a62c34b18ed2ffe6_master.jpg.webp', 'IMAGE_4', b'1', '2024-05-14 10:47:36', '2024-05-14 10:47:36'),
+(10, 'DATB416', 'Sơ mi dài tay kẻ Checkerboard 2.DATB416', 122, 480000, NULL, NULL, 'TORANO', '', 5, 1, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711810249/1703435106886_52695741049_ab53170a62_o_d4d8d423351a4330b41d0fc19ade0513_master.jpg.webp', 'IMAGE_2', b'1', '2024-05-14 10:47:36', '2024-05-14 10:47:36'),
+(11, 'DATB614', 'Áo sơ mi dài tay trơn Bamboo 4.DATB614', 123, 450000, NULL, NULL, 'TORANO', '', 5, 4, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711810494/1702806015812_52660558534_e1239eeb1b_o_786802e53d3843e19392b3f4e5199c71_master.jpg.webp', 'IMAGE_2', b'1', '2024-05-14 10:47:36', '2024-05-14 10:47:36'),
+(12, 'DATB920', 'Áo sơ mi dài tay trơn Bamboo 4.DATB920', 123, 42000, NULL, NULL, 'TORANO', '', 5, 4, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711810527/1702806426640_untitled_design__5__5744f2809b2c4d3499ef8f70899e3c18_master.jpg.webp', 'IMAGE_2', b'1', '2024-05-14 10:47:36', '2024-05-14 10:47:36'),
+(13, 'DSTP611', 'Áo polo trơn bo kẻ DSTP611', 98, 333333, NULL, NULL, 'Torano', '', 4, 1, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711811554/tp611_59ea616328234a9b969ce2d1c48c482f_master.jpg.webp', 'IMAGE_1', b'1', '2024-05-14 10:47:36', '2024-05-14 10:47:36'),
+(14, 'DSTP650', 'Áo Polo monogram TRN DSTP650', 100, 450000, NULL, NULL, 'TORANO', 'Áo Polo monogram TRN 1.DSTP650', 4, 1, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711811057/4_485c2d0480d84e4b983817d401d0c65d_master.jpg.jpg', 'IMAGE_1', b'1', '2024-05-14 10:47:36', '2024-05-14 10:47:36'),
+(15, 'DSTP903', 'Áo polo can phối Horizontal Color Scheme DSTP903', 99, 420000, 290000, 31, 'TORANO', '', 4, 2, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711811223/dstp903_52866905251_o_735380510ed1481090a9d817d712432b_master.jpg.webp', 'IMAGE_1', b'1', '2024-05-14 10:47:36', '2024-05-14 10:47:36'),
+(16, 'DWBS012', 'Quần nỉ trơn Basic 4.DWBS012', 111, 380000, 299000, 21, 'TORANO', '', 4, 3, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711810234/1703928526228_bs012-1_52615553322_o_0d15a75065ed4bf59b9e03ecded5d334_master.jpg.webp', 'IMAGE_4', b'1', '2024-05-14 10:47:36', '2024-05-14 10:47:36'),
+(17, 'DWCT001', 'Áo khoác 2 lớp dạ cổ bomber 3.DWCT001', 87, 990000, NULL, NULL, 'TORANO', '', 4, 2, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711810200/1704190979928_ct001_51762266972_o_9bee17ad6de44acca391c7ad9847bf08_master.jpg.webp', 'IMAGE_5', b'1', '2024-05-14 10:47:36', '2024-05-14 10:47:36'),
+(18, 'DWCT004', 'Áo khoác 2 lớp dạ cổ cao 2.DWCT004', 88, 750000, NULL, NULL, 'TORANO', '', 4, 2, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711810186/1704191300176_ct004-2_52410023919_o_fe0e3f9c03f642cf9309596415dc2278_master.jpg.webp', 'IMAGE_5', b'1', '2024-05-14 10:47:36', '2024-05-14 10:47:36'),
+(19, 'DWCU007', 'Áo khoác 2 lớp lót lông cổ bomber 2.DWCU007', 87, 750000, NULL, NULL, 'TORANO', '', 4, 2, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711810174/1704191606465_20220929_eflqusorg4g4ku3umeps5z9r_389f739d70b645d8a1d6a49d9b745c7b_compact.jpg.webp', 'IMAGE_5', b'1', '2024-05-14 10:47:36', '2024-05-14 10:47:36'),
+(20, 'EABT019', 'Quần âu slim-fit cạp trơn EABT019', 105, 500000, NULL, NULL, 'TORANO', '', 5, 4, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711810674/1702809800334_tb041---bt019-_14__13addb6f4b634d3bb1df83649ff1fdde_master.jpg.webp', 'IMAGE_3', b'1', '2024-05-14 10:47:36', '2024-05-14 10:47:36'),
+(21, 'EABT021', 'Quần âu slim-fit điều chỉnh cạp trơn 1.EABT021', 105, 480000, NULL, NULL, 'TORANO', '', 5, 1, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711810647/1702809333060_eabt021-4_52951993446_o_0d23aa6812b3462cb69bdc6b19240434_master.jpg.webp', 'IMAGE_3', b'1', '2024-05-14 10:47:36', '2024-05-14 10:47:36'),
+(22, 'EATB003', 'Sơ mi dài tay kẻ Checkerboard 3.EATB003', 122, 520000, NULL, NULL, 'TORANO', '', 5, 3, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711810577/1702807767115_eatb003-1_4b6bae1705b84deabfa237c94373b36e_master.jpg.webp', 'IMAGE_2', b'1', '2024-05-14 10:47:36', '2024-05-14 10:47:36'),
+(23, 'EATB006', 'Sơ mi dài tay đũi 5.EATB006', 119, 480000, NULL, NULL, 'TORANO', 'Sơ mi dài tay nam vải đũi cao cấp thấm hút mồ hôi và thoáng mát\r\n', 5, 4, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711810553/1702806927321_eatb006-1_802efda9723841d59eb56fabb46d7b22_master.jpg.webp', 'IMAGE_2', b'1', '2024-05-14 10:47:36', '2024-05-14 10:47:36'),
+(24, 'ESBI006', 'Quần short đũi basic phối dây dệt gấu quần ESBI006', 114, 380000, NULL, NULL, 'TORANO', 'Quần short đũi nam basic phối dây dệt gấu quần. Chất đũi cao cấp mềm mịn, không bai xù và hạn chế nhăn nhàu. Vải thoáng mát thấm hút mồ hôi tốt và nhanh khô.\r\n', 5, 5, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711810389/1702815216177_esbi006-1_405724795b8f4f22867f345eaab26319_master.jpg.webp', 'IMAGE_4', b'1', '2024-05-14 10:47:36', '2024-05-14 10:47:36'),
+(25, 'ESBK002', 'Quần short kaki basic, gấp LV bọc viền dây dệt sườn ESBK002', 117, 380000, NULL, NULL, 'TORANO', '', 5, 4, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711810325/1702813549148_52933853176_7967f42e52_o_208bdabebdb14986a84a5ed6be961474_master.jpg.webp', 'IMAGE_4', b'1', '2024-05-14 10:47:36', '2024-05-14 10:47:36'),
+(26, 'ESBK007', 'Quần short kaki phối chun cạp 3.ESBK007', 117, 400000, NULL, NULL, 'TORANO', '', 5, 3, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711810284/1702812911838_b_d29e6bdf78d04be1aa1575b44e69b2fb_master.jpg.webp', 'IMAGE_4', b'1', '2024-05-14 10:47:36', '2024-05-14 10:47:36'),
+(27, 'ESBW004', 'Quần short gió cạp thường vải hiệu ứng 3.ESBW004', 116, 350000, NULL, NULL, 'TORANO', '', 4, 3, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711810853/1702812478091_esbw004-12_52899473574_o_36fe3a92153a417b89b69bf2ce2d1490_master.jpg.webp', 'IMAGE_4', b'1', '2024-05-14 10:47:36', '2024-05-14 10:47:36'),
+(28, 'ESBW005', 'Short gió cạp phối chun, in logo mép quần 2.ESBW005', 116, 320000, NULL, NULL, 'TORANO', '', 4, 2, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711810827/1702812110775_4268bd5eeb3e637ed3b_master.jpg.webp', 'IMAGE_4', b'1', '2024-05-14 10:47:36', '2024-05-14 10:47:36'),
+(29, 'ESTA003', 'Áo tanktop in họa tiết Tents 2. ESTA003', 126, 300000, NULL, NULL, 'TORANO', '', 4, 2, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711810974/1702701667271_eata003-1_c8e90efa55944401946efba4f0ae02bf_master.jpg.webp', 'IMAGE_1', b'1', '2024-05-14 10:47:36', '2024-05-14 10:47:36'),
+(30, 'ESTA005', 'Áo Tanktop họa tiết in Wild Sool 1.ESTA005', 126, 250000, NULL, NULL, 'TORANO', '', 4, 1, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711810961/1702702646831_eata005-2_ef46f711d4734ba6a8be08d07f8f3567_master.jpg.webp', 'IMAGE_1', b'1', '2024-05-14 10:47:36', '2024-05-14 10:47:36'),
+(31, 'ESTA006', 'Áo tanktop họa tiết in Shoes ESTA006', 126, 250000, NULL, NULL, 'TORANO', '', 4, 1, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711810985/1702700896477_esta006-1_2a8dce82b88d4fd798c0434cf9bed833_master.jpg.webp', 'IMAGE_1', b'1', '2024-05-14 10:47:36', '2024-05-14 10:47:36'),
+(32, 'ESTA010', 'Áo Tanktop họa tiết Defeat ESTA010', 126, 250000, NULL, NULL, 'TORANO', 'Áo tanktop nam cá tính, năng động mặc cực thoải mái. Mẫu áo ba lỗ nam trẻ trung với 2 màu dễ mặc.\r\n', 4, 1, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711810015/1702537484269_esta010-1_ad9f734ad81a4f339a557960d10dd7f5_master.jpg.webp', 'IMAGE_1', b'1', '2024-05-14 10:47:36', '2024-05-14 10:47:36'),
+(33, 'ESTB026', 'Sơ mi ngắn tay đũi ESTB026', 119, 450000, NULL, NULL, 'TORANO', '', 6, 5, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711810474/1702803942386_estb026-11_52822828632_o_fb5c8442ec4146618cca5021c9f98643_master.jpg.webp', 'IMAGE_2', b'1', '2024-05-14 10:47:36', '2024-05-14 10:47:36'),
+(34, 'ESTB030', 'Sơ mi ngắn tay trơn Bamboo ESTB030', 123, 400000, NULL, NULL, 'TORANO', '', 5, 2, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711810115/1704715289535_eatb030-3_f4f3649109194318999a3e984bbd30f3_master.jpg.webp', 'IMAGE_2', b'1', '2024-05-14 10:47:36', '2024-05-14 10:47:36'),
+(35, 'ESTP001', 'Áo polo họa tiết in tràn ESTP001', 100, 420000, NULL, NULL, 'TORANO', '', 4, 1, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711811327/7_9bc29d0a14064c70aca802cc201f2750_master.jpg.webp', 'IMAGE_1', b'1', '2024-05-14 10:47:36', '2024-05-14 10:47:36'),
+(36, 'ESTP005', 'Áo polo trơn bo kẻ, logo cánh tay ESTP005', 98, 420000, NULL, NULL, 'TORANO', 'Áo polo trơn bo kẻ, logo cánh tay ESTP005', 4, 1, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711811464/estp005_52833497146_o_19f6e6d8b44947d4bcd7461012e1e40d_master.jpg.jpg', 'IMAGE_1', b'1', '2024-05-14 10:47:36', '2024-05-14 10:47:36'),
+(37, 'ESTP007', 'Áo Polo can phối 3 màu ESTP007', 99, 420000, NULL, NULL, 'TORANO', 'Áo polo nam cao cấp đẹp, tôn dáng. Chất vải dệt mềm, dày dặn không bai xù nhăn nhàu', 4, 2, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711811282/52898691562_67c82c3ca7_o_9da334afa0244604bf21a0d59cf2a7f2_master.jpg.webp', 'IMAGE_1', b'1', '2024-05-14 10:47:36', '2024-05-14 10:47:36'),
+(38, 'ESTP010', 'Áo polo trơn bo kẻ ESTP010', 98, 400000, NULL, NULL, 'TORANO', '', 5, 3, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711811545/tp010---bk603-_8__b6487398009b4c6eaa1950ee0f26e718_master.jpg.webp', 'IMAGE_1', b'1', '2024-05-14 10:47:36', '2024-05-14 10:47:36'),
+(39, 'ESTP012', 'Áo Polo kẻ dệt ngang 1.ESTP012', 101, 500000, NULL, NULL, 'TORANO', '', 4, 1, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711811086/tp012_0d295f194e3f4f0eab7eede288c3a7c5_master.jpg.webp', 'IMAGE_1', b'1', '2024-05-14 10:47:36', '2024-05-14 10:47:36'),
+(40, 'ESTP014', 'Áo Polo kẻ dệt ngang 1.ESTP014', 101, 500000, NULL, NULL, 'TORANO', '', 4, 1, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711811112/estp014_f4dabbabbe0346598163050a85b06f1a_master.jpg.webp', 'IMAGE_1', b'1', '2024-05-14 10:47:36', '2024-05-14 10:47:36'),
+(41, 'ESTP015', 'Áo polo can phối Horizontal Color Scheme 1.ESTP015', 99, 450000, NULL, NULL, 'TORANO', '', 4, 1, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711811242/estp015_a0e07e027c614085b06c261c289544ab_master.jpg.webp', 'IMAGE_1', b'1', '2024-05-14 10:47:36', '2024-05-14 10:47:36'),
+(42, 'ESTP017', 'Áo polo can phối Horizontal Color Scheme ESTP017', 99, 420000, NULL, NULL, 'TORANO', '', 4, 1, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711811175/52985905053_bdeffa314e_o_aa67bed06deb439399cc2046790f8c59_master.jpg.jpg', 'IMAGE_1', b'1', '2024-05-14 10:47:36', '2024-05-14 10:47:36'),
+(43, 'ESTP018', 'Áo polo can phối, thêu logo ngực ESTP018', 99, 420000, NULL, NULL, 'TORANO', 'Áo polo can phối, thêu logo ngực ESTP018', 4, 1, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711811140/tp018_0691972d076d4071a4fee5291912df9e_master.jpg.webp', 'IMAGE_1', b'1', '2024-05-14 10:47:36', '2024-05-14 10:47:36'),
+(44, 'ESTP020', 'Áo Polo can phối 3 màu ESTP020', 99, 450000, NULL, NULL, 'TORANO', '', 4, 1, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711811280/tp020---bk001-_10__b44a6900b6934440ad797f313b2cdd9a_master.jpg.webp', 'IMAGE_1', b'1', '2024-05-14 10:47:36', '2024-05-14 10:47:36'),
+(45, 'ESTP021', 'Áo polo can phối, thêu logo ngực ESTP021', 99, 550000, 450000, 18, 'TORANO', '', 4, 1, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711811124/estp021-2_7b1e8ac1a10c4163bf199b7b89332d81_master.jpg.webp', 'IMAGE_1', b'1', '2024-05-14 10:47:36', '2024-05-14 10:47:36'),
+(46, 'ESTP022', 'Áo polo can phối vai ESTP022', 99, 450000, NULL, NULL, 'TORANO', 'Áo polo nam cao cấp đẹp, tôn dáng. Chất vải dệt mềm, dày dặn không bai xù nhăn nhàu', 5, 2, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711811171/52901478774_f103d7180e_o_6ec337721b6d4a8bae3c2626bca7d037_master.jpg.webp', 'IMAGE_1', b'1', '2024-05-14 10:47:36', '2024-05-14 10:47:36'),
+(47, 'ESTP023', 'Áo Polo can phối họa tiết TRN ESTP023', 99, 420000, NULL, NULL, 'TORANO', 'Áo Polo can phối họa tiết nam phong cách trẻ trung và lịch lãm thích hợp với mọi dáng người.', 4, 1, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711811255/1_4554a899fc974e40bc58638b060b31ee_master.jpg.webp', 'IMAGE_1', b'1', '2024-05-14 10:47:36', '2024-05-14 10:47:36'),
+(48, 'ESTP028', 'Áo polo trơn bo kẻ cổ V, in logo ngực ESTP028', 98, 420000, NULL, NULL, 'TORANO', '', 5, 4, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711811570/tp028---bk004-_11__9246a1d8b0184518abd852704bd4fa02_master.jpg.webp', 'IMAGE_1', b'1', '2024-05-14 10:47:36', '2024-05-14 10:47:36'),
+(49, 'ESTP032', 'Áo polo trơn bo kẻ ESTP032', 98, 400000, NULL, NULL, 'TORANO', '', 4, 3, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711811526/estp032-3_f94042405af64ca581ca72c753b53b51_master.jpg.webp', 'IMAGE_1', b'1', '2024-05-14 10:47:36', '2024-05-14 10:47:36'),
+(50, 'ESTP033', 'Áo polo trơn bo kẻ phối viền cổ ESTP033', 98, 420000, NULL, NULL, 'TORANO', 'Áo polo trơn bo kẻ phối viền cổ cao cấp', 4, 1, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711811351/m1t1_9a04e0331596472281861b7f44cc3ca2_master.jpg.webp', 'IMAGE_1', b'1', '2024-05-14 10:47:36', '2024-05-14 10:47:36'),
+(51, 'ESTP038', 'Áo Polo trơn basic đen thêu logo ngực ESTP038', 102, 330000, 200000, 39, 'TORANO', 'Áo Polo trơn TORANO cổ bẻ tay ngắn trơn, bo kẻ nhiều màu ESTP038 chính là item hoàn hảo dễ mặc dễ phối đồ cho cả nam và nữ. Khám phá ngay!!!\r\n\r\n+ Chất vải có độ co giãn tốt, thoáng khí và không phai màu.\r\n\r\n+60% Poly +35% cotton +5% Spandex\r\n\r\n+ Thấm hút mồ hôi tối đa và thoải mái khi vận động\r\n\r\n+ Thiết kế Slimfit vừa vặn tôn dáng\r\n\r\n+ Phù hợp với đi làm, đi học, đi chơi, hẹn hò, du lịch...\r\n\r\n+ Áo có 4 size : S – M –L – XL\r\n\r\nHướng dẫn sử dụng và bảo quản:\r\n\r\n+ Giặt ở nhiệt độ bình thường, với đồ có màu tương tự.\r\n\r\n+ Không được dùng hóa chất tẩy.\r\n\r\n+ Hạn chế sử dụng máy sấy và ủi ở nhiệt độ thích hợp.\r\n\r\n+ Lộn mặt trái khi phơi tránh bị phai màu\r\n\r\nChính sách và điều kiện đổi trả của TORANO:\r\n\r\n+ Cam kết chất lượng và mẫu mã sản phẩm giống với hình ảnh.\r\n\r\n+ Cam kết được đổi trả hàng trong vòng 7 ngày.\r\n\r\n+ Hàng phải còn nguyên tem mác và chưa qua sử dụng\r\n\r\n+ Sản phẩm bị lỗi do vận chuyển và do nhà sản xuất', 5, 1, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711811636/tp038-1.jpeg.webp', 'IMAGE_1', b'1', '2024-05-14 10:47:36', '2024-05-14 10:47:36'),
+(52, 'ESTP041', 'Áo Polo trơn hiệu ứng ESTP041', 102, 450000, NULL, NULL, 'TORANO', 'Áo polo nam cao cấp chống nhăn nhàu đang hot tại Torano', 4, 5, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711811461/estp041-16_4cb9d42d84e7436884bd3f4e648621ed_master.jpg.webp', 'IMAGE_1', b'1', '2024-05-14 10:47:36', '2024-05-14 10:47:36'),
+(53, 'ESTP042', 'Áo Polo trơn vải lục giác kèm logo ngực ESTP042', 102, 380000, 349000, 8, 'TORANO', 'Mẫu áo polo chất liệu cải tiến thế hệ mới mang lại cho các anh sự thoải mái cũng như vẻ ngoài lịch sự và đầy nam tính.', 5, 9, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711811418/tp042---bk004-_9__2efe604ac9324e06841cf8edc590e169_master.jpg.webp', 'IMAGE_1', b'1', '2024-05-14 10:47:36', '2024-05-14 10:47:36'),
+(54, 'ESTP047', 'Áo Polo len bo kẻ cổ 2.ESTP047', 98, 500000, NULL, NULL, 'TORANO', 'Áo polo len bo kẻ nam cao cấp chính hãng Torano. Chất vải len dệt chắc chắn, không xù và dão.', 4, 2, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711811054/5_66590d1cba6041359e8a89a1c7e0feb5_master.jpg.webp', 'IMAGE_1', b'1', '2024-05-14 10:47:36', '2024-05-14 10:47:36'),
+(55, 'ESTP060', 'Áo Polo can phối 2 màu ESTP060', 99, 420000, NULL, NULL, 'TORANO', 'Áo polo nam cao cấp đẹp, tôn dáng. Chất vải dệt mềm, dày dặn không bai xù nhăn nhàu', 4, 2, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711811325/3_a6cdb2c46dd543fd9507418aef06c558_master.jpg.webp', 'IMAGE_1', b'1', '2024-05-14 10:47:36', '2024-05-14 10:47:36'),
+(56, 'ESTP067', 'Áo Polo trơn bo kẻ cổ ESTP067', 98, 380000, NULL, NULL, 'TORANO', '', 5, 3, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711811574/tp067---bk004-_16__bc6a55b32ddb4d94bc5c0fa5a7997db4_master.jpg.webp', 'IMAGE_1', b'1', '2024-05-14 10:47:36', '2024-05-14 10:47:36'),
+(57, 'ESTP074', 'Áo Polo trơn bo kẻ ESTP074', 98, 420000, NULL, NULL, 'TORANO', 'Áo Polo nam trơn bo kẻ cao cấp phong cách trẻ trung và lịch lãm thích hợp với mọi dáng người.', 4, 2, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711811013/1701361255452_1_50f16dbd5df34aa3acc99865b4820084_master.jpg.webp', 'IMAGE_1', b'1', '2024-05-14 10:47:36', '2024-05-14 10:47:36'),
+(58, 'ESTS021', 'Áo T shirt họa tiết in Color scheme ESTS021', 125, 300000, NULL, NULL, 'TORANO', '', 4, 2, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711810897/1702717756318_ests021_64a34ff68d6d4857bae234b1364576fc_master.jpg.webp', 'IMAGE_1', b'1', '2024-05-14 10:47:36', '2024-05-14 10:47:36'),
+(59, 'ESTS036', 'Áo T shirt họa tiết in Anxiety Disorders 2.ESTS036', 125, 300000, NULL, NULL, 'TORANO', '', 4, 2, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711810443/1702802725844_52932058522_9aba18e17a_o_e54f4d9597d9417c80ecba97a29c218c_master.jpg.webp', 'IMAGE_1', b'1', '2024-05-14 10:47:36', '2024-05-14 10:47:36'),
+(60, 'ESTS038', 'Áo T shirt họa tiết in Vagabond 2.ESTS038', 125, 300000, NULL, NULL, 'TORANO', '', 4, 2, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711810394/1702802210675_52933043930_8da87d7a6c_o_1af3f2feba9545f8be8a0a196b8b2567_master.jpg.jpg.webp', 'IMAGE_1', b'1', '2024-05-14 10:47:36', '2024-05-14 10:47:36'),
+(61, 'ESTS040', 'Áo T shirt họa tiết in Smithereens 2.ESTS040', 125, 300000, NULL, NULL, 'TORANO', '', 4, 2, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711810947/1702703208795_ests040-2_52988193045_o_8fd6a00033484ba78cd9122314ac7912_master.jpg.webp', 'IMAGE_1', b'1', '2024-05-14 10:47:36', '2024-05-14 10:47:36'),
+(62, 'ESTS044', 'Áo T shirt họa tiết in monogram TRN 1.ESTS044', 125, 300000, NULL, NULL, 'TORANO', '', 4, 1, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711810918/1702717326862_ests044-3_52952396788_o_5673812b89994da69cfc7ad22ca9677e_master.jpg.webp', 'IMAGE_1', b'1', '2024-05-14 10:47:36', '2024-05-14 10:47:36'),
+(63, 'ESTS046', 'Áo T shirt họa tiết in hình Intense ESTS046', 125, 300000, NULL, NULL, 'TORANO', '', 4, 1, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711810418/1702802457873_52932806289_bc52c62c78_o_f52bd9c5a85245f994c7648225599922_master.jpg.webp', 'IMAGE_1', b'1', '2024-05-14 10:47:36', '2024-05-14 10:47:36'),
+(64, 'EWBS001', 'Quần nỉ trơn basic vải hiệu ứng 3.EWBS001', 111, 400000, NULL, NULL, 'TORANO', '', 4, 3, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711810132/1704251898000_tw003-bs001-3_53291377849_o_110158d740fc40de9fceb818bda1132b_master.jpg.webp', 'IMAGE_5', b'1', '2024-05-14 10:47:36', '2024-05-14 10:47:36'),
+(65, 'EWCL003', 'Áo khoác 2 lớp da lộn basic 1.EWCL003', 87, 890000, NULL, NULL, 'TORANO', '', 4, 1, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711810171/1704250844877_ewcl003-7_53376839244_o_be698d6fa9ab4f78bf2132679fc67647_master.jpg.webp', 'IMAGE_5', b'1', '2024-05-14 10:47:36', '2024-05-14 10:47:36'),
+(66, 'EWCP002', 'Áo khoác Hooded Puffer 4.EWCP002', 90, 1200000, NULL, NULL, 'TORANO', '', 4, 3, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711810156/1704251255837_ewcp002-30_53376967025_o_d452a9fe67ca4f9b9803a72fa15b64fd_master.jpg.webp', 'IMAGE_5', b'1', '2024-05-14 10:47:36', '2024-05-14 10:47:36'),
+(67, 'EWCW007', 'Áo khoác gió 1 lớp mũ liền EWCW007', 89, 50000, NULL, NULL, 'TORANO', 'Áo khoác gió 1 lớp mũ liền chống nước giá siêu tốt của nhà Torano đã cập bến.\r\n', 4, 3, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711810212/1704189991841_ewcw007-1_c8b1f230ddb2408daa72728d0ecee531_master.jpg.webp', 'IMAGE_5', b'1', '2024-05-14 10:47:36', '2024-05-14 10:47:36'),
+(68, 'EWTE003', 'Áo len kẻ ngang cổ tròn 2.EWTE003', 91, 520000, NULL, NULL, 'TORANO', '', 4, 2, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711810003/1708267758762_ewte003-10_53297045794_o_af9bd1f2fa8246dab498a75b2a976f04_master.jpg.jpg', 'IMAGE_5', b'1', '2024-05-14 10:47:36', '2024-05-14 10:47:36'),
+(69, 'EWTW003', 'Áo nỉ trơn basic vải hiệu ứng 3.EWTW003', 95, 380000, NULL, NULL, 'TORANO', '', 5, 3, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711810052/1707657567773_tw003-bs001-6_53291471625_o_1f620c3d758e41d696fb128d159744a2_master.jpg.webp', 'IMAGE_5', b'1', '2024-05-14 10:47:36', '2024-05-14 10:47:36'),
+(70, 'test', 'test', 108, 1, 1, 0, 'test', 'test', 1, 1, NULL, 'IMAGE_4', b'1', '2024-05-14 10:47:36', '2024-05-14 10:47:36'),
+(71, 'TP004', 'Áo polo phối màu color-block 1.TP004', 100, 450000, NULL, NULL, 'TORANO', 'Áo polo phối màu color-block TP004', 4, 1, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711811025/tp004_45415f65d7bc4f4c8d52f4893d682a43_master.jpg.webp', 'IMAGE_1', b'1', '2024-05-14 10:47:36', '2024-05-14 10:47:36');
 
 -- --------------------------------------------------------
 
@@ -1919,7 +1921,8 @@ ALTER TABLE `jwt_tokens`
 -- Chỉ mục cho bảng `products`
 --
 ALTER TABLE `products`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `cat_id` (`cat_id`);
 
 --
 -- Chỉ mục cho bảng `products_detail`
@@ -1967,13 +1970,13 @@ ALTER TABLE `invoices`
 -- AUTO_INCREMENT cho bảng `invoices_detail`
 --
 ALTER TABLE `invoices_detail`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=453;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=455;
 
 --
 -- AUTO_INCREMENT cho bảng `jwt_tokens`
 --
 ALTER TABLE `jwt_tokens`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=122;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=128;
 
 --
 -- AUTO_INCREMENT cho bảng `products`
@@ -2021,6 +2024,12 @@ ALTER TABLE `invoices_detail`
 --
 ALTER TABLE `jwt_tokens`
   ADD CONSTRAINT `jwt_tokens_ibfk_1` FOREIGN KEY (`account_id`) REFERENCES `accounts` (`id`);
+
+--
+-- Các ràng buộc cho bảng `products`
+--
+ALTER TABLE `products`
+  ADD CONSTRAINT `products_ibfk_1` FOREIGN KEY (`cat_id`) REFERENCES `categories` (`id`);
 
 --
 -- Các ràng buộc cho bảng `products_detail`

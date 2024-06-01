@@ -63,7 +63,7 @@ services:
       RABBITMQ_DEAD_LETTER_EXCHANGE: dead_letter.exchange
       RABBITMQ_DEAD_LETTER_QUEUE: dead_letter.queue
       RABBITMQ_DEAD_LETTER_KEY: dead_letter.key
-      BASE_URL: http://localhost:8080
+      URL_VNPAY_RESPONSE: http://localhost:8080/vnpay/response
     ports:
       - 8080:8080
     networks:

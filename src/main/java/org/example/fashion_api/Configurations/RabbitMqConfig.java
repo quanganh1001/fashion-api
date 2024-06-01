@@ -11,6 +11,8 @@ import org.springframework.amqp.support.converter.MessageConverter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.retry.policy.SimpleRetryPolicy;
+import org.springframework.retry.support.RetryTemplate;
 
 import java.text.SimpleDateFormat;
 
@@ -52,8 +54,17 @@ public class RabbitMqConfig {
     public AmqpTemplate amqpTemplate(ConnectionFactory factory){
         RabbitTemplate rabbitTemplate = new RabbitTemplate(factory);
         rabbitTemplate.setMessageConverter(messageConverter());
+        rabbitTemplate.setRetryTemplate(retryTemplate());
         return rabbitTemplate;
     }
+
+    @Bean
+    public RetryTemplate retryTemplate() {
+        RetryTemplate retryTemplate = new RetryTemplate();
+        retryTemplate.setRetryPolicy(new SimpleRetryPolicy(1));
+        return retryTemplate;
+    }
+
 
 
 

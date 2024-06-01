@@ -20,6 +20,7 @@ public class MailConsumer {
     public void consume(MailTemplate mailTemplate){
         logger.info("Processing mail request -> {}", mailTemplate.getTo());
         mailService.sendEmail(mailTemplate);
+
     }
 
 }

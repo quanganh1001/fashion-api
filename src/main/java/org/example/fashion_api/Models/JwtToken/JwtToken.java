@@ -30,7 +30,7 @@ public class JwtToken {
 
     private Boolean revoked;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "accountId")
     private Account account;
 

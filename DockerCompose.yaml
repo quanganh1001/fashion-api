@@ -41,18 +41,15 @@ services:
       dockerfile: ./DockerfileJavaSpring
     environment:
       TZ: "Asia/Ho_Chi_Minh"
-      SPRING_DATASOURCE_URL: jdbc:mysql://mysql8-container-api:3306/fashion_api_project?useSSL=false&serverTimezone=UTC
-      SPRING_DATASOURCE_USERNAME: root
-      SPRING_DATASOURCE_PASSWORD: quanganh123
-      SPRING_DATASOURCE_DRIVER_CLASS_NAME: com.mysql.cj.jdbc.Driver
-      SPRING_JPA_DATABASE_PLATFORM: org.hibernate.dialect.MySQL8Dialect
-      SPRING_DATA_REDIS_HOST: redis-container-api
-      SPRING_DATA_REDIS_PORT: 6379
-      SPRING_CACHE_REDIS_CACHE_NULL_VALUES: true
-      SPRING_RABBITMQ_HOST: rabbitmq
-      SPRING_RABBITMQ_PORT: 5672
-      SPRING_RABBITMQ_USERNAME: guest
-      SPRING_RABBITMQ_PASSWORD: guest
+      MYSQL_HOST: jdbc:mysql://mysql8-container-api:3306/fashion_api_project?useSSL=false&serverTimezone=UTC
+      MYSQL_USERNAME: root
+      MYSQL_PASSWORD: quanganh123
+      REDIS_HOST: redis-container-api
+      REDIS_PORT: 6379
+      RABBITMQ_HOST: rabbitmq
+      RABBITMQ_PORT: 5672
+      RABBITMQ_USERNAME: guest
+      RABBITMQ_PASSWORD: guest
       SPRING_MAIL_HOST: smtp.gmail.com
       SPRING_MAIL_PORT: 587
       SPRING_MAIL_USERNAME: quanganhnguyen100196@gmail.com

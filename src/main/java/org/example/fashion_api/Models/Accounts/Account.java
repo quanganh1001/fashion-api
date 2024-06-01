@@ -1,12 +1,17 @@
 package org.example.fashion_api.Models.Accounts;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import org.example.fashion_api.Enum.RoleEnum;
 import org.example.fashion_api.Models.BaseEntity;
+import org.example.fashion_api.Models.JwtToken.JwtToken;
+import org.example.fashion_api.Models.Products.Product;
 import org.example.fashion_api.Models.RedisListener;
+
+import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor(force = true)
@@ -39,5 +44,9 @@ public class Account extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private RoleEnum role = RoleEnum.ROLE_CUSTOMER;
 
+    @OneToMany(mappedBy = "account",cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
+    @JsonIgnore
+    @ToString.Exclude
+    private List<JwtToken> tokens;
 
 }

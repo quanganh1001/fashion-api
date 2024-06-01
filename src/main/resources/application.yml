@@ -1,46 +1,20 @@
 spring:
   # Use for localhost
-#    datasource:
-#      url: jdbc:mysql://${MYSQL_LOCAL_HOST}:3306/${MYSQL_DATABASE}
-#      username: ${MYSQL_USERNAME}
-#      password: ""
-#    data:
-#      redis:
-#        host: ${REDIS_LOCAL_HOST}
-#        port: ${REDIS_PORT}
-#        cache-null-values: true
-#    rabbitmq:
-#      host: ${RABBITMQ_LOCAL_HOST}
-#      port: ${RABBITMQ_PORT}
-#      username: ${RABBITMQ_USERNAME}
-#      password: ${RABBITMQ_PASSWORD}
-
-  ##################################
-  ##################################
-
-  # Use for docker
-  datasource:
-      url: jdbc:mysql://${MYSQL_HOST}:3306/${MYSQL_DATABASE}?useSSL=false&serverTimezone=UTC
+    datasource:
+      url: ${MYSQL_HOST}
       username: ${MYSQL_USERNAME}
       password: ${MYSQL_PASSWORD}
-#      driver-class-name: com.mysql.cj.jdbc.Driver
-#      jpa:
-#      database-platform: org.hibernate.dialect.MySQL8Dialect
-
-  data:
+    data:
       redis:
         host: ${REDIS_HOST}
         port: ${REDIS_PORT}
         cache-null-values: true
-
-  rabbitmq:
+    rabbitmq:
       host: ${RABBITMQ_HOST}
       port: ${RABBITMQ_PORT}
       username: ${RABBITMQ_USERNAME}
       password: ${RABBITMQ_PASSWORD}
 
-  ##################################
-  ##################################
 
 mail:
       host: ${SPRING_MAIL_HOST}

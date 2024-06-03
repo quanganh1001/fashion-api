@@ -85,6 +85,7 @@ public class JwtServiceImpl implements JwtService {
                 .builder()
                 .token(jwtToken)
                 .refreshToken(newRefreshToken)
+                .username(account.getUsername())
                 .role(account.getRole().name())
                 .build();
     }
@@ -118,6 +119,7 @@ public class JwtServiceImpl implements JwtService {
         return JwtTokenRes.builder()
                 .token(jwtToken)
                 .refreshToken(refreshToken)
+                .username(account.getUsername())
                 .role(account.getRole().name())
                 .build();
     }

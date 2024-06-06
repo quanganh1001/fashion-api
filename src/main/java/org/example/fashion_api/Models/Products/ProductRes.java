@@ -35,7 +35,7 @@ public class ProductRes {
     @Enumerated(EnumType.STRING)
     private ImgSizeEnum imageChooseSize;
 
-    private String catId;
+    private String catName;
 
     private Integer totalSize;
 

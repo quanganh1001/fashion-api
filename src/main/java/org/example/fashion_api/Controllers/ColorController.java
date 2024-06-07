@@ -21,15 +21,15 @@ public class ColorController {
     @Operation(summary = "get all colors (role MANAGER)")
     @PreAuthorize("hasAnyRole('MANAGER')")
     @GetMapping()
-    public List<ColorRes> findAll(){
-        return colorService.findAll();
+    public ResponseEntity<List<ColorRes>> findAll(){
+        return ResponseEntity.ok(colorService.findAll());
     }
 
     @Operation(summary = "create color (role MANAGER)")
     @PreAuthorize("hasAnyRole('MANAGER')")
     @PostMapping()
-    public ColorRes createColor(@Valid @RequestBody ColorDto colorDto){
-        return colorService.createColor(colorDto);
+    public ResponseEntity<ColorRes> createColor(@Valid @RequestBody ColorDto colorDto){
+        return ResponseEntity.ok(colorService.createColor(colorDto));
     }
 
     @Operation(summary = "delete color (role MANAGER)")

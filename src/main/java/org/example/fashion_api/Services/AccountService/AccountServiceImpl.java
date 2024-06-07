@@ -119,7 +119,7 @@ public class AccountServiceImpl implements AccountService {
                 pageAccountResRes = PageAccountRes
                         .builder()
                         .accountsRes(accountsRes)
-                        .currenPage(page + 1)
+                        .currentPage(page + 1)
                         .totalAccount(totalAccount)
                         .totalPages(accountPage.getTotalPages())
                         .build();

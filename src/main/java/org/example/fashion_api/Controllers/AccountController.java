@@ -33,15 +33,15 @@ public class AccountController {
 
     @GetMapping("/current")
     @Operation(summary = "get current account")
-    public AccountRes getCurrentAccount() {
-        return accountService.getCurrentAccount();
+    public ResponseEntity<AccountRes> getCurrentAccount() {
+        return ResponseEntity.ok(accountService.getCurrentAccount());
     }
 
     @PreAuthorize("hasAnyRole('MANAGER')")
     @Operation(summary = "get account (role MANAGER)")
     @GetMapping("/{accountId}")
-    public AccountRes getAccount(@PathVariable("accountId") Long accountId) {
-        return accountService.getAccount(accountId);
+    public ResponseEntity<AccountRes> getAccount(@PathVariable("accountId") Long accountId) {
+        return ResponseEntity.ok(accountService.getAccount(accountId));
     }
 
     @PreAuthorize("hasAnyRole('MANAGER')")

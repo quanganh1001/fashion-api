@@ -66,7 +66,7 @@ public class ProductServiceImpl implements ProductService {
             pageProductRes = PageProductRes.builder()
                     .productsRes(productResList)
                     .totalProduct(totalProduct)
-                    .currenPage(page+1)
+                    .currentPage(page+1)
                     .totalPages(productsPage.getTotalPages())
                     .build();
             redisService.saveRedis(redisKey,pageProductRes);
@@ -176,7 +176,7 @@ public class ProductServiceImpl implements ProductService {
             pageProductRes = PageProductRes.builder()
                     .productsRes(productsRes)
                     .totalProduct(totalProduct)
-                    .currenPage(page+1)
+                    .currentPage(page+1)
                     .totalPages(totalPage)
                     .build();
             redisService.saveRedis(redisKey, pageProductRes);

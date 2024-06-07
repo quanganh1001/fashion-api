@@ -15,7 +15,7 @@ public class PageAccountRes {
 
     private int totalPages;
 
-    private int currenPage;
+    private int currentPage;
 
     private Long totalAccount;
 }

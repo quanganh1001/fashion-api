@@ -15,7 +15,7 @@ public class PageProductRes {
 
     private int totalProduct;
 
-    private int currenPage;
+    private int currentPage;
 
     private List<ProductRes> productsRes;
 

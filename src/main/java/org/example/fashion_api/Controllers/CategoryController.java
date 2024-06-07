@@ -23,12 +23,14 @@ public class CategoryController {
     private CategoryService categoryService;
 
     @Operation(summary = "get all categories")
+    @PreAuthorize("hasAnyRole('MANAGER')")
     @GetMapping()
     public ResponseEntity<List<CategoryRes>> getAllCategories() throws JsonProcessingException {
         return ResponseEntity.ok(categoryService.findAll());
     }
 
     @Operation(summary = "get category by Id")
+    @PreAuthorize("hasAnyRole('MANAGER')")
     @GetMapping("/{catId}")
     public ResponseEntity<CategoryRes> getCategory(@PathVariable Long catId) {
         return ResponseEntity.ok(categoryService.findById(catId));

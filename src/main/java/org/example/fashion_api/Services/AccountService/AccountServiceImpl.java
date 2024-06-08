@@ -244,8 +244,6 @@ public class AccountServiceImpl implements AccountService {
         }else {
             throw new BadRequestException("Token not found");
         }
-
-
         SecurityContextHolder.clearContext();
     }
 

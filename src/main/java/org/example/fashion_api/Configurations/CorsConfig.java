@@ -16,10 +16,10 @@ public class CorsConfig {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**")
-                        .allowedOrigins("http://localhost:3000") // Chỉ cho phép localhost:3000
-                        .allowedMethods("*") // Cho phép tất cả phương thức HTTP
-                        .allowedHeaders("*") // Cho phép tất cả các tiêu đề
-                        .exposedHeaders("*"); // Cho phép tất cả các tiêu đề trong phản hồi
+                        .allowedOrigins("*")
+                        .allowedMethods("*")
+                        .allowedHeaders("*")
+                        .exposedHeaders("*");
             }
         };
     }

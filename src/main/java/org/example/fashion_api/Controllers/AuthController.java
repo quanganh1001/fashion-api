@@ -15,7 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping()
+@RequestMapping("/auth")
 public class AuthController {
     @Autowired
     private AccountService accountService;
@@ -33,14 +33,15 @@ public class AuthController {
 
     @DeleteMapping("/logout")
     @Operation(summary = "Logout", description = "This is a logout API")
-    public ResponseEntity<String> logout(String token) {
+    public ResponseEntity<String> logout(@RequestBody String token) {
+        System.out.println(token);
         accountService.Logout(token);
         return ResponseEntity.ok("Logout successful");
     }
 
     @Operation(summary = "refresh token")
     @PutMapping("/refreshToken")
-    public ResponseEntity<JwtTokenRes> refreshToken( String refreshToken)  {
+    public ResponseEntity<JwtTokenRes> refreshToken(@RequestBody String refreshToken)  {
         return new ResponseEntity<>(jwtService.RefreshToken(refreshToken), HttpStatus.OK);
     }
 

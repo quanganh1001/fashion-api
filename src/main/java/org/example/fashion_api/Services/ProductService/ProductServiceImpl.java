@@ -112,8 +112,8 @@ public class ProductServiceImpl implements ProductService {
 
         // check code and name exist
         if (productRepo.existsByProductCode(createProductDTO.getProductCode())) {
-            throw new AlreadyExistException(createProductDTO.getProductCode());
-        } else if (productRepo.existsByProductName(createProductDTO.getProductName())) {
+            throw new AlreadyExistException("Product code");
+        } else if (productRepo.existsByProductName("Product name")) {
             throw new AlreadyExistException(createProductDTO.getProductName());
         }
 

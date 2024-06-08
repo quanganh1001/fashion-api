@@ -39,15 +39,15 @@ public class CategoryServiceImpl implements CategoryService {
         String redisKey = "categoryRepo.findAll() - categories";
 
         //get redis
-        List<Category> categories = redisService.getListRedis(redisKey, Category.class);
+        List<CategoryRes> categories = redisService.getListRedis(redisKey, CategoryRes.class);
 
         // if redis with redis key = null -> create redis
         if (categories == null) {
-            categories = categoryRepo.findAll();
+            categories = categoryMapper.toDtoList(categoryRepo.findAll());
             redisService.saveRedis(redisKey, categories);
         }
 
-        return categoryMapper.toDtoList(categories);
+        return categories;
     }
 
     @Override

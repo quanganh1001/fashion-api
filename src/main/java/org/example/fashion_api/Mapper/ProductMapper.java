@@ -24,6 +24,7 @@ public interface ProductMapper {
 
 
     @Mapping(target = "catName", source = "category.catName")
+    @Mapping(target = "catId", source = "category.id")
     @Mapping(target = "productsDetails", source = "productsDetails")
     ProductRes productToProductRes(Product product);
 

@@ -37,6 +37,8 @@ public class ProductRes {
 
     private String catName;
 
+    private Long catId;
+
     private Integer totalSize;
 
     private Integer totalColor;

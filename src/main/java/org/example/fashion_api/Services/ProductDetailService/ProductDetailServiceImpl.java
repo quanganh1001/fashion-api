@@ -25,14 +25,14 @@ public class ProductDetailServiceImpl implements ProductDetailService{
     @Override
     public List<ProductDetailRes> findAllProductDetails(Long productId) throws JsonProcessingException {
         String keyRedis = "findAllProductDetails("+productId+")";
-        List<ProductDetail> productDetails = redisService.getListRedis(keyRedis,ProductDetail.class);
+        List<ProductDetailRes> productDetailsRes = redisService.getListRedis(keyRedis,ProductDetailRes.class);
 
-        if (productDetails == null) {
-            productDetails = productDetailRepo.findAllByProductId(productId);
+        if (productDetailsRes == null) {
+            productDetailsRes = productDetailMapper.productDetailsToProductDetailRes(productDetailRepo.findAllByProductId(productId));
 
-            redisService.saveRedis(keyRedis,productDetails);
+            redisService.saveRedis(keyRedis,productDetailsRes);
         }
-        return productDetailMapper.productDetailsToProductDetailRes(productDetails);
+        return productDetailsRes;
     }
 
     @Override

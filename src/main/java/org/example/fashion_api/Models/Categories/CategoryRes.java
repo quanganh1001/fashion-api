@@ -24,5 +24,7 @@ public class CategoryRes {
 
     private Boolean isActivated;
 
-    private String catParent;
+    private Long catParent;
+
+    private String catParentName;
 }

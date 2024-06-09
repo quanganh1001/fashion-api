@@ -18,9 +18,6 @@ public class CreateCategoryDto {
     @NotNull
     private String catName;
 
-    private String catBackground;
+    private Long catParent;
 
-    private String catParent;
-
-    private Boolean isActivated = true;
 }

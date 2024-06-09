@@ -30,7 +30,6 @@ public class RedisServiceImpl implements RedisService {
             String json = redisObjectMapper.writeValueAsString(object);
             redisTemplate.opsForValue().set(keyRedis, json);
         } catch (JsonProcessingException e) {
-            // Xử lý ngoại lệ tại đây (ví dụ: log và báo lỗi)
             e.printStackTrace();
         }
     }

@@ -93,11 +93,11 @@ public class CategoryServiceImpl implements CategoryService {
         //check exist by category code and category name
         if (categoryRepo.existsByCategoryCode(createCategoryDto.getCategoryCode())) {
 
-            throw new AlreadyExistException(createCategoryDto.getCategoryCode());
+            throw new AlreadyExistException("Category code");
 
         } else if (categoryRepo.existsByCatName(createCategoryDto.getCatName())) {
 
-            throw new AlreadyExistException(createCategoryDto.getCatName());
+            throw new AlreadyExistException("Category name");
         }
 
         Category category = categoryMapper.createCategoryDtoToCategory(createCategoryDto, new Category());
@@ -136,10 +136,10 @@ public class CategoryServiceImpl implements CategoryService {
         String redisKey = "childCategories("+catParentId+") - category";
 
         //get redis
-        List<Category> categories = redisService.getListRedis(redisKey, Category.class);
+        List<CategoryRes> categoriesRes = redisService.getListRedis(redisKey, CategoryRes.class);
 
         // if redis with redis key = null -> create redis
-        if (categories == null){
+        if (categoriesRes == null){
 
             List<Category> childCategories;
 
@@ -150,11 +150,14 @@ public class CategoryServiceImpl implements CategoryService {
                 childCategories = categoryRepo.findAllByCatParentId(null);
             }
 
-            redisService.saveRedis(redisKey, childCategories);
-            return categoryMapper.toDtoList(childCategories);
+            categoriesRes = categoryMapper.toDtoList(childCategories);
+
+            redisService.saveRedis(redisKey, categoriesRes);
+
+            return categoriesRes;
         }
 
-        return categoryMapper.toDtoList(categories);
+        return categoriesRes;
 
 
     }

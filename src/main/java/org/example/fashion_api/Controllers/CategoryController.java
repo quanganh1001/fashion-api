@@ -39,7 +39,7 @@ public class CategoryController {
     @Operation(summary = "get child categories")
     @GetMapping("/childCategories")
     public ResponseEntity<List<CategoryRes>> getChildCategories(@RequestParam(value = "catParentId",
-            defaultValue = "") Long catParentId) throws JsonProcessingException {
+            required = false) Long catParentId) throws JsonProcessingException {
         return ResponseEntity.ok(categoryService.childCategories(catParentId));
     }
 

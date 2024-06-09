@@ -23,6 +23,7 @@ public interface CategoryMapper {
     List<CategoryRes> toDtoList(List<Category> categories);
 
     @Mapping(target = "catParent",source = "catParent.id")
+    @Mapping(target = "catParentName",source = "catParent.catName")
     CategoryRes categoryToCategoryRes(Category category);
 
 }

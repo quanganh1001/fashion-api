@@ -19,19 +19,7 @@ public class ImageProductController {
     @Autowired
     private ImgProductService imgProductService;
 
-    @Operation(summary = "get image by productId")
-    @GetMapping("/{productId}")
-    public List<ImgProductRes> getImgProductsByProductId(@PathVariable Long productId) {
-        return imgProductService.imgProductByProductId(productId);
-    }
 
-    @Operation(summary = "create image (role MANAGER)")
-    @PreAuthorize("hasAnyRole('MANAGER')")
-    @PostMapping("/{productId}")
-    public ResponseEntity<String> addImgProduct(@PathVariable Long productId, MultipartFile[] imgFiles) throws IOException {
-        imgProductService.createImgProduct(productId, imgFiles);
-        return ResponseEntity.ok("done");
-    }
 
 
     @Operation(summary = "delete image (role MANAGER)")

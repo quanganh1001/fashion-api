@@ -23,7 +23,10 @@ spring:
         mail.smtp.starttls.enable: true
         mail.smtp.starttls.required: true
         mail.smtp.ssl.trust: smtp.gmail.com
-
+    servlet:
+      multipart:
+        max-file-size: 100MB
+        max-request-size: 100MB
 
 
 rabbitmq:
@@ -36,5 +39,7 @@ rabbitmq:
       exchange: ${RABBITMQ_DEAD_LETTER_EXCHANGE}
       queue: ${RABBITMQ_DEAD_LETTER_QUEUE}
       key: ${RABBITMQ_DEAD_LETTER_KEY}
+
+
 
 

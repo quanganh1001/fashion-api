@@ -3,11 +3,14 @@ package org.example.fashion_api.Controllers;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
+import org.example.fashion_api.Models.ImgsProducts.ImgProduct;
+import org.example.fashion_api.Models.ImgsProducts.ImgProductRes;
 import org.example.fashion_api.Models.Products.CreateProductDto;
 import org.example.fashion_api.Models.Products.PageProductRes;
 import org.example.fashion_api.Models.Products.ProductRes;
 import org.example.fashion_api.Models.Products.UpdateProductDto;
 import org.example.fashion_api.Models.ProductsDetails.ProductDetailRes;
+import org.example.fashion_api.Services.ImgProductService.ImgProductService;
 import org.example.fashion_api.Services.ProductDetailService.ProductDetailService;
 import org.example.fashion_api.Services.ProductService.ProductService;
 import org.example.fashion_api.Services.RedisService.RedisService;
@@ -27,6 +30,8 @@ public class ProductController {
     private ProductService productService;
     @Autowired
     private ProductDetailService productDetailService;
+    @Autowired
+    private ImgProductService imgProductService;
 
 
     @Operation(summary = "get all products ")
@@ -89,6 +94,20 @@ public class ProductController {
     @GetMapping("/{productId}/productsDetail")
     public ResponseEntity<List<ProductDetailRes>> getAllProductDetailsByProductId(@PathVariable("productId") Long productId) throws JsonProcessingException {
         return ResponseEntity.ok(productDetailService.findAllProductDetails(productId));
+    }
+
+    @Operation(summary = "get image by productId")
+    @GetMapping("/{productId}/images")
+    public ResponseEntity<List<ImgProductRes>> getImgProductsByProductId(@PathVariable Long productId) {
+        return ResponseEntity.ok(imgProductService.imgProductByProductId(productId));
+    }
+
+    @Operation(summary = "create image (role MANAGER)")
+    @PreAuthorize("hasAnyRole('MANAGER')")
+    @PostMapping("/{productId}/createImage")
+    public ResponseEntity<String> addImgProduct(@PathVariable Long productId, MultipartFile[] imgFiles) throws IOException {
+        imgProductService.createImgProduct(productId, imgFiles);
+        return ResponseEntity.ok("done");
     }
 
 }

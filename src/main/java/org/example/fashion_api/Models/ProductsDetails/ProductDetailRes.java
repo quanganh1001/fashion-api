@@ -27,6 +27,8 @@ public class ProductDetailRes {
 
     private String color;
 
+    private Long colorId;
+
     private String productName;
 
     private Long price;

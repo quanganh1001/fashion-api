@@ -28,7 +28,7 @@ public interface ProductService {
 
 
     @Transactional
-    ResponseEntity<String> updateProductBackground(MultipartFile file, Long productId) throws IOException;
+    ResponseEntity<String> updateProductBackground(String imageUrl, Long productId) throws IOException;
 
     PageProductRes getAllProductsByCategory(String keyword, int page, int limit, Long catId) throws JsonProcessingException;
 }

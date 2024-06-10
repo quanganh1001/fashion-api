@@ -126,18 +126,8 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     @Transactional
-    public ResponseEntity<String> updateProductBackground(MultipartFile file, Long productId) throws IOException {
-        Product product = productRepo.findById(productId).orElseThrow(() -> new NotFoundException("Product not found"));
+    public ResponseEntity<String> updateProductBackground(String imageUrl, Long productId) throws IOException {
 
-        // delete old image in cloud
-        cloudinaryService.deleteImageByUrl(product.getImageBackground());
-
-        // add new image in cloud
-        Map<String, Object> uploadResult = cloudinaryService.upload(file);
-
-
-        //save to db
-        String imageUrl = uploadResult.get("secure_url").toString();
 
         productRepo.updateProductBackground(imageUrl, productId);
 

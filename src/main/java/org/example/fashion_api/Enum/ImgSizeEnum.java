@@ -17,5 +17,4 @@ public enum ImgSizeEnum {
         this.name = name;
         this.url = url;
     }
-
 }

@@ -83,10 +83,9 @@ public class ProductController {
 
     @Operation(summary = "update image background product (role MANAGER) ")
     @PreAuthorize("hasAnyRole('MANAGER')")
-    @PostMapping("/updateProductBackground")
-    public ResponseEntity<String> updateProductBackground(@RequestParam("file") MultipartFile file,
-                                                  @RequestParam("productId") Long productId) throws IOException {
-        return productService.updateProductBackground(file,productId);
+    @PutMapping("/{productId}/updateProductBackground")
+    public ResponseEntity<String> updateProductBackground(@RequestBody String imageUrl, @PathVariable("productId") Long productId) throws IOException {
+        return productService.updateProductBackground(imageUrl,productId);
 
     }
 

@@ -2,6 +2,7 @@ package org.example.fashion_api.Controllers;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import io.swagger.v3.oas.annotations.Operation;
+import jakarta.validation.Valid;
 import org.example.fashion_api.Models.ProductsDetails.CreateProductDetailDto;
 import org.example.fashion_api.Models.ProductsDetails.ProductDetailRes;
 import org.example.fashion_api.Models.ProductsDetails.UpdateProductDetailDto;
@@ -29,7 +30,7 @@ public class ProductDetailController {
     @Operation(summary = "create product detail (role MANAGER)")
     @PreAuthorize("hasAnyRole('MANAGER')")
     @PostMapping()
-    public ResponseEntity<String> createProductDetail(@RequestBody CreateProductDetailDto createProductDetailDto) {
+    public ResponseEntity<String> createProductDetail(@Valid @RequestBody CreateProductDetailDto createProductDetailDto) {
         productDetailService.createProductDetail(createProductDetailDto);
         return ResponseEntity.ok("Product detail created");
     }

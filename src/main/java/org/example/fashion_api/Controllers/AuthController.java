@@ -34,7 +34,6 @@ public class AuthController {
     @DeleteMapping("/logout")
     @Operation(summary = "Logout", description = "This is a logout API")
     public ResponseEntity<String> logout(@RequestBody String token) {
-        System.out.println(token);
         accountService.Logout(token);
         return ResponseEntity.ok("Logout successful");
     }

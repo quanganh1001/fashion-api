@@ -24,6 +24,7 @@ public interface ProductDetailMapper {
     @Mapping(target = "discountPercent", source = "product.discountPercent")
     @Mapping(target = "imageBackground", source = "product.imageBackground")
     @Mapping(target = "productName", source = "product.productName")
+    @Mapping(target = "colorId", source = "color.id")
     ProductDetailRes productDetailToProductDetailRes(ProductDetail productDetail);
 
 

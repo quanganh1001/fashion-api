@@ -48,7 +48,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 UserCustomDetail userCustomDetail = (UserCustomDetail) this.userDetailService.loadUserByUsername(username);
 
                 if (jwtService.isTokenValid(jwt, userCustomDetail.getAccount().getId())) {
-                    if (!jwtService.isTokenExpiredInDatabse(jwt, userCustomDetail.getAccount().getId())) {
+                    if (!jwtService.isTokenExpiredInDatabase(jwt, userCustomDetail.getAccount().getId())) {
                         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
                                 userCustomDetail,
                                 null,
@@ -56,9 +56,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                         );
                         authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                         SecurityContextHolder.getContext().setAuthentication(authenticationToken);
-                    } else throw new ExpiredJwtException();
-                } else throw new InvalidTokenException();
-            }else throw new InvalidTokenException();
+                    } else throw new ExpiredJwtException("Token");
+                } else throw new InvalidTokenException("Token");
+            }else throw new InvalidTokenException("Token");
         }catch (ExpiredJwtException  e){
             response.sendError(e.getStatus().value(), e.getMessage());
             return;

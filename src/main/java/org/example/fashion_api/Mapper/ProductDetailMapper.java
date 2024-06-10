@@ -27,7 +27,7 @@ public interface ProductDetailMapper {
     @Mapping(target = "colorId", source = "color.id")
     ProductDetailRes productDetailToProductDetailRes(ProductDetail productDetail);
 
-
+    @Mapping(target = "imageBackground", source = "product.imageBackground")
     List<ProductDetailRes> productDetailsToProductDetailRes(List<ProductDetail> productDetails);
 
 
@@ -36,6 +36,5 @@ public interface ProductDetailMapper {
     ProductDetail createProductDetailToProductDetail(CreateProductDetailDto createProductDetailDto, @MappingTarget ProductDetail productDetail);
 
 
-    @Mapping(target = "color.id", source = "colorId")
     ProductDetail updateProductDetailToProductDetail(UpdateProductDetailDto updateProductDetailDto, @MappingTarget ProductDetail productDetail);
 }

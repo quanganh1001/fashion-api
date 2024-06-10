@@ -1,6 +1,8 @@
 package org.example.fashion_api.Controllers;
 
 import io.swagger.v3.oas.annotations.Operation;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import org.example.fashion_api.Mapper.AccountMapper;
 import org.example.fashion_api.Models.Accounts.AccountLoginDto;
@@ -40,8 +42,8 @@ public class AuthController {
 
     @Operation(summary = "refresh token")
     @PutMapping("/refreshToken")
-    public ResponseEntity<JwtTokenRes> refreshToken(@RequestBody String refreshToken)  {
-        return new ResponseEntity<>(jwtService.RefreshToken(refreshToken), HttpStatus.OK);
+    public ResponseEntity<JwtTokenRes> refreshToken(HttpServletRequest req, HttpServletResponse res)  {
+        return new ResponseEntity<>(jwtService.RefreshToken(req, res), HttpStatus.OK);
     }
 
     @Operation(summary = "register")

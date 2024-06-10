@@ -19,9 +19,4 @@ public class UpdateProductDetailDto {
     @NotNull
     private Boolean isActivated;
 
-    @NotNull
-    private String size;
-
-    @NotNull
-    private Long colorId;
 }

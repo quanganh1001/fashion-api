@@ -10,8 +10,9 @@ import org.springframework.http.HttpStatus;
 public class ExpiredJwtException extends RuntimeException{
     private HttpStatus status;
 
-    public ExpiredJwtException() {
-        super("Token has expired");
+    public ExpiredJwtException(String message) {
+        super(message+ " has expired");
         this.status = HttpStatus.UNAUTHORIZED;
+
     }
 }

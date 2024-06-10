@@ -2,6 +2,7 @@ package org.example.fashion_api.Models.ProductsDetails;
 
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
+import org.example.fashion_api.Enum.SizeEnum;
 
 @Getter
 @Setter
@@ -17,7 +18,7 @@ public class CreateProductDetailDto {
     private Integer quantity;
 
     @NotNull
-    private String size;
+    private SizeEnum size;
 
     @NotNull
     private Long productId;

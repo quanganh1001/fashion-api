@@ -7,12 +7,17 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.TokenExpiredException;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import jakarta.annotation.PostConstruct;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.transaction.Transactional;
+import org.example.fashion_api.Exception.BadRequestException;
 import org.example.fashion_api.Exception.ExpiredJwtException;
 import org.example.fashion_api.Exception.InvalidTokenException;
+import org.example.fashion_api.Exception.NotFoundException;
 import org.example.fashion_api.Models.Accounts.Account;
 import org.example.fashion_api.Models.JwtToken.JwtToken;
 import org.example.fashion_api.Models.JwtToken.JwtTokenRes;
+import org.example.fashion_api.Repositories.AccountRepo;
 import org.example.fashion_api.Repositories.JwtTokenRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -29,7 +34,10 @@ public class JwtServiceImpl implements JwtService {
     @Autowired
     private JwtTokenRepo jwtTokenRepo;
 
+
     private Algorithm algorithm;
+    @Autowired
+    private AccountRepo accountRepo;
 
     @PostConstruct
     protected void init() {
@@ -38,63 +46,58 @@ public class JwtServiceImpl implements JwtService {
 
 
     @Override
-    public String generateToken(Map<String, Object> extraClaims,
-                                Account account) {
-
-        return JWT.create()
-                .withIssuer(issuer)
-                .withClaim("username", account.getUsername())
-                .withClaim("role", account.getRole().name())
-                .withIssuedAt(new Date(System.currentTimeMillis()))
-                .withExpiresAt(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 24))
-                .sign(algorithm);
-    }
-
-    @Override
     public boolean isTokenValid(String token, Long accountId) {
         JwtToken tokenRepoByTokenAndAccountId = jwtTokenRepo.findTokenByTokenAndAccount_Id(token, accountId);
         return tokenRepoByTokenAndAccountId != null;
     }
 
+
     @Override
     @Transactional
-    public JwtTokenRes RefreshToken(String refreshToken) {
-        JwtToken token = jwtTokenRepo.findByRefreshToken(refreshToken);
-        if (token == null) {
-            throw new InvalidTokenException();
-        } else if (token.getRefreshExpirationDate().before(new Date())) {
-            throw new ExpiredJwtException();
+    public JwtTokenRes RefreshToken(HttpServletRequest req, HttpServletResponse res) {
+        String authHeader = req.getHeader("Authorization");
+
+        if (authHeader != null) {
+            String[] headerElements = authHeader.split(" ");
+            if (headerElements.length == 2 && "RefreshToken".equals(headerElements[0])) {
+                String refreshToken = headerElements[1];
+
+                JwtToken token = jwtTokenRepo.findByRefreshToken(refreshToken);
+                if (token == null) {
+                    throw new InvalidTokenException("Refresh token");
+                } else if (token.getRefreshExpirationDate().before(new Date())) {
+                    throw new ExpiredJwtException("Refresh token");
+                }
+
+
+                String newToken = generateToken(token.getAccount());
+                String newRefreshToken = generateRefreshToken(token.getAccount());
+                Date newRefreshExpirationDate = new Date(System.currentTimeMillis() + 1000L * 60 * 60 * 24 * 30);
+
+                token.setRefreshExpirationDate(newRefreshExpirationDate);
+                token.setRefreshToken(newRefreshToken);
+                token.setToken(newToken);
+                token.setExpirationDate(extractExpiration(newToken));
+
+                jwtTokenRepo.save(token);
+                return JwtTokenRes
+                        .builder()
+                        .token(newToken)
+                        .refreshToken(newRefreshToken)
+                        .username(token.getAccount().getUsername())
+                        .role(token.getAccount().getRole().name())
+                        .build();
+            }
+            throw new BadRequestException("Invalid credentials");
         }
-
-        Account account = token.getAccount();
-        String jwtToken = generateToken(new HashMap<>(), account);
-        String newRefreshToken = UUID.randomUUID().toString();
-        Date newRefreshExpirationDate = new Date(System.currentTimeMillis() + 1000L * 60 * 60 * 24 * 30);
-
-        jwtTokenRepo.save(JwtToken.builder()
-                .id(token.getId())
-                .account(account)
-                .token(jwtToken)
-                .expirationDate(extractExpiration(jwtToken))
-                .refreshToken(newRefreshToken)
-                .refreshExpirationDate(newRefreshExpirationDate)
-                .revoked(token.getRevoked())
-                .build());
-
-        return JwtTokenRes
-                .builder()
-                .token(jwtToken)
-                .refreshToken(newRefreshToken)
-                .username(account.getUsername())
-                .role(account.getRole().name())
-                .build();
+        throw new BadRequestException("Invalid credentials");
     }
+
 
     @Override
     public JwtTokenRes tokenRes(Account account) {
-        String jwtToken = generateToken(new HashMap<>(), account);
-        String refreshToken = UUID.randomUUID().toString();
-        Date refreshExpirationDate = new Date(System.currentTimeMillis() + 1000L * 60 * 60 * 24 * 30);
+        String jwtToken = generateToken(account);
+        String refreshToken = generateRefreshToken(account);
 
         // Đếm số lượng token hiện có cho accountId
         long tokenCount = jwtTokenRepo.countByAccount_Id(account.getId());
@@ -114,7 +117,7 @@ public class JwtServiceImpl implements JwtService {
                 .token(jwtToken)
                 .expirationDate(extractExpiration(jwtToken))
                 .refreshToken(refreshToken)
-                .refreshExpirationDate(refreshExpirationDate).build());
+                .refreshExpirationDate(extractExpiration(refreshToken)).build());
 
         return JwtTokenRes.builder()
                 .token(jwtToken)
@@ -125,12 +128,35 @@ public class JwtServiceImpl implements JwtService {
     }
 
     @Override
+    public String generateToken(Account account) {
+
+        return JWT.create()
+                .withIssuer(issuer)
+                .withClaim("username", account.getUsername())
+                .withClaim("role", account.getRole().name())
+                .withIssuedAt(new Date(System.currentTimeMillis()))
+                .withExpiresAt(new Date(System.currentTimeMillis() + 1000 * 10 * 60))
+                .sign(algorithm);
+    }
+
+    @Override
+    public String generateRefreshToken(Account account) {
+        return JWT.create()
+                .withIssuer(issuer)
+                .withClaim("username", account.getUsername())
+                .withClaim("role", account.getRole().name())
+                .withIssuedAt(new Date(System.currentTimeMillis()))
+                .withExpiresAt(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 24 * 7))
+                .sign(algorithm);
+    }
+
+    @Override
     public DecodedJWT decodeToken(String token) {
         try {
             JWTVerifier verifier = JWT.require(algorithm).build();
             return verifier.verify(token);
         } catch (TokenExpiredException e) {
-            throw new ExpiredJwtException();
+            throw new ExpiredJwtException("Token");
         }
 
     }
@@ -140,10 +166,6 @@ public class JwtServiceImpl implements JwtService {
         return decodeToken(token).getClaim("username").asString();
     }
 
-    @Override
-    public String extractRole(String token) {
-        return decodeToken(token).getClaim("role").asString();
-    }
 
     @Override
     public Date extractExpiration(String token) {
@@ -151,9 +173,11 @@ public class JwtServiceImpl implements JwtService {
     }
 
     @Override
-    public Boolean isTokenExpiredInDatabse(String token, Long accountId) {
+    public Boolean isTokenExpiredInDatabase(String token, Long accountId) {
         JwtToken tokenRepoByTokenAndAccountId = jwtTokenRepo.findTokenByTokenAndAccount_Id(token, accountId);
         return tokenRepoByTokenAndAccountId.getExpirationDate().before(new Date());
     }
+
+
 }
 

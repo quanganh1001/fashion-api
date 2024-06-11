@@ -22,8 +22,6 @@ public class CategoryRes {
 
     private String catBackground;
 
-    private Boolean isActivated;
-
     private Long catParent;
 
     private String catParentName;

@@ -16,7 +16,7 @@ public interface CategoryService {
     List<CategoryRes> findAll() throws JsonProcessingException;
 
 
-    CategoryRes save(Long catId, UpdateCategoryDto updateCategoryDto);
+    CategoryRes save(Long catId, UpdateCategoryDto updateCategoryDto) throws IOException;
 
     void delete(Long id) throws IOException;
 
@@ -28,5 +28,5 @@ public interface CategoryService {
 
     List<CategoryRes> childCategories(Long catParentId) throws JsonProcessingException;
 
-    List<Category> CatDescendants(Long id, List<Category> allCategory);
+    List<CategoryRes> CatDescendants(Long id, List<CategoryRes> allCategory) throws JsonProcessingException;
 }

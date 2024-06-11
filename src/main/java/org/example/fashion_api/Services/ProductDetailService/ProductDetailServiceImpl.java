@@ -43,7 +43,7 @@ public class ProductDetailServiceImpl implements ProductDetailService{
     @Override
     public void createProductDetail(CreateProductDetailDto dto){
         if (productDetailRepo.existsByCode(dto.getCode())){
-            throw new AlreadyExistException(dto.getCode());
+            throw new AlreadyExistException("Product detail code");
         }
         ProductDetail productDetail = productDetailMapper.createProductDetailToProductDetail(dto,
                 new ProductDetail());
@@ -56,7 +56,7 @@ public class ProductDetailServiceImpl implements ProductDetailService{
         ProductDetail currenProductDetail = productDetailRepo.findById(productDetailId).orElseThrow(()-> new NotFoundException(productDetailId.toString()));
 
         if(!Objects.equals(productDetailId, currenProductDetail.getId()) && productDetailRepo.existsByCode(dto.getCode())){
-            throw new AlreadyExistException(dto.getCode());
+            throw new AlreadyExistException("Product detail code");
         }
 
         ProductDetail productDetail = productDetailMapper.updateProductDetailToProductDetail(dto,currenProductDetail);

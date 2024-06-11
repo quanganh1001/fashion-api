@@ -5,10 +5,14 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import jakarta.transaction.Transactional;
 import org.example.fashion_api.Exception.AlreadyExistException;
 import org.example.fashion_api.Exception.NotFoundException;
+import org.example.fashion_api.Mapper.CategoryMapper;
 import org.example.fashion_api.Mapper.ProductMapper;
 import org.example.fashion_api.Models.Categories.Category;
+import org.example.fashion_api.Models.Categories.CategoryRes;
 import org.example.fashion_api.Models.Products.*;
+import org.example.fashion_api.Models.ProductsDetails.ProductDetail;
 import org.example.fashion_api.Repositories.CategoryRepo;
+import org.example.fashion_api.Repositories.ProductDetailRepo;
 import org.example.fashion_api.Repositories.ProductRepo;
 import org.example.fashion_api.Services.CategoryService.CategoryService;
 import org.example.fashion_api.Services.CloudinaryService;
@@ -33,13 +37,14 @@ public class ProductServiceImpl implements ProductService {
     @Autowired
     private ProductRepo productRepo;
     @Autowired
-    private CloudinaryService cloudinaryService;
+    private CategoryMapper categoryMapper;
     @Autowired
     private CategoryRepo categoryRepo;
     @Autowired
     private CategoryService categoryService;
     @Autowired
     private RedisService redisService;
+    private ProductDetailRepo productDetailRepo;
 
 
     @Override
@@ -88,10 +93,13 @@ public class ProductServiceImpl implements ProductService {
         // check code and name exist
         if (!currentProduct.getProductCode().equals(updateProductDto.getProductCode()) && productRepo.existsByProductCode(updateProductDto.getProductCode())) {
             throw new AlreadyExistException(updateProductDto.getProductCode());
-        } else if (!currentProduct.getProductName().equals(updateProductDto.getProductName()) && productRepo.existsByProductName(updateProductDto.getProductName())) {
-            throw new AlreadyExistException(updateProductDto.getProductName());
         }
 
+        if (updateProductDto.getIsActivated() != currentProduct.getIsActivated() && !updateProductDto.getIsActivated()){
+            List<ProductDetail> productDetails = productDetailRepo.findAllByProductId(productId);
+
+
+        }
 
         Product product = productRepo.save(productMapper.updateProductDtoToProduct(updateProductDto, currentProduct));
 
@@ -112,9 +120,7 @@ public class ProductServiceImpl implements ProductService {
 
         // check code and name exist
         if (productRepo.existsByProductCode(createProductDTO.getProductCode())) {
-            throw new AlreadyExistException("Product code");
-        } else if (productRepo.existsByProductName("Product name")) {
-            throw new AlreadyExistException(createProductDTO.getProductName());
+            throw new AlreadyExistException(createProductDTO.getProductCode());
         }
 
         // save product
@@ -145,14 +151,14 @@ public class ProductServiceImpl implements ProductService {
         // if redis with key = null -> create redis
         if (pageProductRes == null){
             List<Product> productList = new ArrayList<>();
-            List<Category> categories = categoryService.CatDescendants(catId, new ArrayList<>());
+            List<CategoryRes> categories = categoryService.CatDescendants(catId, new ArrayList<>());
 
 
-            categories.add(categoryRepo.findById(catId).orElseThrow(() -> new NotFoundException(catId.toString())));
+            categories.add(categoryMapper.categoryToCategoryRes(categoryRepo.findById(catId).orElseThrow(() -> new NotFoundException(catId.toString()))));
 
             PageRequest pageRequest = PageRequest.of(page,limit, Sort.by("id").ascending());
 
-            for (Category cat : categories) {
+            for (CategoryRes cat : categories) {
                 Page<Product> productPage = productRepo.findAllByCategoryCatId(cat.getId(),keyword,pageRequest);
 
                 productList.addAll(productPage.getContent());

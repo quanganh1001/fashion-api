@@ -3,6 +3,7 @@ package org.example.fashion_api.Services.CategoryService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import jakarta.transaction.Transactional;
 import org.example.fashion_api.Exception.AlreadyExistException;
+import org.example.fashion_api.Exception.BadRequestException;
 import org.example.fashion_api.Exception.NotFoundException;
 import org.example.fashion_api.Models.Categories.Category;
 import org.example.fashion_api.Models.Categories.CreateCategoryDto;
@@ -17,9 +18,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 
 @Service
 public class CategoryServiceImpl implements CategoryService {
@@ -52,7 +51,7 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     @Transactional
-    public CategoryRes save(Long catId, UpdateCategoryDto updateCategoryDto) {
+    public CategoryRes save(Long catId, UpdateCategoryDto updateCategoryDto) throws IOException {
 
         Category currentCategory = categoryRepo.findById(catId).orElseThrow(() -> new NotFoundException(catId.toString()));
 
@@ -60,12 +59,9 @@ public class CategoryServiceImpl implements CategoryService {
         if (!Objects.equals(updateCategoryDto.getCategoryCode(), currentCategory.getCategoryCode())
                 && categoryRepo.existsByCategoryCode(updateCategoryDto.getCategoryCode())) {
             throw new AlreadyExistException(updateCategoryDto.getCategoryCode());
-        } else if (!Objects.equals(updateCategoryDto.getCatName(), currentCategory.getCatName()) && categoryRepo.existsByCatName(updateCategoryDto.getCatName())) {
-            throw new AlreadyExistException(updateCategoryDto.getCatName());
         }
 
         currentCategory = categoryMapper.updateCategoryDtoToCategory(updateCategoryDto, currentCategory);
-
 
         Category category = categoryRepo.save(currentCategory);
 
@@ -93,11 +89,8 @@ public class CategoryServiceImpl implements CategoryService {
         //check exist by category code and category name
         if (categoryRepo.existsByCategoryCode(createCategoryDto.getCategoryCode())) {
 
-            throw new AlreadyExistException("Category code");
+            throw new AlreadyExistException(createCategoryDto.getCategoryCode());
 
-        } else if (categoryRepo.existsByCatName(createCategoryDto.getCatName())) {
-
-            throw new AlreadyExistException("Category name");
         }
 
         Category category = categoryMapper.createCategoryDtoToCategory(createCategoryDto, new Category());
@@ -163,11 +156,11 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public List<Category> CatDescendants(Long id, List<Category> allCategory) {
+    public List<CategoryRes> CatDescendants(Long id, List<CategoryRes> allCategory) throws JsonProcessingException {
 
-        List<Category> categories = categoryRepo.findAllByCatParentId(id);
+        List<CategoryRes> categories = childCategories(id);
         // get all child category of child category
-        for (Category child : categories) {
+        for (CategoryRes child : categories) {
             allCategory.add(child);
             CatDescendants(child.getId(), allCategory);
         }

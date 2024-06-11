@@ -14,6 +14,7 @@ import java.util.List;
 @Mapper(componentModel = "spring",uses = {ProductMapper.class}, unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface CategoryMapper {
 
+    @Mapping(target = "catBackground", ignore = true)
     Category updateCategoryDtoToCategory(UpdateCategoryDto updateCategoryDto, @MappingTarget Category category);
 
 

@@ -1,6 +1,7 @@
 package org.example.fashion_api.Repositories;
 
 
+import jakarta.transaction.Transactional;
 import org.example.fashion_api.Models.Products.Product;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -29,6 +30,5 @@ public interface ProductRepo extends JpaRepository<Product,Long> {
     @Query(value = "SELECT * FROM products WHERE LOWER(product_name) LIKE LOWER(CONCAT('%', :keyword, '%')) " +
             "OR LOWER(product_code) LIKE LOWER(CONCAT('%', :keyword, '%')) ", nativeQuery = true)
     Page<Product> findAllProductByKey(@Param("keyword") String keyword, PageRequest pageRequest);
-
 
 }

@@ -21,4 +21,6 @@ public interface CategoryRepo extends JpaRepository<Category,Long> {
 
     List<Category> findAllByCatParentId(Long catId);
 
+
+
 }

@@ -52,9 +52,9 @@ public class CategoryController {
 
     @Operation(summary = "update category (role MANAGER)")
     @PreAuthorize("hasAnyRole('MANAGER')")
-    @PutMapping("update/{catId}")
+    @PutMapping("{catId}")
     public ResponseEntity<CategoryRes> updateCategory(@PathVariable("catId") Long catId,
-                                                      @Valid @RequestBody UpdateCategoryDto updateCategoryDto) {
+                                                      @Valid @RequestBody UpdateCategoryDto updateCategoryDto) throws IOException {
         return ResponseEntity.ok(categoryService.save(catId, updateCategoryDto));
     }
 

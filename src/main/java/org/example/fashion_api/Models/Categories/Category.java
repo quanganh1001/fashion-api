@@ -12,12 +12,11 @@ import org.example.fashion_api.Models.RedisListener;
 import java.util.List;
 
 @Entity
-@Data
 @Builder
+@Data
 @AllArgsConstructor
 @NoArgsConstructor(force = true)
 @Table(name = "categories")
-@EntityListeners(RedisListener.class)
 public class Category extends BaseEntity {
     @NotNull
     private String categoryCode;
@@ -25,8 +24,6 @@ public class Category extends BaseEntity {
     private String catName;
 
     private String catBackground;
-
-    private Boolean isActivated = Boolean.TRUE;
 
     @OneToMany(mappedBy = "category")
     @JsonIgnore

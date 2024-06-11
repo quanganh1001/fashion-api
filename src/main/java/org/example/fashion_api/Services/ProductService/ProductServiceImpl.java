@@ -44,6 +44,7 @@ public class ProductServiceImpl implements ProductService {
     private CategoryService categoryService;
     @Autowired
     private RedisService redisService;
+    @Autowired
     private ProductDetailRepo productDetailRepo;
 
 
@@ -97,6 +98,9 @@ public class ProductServiceImpl implements ProductService {
 
         if (updateProductDto.getIsActivated() != currentProduct.getIsActivated() && !updateProductDto.getIsActivated()){
             List<ProductDetail> productDetails = productDetailRepo.findAllByProductId(productId);
+            for (ProductDetail productDetail : productDetails) {
+                productDetailRepo.setIsActivated(productDetail.getId(),updateProductDto.getIsActivated());
+            }
 
 
         }

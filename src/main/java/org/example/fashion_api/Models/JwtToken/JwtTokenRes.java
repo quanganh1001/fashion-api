@@ -2,6 +2,7 @@ package org.example.fashion_api.Models.JwtToken;
 
 
 import lombok.*;
+import org.example.fashion_api.Models.Accounts.AccountRes;
 
 @Getter
 @Setter
@@ -14,8 +15,6 @@ public class JwtTokenRes {
 
     private String refreshToken;
 
-    private String username;
-
-    private String role;
+    private AccountRes account;
 
 }

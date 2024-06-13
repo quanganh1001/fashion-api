@@ -13,13 +13,15 @@ import jakarta.transaction.Transactional;
 import org.example.fashion_api.Exception.BadRequestException;
 import org.example.fashion_api.Exception.ExpiredJwtException;
 import org.example.fashion_api.Exception.InvalidTokenException;
-import org.example.fashion_api.Exception.NotFoundException;
+import org.example.fashion_api.Mapper.AccountMapper;
 import org.example.fashion_api.Models.Accounts.Account;
+import org.example.fashion_api.Models.Accounts.AccountRes;
 import org.example.fashion_api.Models.JwtToken.JwtToken;
 import org.example.fashion_api.Models.JwtToken.JwtTokenRes;
 import org.example.fashion_api.Repositories.AccountRepo;
 import org.example.fashion_api.Repositories.JwtTokenRepo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -27,20 +29,29 @@ import java.util.*;
 @Service
 public class JwtServiceImpl implements JwtService {
 
-    private static final String SECRET_KEY = "e82c73692e6fa99b1770cfd6605bfc5b9ec3a12b362d9de5459a2612191497c4";
+    @Value("${secret.key}")
+    private String secretKey;
 
-    private static final String issuer = "nguyenquanganh";
+    @Value("${jwt.issuer}")
+    private String issuerValue;
+
+    private static String SECRET_KEY;
+
+    private static String issuer;
 
     @Autowired
     private JwtTokenRepo jwtTokenRepo;
 
+    @Autowired
+    private AccountMapper accountMapper;
 
     private Algorithm algorithm;
-    @Autowired
-    private AccountRepo accountRepo;
+
 
     @PostConstruct
     protected void init() {
+        SECRET_KEY = secretKey;
+        issuer = issuerValue;
         algorithm = Algorithm.HMAC256(SECRET_KEY);
     }
 
@@ -79,13 +90,14 @@ public class JwtServiceImpl implements JwtService {
                 token.setToken(newToken);
                 token.setExpirationDate(extractExpiration(newToken));
 
+                AccountRes accountRes = accountMapper.accountEntityToAccountRes(token.getAccount());
+
                 jwtTokenRepo.save(token);
                 return JwtTokenRes
                         .builder()
                         .token(newToken)
                         .refreshToken(newRefreshToken)
-                        .username(token.getAccount().getUsername())
-                        .role(token.getAccount().getRole().name())
+                        .account(accountRes)
                         .build();
             }
             throw new BadRequestException("Invalid credentials");
@@ -119,11 +131,12 @@ public class JwtServiceImpl implements JwtService {
                 .refreshToken(refreshToken)
                 .refreshExpirationDate(extractExpiration(refreshToken)).build());
 
+        AccountRes accountRes = accountMapper.accountEntityToAccountRes(account);
+
         return JwtTokenRes.builder()
                 .token(jwtToken)
                 .refreshToken(refreshToken)
-                .username(account.getUsername())
-                .role(account.getRole().name())
+                .account(accountRes)
                 .build();
     }
 

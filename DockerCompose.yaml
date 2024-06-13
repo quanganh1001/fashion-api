@@ -61,6 +61,8 @@ services:
       RABBITMQ_DEAD_LETTER_QUEUE: dead_letter.queue
       RABBITMQ_DEAD_LETTER_KEY: dead_letter.key
       URL_VNPAY_RESPONSE: http://localhost:8080/vnpay/response
+      JWT_SECRET_KEY: e82c73692e6fa99b1770cfd6605bfc5b9ec3a12b362d9de5459a2612191497c4
+      JWT_ISSUER: nguyenquanganh
     ports:
       - 8080:8080
     networks:

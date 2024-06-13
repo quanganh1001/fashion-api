@@ -24,7 +24,7 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 
 import java.util.Optional;
 
-@Configuration // định nghĩa 1 hoặc nhiều bean
+@Configuration
 @RequiredArgsConstructor
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig {

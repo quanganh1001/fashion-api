@@ -10,6 +10,7 @@ import org.example.fashion_api.Models.Accounts.AccountUpdateDto;
 import org.example.fashion_api.Models.Accounts.ChangePassDto;
 import org.example.fashion_api.Services.AccountService.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -79,6 +80,9 @@ public class AccountController {
     @Operation(summary = "activated or deactivated account (role MANAGER)")
     @PutMapping("/{accountId}/activated")
     public ResponseEntity<String> activatedAccount(@PathVariable("accountId") Long accountId) {
+        if(accountId == 1){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Cannot deactivate this account");
+        }
         Boolean handleActivateStatus = accountService.activatedAccount(accountId);
         return ResponseEntity.ok(handleActivateStatus ? "Account activated successfully" : "Account deactivated successfully");
     }

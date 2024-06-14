@@ -3,6 +3,7 @@ package org.example.fashion_api.Controllers;
 import io.swagger.v3.oas.annotations.Operation;
 import org.example.fashion_api.Enum.EnumDto;
 import org.example.fashion_api.Enum.ImgSizeEnum;
+import org.example.fashion_api.Enum.RoleEnum;
 import org.example.fashion_api.Enum.SizeEnum;
 import org.hibernate.engine.jdbc.Size;
 import org.springframework.http.ResponseEntity;
@@ -18,7 +19,7 @@ import java.util.List;
 public class EnumController {
 
     @Operation(summary = "get Enum size image ")
-    @GetMapping("sizeImage")
+    @GetMapping("sizeImages")
     public ResponseEntity<List<EnumDto>> sizeImage(){
         List<EnumDto> enumDtos = new ArrayList<>();
         for (ImgSizeEnum imgSizeEnum : ImgSizeEnum.values()) {
@@ -28,11 +29,21 @@ public class EnumController {
     }
 
     @Operation(summary = "get Enum size ")
-    @GetMapping("size")
+    @GetMapping("sizes")
     public ResponseEntity<List<EnumDto>> size(){
         List<EnumDto> enumDtos = new ArrayList<>();
         for (SizeEnum imgSizeEnum : SizeEnum.values()) {
             enumDtos.add(new EnumDto(imgSizeEnum.name(), imgSizeEnum.getSize()));
+        }
+        return ResponseEntity.ok(enumDtos);
+    }
+
+    @Operation(summary = "get Role ")
+    @GetMapping("roles")
+    public ResponseEntity<List<EnumDto>> role(){
+        List<EnumDto> enumDtos = new ArrayList<>();
+        for (RoleEnum roleEnum : RoleEnum.values()) {
+            enumDtos.add(new EnumDto(roleEnum.name(), roleEnum.getRole()));
         }
         return ResponseEntity.ok(enumDtos);
     }

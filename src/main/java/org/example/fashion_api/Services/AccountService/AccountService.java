@@ -18,7 +18,7 @@ public interface AccountService {
 
     void deleteAccount(Long accountId);
 
-    ResponseEntity<AccountRes> updateAccount(Long accountId, AccountUpdateDto dto);
+    ResponseEntity<AccountRes> updateAccount( AccountUpdateDto dto);
 
     void changePass(Long accountId,ChangePassDto changePassDto);
 

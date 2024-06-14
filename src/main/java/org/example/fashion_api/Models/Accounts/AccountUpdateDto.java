@@ -26,7 +26,6 @@ public class AccountUpdateDto {
     @NotBlank
     private String name;
 
-    @NotBlank
     private String address;
 
 }

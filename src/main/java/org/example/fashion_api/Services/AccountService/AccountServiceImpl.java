@@ -176,9 +176,8 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     @Transactional
-    public ResponseEntity<AccountRes> updateAccount(Long accountId, AccountUpdateDto dto) {
-
-        Account account = accountRepo.findById(accountId).orElseThrow(() -> new NotFoundException("Accounts"));
+    public ResponseEntity<AccountRes> updateAccount( AccountUpdateDto dto) {
+        Account account = getAccountFromAuthentication();
         // check exist
         if (!Objects.equals(account.getEmail(), dto.getEmail()) && accountRepo.existsByEmail(dto.getEmail())) {
             throw new AlreadyExistException("Email");

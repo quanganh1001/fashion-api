@@ -53,11 +53,10 @@ public class AccountController {
             return ResponseEntity.ok("Deleted");
     }
 
-    @PreAuthorize("#accountId == authentication.principal.account.Id or hasAnyRole('MANAGER')")
-    @Operation(summary = "update account (role MANAGER or current account)")
-    @PutMapping("/{accountId}")
-    public ResponseEntity<AccountRes> updateAccount(@PathVariable("accountId") Long accountId,@Valid @RequestBody AccountUpdateDto accountUpdateDto) {
-        return accountService.updateAccount(accountId,accountUpdateDto);
+    @Operation(summary = "update account (current account)")
+    @PutMapping("edit")
+    public ResponseEntity<AccountRes> updateAccount(@Valid @RequestBody AccountUpdateDto accountUpdateDto) {
+        return accountService.updateAccount(accountUpdateDto);
     }
 
 

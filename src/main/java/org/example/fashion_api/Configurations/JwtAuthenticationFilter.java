@@ -39,13 +39,13 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         }
 
         final String jwt;
-        final String username;
+        final String phone;
         jwt = authHeader.substring(7);
 
         try {
-            username = jwtService.extractUsername(jwt);
-            if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-                UserCustomDetail userCustomDetail = (UserCustomDetail) this.userDetailService.loadUserByUsername(username);
+            phone = jwtService.extractPhone(jwt);
+            if (phone != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+                UserCustomDetail userCustomDetail = (UserCustomDetail) this.userDetailService.loadUserByUsername(phone);
 
                 if (jwtService.isTokenValid(jwt, userCustomDetail.getAccount().getId())) {
                     if (!jwtService.isTokenExpiredInDatabase(jwt, userCustomDetail.getAccount().getId())) {

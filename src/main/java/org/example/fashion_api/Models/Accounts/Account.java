@@ -23,9 +23,6 @@ import java.util.List;
 public class Account extends BaseEntity {
 
     @NotNull
-    private String username;
-
-    @NotNull
     private String password;
 
     private String name;

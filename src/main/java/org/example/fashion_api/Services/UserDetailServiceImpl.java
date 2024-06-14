@@ -19,7 +19,7 @@ public class UserDetailServiceImpl implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Optional<Account> findByUser = accountRepo.findByUsername(username);
+        Optional<Account> findByUser = accountRepo.findByPhone(username);
         return UserCustomDetail.builder().account(findByUser.get()).build();
     }
 }

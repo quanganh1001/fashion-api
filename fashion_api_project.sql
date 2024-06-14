@@ -2,10 +2,10 @@
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th5 30, 2024 lúc 05:11 PM
--- Phiên bản máy phục vụ: 10.4.32-MariaDB
--- Phiên bản PHP: 8.2.12
+-- Máy chủ: localhost
+-- Thời gian đã tạo: Th6 14, 2024 lúc 07:13 AM
+-- Phiên bản máy phục vụ: 10.4.28-MariaDB
+-- Phiên bản PHP: 8.2.4
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -31,7 +31,6 @@ USE `fashion_api_project`;
 
 CREATE TABLE `accounts` (
   `id` int(11) NOT NULL,
-  `username` varchar(50) NOT NULL,
   `password` varchar(255) NOT NULL,
   `name` varchar(255) NOT NULL,
   `email` varchar(55) NOT NULL,
@@ -47,13 +46,13 @@ CREATE TABLE `accounts` (
 -- Đang đổ dữ liệu cho bảng `accounts`
 --
 
-INSERT INTO `accounts` (`id`, `username`, `password`, `name`, `email`, `phone`, `address`, `role`, `is_activated`, `created_at`, `updated_at`) VALUES
-(1, 'quanly', '$2a$10$5C32JYodwPS87Qo2ZqTRBOb3NpDJyls3DEWLoEdb4i1oV5jjmNzNe', 'quang anh', 'quanganhnguyen100196@gmail.com', '0364100196', 'h', 'ROLE_MANAGER', b'1', '2024-05-14 10:45:53', '2024-05-14 10:45:53'),
-(2, 'nhanvien1', '$2a$10$cIsfc/R8PIsJWzbgolJRheAfJ7hK9hxwxxpqplMP4CSlTBJhcoMk.', 'nhanvien1', 'nhanvien1@gmail.com', '0365151822', 'hanoi', 'ROLE_EMPLOYEE', b'1', '2024-05-14 10:45:53', '2024-05-16 15:36:22'),
-(4, 'nhanvien2', '$2a$10$5D2B5O4CmS5RN4VxaTwJXOi9B83aa0lGwWy.sICls9O3LKRgNXyDm', 'quanganh', 'nhanvien2@gmail.com', '0364421123', 'hanoi', 'ROLE_EMPLOYEE', b'1', '2024-05-14 10:45:53', '2024-05-14 10:45:53'),
-(8, 'nhanvien3', '$2a$10$Eh581hpIm67HRwTrHJDpi.iNlHtcbYIBOy313HikKSFJQ4BUPycNu', 'nhanvien3', 'nhanvien3@gmail.com', '0312646431', 'hanoi', 'ROLE_EMPLOYEE', b'1', '2024-05-14 10:45:53', '2024-05-14 10:45:53'),
-(14, 'khachhang', '$2a$10$txuPDKVLcA7VGk5x9L8NfuLd2GcUeNAxRzZGl/pWgQl.LpFdcA8QK', 'khách hàng', 'khachhang@gmail.com', '0364431132', 'hanoi', 'ROLE_CUSTOMER', b'1', '2024-05-14 10:45:53', '2024-05-14 10:45:53'),
-(28, 'test', '$2a$10$D1u7SGmapXHoWW/5FV.8heroRTJA16m74nl7R7NV2zc8.FJnzj3/y', 'name', 'test2@gmail.com', '012345789', 'test', 'ROLE_CUSTOMER', b'1', '2024-05-15 14:24:38', '2024-05-15 14:28:13');
+INSERT INTO `accounts` (`id`, `password`, `name`, `email`, `phone`, `address`, `role`, `is_activated`, `created_at`, `updated_at`) VALUES
+(1, '$2a$10$5C32JYodwPS87Qo2ZqTRBOb3NpDJyls3DEWLoEdb4i1oV5jjmNzNe', 'quang anh', 'quanganhnguyen100196@gmail.com', '0364100196', 'h', 'ROLE_MANAGER', b'1', '2024-05-14 10:45:53', '2024-05-14 10:45:53'),
+(2, '$2a$10$cIsfc/R8PIsJWzbgolJRheAfJ7hK9hxwxxpqplMP4CSlTBJhcoMk.', 'nhanvien1', 'nhanvien1@gmail.com', '0365151822', 'hanoi', 'ROLE_EMPLOYEE', b'1', '2024-05-14 10:45:53', '2024-05-16 15:36:22'),
+(4, '$2a$10$5D2B5O4CmS5RN4VxaTwJXOi9B83aa0lGwWy.sICls9O3LKRgNXyDm', 'quanganh', 'nhanvien2@gmail.com', '0364421123', 'hanoi', 'ROLE_EMPLOYEE', b'1', '2024-05-14 10:45:53', '2024-05-14 10:45:53'),
+(8, '$2a$10$Eh581hpIm67HRwTrHJDpi.iNlHtcbYIBOy313HikKSFJQ4BUPycNu', 'nhanvien3', 'nhanvien3@gmail.com', '0312646431', 'hanoi', 'ROLE_EMPLOYEE', b'1', '2024-05-14 10:45:53', '2024-05-14 10:45:53'),
+(14, '$2a$10$txuPDKVLcA7VGk5x9L8NfuLd2GcUeNAxRzZGl/pWgQl.LpFdcA8QK', 'khách hàng', 'khachhang@gmail.com', '0364431132', 'hanoi', 'ROLE_CUSTOMER', b'1', '2024-05-14 10:45:53', '2024-05-14 10:45:53'),
+(29, '$2a$10$rFqPbyKiX7ZAuhIde4opiukU4DQJ3s9zrUyzYyU3SHU44lzkRM2Ua', 'name', 'anhnqth2211019@fpt.edu.vn', '012345789', 'test', 'ROLE_CUSTOMER', b'1', '2024-06-01 06:13:05', '2024-06-01 06:13:05');
 
 -- --------------------------------------------------------
 
@@ -67,7 +66,6 @@ CREATE TABLE `categories` (
   `cat_name` varchar(30) DEFAULT NULL,
   `parent_id` int(11) DEFAULT NULL,
   `cat_background` varchar(255) DEFAULT NULL,
-  `is_activated` bit(1) NOT NULL DEFAULT b'1',
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -76,51 +74,50 @@ CREATE TABLE `categories` (
 -- Đang đổ dữ liệu cho bảng `categories`
 --
 
-INSERT INTO `categories` (`id`, `category_code`, `cat_name`, `parent_id`, `cat_background`, `is_activated`, `created_at`, `updated_at`) VALUES
-(86, 'AK', 'Áo khoác', 96, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711887062/trmwzjbstkhva5q3s12g.jpg', b'1', '2024-05-14 10:46:05', '2024-05-14 10:46:05'),
-(87, 'AKBB', 'Áo khoác Bomber', 86, NULL, b'1', '2024-05-14 10:46:05', '2024-05-14 10:46:05'),
-(88, 'AKCC', 'Áo khoác cổ cao', 86, NULL, b'1', '2024-05-14 10:46:05', '2024-05-14 10:46:05'),
-(89, 'AKG', 'Áo khoác gió', 86, NULL, b'1', '2024-05-14 10:46:05', '2024-05-14 10:46:05'),
-(90, 'AKP', 'Áo khoác phao', 86, NULL, b'1', '2024-05-14 10:46:05', '2024-05-14 10:46:05'),
-(91, 'ALK', 'Áo len kẻ', 94, NULL, b'1', '2024-05-14 10:46:05', '2024-05-14 10:46:05'),
-(92, 'ALT', 'Áo len trơn', 94, NULL, b'1', '2024-05-14 10:46:05', '2024-05-14 10:46:05'),
-(93, 'ANK', 'Áo nỉ kẻ', 94, NULL, b'1', '2024-05-14 10:46:05', '2024-05-14 10:46:05'),
-(94, 'ANL', 'Áo nỉ - len', 96, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711887116/qasfi8lttpdvyvgmolah.webp', b'1', '2024-05-14 10:46:05', '2024-05-14 10:46:05'),
-(95, 'ANT', 'Áo nỉ trơn', 94, NULL, b'1', '2024-05-14 10:46:05', '2024-05-14 10:46:05'),
-(96, 'AO', 'Áo nam', NULL, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711889153/vsxicuhzwi7pnbttle2w.webp', b'1', '2024-05-14 10:46:05', '2024-05-14 10:46:05'),
-(97, 'BN', 'Bộ nỉ', 115, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711887418/zisn6ikfcajpyoqvwits.webp', b'1', '2024-05-14 10:46:05', '2024-05-14 10:46:05'),
-(98, 'PLBK', 'Polo Bo Kẻ', 103, 'no_image.jpg', b'1', '2024-05-14 10:46:05', '2024-05-14 10:46:05'),
-(99, 'PLCP', 'Polo can phối', 103, 'no_image.jpg', b'1', '2024-05-14 10:46:05', '2024-05-14 10:46:05'),
-(100, 'PLHT', 'Polo họa tiết', 103, '1707659794400_home_category_7_img.jpg', b'1', '2024-05-14 10:46:05', '2024-05-14 10:46:05'),
-(101, 'PLK', 'Polo kẻ', 103, 'no_image.jpg', b'1', '2024-05-14 10:46:05', '2024-05-14 10:46:05'),
-(102, 'PLT', 'Polo trơn', 103, 'no_image.jpg', b'1', '2024-05-14 10:46:05', '2024-05-14 10:46:05'),
-(103, 'POLO', 'Áo polo', 96, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711887135/ikfhqgyc649ojjh98kwr.webp', b'1', '2024-05-14 10:46:05', '2024-05-14 10:46:05'),
-(104, 'QA', 'Quần âu', 113, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711887256/ubsonyurdhhfwczmykoy.webp', b'1', '2024-05-14 10:46:05', '2024-05-14 10:46:05'),
-(105, 'QAPTC', 'Quần âu phối thun cạp', 104, 'no_image.jpg', b'1', '2024-05-14 10:46:05', '2024-05-14 10:46:05'),
-(106, 'QDK', 'Quần dài kaki', 113, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711887282/etuppqbnkbxufsqmy7el.jpg', b'1', '2024-05-14 10:46:05', '2024-05-14 10:46:05'),
-(107, 'QJ', 'Quần jeans', 113, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711887311/d3eqcj37abqwnwv4dmvu.webp', b'1', '2024-05-14 10:46:05', '2024-05-14 10:46:05'),
-(108, 'QJB', 'Quần jeans basic', 107, 'no_image.jpg', b'1', '2024-05-14 10:46:05', '2024-05-14 10:46:05'),
-(109, 'QJR', 'Quần jeans rách', 107, 'no_image.jpg', b'1', '2024-05-14 10:46:05', '2024-05-14 10:46:05'),
-(110, 'QKB', 'Quần kaki basic', 106, 'no_image.jpg', b'1', '2024-05-14 10:46:05', '2024-05-14 10:46:05'),
-(111, 'QN', 'Quần nỉ', 113, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711887352/x23rz8v9cqdaadztvexs.webp', b'1', '2024-05-14 10:46:05', '2024-05-14 10:46:05'),
-(112, 'QS', 'Quần short', 113, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711887380/x9muxebcf9z8xa4naqte.webp', b'1', '2024-05-14 10:46:05', '2024-05-14 10:46:05'),
-(113, 'QUAN', 'Quần nam', NULL, 'no_image.jpg', b'1', '2024-05-14 10:46:05', '2024-05-14 10:46:05'),
-(114, 'SD', 'Short đũi', 112, 'no_image.jpg', b'1', '2024-05-14 10:46:05', '2024-05-14 10:46:05'),
-(115, 'SET', 'Set', NULL, '1707658980103_home_category_2_img.jpg', b'1', '2024-05-14 10:46:05', '2024-05-14 10:46:05'),
-(116, 'SG', 'Short gió', 112, 'no_image.jpg', b'1', '2024-05-14 10:46:05', '2024-05-14 10:46:05'),
-(117, 'SKK', 'Short kaki', 112, 'no_image.jpg', b'1', '2024-05-14 10:46:05', '2024-05-14 10:46:05'),
-(118, 'SM', 'Sơ mi', 96, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711887158/qrazso5enu9rfz1zrwze.webp', b'1', '2024-05-14 10:46:05', '2024-05-14 10:46:05'),
-(119, 'SMD', 'Sơ mi đũi', 118, NULL, b'1', '2024-05-14 10:46:05', '2024-05-14 10:46:05'),
-(120, 'SMDM', 'Sơ mi Demin', 118, NULL, b'1', '2024-05-14 10:46:05', '2024-05-14 10:46:05'),
-(121, 'SMHT', 'Sơ mi họa tiết', 119, NULL, b'1', '2024-05-14 10:46:05', '2024-05-14 10:46:05'),
-(122, 'SMK', 'Sơ mi kẻ', 118, NULL, b'1', '2024-05-14 10:46:05', '2024-05-14 10:46:05'),
-(123, 'SMT', 'Sơ mi trơn', 118, NULL, b'1', '2024-05-14 10:46:05', '2024-05-14 10:46:05'),
-(124, 'THUN', 'Áo thun', 96, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711887206/weftgxxcytuuh11xtpj8.webp', b'1', '2024-05-14 10:46:05', '2024-05-14 10:46:05'),
-(125, 'TIH', 'Thun in hình', 124, NULL, b'1', '2024-05-14 10:46:05', '2024-05-14 10:46:05'),
-(126, 'TT', 'Tank top', 124, NULL, b'1', '2024-05-14 10:46:05', '2024-05-14 10:46:05'),
-(129, 'test1', 'test2', NULL, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1715873904/raqzyobfnx2djfwfocw3.jpg', b'1', '2024-05-15 14:40:00', '2024-05-16 15:38:25'),
-(130, 'test3', 'test3', NULL, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711887062/trmwzjbstkhva5q3s12g.jpg', b'1', '2024-05-16 14:11:05', '2024-05-16 14:11:05'),
-(131, 'test4', 'test4', 98, 'a', b'1', '2024-05-16 14:11:22', '2024-05-16 14:11:41');
+INSERT INTO `categories` (`id`, `category_code`, `cat_name`, `parent_id`, `cat_background`, `created_at`, `updated_at`) VALUES
+(86, 'AK', 'Áo khoác', 96, NULL, '2024-05-14 10:46:05', '2024-06-11 05:12:45'),
+(87, 'AKBB', 'Áo khoác Bomber', 86, NULL, '2024-05-14 10:46:05', '2024-06-11 05:12:45'),
+(88, 'AKCC', 'Áo khoác cổ cao', 86, NULL, '2024-05-14 10:46:05', '2024-06-11 05:12:45'),
+(89, 'AKG', 'Áo khoác gió', 86, NULL, '2024-05-14 10:46:05', '2024-06-11 05:12:45'),
+(90, 'AKP', 'Áo khoác phao', 86, NULL, '2024-05-14 10:46:05', '2024-06-11 05:12:45'),
+(91, 'ALK', 'Áo len kẻ', 94, NULL, '2024-05-14 10:46:05', '2024-06-11 05:12:18'),
+(92, 'ALT', 'Áo len trơn', 94, NULL, '2024-05-14 10:46:05', '2024-06-11 05:12:18'),
+(93, 'ANK', 'Áo nỉ kẻ', 94, NULL, '2024-05-14 10:46:05', '2024-06-11 05:12:18'),
+(94, 'ANL', 'Áo nỉ - len', 96, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711887116/qasfi8lttpdvyvgmolah.webp', '2024-05-14 10:46:05', '2024-06-11 05:12:18'),
+(95, 'ANT', 'Áo nỉ trơn', 94, NULL, '2024-05-14 10:46:05', '2024-06-11 05:12:18'),
+(96, 'AO', 'Áo nam', NULL, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1718101638/pzmpkmgsfbnt2im2dxcl.jpg', '2024-05-14 10:46:05', '2024-06-11 10:27:19'),
+(97, 'BN', 'Bộ nỉ', 115, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711887418/zisn6ikfcajpyoqvwits.webp', '2024-05-14 10:46:05', '2024-05-14 10:46:05'),
+(98, 'PLBK', 'Polo Bo Kẻ', 103, 'no_image.jpg', '2024-05-14 10:46:05', '2024-06-11 05:12:18'),
+(99, 'PLCP', 'Polo can phối', 103, 'no_image.jpg', '2024-05-14 10:46:05', '2024-06-11 05:12:18'),
+(100, 'PLHT', 'Polo họa tiết', 103, '1707659794400_home_category_7_img.jpg', '2024-05-14 10:46:05', '2024-06-11 05:12:18'),
+(101, 'PLK', 'Polo kẻ', 103, 'no_image.jpg', '2024-05-14 10:46:05', '2024-06-11 05:12:18'),
+(102, 'PLT', 'Polo trơn', 103, 'no_image.jpg', '2024-05-14 10:46:05', '2024-06-11 05:12:18'),
+(103, 'POLO', 'Áo polo', 96, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711887135/ikfhqgyc649ojjh98kwr.webp', '2024-05-14 10:46:05', '2024-06-11 05:12:18'),
+(104, 'QA', 'Quần âu', 113, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711887256/ubsonyurdhhfwczmykoy.webp', '2024-05-14 10:46:05', '2024-05-14 10:46:05'),
+(105, 'QAPTC', 'Quần âu phối thun cạp', 104, 'no_image.jpg', '2024-05-14 10:46:05', '2024-05-14 10:46:05'),
+(106, 'QDK', 'Quần dài kaki', 113, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711887282/etuppqbnkbxufsqmy7el.jpg', '2024-05-14 10:46:05', '2024-05-14 10:46:05'),
+(107, 'QJ', 'Quần jeans', 113, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711887311/d3eqcj37abqwnwv4dmvu.webp', '2024-05-14 10:46:05', '2024-05-14 10:46:05'),
+(108, 'QJB', 'Quần jeans basic', 107, 'no_image.jpg', '2024-05-14 10:46:05', '2024-05-14 10:46:05'),
+(109, 'QJR', 'Quần jeans rách', 107, 'no_image.jpg', '2024-05-14 10:46:05', '2024-05-14 10:46:05'),
+(110, 'QKB', 'Quần kaki basic', 106, 'no_image.jpg', '2024-05-14 10:46:05', '2024-05-14 10:46:05'),
+(111, 'QN', 'Quần nỉ', 113, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711887352/x23rz8v9cqdaadztvexs.webp', '2024-05-14 10:46:05', '2024-05-14 10:46:05'),
+(112, 'QS', 'Quần short', 113, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711887380/x9muxebcf9z8xa4naqte.webp', '2024-05-14 10:46:05', '2024-05-14 10:46:05'),
+(113, 'QUAN', 'Quần nam', NULL, 'no_image.jpg', '2024-05-14 10:46:05', '2024-05-14 10:46:05'),
+(114, 'SD', 'Short đũi', 112, 'no_image.jpg', '2024-05-14 10:46:05', '2024-05-14 10:46:05'),
+(115, 'SET', 'Set', NULL, '1707658980103_home_category_2_img.jpg', '2024-05-14 10:46:05', '2024-05-14 10:46:05'),
+(116, 'SG', 'Short gió', 112, 'no_image.jpg', '2024-05-14 10:46:05', '2024-05-14 10:46:05'),
+(117, 'SKK', 'Short kaki', 112, 'no_image.jpg', '2024-05-14 10:46:05', '2024-05-14 10:46:05'),
+(118, 'SM', 'Sơ mi', 96, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711887158/qrazso5enu9rfz1zrwze.webp', '2024-05-14 10:46:05', '2024-06-11 05:12:18'),
+(119, 'SMD', 'Sơ mi đũi', 118, NULL, '2024-05-14 10:46:05', '2024-06-11 05:12:18'),
+(120, 'SMDM', 'Sơ mi Demin', 118, NULL, '2024-05-14 10:46:05', '2024-06-11 05:12:18'),
+(121, 'SMHT', 'Sơ mi họa tiết', 119, NULL, '2024-05-14 10:46:05', '2024-06-11 05:12:18'),
+(122, 'SMK', 'Sơ mi kẻ', 118, NULL, '2024-05-14 10:46:05', '2024-06-11 05:12:18'),
+(123, 'SMT', 'Sơ mi trơn', 118, NULL, '2024-05-14 10:46:05', '2024-06-11 05:12:18'),
+(124, 'THUN', 'Áo thun', 96, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711887206/weftgxxcytuuh11xtpj8.webp', '2024-05-14 10:46:05', '2024-06-11 05:12:18'),
+(125, 'TIH', 'Thun in hình', 124, NULL, '2024-05-14 10:46:05', '2024-06-11 05:12:18'),
+(126, 'TT', 'Tank top', 124, NULL, '2024-05-14 10:46:05', '2024-06-11 05:12:18'),
+(130, 'test3', 'test3', NULL, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1718100026/r1isydwalmavemtm6zoo.jpg', '2024-05-16 14:11:05', '2024-06-11 10:00:26'),
+(131, 'test4', 'test4', 98, 'a', '2024-05-16 14:11:22', '2024-06-11 05:12:18');
 
 -- --------------------------------------------------------
 
@@ -806,7 +803,12 @@ INSERT INTO `invoices` (`id`, `invoice_code`, `name`, `phone`, `address`, `note`
 (81, 'YK68ZX7R', 'nguyễn quang anh', '3432224222', 'số 18 ngõ 222 tựu liệt,thanh trì, hà nội', '', '', 1, 990000, 0, 990000, b'0', '2024-05-14 10:47:02', '2024-05-14 11:16:14', 0, 1),
 (82, 'YTNKBIKE', 'quang anh', '0365151822', '4dvsdsf', '', 's', 1, 990000, 0, 990000, b'0', '2024-05-14 10:47:02', '2024-05-14 11:16:14', 0, 1),
 (83, 'YZSGNG1E', 'quang anh', '0365151822', '4dvsdsf', '', 'd', 1, 750000, 0, 750000, b'0', '2024-05-14 10:47:02', '2024-05-14 11:16:14', 0, 1),
-(84, 'ZUI23NIT', 'nguyễn quang anh', '0999999999', 'số 18 ngõ 222 tựu liệt,thanh trì, hà nội', '                        dsf', NULL, 1, 290000, 20000, 890000, b'0', '2024-05-14 10:47:02', '2024-05-14 11:16:14', 0, 1);
+(84, 'ZUI23NIT', 'nguyễn quang anh', '0999999999', 'số 18 ngõ 222 tựu liệt,thanh trì, hà nội', '                        dsf', NULL, 1, 290000, 20000, 890000, b'0', '2024-05-14 10:47:02', '2024-05-14 11:16:14', 0, 1),
+(86, '7K1RTIHD', 'string', '2538878580', 'string', NULL, 'string', 1, 1040000, 10000, 1050000, b'0', '2024-06-01 04:17:24', '2024-06-01 04:17:25', 0, 1),
+(87, 'UPX8U4CZ', 'string', '2538878580', 'string', NULL, 'string', 1, 1040000, 10000, 1050000, b'0', '2024-06-01 04:18:19', '2024-06-01 04:18:19', 0, 1),
+(88, 'O0VRCG1N', 'string', '2538878580', 'string', NULL, 'string', 1, 1040000, 10000, 1050000, b'0', '2024-06-01 04:22:37', '2024-06-01 04:22:37', 0, 1),
+(89, '7ECXBCFQ', 'string', '2538878580', 'string', NULL, 'string', 1, 1040000, 10000, 1050000, b'0', '2024-06-01 04:24:54', '2024-06-01 04:24:55', 0, 1),
+(90, 'DK9QJKRV', 'string', '2538878580', 'string', NULL, 'string', 1, 1040000, 10000, 1050000, b'1', '2024-06-01 04:30:43', '2024-06-01 04:31:47', 0, 1);
 
 -- --------------------------------------------------------
 
@@ -929,7 +931,17 @@ INSERT INTO `invoices_detail` (`id`, `invoice_id`, `product_detail_id`, `price`,
 (447, 75, 614, 380000, 1, 380000, '2024-05-14 10:47:14', '2024-05-14 10:47:14'),
 (448, 75, 615, 380000, 13, 4940000, '2024-05-14 10:47:14', '2024-05-14 10:47:14'),
 (453, 75, 655, 380000, 1, 380000, '2024-05-22 14:41:41', '2024-05-22 14:41:41'),
-(454, 75, 654, 380000, 1, 380000, '2024-05-22 14:49:07', '2024-05-22 14:49:07');
+(454, 75, 654, 380000, 1, 380000, '2024-05-22 14:49:07', '2024-05-22 14:49:07'),
+(455, 86, 447, 520000, 1, 520000, '2024-06-01 04:17:25', '2024-06-01 04:17:25'),
+(456, 86, 448, 520000, 1, 520000, '2024-06-01 04:17:25', '2024-06-01 04:17:25'),
+(457, 87, 447, 520000, 1, 520000, '2024-06-01 04:18:19', '2024-06-01 04:18:19'),
+(458, 87, 448, 520000, 1, 520000, '2024-06-01 04:18:19', '2024-06-01 04:18:19'),
+(459, 88, 447, 520000, 1, 520000, '2024-06-01 04:22:37', '2024-06-01 04:22:37'),
+(460, 88, 448, 520000, 1, 520000, '2024-06-01 04:22:37', '2024-06-01 04:22:37'),
+(461, 89, 447, 520000, 1, 520000, '2024-06-01 04:24:55', '2024-06-01 04:24:55'),
+(462, 89, 448, 520000, 1, 520000, '2024-06-01 04:24:55', '2024-06-01 04:24:55'),
+(463, 90, 447, 520000, 1, 520000, '2024-06-01 04:30:43', '2024-06-01 04:30:43'),
+(464, 90, 448, 520000, 1, 520000, '2024-06-01 04:30:43', '2024-06-01 04:30:43');
 
 --
 -- Bẫy `invoices_detail`
@@ -1009,12 +1021,12 @@ CREATE TABLE `jwt_tokens` (
 --
 
 INSERT INTO `jwt_tokens` (`id`, `token`, `expiration_date`, `refresh_token`, `account_id`, `refresh_expiration_date`, `revoked`, `created_at`, `updated_at`) VALUES
-(53, 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJuZ3V5ZW5xdWFuZ2FuaCIsInVzZXJuYW1lIjoibmhhbnZpZW4xIiwicm9sZSI6IlJPTEVfRU1QTE9ZRUUiLCJpYXQiOjE3MTM4ODk5NzMsImV4cCI6MTcxMzg5MzU3M30.UghEbLPKZUlWLiTXjqZauOAnIi3hxPHirXkD79ohzGk', '2024-04-24 00:32:53', '4bf80277-d71b-4533-ad94-d2dd16a472aa', 2, '2024-04-23 23:33:03', 0, '2024-05-14 10:47:28', '2024-05-14 10:47:28'),
-(54, 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJuZ3V5ZW5xdWFuZ2FuaCIsInVzZXJuYW1lIjoibmhhbnZpZW4xIiwicm9sZSI6IlJPTEVfRU1QTE9ZRUUiLCJpYXQiOjE3MTM4OTE2OTEsImV4cCI6MTcxMzg5NTI5MX0.zMzZPWZrUHYOsIauCEH0o9mu8VKGsXtHSaO-TpX2Dbw', '2024-04-24 01:01:31', '9bb3c204-6b55-47f3-bada-ed056704b408', 2, '2024-04-24 00:01:41', 0, '2024-05-14 10:47:28', '2024-05-14 10:47:28'),
-(118, 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJuZ3V5ZW5xdWFuZ2FuaCIsInVzZXJuYW1lIjoidGVzdCIsInJvbGUiOiJST0xFX0NVU1RPTUVSIiwiaWF0IjoxNzE1NzgzMjE1LCJleHAiOjE3MTU4Njk2MTV9.IVbTZvuMjeMTAakiIWRmh_XX7ZUkKLvljAZaVj_fnPE', '2024-05-16 21:26:55', '86e28236-b3de-4631-b4a0-a187e0b86dba', 28, '2024-06-14 21:26:55', 0, '2024-05-15 14:26:55', '2024-05-15 14:26:55'),
-(119, 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJuZ3V5ZW5xdWFuZ2FuaCIsInVzZXJuYW1lIjoidGVzdCIsInJvbGUiOiJST0xFX0NVU1RPTUVSIiwiaWF0IjoxNzE1NzgzMjc1LCJleHAiOjE3MTU4Njk2NzV9.H7L5O3EI5bYE0oQ9ndqjlCgHzRROuZ_QjUKJ0fdr9pM', '2024-05-16 21:27:55', 'a634a324-4258-4e04-b1b3-cce1a6e478b8', 28, '2024-06-14 21:27:55', 0, '2024-05-15 14:27:55', '2024-05-15 14:27:55'),
-(126, 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJuZ3V5ZW5xdWFuZ2FuaCIsInVzZXJuYW1lIjoicXVhbmx5Iiwicm9sZSI6IlJPTEVfTUFOQUdFUiIsImlhdCI6MTcxNzA3OTgyNSwiZXhwIjoxNzE3MTY2MjI1fQ.UHXNpVJdCLtF94HAp-yeUOSz46HFMpBFTDx8oa37GVs', '2024-05-31 21:37:05', '4171ab78-e542-4e03-b1d6-8f6e841dbe84', 1, '2024-06-29 21:37:05', 0, '2024-05-30 14:37:05', '2024-05-30 14:37:05'),
-(127, 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJuZ3V5ZW5xdWFuZ2FuaCIsInVzZXJuYW1lIjoicXVhbmx5Iiwicm9sZSI6IlJPTEVfTUFOQUdFUiIsImlhdCI6MTcxNzA4MDU0MCwiZXhwIjoxNzE3MTY2OTQwfQ.zIrR2sETMrOD0vL4ZPb9spZGzNvXl3oKRD58hq_qkJk', '2024-05-31 21:49:00', '7b658e4d-7791-4353-811c-d6146ad47077', 1, '2024-06-29 21:49:00', 0, '2024-05-30 14:49:00', '2024-05-30 14:49:00');
+(236, 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJuZ3V5ZW5xdWFuZ2FuaCIsInVzZXJuYW1lIjoibmhhbnZpZW4xIiwicm9sZSI6IlJPTEVfRU1QTE9ZRUUiLCJpYXQiOjE3MTgyODcyMzcsImV4cCI6MTcxODI4NzgzN30.PZUhGFpkdnkpT4_OL2tLlI2ZDrnZqThjifH9WjRgBOA', '2024-06-13 21:10:37', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJuZ3V5ZW5xdWFuZ2FuaCIsInVzZXJuYW1lIjoibmhhbnZpZW4xIiwicm9sZSI6IlJPTEVfRU1QTE9ZRUUiLCJpYXQiOjE3MTgyODcyMzcsImV4cCI6MTcxODg5MjAzN30.Pq0AHM-ps3F0WpwfPuQEQOY9bLtcxt8NnEW7Qh_Rk7Q', 2, '2024-06-20 21:00:37', 0, '2024-06-13 14:00:37', '2024-06-13 14:00:37'),
+(238, 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJuZ3V5ZW5xdWFuZ2FuaCIsInVzZXJuYW1lIjoia2hhY2hoYW5nIiwicm9sZSI6IlJPTEVfQ1VTVE9NRVIiLCJpYXQiOjE3MTgyODczNTAsImV4cCI6MTcxODI4Nzk1MH0.MBtQQmXdFsaTq9df4PONbzDrcuLkdbDnbUzXenZh7Mw', '2024-06-13 21:12:30', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJuZ3V5ZW5xdWFuZ2FuaCIsInVzZXJuYW1lIjoia2hhY2hoYW5nIiwicm9sZSI6IlJPTEVfQ1VTVE9NRVIiLCJpYXQiOjE3MTgyODczNTAsImV4cCI6MTcxODg5MjE1MH0.vomPZVTKgof4oZ2P-DE7ROAqsjSxEAvY-waJPFMqTAI', 14, '2024-06-20 21:02:30', 0, '2024-06-13 14:02:30', '2024-06-13 14:02:30'),
+(239, 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJuZ3V5ZW5xdWFuZ2FuaCIsInVzZXJuYW1lIjoia2hhY2hoYW5nIiwicm9sZSI6IlJPTEVfQ1VTVE9NRVIiLCJpYXQiOjE3MTgyODc0MDgsImV4cCI6MTcxODI4ODAwOH0.ZrjFfLfodYx3Uz_2-2U243bseY__EZmxUAhJ4NfU55Q', '2024-06-13 21:13:28', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJuZ3V5ZW5xdWFuZ2FuaCIsInVzZXJuYW1lIjoia2hhY2hoYW5nIiwicm9sZSI6IlJPTEVfQ1VTVE9NRVIiLCJpYXQiOjE3MTgyODc0MDgsImV4cCI6MTcxODg5MjIwOH0.k1MMiq8HjS1N3I2kjNyK2bEcgEVTSlp7ueyLW5jiEzs', 14, '2024-06-20 21:03:28', 0, '2024-06-13 14:03:28', '2024-06-13 14:03:28'),
+(240, 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJuZ3V5ZW5xdWFuZ2FuaCIsInVzZXJuYW1lIjoibmhhbnZpZW4xIiwicm9sZSI6IlJPTEVfRU1QTE9ZRUUiLCJpYXQiOjE3MTgyODc3MTksImV4cCI6MTcxODI4ODMxOX0.0j2JXkY0dhCHTyO3XGiMibEeeNKECVs0xF_Npa-KL5c', '2024-06-13 21:18:39', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJuZ3V5ZW5xdWFuZ2FuaCIsInVzZXJuYW1lIjoibmhhbnZpZW4xIiwicm9sZSI6IlJPTEVfRU1QTE9ZRUUiLCJpYXQiOjE3MTgyODc3MTksImV4cCI6MTcxODg5MjUxOX0.tJ7DyIzEtNISfJN60UJ5WMnfUtRWwOi3MEpQ4b_KK94', 2, '2024-06-20 21:08:39', 0, '2024-06-13 14:08:39', '2024-06-13 14:08:39'),
+(255, 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJuZ3V5ZW5xdWFuZ2FuaCIsInBob25lIjoiMDM2NDEwMDE5NiIsInJvbGUiOiJST0xFX01BTkFHRVIiLCJpYXQiOjE3MTgzMzk4OTEsImV4cCI6MTcxODM0MDQ5MX0.k4rrtDS5EA3g-qP08n36-3CVb5Kbe0St3ThqH0DEQpg', '2024-06-14 11:48:11', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJuZ3V5ZW5xdWFuZ2FuaCIsInBob25lIjoiMDM2NDEwMDE5NiIsInJvbGUiOiJST0xFX01BTkFHRVIiLCJpYXQiOjE3MTgzMzk4OTEsImV4cCI6MTcxODk0NDY5MX0.THSJeRysYyy63xuTEc7DEaYUC8uBJZMo1Xv-8bUXOXw', 1, '2024-06-21 11:38:11', 0, '2024-06-14 04:38:11', '2024-06-14 04:38:11'),
+(256, 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJuZ3V5ZW5xdWFuZ2FuaCIsInBob25lIjoiMDM2NDEwMDE5NiIsInJvbGUiOiJST0xFX01BTkFHRVIiLCJpYXQiOjE3MTgzNDEwODYsImV4cCI6MTcxODM0MTY4Nn0.DqkrVdFoGbYmkuNGV7oGp-Wvzj_NQGjNLpNHh2dsK4w', '2024-06-14 12:08:06', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJuZ3V5ZW5xdWFuZ2FuaCIsInBob25lIjoiMDM2NDEwMDE5NiIsInJvbGUiOiJST0xFX01BTkFHRVIiLCJpYXQiOjE3MTgzNDEwODYsImV4cCI6MTcxODk0NTg4Nn0.CsfA0J-Ymr4C4sCOqDhNrPlonGMwIaaD_yzH93l9gwU', 1, '2024-07-14 11:58:06', 0, '2024-06-14 04:42:55', '2024-06-14 04:58:06');
 
 -- --------------------------------------------------------
 
@@ -1046,11 +1058,11 @@ CREATE TABLE `products` (
 --
 
 INSERT INTO `products` (`id`, `product_code`, `product_name`, `cat_id`, `price`, `discount_price`, `discount_percent`, `brand`, `description`, `total_size`, `total_color`, `image_background`, `image_choose_size`, `is_activated`, `created_at`, `updated_at`) VALUES
-(1, 'BI013', '423423', 114, 380000, NULL, NULL, 'TORANO', '', 6, 7, 'https://res.cloudinary.com/dmmvhjl0m/video/upload/v1711858413/tvzzpjqeocumuaszfpxt.mp4', 'IMAGE_4', b'1', '2024-05-14 10:47:36', '2024-05-14 10:47:36'),
+(1, 'BI013', '423423', 114, 380000, NULL, NULL, 'TORANO', '', 6, 7, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711810365/1702814188840_tp038---bi013-_20__790f72cbd3d34a918920b73579e72ea5_master.jpg.webp', 'IMAGE_4', b'1', '2024-05-14 10:47:36', '2024-06-13 09:49:33'),
 (2, 'CABJ003', 'Quần Jeans rách Slim CABJ003', 109, 550000, NULL, NULL, 'TORANO', 'Quần Jeans rách Slim CABJ003\r\n', 5, 1, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711810773/1702810774291_cabj003_75aa0eb2e3ef4d7cb175dcef6ceae9cf_master.jpg.webp', 'IMAGE_4', b'1', '2024-05-14 10:47:36', '2024-05-14 10:47:36'),
 (3, 'DABJ004', 'Quần Jeans basic Slim DABJ004', 108, 550000, NULL, NULL, 'TORANO', 'Quần Jeans basic Slim CABJ004/2\r\n', 5, 1, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711810701/1702810004163_52706071935_8966d1e12f_o_a66489be76c949d791609a08ca73993f_master.jpg.webp', 'IMAGE_4', b'1', '2024-05-14 10:47:36', '2024-05-14 10:47:36'),
 (4, 'DABJ010', 'Quần Jeans basic Slim DABJ010', 108, 550000, NULL, NULL, 'TORANO', 'Quần Jeans basic Slim CABJ010/2', 5, 1, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711810727/1702810256808_52169110354_87bd6ccaa0_o_abf9f4cabd204376b1d1cba50d2deec9_master.jpg.webp', 'IMAGE_4', b'1', '2024-05-14 10:47:36', '2024-05-14 10:47:36'),
-(5, 'DABJ903', 'Quần Jeans basic Slim DABJ903', 108, 550000, NULL, NULL, 'TORANO', 'Quần Jeans basic Slim DABJ903\r\n', 5, 1, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711810748/1702810455348_dabj903_bf925f25f2c244aeb43a9c4430f64ef8_master.jpg.webp', 'IMAGE_4', b'1', '2024-05-14 10:47:36', '2024-05-14 10:47:36'),
+(5, 'DABJ903', 'Quần Jeans basic Slim DABJ903', 108, 550000, NULL, NULL, 'TORANO', 'Quần Jeans basic Slim DABJ903\r\n', 5, 1, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711810748/1702810455348_dabj903_bf925f25f2c244aeb43a9c4430f64ef8_master.jpg.webp', 'IMAGE_4', b'1', '2024-05-14 10:47:36', '2024-06-10 08:54:54'),
 (6, 'DABJ904', 'Quần Jeans rách Slim DABJ904', 109, 550000, NULL, NULL, 'TORANO', 'Quần Jeans rách Slim DABJ904\r\n', 5, 1, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711810794/1702810960863_20230209_2nqi04eclesynryo_614790fe9b5a479095c6726ef90f2df7_master.jpg.jpg', 'IMAGE_4', b'1', '2024-05-14 10:47:36', '2024-05-14 10:47:36'),
 (7, 'DABJ908', 'Quần Jeans rách Slim 1.DABJ908', 109, 550000, NULL, NULL, 'TORANO', '', 5, 1, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711810768/1702810648513_bj908-2_53198051989_o_d8c0aeb3be18470c95b4e19e4481b38d_master.jpg.webp', 'IMAGE_4', b'1', '2024-05-14 10:47:36', '2024-05-14 10:47:36'),
 (8, 'DABK906', 'Quần kaki dài basic cạp tender túi lé DABK906', 110, 500000, NULL, NULL, 'TORANO', '', 5, 4, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711810591/1702808414194_dabk906-1_6be1255f7e6b427094e410388cb5f6a1_master.jpg.webp', 'IMAGE_4', b'1', '2024-05-14 10:47:36', '2024-05-14 10:47:36'),
@@ -1115,7 +1127,6 @@ INSERT INTO `products` (`id`, `product_code`, `product_name`, `cat_id`, `price`,
 (67, 'EWCW007', 'Áo khoác gió 1 lớp mũ liền EWCW007', 89, 50000, NULL, NULL, 'TORANO', 'Áo khoác gió 1 lớp mũ liền chống nước giá siêu tốt của nhà Torano đã cập bến.\r\n', 4, 3, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711810212/1704189991841_ewcw007-1_c8b1f230ddb2408daa72728d0ecee531_master.jpg.webp', 'IMAGE_5', b'1', '2024-05-14 10:47:36', '2024-05-14 10:47:36'),
 (68, 'EWTE003', 'Áo len kẻ ngang cổ tròn 2.EWTE003', 91, 520000, NULL, NULL, 'TORANO', '', 4, 2, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711810003/1708267758762_ewte003-10_53297045794_o_af9bd1f2fa8246dab498a75b2a976f04_master.jpg.jpg', 'IMAGE_5', b'1', '2024-05-14 10:47:36', '2024-05-14 10:47:36'),
 (69, 'EWTW003', 'Áo nỉ trơn basic vải hiệu ứng 3.EWTW003', 95, 380000, NULL, NULL, 'TORANO', '', 5, 3, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711810052/1707657567773_tw003-bs001-6_53291471625_o_1f620c3d758e41d696fb128d159744a2_master.jpg.webp', 'IMAGE_5', b'1', '2024-05-14 10:47:36', '2024-05-14 10:47:36'),
-(70, 'test', 'test', 108, 1, 1, 0, 'test', 'test', 1, 1, NULL, 'IMAGE_4', b'1', '2024-05-14 10:47:36', '2024-05-14 10:47:36'),
 (71, 'TP004', 'Áo polo phối màu color-block 1.TP004', 100, 450000, NULL, NULL, 'TORANO', 'Áo polo phối màu color-block TP004', 4, 1, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711811025/tp004_45415f65d7bc4f4c8d52f4893d682a43_master.jpg.webp', 'IMAGE_1', b'1', '2024-05-14 10:47:36', '2024-05-14 10:47:36');
 
 -- --------------------------------------------------------
@@ -1705,36 +1716,35 @@ INSERT INTO `products_detail` (`id`, `product_id`, `code`, `color_id`, `size`, `
 (609, 25, 'ESBK00202CT00RB_BE-31', 3, 'SIZE_31', 999, b'1', '2024-05-14 10:47:45', '2024-05-16 12:28:59'),
 (610, 25, 'ESBK00202CT00RB_BE-32', 3, 'SIZE_32', 999, b'1', '2024-05-14 10:47:45', '2024-05-16 12:28:59'),
 (611, 25, 'ESBK00202CT00RB_BE-33', 3, 'SIZE_33', 999, b'1', '2024-05-14 10:47:45', '2024-05-16 12:28:59'),
-(612, 1, 'DSBI01302LI00SB_BE-29', 3, 'SIZE_29', 996, b'1', '2024-05-14 10:47:45', '2024-05-16 12:28:59'),
-(613, 1, 'DSBI01302LI00SB_BE-30', 3, 'SIZE_30', 999, b'1', '2024-05-14 10:47:45', '2024-05-16 12:28:59'),
-(614, 1, 'DSBI01302LI00SB_BE-31', 3, 'SIZE_31', 991, b'1', '2024-05-14 10:47:45', '2024-05-16 12:28:59'),
-(615, 1, 'DSBI01302LI00SB_BE-32', 3, 'SIZE_32', 999, b'1', '2024-05-14 10:47:45', '2024-05-16 12:28:59'),
-(616, 1, 'DSBI01302LI00SB_BE-33', 3, 'SIZE_33', 999, b'1', '2024-05-14 10:47:45', '2024-05-16 12:28:59'),
-(617, 1, 'DSBI01302LI00SB_WH-29', 40, 'SIZE_29', 999, b'1', '2024-05-14 10:47:45', '2024-05-16 12:28:59'),
-(618, 1, 'DSBI01302LI00SB_WH-31', 40, 'SIZE_31', 999, b'1', '2024-05-14 10:47:45', '2024-05-16 12:28:59'),
-(619, 1, 'DSBI01302LI00SB_WH-30', 40, 'SIZE_30', 999, b'1', '2024-05-14 10:47:45', '2024-05-16 12:28:59'),
-(620, 1, 'DSBI01302LI00SB_WH-32', 40, 'SIZE_32', 999, b'1', '2024-05-14 10:47:45', '2024-05-16 12:28:59'),
-(621, 1, 'DSBI01302LI00SB_WH-33', 40, 'SIZE_33', 999, b'1', '2024-05-14 10:47:45', '2024-05-16 12:28:59'),
-(622, 1, 'DSBI01302LI00SB_LB-31', 22, 'SIZE_31', 999, b'1', '2024-05-14 10:47:45', '2024-05-16 12:28:59'),
-(623, 1, 'DSBI01302LI00SB_LB-30', 22, 'SIZE_30', 999, b'1', '2024-05-14 10:47:45', '2024-05-16 12:28:59'),
+(613, 1, 'DSBI01302LI00SB_BE-30', 3, 'SIZE_30', 999, b'0', '2024-05-14 10:47:45', '2024-06-11 12:03:46'),
+(614, 1, 'DSBI01302LI00SB_BE-31', 3, 'SIZE_31', 991, b'0', '2024-05-14 10:47:45', '2024-06-11 12:03:46'),
+(615, 1, 'DSBI01302LI00SB_BE-32', 3, 'SIZE_32', 999, b'0', '2024-05-14 10:47:45', '2024-06-11 12:03:46'),
+(616, 1, 'DSBI01302LI00SB_BE-33', 3, 'SIZE_33', 999, b'0', '2024-05-14 10:47:45', '2024-06-11 12:03:46'),
+(617, 1, 'DSBI01302LI00SB_WH-29', 40, 'SIZE_29', 999, b'0', '2024-05-14 10:47:45', '2024-06-11 12:03:46'),
+(618, 1, 'DSBI01302LI00SB_WH-31', 40, 'SIZE_31', 999, b'0', '2024-05-14 10:47:45', '2024-06-11 12:03:46'),
+(619, 1, 'DSBI01302LI00SB_WH-30', 40, 'SIZE_30', 999, b'0', '2024-05-14 10:47:45', '2024-06-11 12:03:46'),
+(620, 1, 'DSBI01302LI00SB_WH-32', 40, 'SIZE_32', 999, b'0', '2024-05-14 10:47:45', '2024-06-11 12:03:46'),
+(621, 1, 'DSBI01302LI00SB_WH-33', 40, 'SIZE_33', 999, b'0', '2024-05-14 10:47:45', '2024-06-11 12:03:46'),
+(622, 1, 'DSBI01302LI00SB_LB-31', 22, 'SIZE_31', 999, b'0', '2024-05-14 10:47:45', '2024-06-11 12:03:46'),
+(623, 1, 'DSBI01302LI00SB_LB-30', 22, 'SIZE_30', 999, b'0', '2024-05-14 10:47:45', '2024-06-11 12:03:46'),
 (624, NULL, 'DSBI01302LI00SB_LB-29', 22, 'SIZE_29', 0, b'1', '2024-05-14 10:47:45', '2024-05-16 12:28:59'),
-(625, 1, 'DSBI01302LI00SB_LB-32', 22, 'SIZE_32', 999, b'1', '2024-05-14 10:47:45', '2024-05-16 12:28:59'),
-(626, 1, 'DSBI01302LI00SB_LB-33', 22, 'SIZE_33', 999, b'1', '2024-05-14 10:47:45', '2024-05-16 12:28:59'),
-(627, 1, 'DSBI01302LI00SB_LG-29', 27, 'SIZE_29', 999, b'1', '2024-05-14 10:47:45', '2024-05-16 12:28:59'),
-(628, 1, 'DSBI01302LI00SB_LG-30', 27, 'SIZE_30', 0, b'1', '2024-05-14 10:47:45', '2024-05-16 12:28:59'),
-(629, 1, 'DSBI01302LI00SB_LG-31', 27, 'SIZE_31', 999, b'1', '2024-05-14 10:47:45', '2024-05-16 12:28:59'),
-(630, 1, 'DSBI01302LI00SB_LG-32', 27, 'SIZE_32', 999, b'1', '2024-05-14 10:47:45', '2024-05-16 12:28:59'),
-(631, 1, 'DSBI01302LI00SB_LG-33', 27, 'SIZE_33', 999, b'1', '2024-05-14 10:47:45', '2024-05-16 12:28:59'),
-(632, 1, 'DSBI01302LI00SB_NV-29', 33, 'SIZE_29', 999, b'1', '2024-05-14 10:47:45', '2024-05-16 12:28:59'),
-(633, 1, 'DSBI01302LI00SB_NV-30', 33, 'SIZE_30', 999, b'1', '2024-05-14 10:47:45', '2024-05-16 12:28:59'),
-(634, 1, 'DSBI01302LI00SB_NV-31', 33, 'SIZE_31', 999, b'1', '2024-05-14 10:47:45', '2024-05-16 12:28:59'),
-(635, 1, 'DSBI01302LI00SB_NV-32', 33, 'SIZE_32', 999, b'1', '2024-05-14 10:47:45', '2024-05-16 12:28:59'),
-(636, 1, 'DSBI01302LI00SB_NV-33', 33, 'SIZE_33', 999, b'1', '2024-05-14 10:47:45', '2024-05-16 12:28:59'),
-(637, 1, 'DSBI01302LI00SB_BL-29', 4, 'SIZE_29', 999, b'1', '2024-05-14 10:47:45', '2024-05-16 12:28:59'),
-(638, 1, 'DSBI01302LI00SB_BL-30', 4, 'SIZE_30', 999, b'1', '2024-05-14 10:47:45', '2024-05-16 12:28:59'),
-(639, 1, 'DSBI01302LI00SB_BL-31', 4, 'SIZE_31', 999, b'1', '2024-05-14 10:47:45', '2024-05-16 12:28:59'),
-(640, 1, 'DSBI01302LI00SB_BL-32', 4, 'SIZE_31', 999, b'1', '2024-05-14 10:47:45', '2024-05-16 12:28:59'),
-(641, 1, 'DSBI01302LI00SB_BL-33', 4, 'SIZE_33', 999, b'1', '2024-05-14 10:47:45', '2024-05-16 12:28:59'),
+(625, 1, 'DSBI01302LI00SB_LB-32', 22, 'SIZE_32', 999, b'0', '2024-05-14 10:47:45', '2024-06-11 12:03:46'),
+(626, 1, 'DSBI01302LI00SB_LB-33', 22, 'SIZE_33', 999, b'0', '2024-05-14 10:47:45', '2024-06-11 12:03:46'),
+(627, 1, 'DSBI01302LI00SB_LG-29', 27, 'SIZE_29', 999, b'0', '2024-05-14 10:47:45', '2024-06-11 12:03:46'),
+(628, 1, 'DSBI01302LI00SB_LG-30', 27, 'SIZE_30', 0, b'0', '2024-05-14 10:47:45', '2024-06-11 12:03:46'),
+(629, 1, 'DSBI01302LI00SB_LG-31', 27, 'SIZE_31', 999, b'0', '2024-05-14 10:47:45', '2024-06-11 12:03:46'),
+(630, 1, 'DSBI01302LI00SB_LG-32', 27, 'SIZE_32', 999, b'0', '2024-05-14 10:47:45', '2024-06-11 12:03:46'),
+(631, 1, 'DSBI01302LI00SB_LG-33', 27, 'SIZE_33', 999, b'0', '2024-05-14 10:47:45', '2024-06-11 12:03:46'),
+(632, 1, 'DSBI01302LI00SB_NV-29', 33, 'SIZE_29', 999, b'0', '2024-05-14 10:47:45', '2024-06-11 12:03:46'),
+(633, 1, 'DSBI01302LI00SB_NV-30', 33, 'SIZE_30', 999, b'0', '2024-05-14 10:47:45', '2024-06-11 12:03:46'),
+(634, 1, 'DSBI01302LI00SB_NV-31', 33, 'SIZE_31', 999, b'0', '2024-05-14 10:47:45', '2024-06-11 12:03:46'),
+(635, 1, 'DSBI01302LI00SB_NV-32', 33, 'SIZE_32', 999, b'0', '2024-05-14 10:47:45', '2024-06-11 12:03:46'),
+(636, 1, 'DSBI01302LI00SB_NV-33', 33, 'SIZE_33', 999, b'0', '2024-05-14 10:47:45', '2024-06-11 12:03:46'),
+(637, 1, 'DSBI01302LI00SB_BL-29', 4, 'SIZE_29', 999, b'0', '2024-05-14 10:47:45', '2024-06-11 12:03:46'),
+(638, 1, 'DSBI01302LI00SB_BL-30', 4, 'SIZE_30', 999, b'0', '2024-05-14 10:47:45', '2024-06-11 12:03:46'),
+(639, 1, 'DSBI01302LI00SB_BL-31', 4, 'SIZE_31', 999, b'0', '2024-05-14 10:47:45', '2024-06-11 12:03:46'),
+(640, 1, 'DSBI01302LI00SB_BL-32', 4, 'SIZE_31', 999, b'0', '2024-05-14 10:47:45', '2024-06-11 12:03:46'),
+(641, 1, 'DSBI01302LI00SB_BL-33', 4, 'SIZE_33', 999, b'0', '2024-05-14 10:47:45', '2024-06-11 12:03:46'),
 (642, 24, 'ESBI00602CA00SB_BL-29', 4, 'SIZE_29', 999, b'1', '2024-05-14 10:47:45', '2024-05-16 12:28:59'),
 (643, 24, 'ESBI00602CA00SB_BL-30', 4, 'SIZE_29', 999, b'1', '2024-05-14 10:47:45', '2024-05-16 12:28:59'),
 (644, 24, 'ESBI00602CA00SB_BL-31', 4, 'SIZE_31', 999, b'1', '2024-05-14 10:47:45', '2024-05-16 12:28:59'),
@@ -1856,13 +1866,7 @@ INSERT INTO `products_detail` (`id`, `product_id`, `code`, `color_id`, `size`, `
 (763, 68, 'EWTE00311AC08SB_BL-S', 4, 'SIZE_S', 999, b'1', '2024-05-14 10:47:45', '2024-05-16 12:28:59'),
 (764, 68, 'EWTE00311AC08SB_BL-M', 4, 'SIZE_M', 999, b'1', '2024-05-14 10:47:45', '2024-05-16 12:28:59'),
 (765, 68, 'EWTE00311AC08SB_BL-XL', 4, 'SIZE_XL', 999, b'1', '2024-05-14 10:47:45', '2024-05-16 12:28:59'),
-(766, 68, ' EWTE00311AC08SB_BL-L', 4, 'SIZE_L', 999, b'1', '2024-05-14 10:47:45', '2024-05-16 12:28:59'),
-(792, 1, 'test', 1, 'SIZE_M', 1, b'1', '2024-05-14 10:47:45', '2024-05-16 12:28:59'),
-(794, 1, 'test2', 1, 'SIZE_M', 1, b'1', '2024-05-14 10:47:45', '2024-05-16 12:28:59'),
-(796, 1, 'test3', 1, 'SIZE_M', 1, b'1', '2024-05-14 10:47:45', '2024-05-16 12:28:59'),
-(799, 1, 'test4', 1, 'SIZE_M', 1, b'1', '2024-05-14 10:47:45', '2024-05-16 12:28:59'),
-(804, 70, 'test6', 4, 'SIZE_M', 1, b'1', '2024-05-14 10:47:45', '2024-05-16 12:28:59'),
-(805, 70, 'test7', 4, 'SIZE_M', 1, b'1', '2024-05-14 10:47:45', '2024-05-16 12:28:59');
+(766, 68, ' EWTE00311AC08SB_BL-L', 4, 'SIZE_L', 999, b'1', '2024-05-14 10:47:45', '2024-05-16 12:28:59');
 
 --
 -- Chỉ mục cho các bảng đã đổ
@@ -1873,7 +1877,8 @@ INSERT INTO `products_detail` (`id`, `product_id`, `code`, `color_id`, `size`, `
 --
 ALTER TABLE `accounts`
   ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `unique_constraint_name` (`username`,`phone`,`email`);
+  ADD UNIQUE KEY `email` (`email`),
+  ADD UNIQUE KEY `phone` (`phone`);
 
 --
 -- Chỉ mục cho bảng `categories`
@@ -1940,13 +1945,13 @@ ALTER TABLE `products_detail`
 -- AUTO_INCREMENT cho bảng `accounts`
 --
 ALTER TABLE `accounts`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 
 --
 -- AUTO_INCREMENT cho bảng `categories`
 --
 ALTER TABLE `categories`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=132;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=133;
 
 --
 -- AUTO_INCREMENT cho bảng `colors`
@@ -1958,37 +1963,37 @@ ALTER TABLE `colors`
 -- AUTO_INCREMENT cho bảng `imgs_product`
 --
 ALTER TABLE `imgs_product`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=715;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=721;
 
 --
 -- AUTO_INCREMENT cho bảng `invoices`
 --
 ALTER TABLE `invoices`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=86;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=91;
 
 --
 -- AUTO_INCREMENT cho bảng `invoices_detail`
 --
 ALTER TABLE `invoices_detail`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=455;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=465;
 
 --
 -- AUTO_INCREMENT cho bảng `jwt_tokens`
 --
 ALTER TABLE `jwt_tokens`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=128;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=257;
 
 --
 -- AUTO_INCREMENT cho bảng `products`
 --
 ALTER TABLE `products`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=72;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=80;
 
 --
 -- AUTO_INCREMENT cho bảng `products_detail`
 --
 ALTER TABLE `products_detail`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=821;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=822;
 
 --
 -- Các ràng buộc cho các bảng đã đổ

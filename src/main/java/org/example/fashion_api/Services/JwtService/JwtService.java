@@ -26,7 +26,7 @@ public interface JwtService {
 
     DecodedJWT decodeToken(String token);
 
-    String extractUsername(String token);
+    String extractPhone(String token);
 
 
     Date extractExpiration(String token);

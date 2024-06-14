@@ -93,6 +93,7 @@ public class AccountServiceImpl implements AccountService {
 
         authenticationManager.authenticate(authenticationToken);
 
+        SecurityContextHolder.getContext().setAuthentication(authenticationToken);
 
         return jwtService.tokenRes(existingAccount);
     }
@@ -142,10 +143,7 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public AccountRes registerAccount(AccountRegisterDto accountRegisterDto) {
-        // check exist
-        if (accountRepo.existsByUsername(accountRegisterDto.getUsername())) {
-            throw new AlreadyExistException("Username");
-        } else if (accountRepo.existsByEmail(accountRegisterDto.getEmail())) {
+        if (accountRepo.existsByEmail(accountRegisterDto.getEmail())) {
             throw new AlreadyExistException("Email");
         } else if (accountRepo.existsByPhone(accountRegisterDto.getPhone())) {
             throw new AlreadyExistException("Phone");
@@ -239,9 +237,9 @@ public class AccountServiceImpl implements AccountService {
 
         JwtToken jwtToken = jwtTokenRepo.findByToken(token);
 
-        if (jwtToken != null ) {
+        if (jwtToken != null) {
             jwtTokenRepo.delete(jwtToken);
-        }else {
+        } else {
             throw new BadRequestException("Token not found");
         }
         SecurityContextHolder.clearContext();
@@ -255,7 +253,18 @@ public class AccountServiceImpl implements AccountService {
 
             String userName = authentication.getName();
 
-            return accountRepo.findByUsername(userName).orElseThrow(() ->  new AccessDeniedException(" Access Denied"));
+            Optional<Account> account = accountRepo.findByPhone(userName);
+
+            if (account.isEmpty()) {
+                account = accountRepo.findByEmail(userName);
+                if (account.isEmpty()) {
+                    throw new AccessDeniedException(" Access Denied");
+                }
+
+            }
+
+            return account.get();
+
         }
         throw new AccessDeniedException(" Access Denied");
     }
@@ -264,7 +273,7 @@ public class AccountServiceImpl implements AccountService {
     @Override
     @Transactional
     public void updateRole(Long accountId, RoleEnum role) {
-        accountRepo.setRole(accountId,role.name());
+        accountRepo.setRole(accountId, role.name());
         redisService.clear();
     }
 
@@ -282,7 +291,7 @@ public class AccountServiceImpl implements AccountService {
 
         Boolean handleActivateStatus = !account.getIsActivated();
 
-        accountRepo.handleActivateStatus(accountId,handleActivateStatus);
+        accountRepo.handleActivateStatus(accountId, handleActivateStatus);
 
         redisService.clear();
 

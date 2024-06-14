@@ -145,7 +145,7 @@ public class JwtServiceImpl implements JwtService {
 
         return JWT.create()
                 .withIssuer(issuer)
-                .withClaim("username", account.getUsername())
+                .withClaim("phone", account.getPhone())
                 .withClaim("role", account.getRole().name())
                 .withIssuedAt(new Date(System.currentTimeMillis()))
                 .withExpiresAt(new Date(System.currentTimeMillis() + 1000 * 10 * 60))
@@ -156,7 +156,7 @@ public class JwtServiceImpl implements JwtService {
     public String generateRefreshToken(Account account) {
         return JWT.create()
                 .withIssuer(issuer)
-                .withClaim("username", account.getUsername())
+                .withClaim("phone", account.getPhone())
                 .withClaim("role", account.getRole().name())
                 .withIssuedAt(new Date(System.currentTimeMillis()))
                 .withExpiresAt(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 24 * 7))
@@ -175,8 +175,8 @@ public class JwtServiceImpl implements JwtService {
     }
 
     @Override
-    public String extractUsername(String token) {
-        return decodeToken(token).getClaim("username").asString();
+    public String extractPhone(String token) {
+        return decodeToken(token).getClaim("phone").asString();
     }
 
 

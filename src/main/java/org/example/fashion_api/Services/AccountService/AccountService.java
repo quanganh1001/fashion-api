@@ -36,4 +36,6 @@ public interface AccountService {
     AccountRes getCurrentAccount();
 
     Boolean activatedAccount(Long accountId);
+
+    AccountRes createAccount(CreateAccountDto createAccountDto);
 }

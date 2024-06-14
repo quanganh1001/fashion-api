@@ -1,10 +1,7 @@
 package org.example.fashion_api.Mapper;
 
 
-import org.example.fashion_api.Models.Accounts.Account;
-import org.example.fashion_api.Models.Accounts.AccountRegisterDto;
-import org.example.fashion_api.Models.Accounts.AccountRes;
-import org.example.fashion_api.Models.Accounts.AccountUpdateDto;
+import org.example.fashion_api.Models.Accounts.*;
 import org.mapstruct.Mapper;
 
 import org.mapstruct.Mapping;
@@ -24,5 +21,8 @@ public interface AccountMapper {
 
 
     Account accountUpdateDtoToAccount(AccountUpdateDto accountUpdateDto, @MappingTarget Account account);
+
+
+    Account createAccountDtoToAccount(CreateAccountDto createAccountDto, @MappingTarget Account account);
 
 }

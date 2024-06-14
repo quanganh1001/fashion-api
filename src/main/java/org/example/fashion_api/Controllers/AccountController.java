@@ -4,10 +4,8 @@ import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.example.fashion_api.Enum.RoleEnum;
-import org.example.fashion_api.Models.Accounts.AccountRegisterDto;
-import org.example.fashion_api.Models.Accounts.AccountRes;
-import org.example.fashion_api.Models.Accounts.AccountUpdateDto;
-import org.example.fashion_api.Models.Accounts.ChangePassDto;
+import org.example.fashion_api.Models.Accounts.*;
+import org.example.fashion_api.Repositories.AccountRepo;
 import org.example.fashion_api.Services.AccountService.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 public class AccountController {
     @Autowired
     private AccountService accountService;
+
 
 
     @PreAuthorize("hasAnyRole('MANAGER')")
@@ -86,4 +85,10 @@ public class AccountController {
         return ResponseEntity.ok(handleActivateStatus ? "Account activated successfully" : "Account deactivated successfully");
     }
 
+    @PreAuthorize("hasAnyRole('MANAGER')")
+    @Operation(summary = "create an account (role MANAGER)")
+    @PostMapping()
+    public ResponseEntity<AccountRes> createAccount(@Valid @RequestBody CreateAccountDto createAccountDto) {
+        return ResponseEntity.ok(accountService.createAccount(createAccountDto));
+    }
 }

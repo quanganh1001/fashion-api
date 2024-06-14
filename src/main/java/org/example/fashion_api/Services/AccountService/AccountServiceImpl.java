@@ -176,7 +176,7 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     @Transactional
-    public ResponseEntity<AccountRes> updateAccount( AccountUpdateDto dto) {
+    public ResponseEntity<AccountRes> updateAccount(AccountUpdateDto dto) {
         Account account = getAccountFromAuthentication();
         // check exist
         if (!Objects.equals(account.getEmail(), dto.getEmail()) && accountRepo.existsByEmail(dto.getEmail())) {
@@ -295,6 +295,35 @@ public class AccountServiceImpl implements AccountService {
         redisService.clear();
 
         return handleActivateStatus;
+    }
+
+    @Override
+    public AccountRes createAccount(CreateAccountDto createAccountDto) {
+        // check exist
+        if (accountRepo.existsByEmail(createAccountDto.getEmail())) {
+            throw new AlreadyExistException("Email");
+        } else if (accountRepo.existsByPhone(createAccountDto.getPhone())) {
+            throw new AlreadyExistException("Phone");
+        }
+
+        Account account = new Account();
+
+        var newPass = RandomStringUtils.randomAlphanumeric(8).toUpperCase();
+
+        account.setPassword(passwordEncoder.encode(newPass));
+
+        accountMapper.createAccountDtoToAccount(createAccountDto,account);
+
+        Account newAccount = accountRepo.save(account);
+
+        mailProducer.send(MailTemplate.builder()
+                        .to(createAccountDto.getEmail())
+                        .subject("Account created successfully!")
+                        .body("Your new Password is: " + newPass)
+                .build());
+
+        return accountMapper.accountEntityToAccountRes(newAccount);
+
     }
 
 

@@ -7,12 +7,13 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.example.fashion_api.Enum.RoleEnum;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class AccountRegisterDto {
+public class CreateAccountDto {
 
     @Email
     @NotBlank
@@ -23,10 +24,9 @@ public class AccountRegisterDto {
     private String phone;
 
     @NotBlank
-    private String password;
-
-    @NotBlank
     private String name;
 
     private String address;
+
+    private RoleEnum role;
 }

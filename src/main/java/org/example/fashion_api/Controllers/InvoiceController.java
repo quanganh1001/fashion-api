@@ -38,8 +38,10 @@ public class InvoiceController {
     @GetMapping()
     public ResponseEntity<PageInvoiceRes> findAll(@RequestParam(defaultValue = "1") int page,
                                   @RequestParam(defaultValue = "10") int pageSize,
-                                  @RequestParam(defaultValue = "") String keyword){
-        return ResponseEntity.ok(invoiceService.getAllInvoices(keyword, page-1, pageSize));
+                                  @RequestParam(defaultValue = "") String keyword,
+                                  @RequestBody(required = false) Long accountId){
+
+        return ResponseEntity.ok(invoiceService.getAllInvoices(keyword, page-1, pageSize,accountId));
     }
 
     @Operation(summary = "get Invoice (role MANAGER,EMPLOYEE)")

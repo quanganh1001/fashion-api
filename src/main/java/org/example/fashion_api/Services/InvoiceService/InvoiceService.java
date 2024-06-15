@@ -7,7 +7,7 @@ import org.mapstruct.MappingTarget;
 
 public interface InvoiceService {
 
-    PageInvoiceRes getAllInvoices(String keyword, int page, int pageSize);
+    PageInvoiceRes getAllInvoices(String keyword, int page, int pageSize,Long accountId);
 
     InvoiceRes createInvoice(CreateInvoiceDto createInvoiceDto);
 

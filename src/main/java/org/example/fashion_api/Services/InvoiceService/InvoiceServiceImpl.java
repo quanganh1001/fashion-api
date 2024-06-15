@@ -6,17 +6,22 @@ import org.example.fashion_api.Enum.InvoiceStatusEnum;
 import org.example.fashion_api.Exception.BadRequestException;
 import org.example.fashion_api.Exception.NotFoundException;
 import org.example.fashion_api.Mapper.InvoiceMapper;
+import org.example.fashion_api.Models.Accounts.Account;
 import org.example.fashion_api.Models.Invoices.*;
 import org.example.fashion_api.Models.InvoicesDetails.InvoiceDetailDto;
 import org.example.fashion_api.Models.ProductsDetails.ProductDetail;
+import org.example.fashion_api.Repositories.AccountRepo;
 import org.example.fashion_api.Repositories.InvoiceRepo;
 import org.example.fashion_api.Repositories.ProductDetailRepo;
+import org.example.fashion_api.Services.AccountService.AccountService;
+import org.example.fashion_api.Services.AccountService.AccountServiceImpl;
 import org.example.fashion_api.Services.InvoiceDetailService.InvoiceDetailService;
 import org.example.fashion_api.Services.VnpayService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.*;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -33,16 +38,46 @@ public class InvoiceServiceImpl implements InvoiceService {
     private VnpayService vnpayService;
     @Autowired
     private ProductDetailRepo productDetailRepo;
+    @Autowired
+    private AccountService accountService;
 
     @Override
-    public PageInvoiceRes getAllInvoices(String keyword, int page, int pageSize) {
+    public PageInvoiceRes getAllInvoices(String keyword, int page, int pageSize,Long accountId) {
         if (page < 0) {
             page = 0;
         }
 
-        PageRequest pageRequest = PageRequest.of(page, pageSize, Sort.by("createdAt").ascending());
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
-        Page<Invoice> pageInvoices = invoiceRepo.findAllByPhoneContainingIgnoreCaseOrInvoiceCodeContainingIgnoreCaseAndIsDeletedFalse(keyword, keyword, pageRequest);
+
+        Account account = accountService.getAccountFromAuthentication();
+
+
+        PageRequest pageRequest = PageRequest.of(page, pageSize, Sort.by("created_at").ascending());
+
+        Page<Invoice> pageInvoices;
+
+        boolean isManager = false;
+
+        for (GrantedAuthority authority : authentication.getAuthorities()) {
+            if (authority.getAuthority().equals("ROLE_MANAGER")) {
+                isManager = true;
+            }
+        }
+
+        if (isManager) {
+            if (accountId != null) {
+                pageInvoices =
+                        invoiceRepo.searchInvoicesByAccount(accountId,keyword,pageRequest);
+            }else {
+                pageInvoices = invoiceRepo.searchInvoices(keyword, pageRequest);
+            }
+
+        } else {
+            // get by account
+            pageInvoices =
+                    invoiceRepo.searchInvoicesByAccount(account.getId(),keyword,pageRequest);
+        }
 
         List<InvoiceRes> invoicesRes = invoiceMapper.toResList(pageInvoices.getContent());
 
@@ -154,7 +189,7 @@ public class InvoiceServiceImpl implements InvoiceService {
             throw new BadRequestException("Status" + currentInvoice.getInvoiceStatus() + " cannot update to" + status);
         }
 
-        invoiceRepo.changeStatusInvoice(invoiceId,status.getValue());
+        invoiceRepo.changeStatusInvoice(invoiceId, status.getValue());
 
     }
 
@@ -163,15 +198,14 @@ public class InvoiceServiceImpl implements InvoiceService {
         Invoice currentInvoice = invoiceRepo.findById(invoiceId).orElseThrow(() -> new NotFoundException("Invoice"));
 
         if ((currentInvoice.getInvoiceStatus() == InvoiceStatusEnum.SUCCESS)
-            || currentInvoice.getInvoiceStatus() == InvoiceStatusEnum.DELIVERING
-            || currentInvoice.getInvoiceStatus() == InvoiceStatusEnum.RETURN
-            || currentInvoice.getInvoiceStatus() == InvoiceStatusEnum.ORDER_CREATED){
+                || currentInvoice.getInvoiceStatus() == InvoiceStatusEnum.DELIVERING
+                || currentInvoice.getInvoiceStatus() == InvoiceStatusEnum.RETURN
+                || currentInvoice.getInvoiceStatus() == InvoiceStatusEnum.ORDER_CREATED) {
             throw new BadRequestException("Status " + currentInvoice.getInvoiceStatus() + " cannot update invoice");
         }
 
-         
 
-        Invoice invoice =invoiceRepo.save(invoiceMapper.updateInvoiceToInvoice(dto, currentInvoice));
+        Invoice invoice = invoiceRepo.save(invoiceMapper.updateInvoiceToInvoice(dto, currentInvoice));
         return invoiceMapper.invoiceToInvoiceRes(invoice);
     }
 }

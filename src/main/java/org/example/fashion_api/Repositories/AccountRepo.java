@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface AccountRepo extends JpaRepository<Account, Long> {
@@ -36,4 +37,7 @@ public interface AccountRepo extends JpaRepository<Account, Long> {
     @Modifying
     @Query(value = "UPDATE accounts SET is_activated = :status WHERE id = :accountId",nativeQuery = true)
     void handleActivateStatus(@Param("accountId") Long accountId,@Param("status") Boolean status);
+
+    @Query(value = "SELECT * FROM accounts WHERE role = 'ROLE_MANAGER' OR role = 'ROLE_EMPLOYEE'",nativeQuery = true)
+    List<Account> findAllByRole();
 }

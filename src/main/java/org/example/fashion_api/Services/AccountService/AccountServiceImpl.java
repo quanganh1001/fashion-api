@@ -326,5 +326,11 @@ public class AccountServiceImpl implements AccountService {
 
     }
 
+    @Override
+    public List<AccountRes> getAllAccountEmployees() {
+        List<Account> accounts = accountRepo.findAllByRole();
+        return accountMapper.accountsToListAccountRes(accounts);
+    }
+
 
 }

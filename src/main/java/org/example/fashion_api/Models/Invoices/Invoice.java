@@ -51,6 +51,7 @@ public class Invoice extends BaseEntity {
 
     private Boolean isPaid = Boolean.FALSE;
 
+    @Enumerated(EnumType.STRING)
     private InvoiceStatusEnum invoiceStatus = InvoiceStatusEnum.NEW;
 
     private Boolean isDeleted = Boolean.FALSE;

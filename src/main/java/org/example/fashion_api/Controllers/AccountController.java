@@ -13,6 +13,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("accounts")
 public class AccountController {
@@ -28,6 +30,13 @@ public class AccountController {
                                           @RequestParam(defaultValue = "1") int page,
                                           @RequestParam(defaultValue = "10") int limit) {
         return accountService.getAllAccount(keyword,page-1,limit);
+    }
+
+    @PreAuthorize("hasAnyRole('MANAGER')")
+    @Operation(summary = "get all accounts employee (role MANAGER)")
+    @GetMapping("getAllEmployees")
+    public ResponseEntity<List<AccountRes>> getAllAccountEmployees() {
+        return ResponseEntity.ok(accountService.getAllAccountEmployees());
     }
 
 

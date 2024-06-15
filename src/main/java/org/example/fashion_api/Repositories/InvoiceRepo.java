@@ -14,13 +14,15 @@ import java.util.List;
 
 public interface InvoiceRepo extends JpaRepository<Invoice,Long> {
 
-    @Query(value = "SELECT * FROM invoices WHERE is_deleted = false AND (phone LIKE %:keyword% OR invoice_code LIKE %:keyword%)",
+    @Query(value = "SELECT * FROM invoices WHERE is_deleted = false AND ((phone LIKE %:keyword%) OR (invoice_code " +
+            "LIKE %:keyword%))",
             nativeQuery = true)
     Page<Invoice> searchInvoices(@Param("keyword") String keyword, Pageable pageable);
 
 
-    @Query(value = "SELECT * FROM invoices  WHERE is_deleted = false AND account_id = :accountId AND (phone LIKE " +
-            "%:keyword% OR invoice_code LIKE %:keyword%)",
+    @Query(value = "SELECT * FROM invoices WHERE is_deleted = false AND " +
+            "(account_id = :accountId OR (:accountId IS NULL AND account_id IS NULL)) " +
+            "AND (phone LIKE %:keyword% OR invoice_code LIKE %:keyword%)",
             nativeQuery = true)
     Page<Invoice> searchInvoicesByAccount(@Param("accountId") Long accountId, @Param("keyword") String keyword,
                                   Pageable pageable);

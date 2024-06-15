@@ -1,21 +1,22 @@
 package org.example.fashion_api.Enum;
 
+import lombok.Getter;
+
+@Getter
 public enum InvoiceStatusEnum {
-    CANCEL(0),
-    NEW(1),
-    PROCESS(2),
-    ORDER_CREATED(3),
-    DELIVERING(4),
-    SUCCESS(5),
-    RETURN(6);
+    CANCEL(0,"Đơn hủy"),
+    NEW(1,"Đơn mới"),
+    PROCESS(2,"Đơn đang xử lý"),
+    ORDER_CREATED(3,"Đơn đã lên"),
+    DELIVERING(4,"Đơn đang chuyển"),
+    SUCCESS(5,"Đơn thành công"),
+    RETURN(6, "Đơn hoàn");
 
     private final int value;
+    private final String des;
 
-    InvoiceStatusEnum(int value) {
+    InvoiceStatusEnum(int value,String des) {
         this.value = value;
-    }
-
-    public int getValue() {
-        return value;
+        this.des = des;
     }
 }

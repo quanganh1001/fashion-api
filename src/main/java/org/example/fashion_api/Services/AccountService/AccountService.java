@@ -6,6 +6,8 @@ import org.example.fashion_api.Models.Accounts.*;
 import org.example.fashion_api.Models.JwtToken.JwtTokenRes;
 import org.springframework.http.ResponseEntity;
 
+import java.util.List;
+
 
 public interface AccountService {
     JwtTokenRes Login(AccountLoginDto user);
@@ -38,4 +40,6 @@ public interface AccountService {
     Boolean activatedAccount(Long accountId);
 
     AccountRes createAccount(CreateAccountDto createAccountDto);
+
+    List<AccountRes> getAllAccountEmployees();
 }

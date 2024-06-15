@@ -57,21 +57,20 @@ public class InvoiceServiceImpl implements InvoiceService {
 
         Page<Invoice> pageInvoices;
 
-        boolean isManager = false;
+        boolean isManager = authentication.getAuthorities().stream()
+                .anyMatch(authority -> authority.getAuthority().equals("ROLE_MANAGER"));
 
-        for (GrantedAuthority authority : authentication.getAuthorities()) {
-            if (authority.getAuthority().equals("ROLE_MANAGER")) {
-                isManager = true;
-            }
-        }
 
         if (isManager) {
-            if (accountId != null) {
+            if (accountId != null && accountId == 0) {
+                pageInvoices = invoiceRepo.searchInvoices(keyword,pageRequest);
+            } else if(accountId != null){
                 pageInvoices =
                         invoiceRepo.searchInvoicesByAccount(accountId,keyword,pageRequest);
-            }else {
-                pageInvoices = invoiceRepo.searchInvoices(keyword, pageRequest);
-            }
+            } else
+                pageInvoices =
+                        invoiceRepo.searchInvoicesByAccount(null,keyword, pageRequest);
+
 
         } else {
             // get by account
@@ -81,7 +80,7 @@ public class InvoiceServiceImpl implements InvoiceService {
 
         List<InvoiceRes> invoicesRes = invoiceMapper.toResList(pageInvoices.getContent());
 
-        var totalInvoices = invoiceRepo.count();
+        long totalInvoices = pageInvoices.getTotalElements();
 
         return PageInvoiceRes.builder()
                 .currentPage(page + 1)

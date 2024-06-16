@@ -42,15 +42,12 @@ public class InvoiceServiceImpl implements InvoiceService {
     private AccountService accountService;
 
     @Override
-    public PageInvoiceRes getAllInvoices(String keyword, int page, int pageSize,Long accountId) {
+    public PageInvoiceRes getAllInvoices(String keyword, int page, int pageSize, Long accountId, InvoiceStatusEnum invoiceStatus) {
         if (page < 0) {
             page = 0;
         }
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-
-
-        Account account = accountService.getAccountFromAuthentication();
 
 
         PageRequest pageRequest = PageRequest.of(page, pageSize, Sort.by("created_at").ascending());
@@ -60,23 +57,27 @@ public class InvoiceServiceImpl implements InvoiceService {
         boolean isManager = authentication.getAuthorities().stream()
                 .anyMatch(authority -> authority.getAuthority().equals("ROLE_MANAGER"));
 
+        if (!isManager) {
+            Account account = accountService.getAccountFromAuthentication();
+            accountId = account.getId();
+        }
 
-        if (isManager) {
-            if (accountId != null && accountId == 0) {
-                pageInvoices = invoiceRepo.searchInvoices(keyword,pageRequest);
-            } else if(accountId != null){
-                pageInvoices =
-                        invoiceRepo.searchInvoicesByAccount(accountId,keyword,pageRequest);
-            } else
-                pageInvoices =
-                        invoiceRepo.searchInvoicesByAccount(null,keyword, pageRequest);
 
+        if (accountId != null && accountId == 0) {
+            if (invoiceStatus != null) {
+                pageInvoices = invoiceRepo.searchInvoicesWithStatus(keyword, invoiceStatus.name(), pageRequest);
+            } else {
+                pageInvoices = invoiceRepo.searchInvoices(keyword, pageRequest);
+            }
 
         } else {
-            // get by account
-            pageInvoices =
-                    invoiceRepo.searchInvoicesByAccount(account.getId(),keyword,pageRequest);
+            if (invoiceStatus != null) {
+                pageInvoices = invoiceRepo.searchInvoicesByAccountWithStatus(accountId, keyword, invoiceStatus.name(), pageRequest);
+            } else {
+                pageInvoices = invoiceRepo.searchInvoicesByAccount(accountId, keyword, pageRequest);
+            }
         }
+
 
         List<InvoiceRes> invoicesRes = invoiceMapper.toResList(pageInvoices.getContent());
 

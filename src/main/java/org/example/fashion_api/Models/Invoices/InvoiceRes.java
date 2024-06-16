@@ -52,4 +52,5 @@ public class InvoiceRes {
     private Long accountId;
 
     private List<InvoiceDetailRes> invoicesDetails;
+
 }

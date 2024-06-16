@@ -37,11 +37,11 @@ public class InvoiceController {
     @PreAuthorize("hasAnyRole('MANAGER','EMPLOYEE')")
     @GetMapping()
     public ResponseEntity<PageInvoiceRes> findAll(@RequestParam(defaultValue = "1") int page,
-                                  @RequestParam(defaultValue = "10") int limit,
+                                  @RequestParam(defaultValue = "10") int pageSize,
                                   @RequestParam(defaultValue = "") String keyword,
-                                  @RequestBody(required = false) Long accountId){
-
-        return ResponseEntity.ok(invoiceService.getAllInvoices(keyword, page-1, limit,accountId));
+                                  @RequestParam(required = false) Long accountId,
+                                  @RequestParam(required = false) InvoiceStatusEnum invoiceStatus){
+        return ResponseEntity.ok(invoiceService.getAllInvoices(keyword, page-1, pageSize, accountId, invoiceStatus));
     }
 
     @Operation(summary = "get Invoice (role MANAGER,EMPLOYEE)")

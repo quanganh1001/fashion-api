@@ -58,5 +58,5 @@ public class EnumController {
             enumDtos.add(new EnumDto(statusEnum.name(), statusEnum.getDes()));
         }
         return ResponseEntity.ok(enumDtos);
-    }
+    }d 
 }

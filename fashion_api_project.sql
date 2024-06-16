@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: localhost
--- Thời gian đã tạo: Th6 14, 2024 lúc 07:13 AM
+-- Thời gian đã tạo: Th6 16, 2024 lúc 08:12 AM
 -- Phiên bản máy phục vụ: 10.4.28-MariaDB
 -- Phiên bản PHP: 8.2.4
 
@@ -47,8 +47,8 @@ CREATE TABLE `accounts` (
 --
 
 INSERT INTO `accounts` (`id`, `password`, `name`, `email`, `phone`, `address`, `role`, `is_activated`, `created_at`, `updated_at`) VALUES
-(1, '$2a$10$5C32JYodwPS87Qo2ZqTRBOb3NpDJyls3DEWLoEdb4i1oV5jjmNzNe', 'quang anh', 'quanganhnguyen100196@gmail.com', '0364100196', 'h', 'ROLE_MANAGER', b'1', '2024-05-14 10:45:53', '2024-05-14 10:45:53'),
-(2, '$2a$10$cIsfc/R8PIsJWzbgolJRheAfJ7hK9hxwxxpqplMP4CSlTBJhcoMk.', 'nhanvien1', 'nhanvien1@gmail.com', '0365151822', 'hanoi', 'ROLE_EMPLOYEE', b'1', '2024-05-14 10:45:53', '2024-05-16 15:36:22'),
+(1, '$2a$10$5C32JYodwPS87Qo2ZqTRBOb3NpDJyls3DEWLoEdb4i1oV5jjmNzNe', 'quang anh', 'quanganhnguyen100196@gmail.com', '0364100196', 'dsv', 'ROLE_MANAGER', b'1', '2024-05-14 10:45:53', '2024-06-14 09:43:35'),
+(2, '$2a$10$cIsfc/R8PIsJWzbgolJRheAfJ7hK9hxwxxpqplMP4CSlTBJhcoMk.', 'nhanvien1', 'nhanvien1@gmail.com', '0365151822', 'hanoi', 'ROLE_EMPLOYEE', b'1', '2024-05-14 10:45:53', '2024-06-14 09:45:19'),
 (4, '$2a$10$5D2B5O4CmS5RN4VxaTwJXOi9B83aa0lGwWy.sICls9O3LKRgNXyDm', 'quanganh', 'nhanvien2@gmail.com', '0364421123', 'hanoi', 'ROLE_EMPLOYEE', b'1', '2024-05-14 10:45:53', '2024-05-14 10:45:53'),
 (8, '$2a$10$Eh581hpIm67HRwTrHJDpi.iNlHtcbYIBOy313HikKSFJQ4BUPycNu', 'nhanvien3', 'nhanvien3@gmail.com', '0312646431', 'hanoi', 'ROLE_EMPLOYEE', b'1', '2024-05-14 10:45:53', '2024-05-14 10:45:53'),
 (14, '$2a$10$txuPDKVLcA7VGk5x9L8NfuLd2GcUeNAxRzZGl/pWgQl.LpFdcA8QK', 'khách hàng', 'khachhang@gmail.com', '0364431132', 'hanoi', 'ROLE_CUSTOMER', b'1', '2024-05-14 10:45:53', '2024-05-14 10:45:53'),
@@ -704,7 +704,7 @@ CREATE TABLE `invoices` (
   `address` text DEFAULT NULL,
   `note` varchar(255) DEFAULT NULL,
   `customer_note` varchar(255) DEFAULT NULL,
-  `invoice_status` int(1) NOT NULL DEFAULT 1,
+  `invoice_status` varchar(30) NOT NULL DEFAULT '1',
   `total_price` int(20) DEFAULT 0,
   `shipping_fee` int(11) DEFAULT 0,
   `total_bill` int(20) DEFAULT 0,
@@ -720,95 +720,95 @@ CREATE TABLE `invoices` (
 --
 
 INSERT INTO `invoices` (`id`, `invoice_code`, `name`, `phone`, `address`, `note`, `customer_note`, `invoice_status`, `total_price`, `shipping_fee`, `total_bill`, `is_paid`, `created_at`, `updated_at`, `is_deleted`, `account_id`) VALUES
-(1, '41ZSPBHA', 'quang anh', '0365151822', '4dvsdsf', '', 'd', 3, 1960000, 20000, 1980000, b'0', '2024-05-14 10:47:02', '2024-05-14 11:16:14', 0, 1),
-(2, '4LFFMS9V', 'quang anh', '0365151822', '4dvsdsf', '', 'd', 1, 50000, 30000, 80000, b'0', '2024-05-14 10:47:02', '2024-05-14 11:16:14', 0, 1),
-(3, '56BKIMXY', 'quang anh', '0365151822', '4dvsdsf', '', 'f', 1, 990000, 0, 990000, b'0', '2024-05-14 10:47:02', '2024-05-14 11:16:14', 0, 1),
-(4, '5CKTNJXP', 'quang anh', '0365151822', '4dvsdsf', '', 'd', 1, 990000, 0, 990000, b'1', '2024-05-14 10:47:02', '2024-05-14 11:16:14', 0, 1),
-(5, '5FTZ8G2K', 'nguyễn quang anh', '0365151823', 'số 18 ngõ 222 tựu liệt,thanh trì, hà nội', '', 'fsd', 4, 1860000, 10000, 1870000, b'1', '2024-05-14 10:47:02', '2024-05-14 11:16:14', 0, 1),
-(6, '5J8RUFRZ', 'quang anh', '0365151822', '4dvsdsf', '', 'fs', 1, 890000, 0, 890000, b'0', '2024-05-14 10:47:02', '2024-05-14 11:16:14', 0, 1),
-(7, '5RH2CLWH', 'quang anh', '0365151822', '4dvsdsf', '', 'sa', 1, 1540000, 0, 1540000, b'0', '2024-05-14 10:47:02', '2024-05-14 11:16:14', 0, 1),
-(8, '6LU8CYHS', 'nguyễn quang anh', '3651518221', 'số 18 ngõ 222 tựu liệt,thanh trì, hà nội', '', 'ss', 1, 990000, 0, 990000, b'0', '2024-05-14 10:47:02', '2024-05-14 11:16:14', 0, 1),
-(9, '7GBOGE9T', 'string', '1362370307', 'string', 'string', 'string', 1, 0, 0, 0, b'0', '2024-05-14 10:47:02', '2024-05-14 11:16:14', 0, 1),
-(10, '7MOJYIGO', 'vcxvx', '0999999999', 'fsd', '', 'sd', 1, 2350000, 20000, 2370000, b'0', '2024-05-14 10:47:02', '2024-05-14 11:16:14', 0, 1),
-(11, '8XVO3RJ8', 'nguyễn quang anh', '4553333542', 'số 18 ngõ 222 tựu liệt,thanh trì, hà nội', '', '', 1, 990000, 0, 990000, b'1', '2024-05-14 10:47:02', '2024-05-14 11:16:14', 0, 1),
-(12, '98ZCL96V', 'quang anh', '0365151822', '4dvsdsf', '', 'd', 1, 750000, 0, 750000, b'0', '2024-05-14 10:47:02', '2024-05-14 11:16:14', 0, 1),
-(13, 'A5K1TOQE', 'gdfgfdg', '0999999999', 'số 18 ngõ 222 tựu liệt,thanh trì, hà nội', '', 'vsd', 2, 3060000, 30000, 3090000, b'0', '2024-05-14 10:47:02', '2024-05-14 11:16:14', 0, 1),
-(14, 'AEAXIQS0', 'quang anh', '0999999999', 'ssd', '', 'x', 0, 990000, 0, NULL, b'0', '2024-05-14 10:47:02', '2024-05-14 11:16:14', 0, 1),
-(15, 'B90AZKP8', 'quang anh', '0365151822', '4dvsdsf', '', 'f', 1, 750000, 0, 750000, b'0', '2024-05-14 10:47:02', '2024-05-14 11:16:14', 0, 1),
-(16, 'BOXLJSBK', 'quang anh', '0365151822', '4dvsdsf', '', 'sd', 1, 480000, 30000, 510000, b'0', '2024-05-14 10:47:02', '2024-05-14 11:16:14', 0, 1),
-(17, 'BSONPNNZ', 'quang anh', '0365151822', '4dvsdsf', '', 'gsd', 1, 500000, 0, 500000, b'1', '2024-05-14 10:47:02', '2024-05-14 11:16:14', 0, 1),
-(18, 'CDJBJ419', 'quang anh', '0365151822', '4dvsdsf', '', 'd', 1, 750000, 0, 750000, b'0', '2024-05-14 10:47:02', '2024-05-14 11:16:14', 0, 1),
-(19, 'CK0I8M9L', 'quang anh', '0365151822', '4dvsdsf', '', 'a', 1, 750000, 0, 750000, b'0', '2024-05-14 10:47:02', '2024-05-14 11:16:14', 0, 1),
-(20, 'CK2RNNXU', 'quang anh', '0365151822', '4dvsdsf', '', 'd', 1, 990000, 0, 990000, b'0', '2024-05-14 10:47:02', '2024-05-14 11:16:14', 0, 1),
-(21, 'CQK0DVXD', 'quang anh', '0365151822', '4dvsdsf', '', 's', 1, 990000, 0, 990000, b'0', '2024-05-14 10:47:02', '2024-05-14 11:16:14', 0, 1),
-(22, 'CYFRIM6O', 'quang anh', '0365151822', '4dvsdsf', '', 's', 1, 420000, 30000, 450000, b'0', '2024-05-14 10:47:02', '2024-05-14 11:16:14', 0, 1),
-(23, 'DMJHRKWM', 'nguyễn quang anh', '0999999999', 'số 18 ngõ 222 tựu liệt,thanh trì, hà nội', '', 'cs', 1, 580000, 0, 580000, b'0', '2024-05-14 10:47:02', '2024-05-14 11:16:14', 0, 1),
-(24, 'EAEUPXUE', 'quang anh', '0365151822', '4dvsdsf', '', 's', 1, 990000, 0, 990000, b'0', '2024-05-14 10:47:02', '2024-05-14 11:16:14', 0, 1),
-(25, 'EIIMQTNF', 'quang anh', '0365151822', '4dvsdsf', '', 'd', 1, 400000, 30000, 430000, b'0', '2024-05-14 10:47:02', '2024-05-14 11:16:14', 0, 1),
-(26, 'EXAWZYY2', 'quang anh', '0365151822', '4dvsdsf', '', 's', 1, 990000, 0, 990000, b'0', '2024-05-14 10:47:02', '2024-05-14 11:16:14', 0, 1),
-(27, 'EYCDR8PC', 'nguyễn quang anh', '0999999999', 'số 18 ngõ 222 tựu liệt,thanh trì, hà nội', '                        fsd', NULL, 1, 0, 0, 580000, b'0', '2024-05-14 10:47:02', '2024-05-14 11:16:14', 0, 1),
-(28, 'F6GYDSV1', 'nguyễn quang anh', '0365151821', 'số 18 ngõ 222 tựu liệt,thanh trì, hà nội', '', NULL, 1, 0, 0, 0, b'0', '2024-05-14 10:47:02', '2024-05-14 11:16:14', 0, 1),
-(29, 'GB4ENHC1', 'nguyễn quang anh', '0999999999', 'số 18 ngõ 222 tựu liệt,thanh trì, hà nội', '', 'dfs', 0, 1980000, 0, 1980000, b'0', '2024-05-14 10:47:02', '2024-05-14 11:16:14', 0, 1),
-(30, 'GCRM2OC5', 'quang anh', '0365151822', '4dvsdsf', '', 'sd', 1, NULL, 30000, 380000, b'0', '2024-05-14 10:47:02', '2024-05-14 11:16:14', 0, 1),
-(31, 'GGTWEEBJ', 'quang anh', '0365151822', '4dvsdsf', '', 'd', 1, 200000, 30000, 230000, b'1', '2024-05-14 10:47:02', '2024-05-14 11:16:14', 0, 1),
-(32, 'GQ9U9AXK', 'quang anh', '0365151822', '4dvsdsf', '', 'fd', 1, 380000, 0, 380000, b'0', '2024-05-14 10:47:02', '2024-05-14 11:16:14', 0, 1),
-(33, 'GWW0LOZ8', 'quang anh', '0365151822', '4dvsdsf', '', 'v', 1, 750000, 0, 750000, b'0', '2024-05-14 10:47:02', '2024-05-14 11:16:14', 0, 1),
-(34, 'I1TWS5QJ', 'quang anh', '0999999999', 'sdf', '', 'sd', 1, 550000, 0, NULL, b'0', '2024-05-14 10:47:02', '2024-05-14 11:16:14', 0, 1),
-(35, 'I8XDEQJH', 'nguyễn quang anh', '0999999999', 'số 18 ngõ 222 tựu liệt,thanh trì, hà nội', '', 'sd', 2, 598000, 0, 598000, b'0', '2024-05-14 10:47:02', '2024-05-14 11:16:14', 0, 1),
-(36, 'IS8THSPA', 'quang anh', '0365151822', '4dvsdsf', '', 'd', 1, 100000, 30000, 130000, b'0', '2024-05-14 10:47:02', '2024-05-14 11:16:14', 0, 1),
-(37, 'JDIVW1PL', 'quang anh', '0365151822', '4dvsdsf', '', 's', 1, 500000, 0, 500000, b'0', '2024-05-14 10:47:02', '2024-05-14 11:16:14', 0, 1),
-(38, 'JFFE99ZQ', 'quang anh', '0365151822', '4dvsdsf', '', 'fd', 1, 1250000, 0, 1250000, b'0', '2024-05-14 10:47:02', '2024-05-14 11:16:14', 0, 1),
-(39, 'KT9P9ZMY', 'nguyễn quang anh', '0999999999', 'số 18 ngõ 222 tựu liệt,thanh trì, hà nội', '', 'dsf', 1, 4040000, 20000, 4060000, b'0', '2024-05-14 10:47:02', '2024-05-14 11:16:14', 0, 1),
-(40, 'KYGSBUBG', 'quang anh', '0365151822', '4dvsdsf', '', 'd', 1, 500000, 0, 500000, b'0', '2024-05-14 10:47:02', '2024-05-14 11:16:14', 0, 1),
-(41, 'LUW8V8TY', 'quang anh', '0365151822', '4dvsdsf', '', 'd', 1, 750000, 0, 750000, b'0', '2024-05-14 10:47:02', '2024-05-14 11:16:14', 0, 1),
-(42, 'MDXPM23G', 'quang anh', '0365151822', '4dvsdsf', 'cvs', NULL, 1, 760000, 10000, 770000, b'0', '2024-05-14 10:47:02', '2024-05-14 11:16:14', 0, 1),
-(43, 'MSFDUEXY', 'nguyễn quang anh', '0999999999', 'số 18 ngõ 222 tựu liệt,thanh trì, hà nội', '', 'sd', 1, 840000, 0, 840000, b'0', '2024-05-14 10:47:02', '2024-05-14 11:16:14', 0, 1),
-(44, 'MVNWRADX', 'nhanvien1', '0999999999', 'số 18 ngõ 222 tựu liệt,thanh trì, hà nội', '                        ', NULL, 5, 0, 0, 0, b'0', '2024-05-14 10:47:02', '2024-05-14 11:16:14', 0, 1),
-(45, 'N6VKCD4X', 'quang anh', '0365151822', '4dvsdsf', '', 's', 1, 750000, 0, 750000, b'0', '2024-05-14 10:47:02', '2024-05-14 11:16:14', 0, 1),
-(46, 'NHMSP1VU', 'nguyễn quang anh', '0365151822', 'số 18 ngõ 222 tựu liệt,thanh trì, hà nội', '', NULL, 1, 0, 0, 0, b'0', '2024-05-14 10:47:02', '2024-05-14 11:16:14', 0, 1),
-(47, 'NQHLQRH4', 'quang anh', '0365151822', '4dvsdsf', '', NULL, 1, 0, 0, 0, b'0', '2024-05-14 10:47:02', '2024-05-14 11:16:14', 0, 1),
-(48, 'NV7CM7AY', 'quang anh', '0365151822', '4dvsdsf', '', 'gh', 1, 750000, 0, 750000, b'0', '2024-05-14 10:47:02', '2024-05-14 11:16:14', 0, 1),
-(49, 'OCFAOWMB', 'fsdfsd', '0999999999', 'vd', '', 'd', 1, 1380000, 30000, 1410000, b'0', '2024-05-14 10:47:02', '2024-05-14 11:16:14', 0, 1),
-(50, 'OUFWELJT', 'quang anh', '0365151822', '4dvsdsf', '', '', 1, 990000, 0, 990000, b'0', '2024-05-14 10:47:02', '2024-05-14 11:16:14', 0, 1),
-(51, 'PPKY3TZA', 'quang anh', '0365151822', '4dvsdsf', '', 'g', 1, 990000, 0, 990000, b'0', '2024-05-14 10:47:02', '2024-05-14 11:16:14', 0, 1),
-(52, 'QIPTDMTO', 'nguyễn quang anh', '5342423432', 'số 18 ngõ 222 tựu liệt,thanh trì, hà nội', '', '', 1, 990000, 0, 990000, b'0', '2024-05-14 10:47:02', '2024-05-14 11:16:14', 0, 1),
-(53, 'QUZEPN5K', 'quang anh', '0365151822', '4dvsdsf', '', 'd', 1, 750000, 0, 750000, b'0', '2024-05-14 10:47:02', '2024-05-14 11:16:14', 0, 1),
-(54, 'ROSWZNSR', 'quang anh', '0365151822', '4dvsdsf', '', 'sd', 1, 380000, 30000, 410000, b'0', '2024-05-14 10:47:02', '2024-05-14 11:16:14', 0, 1),
-(55, 'S9BQOPOP', 'quang anh', '0365151822', '4dvsdsf', '', 'f', 1, 750000, 0, 750000, b'0', '2024-05-14 10:47:02', '2024-05-14 11:16:14', 0, 1),
-(56, 'SGVWGKLQ', 'quang anh', '0365151822', '4dvsdsf', '', 'd', 1, 990000, 0, 990000, b'0', '2024-05-14 10:47:02', '2024-05-14 11:16:14', 0, 1),
-(57, 'SMMKHRU1', 'dfsd', '0999999999', 'sdf', '', 'fds', 1, 400000, 30000, 430000, b'0', '2024-05-14 10:47:02', '2024-05-14 11:16:14', 0, 1),
-(58, 'SNGWGR4V', 'quang anh', '0365151822', '4dvsdsf', '', 'd', 1, 750000, 0, 750000, b'0', '2024-05-14 10:47:02', '2024-05-14 11:16:14', 0, 1),
-(59, 'SRXO1SSG', 'quang anh', '0365151822', '4dvsdsf', '', 'h', 1, 400000, 30000, 430000, b'0', '2024-05-14 10:47:02', '2024-05-14 11:16:14', 0, 1),
-(60, 'T1VCKYYG', 'sser', '0999999999', 'f', 'dfs', NULL, 3, 0, 0, 0, b'0', '2024-05-14 10:47:02', '2024-05-14 11:16:14', 0, 1),
-(61, 'TFWOAP9I', 'nguyễn quang anh', '4343222342', 'số 18 ngõ 222 tựu liệt,thanh trì, hà nội', '', '', 1, 1046666, 0, 1046666, b'0', '2024-05-14 10:47:02', '2024-05-14 11:16:14', 0, 1),
-(62, 'TGPIGVXB', 'quang anh', '0365151822', '4dvsdsf', '', 'd', 1, 990000, 0, 990000, b'0', '2024-05-14 10:47:02', '2024-05-14 11:16:14', 0, 1),
-(63, 'TLSY7TFT', 'dfgdf', '0999999999', 'fds', '', 'f', 1, 750000, 0, 750000, b'0', '2024-05-14 10:47:02', '2024-05-14 11:16:14', 0, 1),
-(64, 'U0F7TYG1', 'quang anh', '0365151822', '4dvsdsf', '', 'vs', 1, 890000, 0, 890000, b'0', '2024-05-14 10:47:02', '2024-05-14 11:16:14', 0, 1),
-(65, 'U7DZUREO', 'quang anh', '0365151822', '4dvsdsf', '', 'gd', 1, 500000, 0, 500000, b'0', '2024-05-14 10:47:02', '2024-05-14 11:16:14', 0, 1),
-(66, 'UAEZV8YX', 'gdfgfdg', '0999999999', 'số 18 ngõ 222 tựu liệt,thanh trì, hà nội', '', 'vsd', 1, 550000, 30000, 410000, b'0', '2024-05-14 10:47:02', '2024-05-14 11:16:14', 0, 1),
-(67, 'UAGHYL6A', 'quang anh', '0365151822', '4dvsdsf', '', 'd', 1, 750000, 0, 750000, b'0', '2024-05-14 10:47:02', '2024-05-14 11:16:14', 0, 1),
-(68, 'UZZHM3TR', 'nguyễn quang anh', '0999999999', 'số 18 ngõ 222 tựu liệt,thanh trì, hà nội', '', 'fs', 1, 480000, 30000, 510000, b'0', '2024-05-14 10:47:02', '2024-05-14 11:16:14', 0, 1),
-(69, 'V2PBUUIU', 'quang anh', '2313121312', '4dvsdsf', '', NULL, 1, NULL, 0, NULL, b'0', '2024-05-14 10:47:02', '2024-05-14 11:16:14', 0, 1),
-(70, 'VAZZJUMT', 'nguyễn quang anh', '3651518222', 'số 18 ngõ 222 tựu liệt,thanh trì, hà nội', '', 'zcx', 1, 990000, 0, 990000, b'0', '2024-05-14 10:47:02', '2024-05-14 11:16:14', 0, 1),
-(71, 'VWQKIORR', 'quang anh', '0365151822', '4dvsdsf', '', 's', 1, 750000, 0, 750000, b'0', '2024-05-14 10:47:02', '2024-05-14 11:16:14', 0, 1),
-(72, 'WDVTINII', 'quang anh', '0365151822', '4dvsdsf', '', 'sda', 1, 1250000, 0, 1250000, b'0', '2024-05-14 10:47:02', '2024-05-14 11:16:14', 0, 1),
-(73, 'WQKH3LAS', 'string', '1362370307', 'string', 'string', 'string', 1, 0, 0, 0, b'0', '2024-05-14 10:47:02', '2024-05-14 11:16:14', 0, 1),
-(74, 'WVHNNQAC', 'quang anh', '0365151822', '4dvsdsf', '', 'gfd', 1, 500000, 999999, 1499999, b'0', '2024-05-14 10:47:02', '2024-05-14 11:16:14', 0, 1),
-(75, 'X6JPOCJH', 'string', '4019020703', 'string', 'string', 'df', 0, 6840000, 20000, 6860000, b'0', '2024-05-14 10:47:02', '2024-05-22 14:49:07', 0, 1),
-(76, 'XNLM5KBW', 'quang anh', '0365151822', '4dvsdsf', '', 'f', 1, 750000, 0, 750000, b'0', '2024-05-14 10:47:02', '2024-05-14 11:16:14', 0, 1),
-(77, 'XRAPWYJI', 'quang anh', '0999999999', 'fđ', '', 'dgf', 1, 990000, 0, NULL, b'0', '2024-05-14 10:47:02', '2024-05-14 11:16:14', 0, 1),
-(78, 'YFJBR6YE', 'quang anh', '0365151822', '4dvsdsf', '', 'vd', 1, 333333, 0, 333333, b'0', '2024-05-14 10:47:02', '2024-05-14 11:16:14', 0, 1),
-(79, 'YHNB0POU', 'dsfds', '0999999999', 'f', '', 's', 1, 420000, 30000, 450000, b'0', '2024-05-14 10:47:02', '2024-05-14 11:16:14', 0, 1),
-(80, 'YIFBIIM3', 'quang anh', '0365151822', '4dvsdsf', '', 's', 1, 990000, 0, 990000, b'0', '2024-05-14 10:47:02', '2024-05-14 11:16:14', 0, 1),
-(81, 'YK68ZX7R', 'nguyễn quang anh', '3432224222', 'số 18 ngõ 222 tựu liệt,thanh trì, hà nội', '', '', 1, 990000, 0, 990000, b'0', '2024-05-14 10:47:02', '2024-05-14 11:16:14', 0, 1),
-(82, 'YTNKBIKE', 'quang anh', '0365151822', '4dvsdsf', '', 's', 1, 990000, 0, 990000, b'0', '2024-05-14 10:47:02', '2024-05-14 11:16:14', 0, 1),
-(83, 'YZSGNG1E', 'quang anh', '0365151822', '4dvsdsf', '', 'd', 1, 750000, 0, 750000, b'0', '2024-05-14 10:47:02', '2024-05-14 11:16:14', 0, 1),
-(84, 'ZUI23NIT', 'nguyễn quang anh', '0999999999', 'số 18 ngõ 222 tựu liệt,thanh trì, hà nội', '                        dsf', NULL, 1, 290000, 20000, 890000, b'0', '2024-05-14 10:47:02', '2024-05-14 11:16:14', 0, 1),
-(86, '7K1RTIHD', 'string', '2538878580', 'string', NULL, 'string', 1, 1040000, 10000, 1050000, b'0', '2024-06-01 04:17:24', '2024-06-01 04:17:25', 0, 1),
-(87, 'UPX8U4CZ', 'string', '2538878580', 'string', NULL, 'string', 1, 1040000, 10000, 1050000, b'0', '2024-06-01 04:18:19', '2024-06-01 04:18:19', 0, 1),
-(88, 'O0VRCG1N', 'string', '2538878580', 'string', NULL, 'string', 1, 1040000, 10000, 1050000, b'0', '2024-06-01 04:22:37', '2024-06-01 04:22:37', 0, 1),
-(89, '7ECXBCFQ', 'string', '2538878580', 'string', NULL, 'string', 1, 1040000, 10000, 1050000, b'0', '2024-06-01 04:24:54', '2024-06-01 04:24:55', 0, 1),
-(90, 'DK9QJKRV', 'string', '2538878580', 'string', NULL, 'string', 1, 1040000, 10000, 1050000, b'1', '2024-06-01 04:30:43', '2024-06-01 04:31:47', 0, 1);
+(1, '41ZSPBHA', 'quang anh', '0365151822', '4dvsdsf', '', 'd', 'ORDER_CREATED', 1960000, 20000, 1980000, b'0', '2024-05-14 10:47:02', '2024-06-15 13:55:23', 0, 1),
+(2, '4LFFMS9V', 'quang anh', '0365151822', '4dvsdsf', '', 'd', 'NEW', 50000, 30000, 80000, b'0', '2024-05-14 10:47:02', '2024-06-15 13:55:03', 0, 2),
+(3, '56BKIMXY', 'quang anh', '0365151822', '4dvsdsf', '', 'f', 'NEW', 990000, 0, 990000, b'0', '2024-05-14 10:47:02', '2024-06-15 13:55:03', 0, 1),
+(4, '5CKTNJXP', 'quang anh', '0365151822', '4dvsdsf', '', 'd', 'NEW', 990000, 0, 990000, b'1', '2024-05-14 10:47:02', '2024-06-15 13:55:03', 0, 1),
+(5, '5FTZ8G2K', 'nguyễn quang anh', '0365151823', 'số 18 ngõ 222 tựu liệt,thanh trì, hà nội', '', 'fsd', 'DELIVERING', 1860000, 10000, 1870000, b'1', '2024-05-14 10:47:02', '2024-06-15 13:55:23', 0, 2),
+(6, '5J8RUFRZ', 'quang anh', '0365151822', '4dvsdsf', '', 'fs', 'NEW', 890000, 0, 890000, b'0', '2024-05-14 10:47:02', '2024-06-15 13:55:03', 0, 1),
+(7, '5RH2CLWH', 'quang anh', '0365151822', '4dvsdsf', '', 'sa', 'NEW', 1540000, 0, 1540000, b'0', '2024-05-14 10:47:02', '2024-06-15 13:55:03', 0, 2),
+(8, '6LU8CYHS', 'nguyễn quang anh', '3651518221', 'số 18 ngõ 222 tựu liệt,thanh trì, hà nội', '', 'ss', 'NEW', 990000, 0, 990000, b'0', '2024-05-14 10:47:02', '2024-06-15 13:55:03', 0, NULL),
+(9, '7GBOGE9T', 'string', '1362370307', 'string', 'string', 'string', 'NEW', 0, 0, 0, b'0', '2024-05-14 10:47:02', '2024-06-15 13:55:03', 0, 1),
+(10, '7MOJYIGO', 'vcxvx', '0999999999', 'fsd', '', 'sd', 'NEW', 2350000, 20000, 2370000, b'0', '2024-05-14 10:47:02', '2024-06-15 13:55:03', 0, 1),
+(11, '8XVO3RJ8', 'nguyễn quang anh', '4553333542', 'số 18 ngõ 222 tựu liệt,thanh trì, hà nội', '', '', 'NEW', 990000, 0, 990000, b'1', '2024-05-14 10:47:02', '2024-06-15 13:55:03', 0, NULL),
+(12, '98ZCL96V', 'quang anh', '0365151822', '4dvsdsf', '', 'd', 'NEW', 750000, 0, 750000, b'0', '2024-05-14 10:47:02', '2024-06-15 13:55:03', 0, 2),
+(13, 'A5K1TOQE', 'gdfgfdg', '0999999999', 'số 18 ngõ 222 tựu liệt,thanh trì, hà nội', '', 'vsd', 'PROCESS', 3060000, 30000, 3090000, b'0', '2024-05-14 10:47:02', '2024-06-15 13:55:03', 0, NULL),
+(14, 'AEAXIQS0', 'quang anh', '0999999999', 'ssd', '', 'x', 'CANCEL', 990000, 0, NULL, b'0', '2024-05-14 10:47:02', '2024-06-15 13:51:40', 0, 1),
+(15, 'B90AZKP8', 'quang anh', '0365151822', '4dvsdsf', '', 'f', 'NEW', 750000, 0, 750000, b'0', '2024-05-14 10:47:02', '2024-06-15 13:55:03', 0, 1),
+(16, 'BOXLJSBK', 'quang anh', '0365151822', '4dvsdsf', '', 'sd', 'NEW', 480000, 30000, 510000, b'0', '2024-05-14 10:47:02', '2024-06-15 13:55:03', 0, 2),
+(17, 'BSONPNNZ', 'quang anh', '0365151822', '4dvsdsf', '', 'gsd', 'NEW', 500000, 0, 500000, b'1', '2024-05-14 10:47:02', '2024-06-15 13:55:03', 0, 1),
+(18, 'CDJBJ419', 'quang anh', '0365151822', '4dvsdsf', '', 'd', 'NEW', 750000, 0, 750000, b'0', '2024-05-14 10:47:02', '2024-06-15 13:55:03', 0, 1),
+(19, 'CK0I8M9L', 'quang anh', '0365151822', '4dvsdsf', '', 'a', 'NEW', 750000, 0, 750000, b'0', '2024-05-14 10:47:02', '2024-06-15 13:55:03', 0, 1),
+(20, 'CK2RNNXU', 'quang anh', '0365151822', '4dvsdsf', '', 'd', 'NEW', 990000, 0, 990000, b'0', '2024-05-14 10:47:02', '2024-06-15 13:55:03', 0, 1),
+(21, 'CQK0DVXD', 'quang anh', '0365151822', '4dvsdsf', '', 's', 'NEW', 990000, 0, 990000, b'0', '2024-05-14 10:47:02', '2024-06-15 13:55:03', 0, 1),
+(22, 'CYFRIM6O', 'quang anh', '0365151822', '4dvsdsf', '', 's', 'NEW', 420000, 30000, 450000, b'0', '2024-05-14 10:47:02', '2024-06-15 13:55:03', 0, 2),
+(23, 'DMJHRKWM', 'nguyễn quang anh', '0999999999', 'số 18 ngõ 222 tựu liệt,thanh trì, hà nội', '', 'cs', 'NEW', 580000, 0, 580000, b'0', '2024-05-14 10:47:02', '2024-06-15 13:55:03', 0, 1),
+(24, 'EAEUPXUE', 'quang anh', '0365151822', '4dvsdsf', '', 's', 'NEW', 990000, 0, 990000, b'0', '2024-05-14 10:47:02', '2024-06-15 13:55:03', 0, NULL),
+(25, 'EIIMQTNF', 'quang anh', '0365151822', '4dvsdsf', '', 'd', 'NEW', 400000, 30000, 430000, b'0', '2024-05-14 10:47:02', '2024-06-15 13:55:03', 0, 1),
+(26, 'EXAWZYY2', 'quang anh', '0365151822', '4dvsdsf', '', 's', 'NEW', 990000, 0, 990000, b'0', '2024-05-14 10:47:02', '2024-06-15 13:55:03', 0, 1),
+(27, 'EYCDR8PC', 'nguyễn quang anh', '0999999999', 'số 18 ngõ 222 tựu liệt,thanh trì, hà nội', '                        fsd', NULL, 'NEW', 0, 0, 580000, b'0', '2024-05-14 10:47:02', '2024-06-15 13:55:03', 0, 2),
+(28, 'F6GYDSV1', 'nguyễn quang anh', '0365151821', 'số 18 ngõ 222 tựu liệt,thanh trì, hà nội', '', NULL, 'NEW', 0, 0, 0, b'0', '2024-05-14 10:47:02', '2024-06-15 13:55:03', 0, 1),
+(29, 'GB4ENHC1', 'nguyễn quang anh', '0999999999', 'số 18 ngõ 222 tựu liệt,thanh trì, hà nội', '', 'dfs', 'CANCEL', 1980000, 0, 1980000, b'0', '2024-05-14 10:47:02', '2024-06-15 13:51:40', 0, 1),
+(30, 'GCRM2OC5', 'quang anh', '0365151822', '4dvsdsf', '', 'sd', 'NEW', NULL, 30000, 380000, b'0', '2024-05-14 10:47:02', '2024-06-15 13:55:03', 0, 1),
+(31, 'GGTWEEBJ', 'quang anh', '0365151822', '4dvsdsf', '', 'd', 'NEW', 200000, 30000, 230000, b'1', '2024-05-14 10:47:02', '2024-06-15 13:55:03', 0, 1),
+(32, 'GQ9U9AXK', 'quang anh', '0365151822', '4dvsdsf', '', 'fd', 'NEW', 380000, 0, 380000, b'0', '2024-05-14 10:47:02', '2024-06-15 13:55:03', 0, 2),
+(33, 'GWW0LOZ8', 'quang anh', '0365151822', '4dvsdsf', '', 'v', 'NEW', 750000, 0, 750000, b'0', '2024-05-14 10:47:02', '2024-06-15 13:55:03', 0, 1),
+(34, 'I1TWS5QJ', 'quang anh', '0999999999', 'sdf', '', 'sd', 'NEW', 550000, 0, NULL, b'0', '2024-05-14 10:47:02', '2024-06-15 13:55:03', 0, 1),
+(35, 'I8XDEQJH', 'nguyễn quang anh', '0999999999', 'số 18 ngõ 222 tựu liệt,thanh trì, hà nội', '', 'sd', 'PROCESS', 598000, 0, 598000, b'0', '2024-05-14 10:47:02', '2024-06-15 13:55:03', 0, 1),
+(36, 'IS8THSPA', 'quang anh', '0365151822', '4dvsdsf', '', 'd', 'NEW', 100000, 30000, 130000, b'0', '2024-05-14 10:47:02', '2024-06-15 13:55:03', 0, 1),
+(37, 'JDIVW1PL', 'quang anh', '0365151822', '4dvsdsf', '', 's', 'NEW', 500000, 0, 500000, b'0', '2024-05-14 10:47:02', '2024-06-15 13:55:03', 0, 1),
+(38, 'JFFE99ZQ', 'quang anh', '0365151822', '4dvsdsf', '', 'fd', 'NEW', 1250000, 0, 1250000, b'0', '2024-05-14 10:47:02', '2024-06-15 13:55:03', 0, 1),
+(39, 'KT9P9ZMY', 'nguyễn quang anh', '0999999999', 'số 18 ngõ 222 tựu liệt,thanh trì, hà nội', '', 'dsf', 'NEW', 4040000, 20000, 4060000, b'0', '2024-05-14 10:47:02', '2024-06-15 13:55:03', 0, 1),
+(40, 'KYGSBUBG', 'quang anh', '0365151822', '4dvsdsf', '', 'd', 'NEW', 500000, 0, 500000, b'0', '2024-05-14 10:47:02', '2024-06-15 13:55:03', 0, 1),
+(41, 'LUW8V8TY', 'quang anh', '0365151822', '4dvsdsf', '', 'd', 'NEW', 750000, 0, 750000, b'0', '2024-05-14 10:47:02', '2024-06-15 13:55:03', 0, 1),
+(42, 'MDXPM23G', 'quang anh', '0365151822', '4dvsdsf', 'cvs', NULL, 'NEW', 760000, 10000, 770000, b'0', '2024-05-14 10:47:02', '2024-06-15 13:55:03', 0, 1),
+(43, 'MSFDUEXY', 'nguyễn quang anh', '0999999999', 'số 18 ngõ 222 tựu liệt,thanh trì, hà nội', '', 'sd', 'NEW', 840000, 0, 840000, b'0', '2024-05-14 10:47:02', '2024-06-15 13:55:03', 0, 1),
+(44, 'MVNWRADX', 'nhanvien1', '0999999999', 'số 18 ngõ 222 tựu liệt,thanh trì, hà nội', '                        ', NULL, 'SUCCESS', 0, 0, 0, b'0', '2024-05-14 10:47:02', '2024-06-15 13:55:23', 0, 1),
+(45, 'N6VKCD4X', 'quang anh', '0365151822', '4dvsdsf', '', 's', 'NEW', 750000, 0, 750000, b'0', '2024-05-14 10:47:02', '2024-06-15 13:55:03', 0, 1),
+(46, 'NHMSP1VU', 'nguyễn quang anh', '0365151822', 'số 18 ngõ 222 tựu liệt,thanh trì, hà nội', '', NULL, 'NEW', 0, 0, 0, b'0', '2024-05-14 10:47:02', '2024-06-15 13:55:03', 0, 1),
+(47, 'NQHLQRH4', 'quang anh', '0365151822', '4dvsdsf', '', NULL, 'NEW', 0, 0, 0, b'0', '2024-05-14 10:47:02', '2024-06-15 13:55:03', 0, 1),
+(48, 'NV7CM7AY', 'quang anh', '0365151822', '4dvsdsf', '', 'gh', 'NEW', 750000, 0, 750000, b'0', '2024-05-14 10:47:02', '2024-06-15 13:55:03', 0, 1),
+(49, 'OCFAOWMB', 'fsdfsd', '0999999999', 'vd', '', 'd', 'NEW', 1380000, 30000, 1410000, b'0', '2024-05-14 10:47:02', '2024-06-15 13:55:03', 0, 1),
+(50, 'OUFWELJT', 'quang anh', '0365151822', '4dvsdsf', '', '', 'NEW', 990000, 0, 990000, b'0', '2024-05-14 10:47:02', '2024-06-15 13:55:03', 0, 1),
+(51, 'PPKY3TZA', 'quang anh', '0365151822', '4dvsdsf', '', 'g', 'NEW', 990000, 0, 990000, b'0', '2024-05-14 10:47:02', '2024-06-15 13:55:03', 0, 1),
+(52, 'QIPTDMTO', 'nguyễn quang anh', '5342423432', 'số 18 ngõ 222 tựu liệt,thanh trì, hà nội', '', '', 'NEW', 990000, 0, 990000, b'0', '2024-05-14 10:47:02', '2024-06-15 13:55:03', 0, 1),
+(53, 'QUZEPN5K', 'quang anh', '0365151822', '4dvsdsf', '', 'd', 'NEW', 750000, 0, 750000, b'0', '2024-05-14 10:47:02', '2024-06-15 13:55:03', 0, 1),
+(54, 'ROSWZNSR', 'quang anh', '0365151822', '4dvsdsf', '', 'sd', 'NEW', 380000, 30000, 410000, b'0', '2024-05-14 10:47:02', '2024-06-15 13:55:03', 0, 1),
+(55, 'S9BQOPOP', 'quang anh', '0365151822', '4dvsdsf', '', 'f', 'NEW', 750000, 0, 750000, b'0', '2024-05-14 10:47:02', '2024-06-15 13:55:03', 0, 1),
+(56, 'SGVWGKLQ', 'quang anh', '0365151822', '4dvsdsf', '', 'd', 'NEW', 990000, 0, 990000, b'0', '2024-05-14 10:47:02', '2024-06-15 13:55:03', 0, 1),
+(57, 'SMMKHRU1', 'dfsd', '0999999999', 'sdf', '', 'fds', 'NEW', 400000, 30000, 430000, b'0', '2024-05-14 10:47:02', '2024-06-15 13:55:03', 0, 1),
+(58, 'SNGWGR4V', 'quang anh', '0365151822', '4dvsdsf', '', 'd', 'NEW', 750000, 0, 750000, b'0', '2024-05-14 10:47:02', '2024-06-15 13:55:03', 0, 1),
+(59, 'SRXO1SSG', 'quang anh', '0365151822', '4dvsdsf', '', 'h', 'NEW', 400000, 30000, 430000, b'0', '2024-05-14 10:47:02', '2024-06-15 13:55:03', 0, 1),
+(60, 'T1VCKYYG', 'sser', '0999999999', 'f', 'dfs', NULL, 'ORDER_CREATED', 0, 0, 0, b'0', '2024-05-14 10:47:02', '2024-06-15 13:55:23', 0, 1),
+(61, 'TFWOAP9I', 'nguyễn quang anh', '4343222342', 'số 18 ngõ 222 tựu liệt,thanh trì, hà nội', '', '', 'NEW', 1046666, 0, 1046666, b'0', '2024-05-14 10:47:02', '2024-06-15 13:55:03', 0, 1),
+(62, 'TGPIGVXB', 'quang anh', '0365151822', '4dvsdsf', '', 'd', 'NEW', 990000, 0, 990000, b'0', '2024-05-14 10:47:02', '2024-06-15 13:55:03', 0, 1),
+(63, 'TLSY7TFT', 'dfgdf', '0999999999', 'fds', '', 'f', 'NEW', 750000, 0, 750000, b'0', '2024-05-14 10:47:02', '2024-06-15 13:55:03', 0, 1),
+(64, 'U0F7TYG1', 'quang anh', '0365151822', '4dvsdsf', '', 'vs', 'NEW', 890000, 0, 890000, b'0', '2024-05-14 10:47:02', '2024-06-15 13:55:03', 0, 1),
+(65, 'U7DZUREO', 'quang anh', '0365151822', '4dvsdsf', '', 'gd', 'NEW', 500000, 0, 500000, b'0', '2024-05-14 10:47:02', '2024-06-15 13:55:03', 0, 1),
+(66, 'UAEZV8YX', 'gdfgfdg', '0999999999', 'số 18 ngõ 222 tựu liệt,thanh trì, hà nội', '', 'vsd', 'NEW', 550000, 30000, 410000, b'0', '2024-05-14 10:47:02', '2024-06-15 13:55:03', 0, 1),
+(67, 'UAGHYL6A', 'quang anh', '0365151822', '4dvsdsf', '', 'd', 'NEW', 750000, 0, 750000, b'0', '2024-05-14 10:47:02', '2024-06-15 13:55:03', 0, 1),
+(68, 'UZZHM3TR', 'nguyễn quang anh', '0999999999', 'số 18 ngõ 222 tựu liệt,thanh trì, hà nội', '', 'fs', 'NEW', 480000, 30000, 510000, b'0', '2024-05-14 10:47:02', '2024-06-15 13:55:03', 0, 1),
+(69, 'V2PBUUIU', 'quang anh', '2313121312', '4dvsdsf', '', NULL, 'NEW', NULL, 0, NULL, b'0', '2024-05-14 10:47:02', '2024-06-15 13:55:03', 0, 1),
+(70, 'VAZZJUMT', 'nguyễn quang anh', '3651518222', 'số 18 ngõ 222 tựu liệt,thanh trì, hà nội', '', 'zcx', 'NEW', 990000, 0, 990000, b'0', '2024-05-14 10:47:02', '2024-06-15 13:55:03', 0, 1),
+(71, 'VWQKIORR', 'quang anh', '0365151822', '4dvsdsf', '', 's', 'NEW', 750000, 0, 750000, b'0', '2024-05-14 10:47:02', '2024-06-15 13:55:03', 0, 1),
+(72, 'WDVTINII', 'quang anh', '0365151822', '4dvsdsf', '', 'sda', 'NEW', 1250000, 0, 1250000, b'0', '2024-05-14 10:47:02', '2024-06-15 13:55:03', 0, 1),
+(73, 'WQKH3LAS', 'string', '1362370307', 'string', 'string', 'string', 'NEW', 0, 0, 0, b'0', '2024-05-14 10:47:02', '2024-06-15 13:55:03', 0, 1),
+(74, 'WVHNNQAC', 'quang anh', '0365151822', '4dvsdsf', '', 'gfd', 'NEW', 500000, 999999, 1499999, b'0', '2024-05-14 10:47:02', '2024-06-15 13:55:03', 0, 1),
+(75, 'X6JPOCJH', 'string', '4019020703', 'string', 'string', 'df', 'CANCEL', 6840000, 20000, 6860000, b'0', '2024-05-14 10:47:02', '2024-06-15 13:51:40', 0, 1),
+(76, 'XNLM5KBW', 'quang anh', '0365151822', '4dvsdsf', '', 'f', 'NEW', 750000, 0, 750000, b'0', '2024-05-14 10:47:02', '2024-06-15 13:55:03', 0, 1),
+(77, 'XRAPWYJI', 'quang anh', '0999999999', 'fđ', '', 'dgf', 'NEW', 990000, 0, NULL, b'0', '2024-05-14 10:47:02', '2024-06-15 13:55:03', 0, 1),
+(78, 'YFJBR6YE', 'quang anh', '0365151822', '4dvsdsf', '', 'vd', 'NEW', 333333, 0, 333333, b'0', '2024-05-14 10:47:02', '2024-06-15 13:55:03', 0, 1),
+(79, 'YHNB0POU', 'dsfds', '0999999999', 'f', '', 's', 'NEW', 420000, 30000, 450000, b'0', '2024-05-14 10:47:02', '2024-06-15 13:55:03', 0, 1),
+(80, 'YIFBIIM3', 'quang anh', '0365151822', '4dvsdsf', '', 's', 'NEW', 990000, 0, 990000, b'0', '2024-05-14 10:47:02', '2024-06-15 13:55:03', 0, 1),
+(81, 'YK68ZX7R', 'nguyễn quang anh', '3432224222', 'số 18 ngõ 222 tựu liệt,thanh trì, hà nội', '', '', 'NEW', 990000, 0, 990000, b'0', '2024-05-14 10:47:02', '2024-06-15 13:55:03', 0, 1),
+(82, 'YTNKBIKE', 'quang anh', '0365151822', '4dvsdsf', '', 's', 'NEW', 990000, 0, 990000, b'0', '2024-05-14 10:47:02', '2024-06-15 13:55:03', 0, 1),
+(83, 'YZSGNG1E', 'quang anh', '0365151822', '4dvsdsf', '', 'd', 'NEW', 750000, 0, 750000, b'0', '2024-05-14 10:47:02', '2024-06-15 13:55:03', 0, 1),
+(84, 'ZUI23NIT', 'nguyễn quang anh', '0999999999', 'số 18 ngõ 222 tựu liệt,thanh trì, hà nội', '                        dsf', NULL, 'NEW', 290000, 20000, 890000, b'0', '2024-05-14 10:47:02', '2024-06-15 13:55:03', 0, 1),
+(86, '7K1RTIHD', 'string', '2538878580', 'string', NULL, 'string', 'NEW', 1040000, 10000, 1050000, b'0', '2024-06-01 04:17:24', '2024-06-15 13:55:03', 0, 1),
+(87, 'UPX8U4CZ', 'string', '2538878580', 'string', NULL, 'string', 'NEW', 1040000, 10000, 1050000, b'0', '2024-06-01 04:18:19', '2024-06-15 13:55:03', 0, 1),
+(88, 'O0VRCG1N', 'string', '2538878580', 'string', NULL, 'string', 'NEW', 1040000, 10000, 1050000, b'0', '2024-06-01 04:22:37', '2024-06-15 13:55:03', 0, 1),
+(89, '7ECXBCFQ', 'string', '2538878580', 'string', NULL, 'string', 'NEW', 1040000, 10000, 1050000, b'0', '2024-06-01 04:24:54', '2024-06-15 13:55:03', 0, 1),
+(90, 'DK9QJKRV', 'string', '2538878580', 'string', NULL, 'string', 'NEW', 1040000, 10000, 1050000, b'1', '2024-06-01 04:30:43', '2024-06-15 13:55:03', 0, 1);
 
 -- --------------------------------------------------------
 
@@ -1021,12 +1021,12 @@ CREATE TABLE `jwt_tokens` (
 --
 
 INSERT INTO `jwt_tokens` (`id`, `token`, `expiration_date`, `refresh_token`, `account_id`, `refresh_expiration_date`, `revoked`, `created_at`, `updated_at`) VALUES
-(236, 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJuZ3V5ZW5xdWFuZ2FuaCIsInVzZXJuYW1lIjoibmhhbnZpZW4xIiwicm9sZSI6IlJPTEVfRU1QTE9ZRUUiLCJpYXQiOjE3MTgyODcyMzcsImV4cCI6MTcxODI4NzgzN30.PZUhGFpkdnkpT4_OL2tLlI2ZDrnZqThjifH9WjRgBOA', '2024-06-13 21:10:37', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJuZ3V5ZW5xdWFuZ2FuaCIsInVzZXJuYW1lIjoibmhhbnZpZW4xIiwicm9sZSI6IlJPTEVfRU1QTE9ZRUUiLCJpYXQiOjE3MTgyODcyMzcsImV4cCI6MTcxODg5MjAzN30.Pq0AHM-ps3F0WpwfPuQEQOY9bLtcxt8NnEW7Qh_Rk7Q', 2, '2024-06-20 21:00:37', 0, '2024-06-13 14:00:37', '2024-06-13 14:00:37'),
 (238, 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJuZ3V5ZW5xdWFuZ2FuaCIsInVzZXJuYW1lIjoia2hhY2hoYW5nIiwicm9sZSI6IlJPTEVfQ1VTVE9NRVIiLCJpYXQiOjE3MTgyODczNTAsImV4cCI6MTcxODI4Nzk1MH0.MBtQQmXdFsaTq9df4PONbzDrcuLkdbDnbUzXenZh7Mw', '2024-06-13 21:12:30', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJuZ3V5ZW5xdWFuZ2FuaCIsInVzZXJuYW1lIjoia2hhY2hoYW5nIiwicm9sZSI6IlJPTEVfQ1VTVE9NRVIiLCJpYXQiOjE3MTgyODczNTAsImV4cCI6MTcxODg5MjE1MH0.vomPZVTKgof4oZ2P-DE7ROAqsjSxEAvY-waJPFMqTAI', 14, '2024-06-20 21:02:30', 0, '2024-06-13 14:02:30', '2024-06-13 14:02:30'),
 (239, 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJuZ3V5ZW5xdWFuZ2FuaCIsInVzZXJuYW1lIjoia2hhY2hoYW5nIiwicm9sZSI6IlJPTEVfQ1VTVE9NRVIiLCJpYXQiOjE3MTgyODc0MDgsImV4cCI6MTcxODI4ODAwOH0.ZrjFfLfodYx3Uz_2-2U243bseY__EZmxUAhJ4NfU55Q', '2024-06-13 21:13:28', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJuZ3V5ZW5xdWFuZ2FuaCIsInVzZXJuYW1lIjoia2hhY2hoYW5nIiwicm9sZSI6IlJPTEVfQ1VTVE9NRVIiLCJpYXQiOjE3MTgyODc0MDgsImV4cCI6MTcxODg5MjIwOH0.k1MMiq8HjS1N3I2kjNyK2bEcgEVTSlp7ueyLW5jiEzs', 14, '2024-06-20 21:03:28', 0, '2024-06-13 14:03:28', '2024-06-13 14:03:28'),
-(240, 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJuZ3V5ZW5xdWFuZ2FuaCIsInVzZXJuYW1lIjoibmhhbnZpZW4xIiwicm9sZSI6IlJPTEVfRU1QTE9ZRUUiLCJpYXQiOjE3MTgyODc3MTksImV4cCI6MTcxODI4ODMxOX0.0j2JXkY0dhCHTyO3XGiMibEeeNKECVs0xF_Npa-KL5c', '2024-06-13 21:18:39', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJuZ3V5ZW5xdWFuZ2FuaCIsInVzZXJuYW1lIjoibmhhbnZpZW4xIiwicm9sZSI6IlJPTEVfRU1QTE9ZRUUiLCJpYXQiOjE3MTgyODc3MTksImV4cCI6MTcxODg5MjUxOX0.tJ7DyIzEtNISfJN60UJ5WMnfUtRWwOi3MEpQ4b_KK94', 2, '2024-06-20 21:08:39', 0, '2024-06-13 14:08:39', '2024-06-13 14:08:39'),
-(255, 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJuZ3V5ZW5xdWFuZ2FuaCIsInBob25lIjoiMDM2NDEwMDE5NiIsInJvbGUiOiJST0xFX01BTkFHRVIiLCJpYXQiOjE3MTgzMzk4OTEsImV4cCI6MTcxODM0MDQ5MX0.k4rrtDS5EA3g-qP08n36-3CVb5Kbe0St3ThqH0DEQpg', '2024-06-14 11:48:11', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJuZ3V5ZW5xdWFuZ2FuaCIsInBob25lIjoiMDM2NDEwMDE5NiIsInJvbGUiOiJST0xFX01BTkFHRVIiLCJpYXQiOjE3MTgzMzk4OTEsImV4cCI6MTcxODk0NDY5MX0.THSJeRysYyy63xuTEc7DEaYUC8uBJZMo1Xv-8bUXOXw', 1, '2024-06-21 11:38:11', 0, '2024-06-14 04:38:11', '2024-06-14 04:38:11'),
-(256, 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJuZ3V5ZW5xdWFuZ2FuaCIsInBob25lIjoiMDM2NDEwMDE5NiIsInJvbGUiOiJST0xFX01BTkFHRVIiLCJpYXQiOjE3MTgzNDEwODYsImV4cCI6MTcxODM0MTY4Nn0.DqkrVdFoGbYmkuNGV7oGp-Wvzj_NQGjNLpNHh2dsK4w', '2024-06-14 12:08:06', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJuZ3V5ZW5xdWFuZ2FuaCIsInBob25lIjoiMDM2NDEwMDE5NiIsInJvbGUiOiJST0xFX01BTkFHRVIiLCJpYXQiOjE3MTgzNDEwODYsImV4cCI6MTcxODk0NTg4Nn0.CsfA0J-Ymr4C4sCOqDhNrPlonGMwIaaD_yzH93l9gwU', 1, '2024-07-14 11:58:06', 0, '2024-06-14 04:42:55', '2024-06-14 04:58:06');
+(304, 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJuZ3V5ZW5xdWFuZ2FuaCIsInBob25lIjoiMDM2NTE1MTgyMiIsInJvbGUiOiJST0xFX0VNUExPWUVFIiwiaWF0IjoxNzE4NDUzNDkzLCJleHAiOjE3MTg0NTQwOTN9._0VsRL6Q9csdSJWs_aqdFaPHaBtp_JcVgqj0XybXd2M', '2024-06-15 19:21:33', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJuZ3V5ZW5xdWFuZ2FuaCIsInBob25lIjoiMDM2NTE1MTgyMiIsInJvbGUiOiJST0xFX0VNUExPWUVFIiwiaWF0IjoxNzE4NDUzNDkzLCJleHAiOjE3MTkwNTgyOTN9.UJ13mPqX6e46OqvM6LG7pHwpGDX2uDq6AoK1mJ6I_t4', 2, '2024-06-22 19:11:33', 0, '2024-06-15 12:11:33', '2024-06-15 12:11:33'),
+(305, 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJuZ3V5ZW5xdWFuZ2FuaCIsInBob25lIjoiMDM2NTE1MTgyMiIsInJvbGUiOiJST0xFX0VNUExPWUVFIiwiaWF0IjoxNzE4NDU0NDY2LCJleHAiOjE3MTg0NTUwNjZ9.jvGgSMiCaASsqzbMoXfzFAP2Zv88CX7tmI9JAMSEpDU', '2024-06-15 19:37:46', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJuZ3V5ZW5xdWFuZ2FuaCIsInBob25lIjoiMDM2NTE1MTgyMiIsInJvbGUiOiJST0xFX0VNUExPWUVFIiwiaWF0IjoxNzE4NDU0NDY2LCJleHAiOjE3MTkwNTkyNjZ9.Ykm_EohnvsOJEW39xs2Gk6rOjtzQTVxBUC1SyUvm98w', 2, '2024-06-22 19:27:46', 0, '2024-06-15 12:27:46', '2024-06-15 12:27:46'),
+(307, 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJuZ3V5ZW5xdWFuZ2FuaCIsInBob25lIjoiMDM2NDEwMDE5NiIsInJvbGUiOiJST0xFX01BTkFHRVIiLCJpYXQiOjE3MTg0NTUxNzUsImV4cCI6MTcxODQ1NTc3NX0.fPvITPEoDXp88Ns7z7kiq2ThzzhGWHE4MrRoZmXE6yQ', '2024-06-15 19:49:35', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJuZ3V5ZW5xdWFuZ2FuaCIsInBob25lIjoiMDM2NDEwMDE5NiIsInJvbGUiOiJST0xFX01BTkFHRVIiLCJpYXQiOjE3MTg0NTUxNzUsImV4cCI6MTcxOTA1OTk3NX0.NECVBrmACPESJnp1s61AOt1pieqrEmTwJStsDvfxnQg', 1, '2024-06-22 19:39:35', 0, '2024-06-15 12:39:35', '2024-06-15 12:39:35'),
+(308, 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJuZ3V5ZW5xdWFuZ2FuaCIsInBob25lIjoiMDM2NDEwMDE5NiIsInJvbGUiOiJST0xFX01BTkFHRVIiLCJpYXQiOjE3MTg0NTgwMTAsImV4cCI6MTcxODQ1ODYxMH0.3quZYaCLas4Ge8UCYJ_umjEbCCaOcmi3jOzlEfMYZH4', '2024-06-15 20:36:50', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJuZ3V5ZW5xdWFuZ2FuaCIsInBob25lIjoiMDM2NDEwMDE5NiIsInJvbGUiOiJST0xFX01BTkFHRVIiLCJpYXQiOjE3MTg0NTgwMTAsImV4cCI6MTcxOTA2MjgxMH0.ZmERGEBl094IQC8KtHaobl90Qu21v-iH6VMJNXZp4fg', 1, '2024-06-22 20:26:50', 0, '2024-06-15 13:26:50', '2024-06-15 13:26:50');
 
 -- --------------------------------------------------------
 
@@ -1969,7 +1969,7 @@ ALTER TABLE `imgs_product`
 -- AUTO_INCREMENT cho bảng `invoices`
 --
 ALTER TABLE `invoices`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=91;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=94;
 
 --
 -- AUTO_INCREMENT cho bảng `invoices_detail`
@@ -1981,7 +1981,7 @@ ALTER TABLE `invoices_detail`
 -- AUTO_INCREMENT cho bảng `jwt_tokens`
 --
 ALTER TABLE `jwt_tokens`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=257;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=309;
 
 --
 -- AUTO_INCREMENT cho bảng `products`

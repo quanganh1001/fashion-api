@@ -51,6 +51,8 @@ public class InvoiceRes {
 
     private Long accountId;
 
+    private String accountName;
+
     private List<InvoiceDetailRes> invoicesDetails;
 
 }

@@ -40,6 +40,8 @@ public class InvoiceServiceImpl implements InvoiceService {
     private ProductDetailRepo productDetailRepo;
     @Autowired
     private AccountService accountService;
+    @Autowired
+    private AccountRepo accountRepo;
 
     @Override
     public PageInvoiceRes getAllInvoices(String keyword, int page, int pageSize, Long accountId, InvoiceStatusEnum invoiceStatus) {
@@ -204,6 +206,12 @@ public class InvoiceServiceImpl implements InvoiceService {
             throw new BadRequestException("Status " + currentInvoice.getInvoiceStatus() + " cannot update invoice");
         }
 
+
+        if (dto.getAccountId() != null && !dto.getAccountId().equals(currentInvoice.getAccount().getId())) {
+            Account newAccount = accountRepo.findById(dto.getAccountId())
+                    .orElseThrow(() -> new NotFoundException("Account"));
+            currentInvoice.setAccount(newAccount);
+        }
 
         Invoice invoice = invoiceRepo.save(invoiceMapper.updateInvoiceToInvoice(dto, currentInvoice));
         return invoiceMapper.invoiceToInvoiceRes(invoice);

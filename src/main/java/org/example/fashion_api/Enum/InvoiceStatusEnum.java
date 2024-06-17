@@ -1,5 +1,6 @@
 package org.example.fashion_api.Enum;
 
+import com.fasterxml.jackson.annotation.JsonValue;
 import lombok.Getter;
 
 @Getter
@@ -15,8 +16,14 @@ public enum InvoiceStatusEnum {
     private final int value;
     private final String des;
 
+
     InvoiceStatusEnum(int value,String des) {
         this.value = value;
         this.des = des;
+    }
+
+    @JsonValue
+    public String getDes() {
+        return des;
     }
 }

@@ -1,5 +1,6 @@
 package org.example.fashion_api.Enum;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 import lombok.Getter;
 
@@ -25,5 +26,15 @@ public enum InvoiceStatusEnum {
     @JsonValue
     public String getDes() {
         return des;
+    }
+
+    @JsonCreator
+    public static InvoiceStatusEnum fromDes(String des) {
+        for (InvoiceStatusEnum status : InvoiceStatusEnum.values()) {
+            if (status.getDes().equals(des)) {
+                return status;
+            }
+        }
+        throw new IllegalArgumentException("Unknown enum type " + des);
     }
 }

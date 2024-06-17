@@ -28,4 +28,9 @@ public class InvoiceDetailRes {
 
     private String invoiceId;
 
+    private String color;
+
+    private String size;
+
+    private String imgUrl;
 }

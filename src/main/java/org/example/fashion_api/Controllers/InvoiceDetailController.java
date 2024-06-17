@@ -25,7 +25,7 @@ public class InvoiceDetailController {
 
     @Operation(summary = "update shipping fee (role MANAGER,EMPLOYEE)")
     @PutMapping("/{invoiceDetailId}/changeQuantity")
-    public ResponseEntity<String> updateQuantity(@PathVariable Long invoiceDetailId, int quantity){
+    public ResponseEntity<String> updateQuantity(@PathVariable Long invoiceDetailId,@RequestParam int quantity){
         invoiceDetailService.changeQuantity(invoiceDetailId,quantity);
         return ResponseEntity.ok("Change quantity successfully");
     }

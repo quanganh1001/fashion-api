@@ -1,5 +1,6 @@
 package org.example.fashion_api.Mapper;
 
+import org.example.fashion_api.Enum.InvoiceStatusEnum;
 import org.example.fashion_api.Models.Colors.Color;
 import org.example.fashion_api.Models.Colors.ColorDto;
 import org.example.fashion_api.Models.Invoices.CreateInvoiceDto;
@@ -22,7 +23,7 @@ import java.util.List;
 @Mapper(componentModel = "spring",uses = {InvoiceDetailMapper.class}, unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface InvoiceMapper {
 
-    @Mapping(target = "invoice.invoicesDetails",ignore = true)
+    @Mapping(target = "invoice.invoicesDetails", ignore = true)
     List<InvoiceRes> toResList(List<Invoice> invoices);
 
     @Mapping(target = "accountId", source = "account.id")
@@ -30,9 +31,10 @@ public interface InvoiceMapper {
     @Mapping(target = "invoicesDetails", source = "invoicesDetails")
     InvoiceRes invoiceToInvoiceRes(Invoice invoice);
 
-    @Mapping(target = "account.id",source = "accountId")
-    Invoice createInvoiceToInvoice(CreateInvoiceDto createInvoiceDto,@MappingTarget Invoice invoice);
+    @Mapping(target = "account.id", source = "accountId")
+    Invoice createInvoiceToInvoice(CreateInvoiceDto createInvoiceDto, @MappingTarget Invoice invoice);
 
-    @Mapping(target = "account.id",source = "accountId")
+    @Mapping(target = "account.id", source = "accountId")
     Invoice updateInvoiceToInvoice(UpdateInvoiceDto updateInvoiceDto, @MappingTarget Invoice invoice);
+
 }

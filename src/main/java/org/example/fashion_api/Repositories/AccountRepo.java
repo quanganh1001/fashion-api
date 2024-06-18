@@ -22,7 +22,7 @@ public interface AccountRepo extends JpaRepository<Account, Long> {
 
     Boolean existsByPhone(String phone);
 
-    @Query(value = "SELECT * FROM accounts WHERE LOWER(email) LIKE LOWER(CONCAT('%', :keyword, '%')) " +
+    @Query(value = "SELECT * FROM accounts WHERE LOWER(name) LIKE LOWER(CONCAT('%', :keyword, '%')) " +
                                             "OR LOWER(phone) LIKE LOWER(CONCAT('%', :keyword, '%'))", nativeQuery = true)
     Page<Account> findAllByKeyword(@Param("keyword") String keyword, PageRequest pageable);
 

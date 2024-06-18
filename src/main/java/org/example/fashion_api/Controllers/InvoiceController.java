@@ -59,12 +59,7 @@ public class InvoiceController {
         return ResponseEntity.ok(invoiceDetailService.getAllInvoicesDetailsByInvoice(invoiceId));
     }
 
-    @Operation(summary = "create Invoice (role MANAGER,EMPLOYEE)")
-    @PreAuthorize("hasAnyRole('MANAGER','EMPLOYEE')")
-    @PostMapping
-    public ResponseEntity<InvoiceRes> createInvoice(@Valid @RequestBody CreateInvoiceDto createInvoiceDto){
-        return ResponseEntity.ok(invoiceService.createInvoice(createInvoiceDto));
-    }
+
 
     @Operation(summary = "create Invoice detail (role MANAGER,EMPLOYEE)")
     @PreAuthorize("hasAnyRole('MANAGER','EMPLOYEE')")

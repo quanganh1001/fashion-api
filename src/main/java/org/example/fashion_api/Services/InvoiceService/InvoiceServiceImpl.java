@@ -95,8 +95,8 @@ public class InvoiceServiceImpl implements InvoiceService {
     }
 
     @Override
-    public InvoiceRes createInvoice(CreateInvoiceDto createInvoiceDto) {
-        Invoice invoice = invoiceMapper.createInvoiceToInvoice(createInvoiceDto, new Invoice());
+    public InvoiceRes createInvoice(CheckoutDto checkoutDto) {
+        Invoice invoice = invoiceMapper.checkoutDtoToInvoice(checkoutDto, new Invoice());
 
         Invoice newInvoice = invoiceRepo.save(invoice);
 
@@ -130,15 +130,8 @@ public class InvoiceServiceImpl implements InvoiceService {
 
     @Override
     public String checkout(HttpServletRequest http, CheckoutDto checkoutDto) {
-        CreateInvoiceDto createInvoiceDto = CreateInvoiceDto.builder()
-                .accountId(checkoutDto.getAccountId())
-                .address(checkoutDto.getAddress())
-                .phone(checkoutDto.getPhone())
-                .name(checkoutDto.getName())
-                .customerNote(checkoutDto.getCustomerNote())
-                .shippingFee(checkoutDto.getShippingFee())
-                .build();
-        InvoiceRes invoiceRes = createInvoice(createInvoiceDto);
+
+        InvoiceRes invoiceRes = createInvoice(checkoutDto);
 
         long totalPrice = 0;
 

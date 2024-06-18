@@ -9,7 +9,7 @@ public interface InvoiceService {
 
     PageInvoiceRes getAllInvoices(String keyword, int page, int pageSize,Long accountId, InvoiceStatusEnum invoiceStatus);
 
-    InvoiceRes createInvoice(CreateInvoiceDto createInvoiceDto);
+    InvoiceRes createInvoice(CheckoutDto checkoutDto);
 
     InvoiceRes getById(Long invoiceId);
 

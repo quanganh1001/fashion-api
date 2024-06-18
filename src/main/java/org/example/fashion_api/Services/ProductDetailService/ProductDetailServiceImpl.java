@@ -7,6 +7,7 @@ import org.example.fashion_api.Exception.NotFoundException;
 import org.example.fashion_api.Mapper.ProductDetailMapper;
 import org.example.fashion_api.Models.Products.Product;
 import org.example.fashion_api.Models.ProductsDetails.*;
+import org.example.fashion_api.Repositories.InvoiceDetailRepo;
 import org.example.fashion_api.Repositories.ProductDetailRepo;
 import org.example.fashion_api.Repositories.ProductRepo;
 import org.example.fashion_api.Services.RedisService.RedisService;
@@ -28,6 +29,8 @@ public class ProductDetailServiceImpl implements ProductDetailService{
 
     @Autowired
     private ProductRepo productRepo;
+    @Autowired
+    private InvoiceDetailRepo invoiceDetailRepo;
 
     @Override
     public List<ProductDetailRes> findAllProductDetails(Long productId) throws JsonProcessingException {
@@ -83,5 +86,12 @@ public class ProductDetailServiceImpl implements ProductDetailService{
     public void deleteProductDetail(Long productDetailId){
         ProductDetail productDetail = productDetailRepo.findById(productDetailId).orElseThrow(()-> new NotFoundException(productDetailId.toString()));
         productDetailRepo.delete(productDetail);
+    }
+
+    @Override
+    public List<ProductDetailRes> findByKey(String key) {
+        List<ProductDetail> productDetails =
+        productDetailRepo.findAllByKey(key);
+        return productDetailMapper.productDetailsToProductDetailRes(productDetails);
     }
 }

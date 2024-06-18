@@ -19,4 +19,12 @@ public interface ProductDetailRepo extends JpaRepository<ProductDetail, Long> {
     @Transactional
     void setIsActivated(@Param("productDetailId") Long productDetailId, @Param("status") Boolean status);
 
+    @Query(value = "SELECT pd.* FROM products_detail pd " +
+            "JOIN products p ON pd.product_id = p.id " +
+            "WHERE p.product_code LIKE %:key% " +
+            "OR p.product_name LIKE %:key% " +
+            "OR pd.is_activated = true",
+            nativeQuery = true)
+    List<ProductDetail> findAllByKey(String key);
+
 }

@@ -18,4 +18,6 @@ public interface ProductDetailService {
     ProductDetailRes updateProductDetail(Long productDetailId, UpdateProductDetailDto dto);
 
     void deleteProductDetail(Long productDetailId);
+
+    List<ProductDetailRes> findByKey(String key);
 }

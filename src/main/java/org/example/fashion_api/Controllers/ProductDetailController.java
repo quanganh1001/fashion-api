@@ -27,6 +27,12 @@ public class ProductDetailController {
         return ResponseEntity.ok(productDetailService.getProductDetail(productDetailId));
     }
 
+    @Operation(summary = "find product detail by keyword")
+    @GetMapping()
+    public ResponseEntity<List<ProductDetailRes>> findByKey(@RequestParam String key) {
+        return ResponseEntity.ok(productDetailService.findByKey(key));
+    }
+
     @Operation(summary = "create product detail (role MANAGER)")
     @PreAuthorize("hasAnyRole('MANAGER')")
     @PostMapping()

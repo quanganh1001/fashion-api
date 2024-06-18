@@ -14,8 +14,6 @@ public interface ProductRepo extends JpaRepository<Product,Long> {
 
     Boolean existsByProductCode(String productCode);
 
-    Boolean existsByProductName(String productName);
-
     @Modifying
     @Query(value = "UPDATE products SET image_background = :imageUrl WHERE id = :id",
             nativeQuery = true)

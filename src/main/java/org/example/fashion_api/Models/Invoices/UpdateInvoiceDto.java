@@ -31,4 +31,5 @@ public class UpdateInvoiceDto {
 
     private InvoiceStatusEnum invoiceStatus;
 
+    private Boolean isPaid;
 }

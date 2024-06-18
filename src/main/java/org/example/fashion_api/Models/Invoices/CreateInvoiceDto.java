@@ -34,4 +34,6 @@ public class CreateInvoiceDto {
     private Long totalBill;
 
     private Long accountId;
+
+    private Boolean isPaid ;
 }

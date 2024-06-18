@@ -91,7 +91,7 @@ public class ProductDetailServiceImpl implements ProductDetailService{
     @Override
     public List<ProductDetailRes> findByKey(String key) {
         List<ProductDetail> productDetails =
-        productDetailRepo.findAllByKey(key);
+        productDetailRepo.searchProductDetailByProductProductNameContainingIgnoreCase(key);
         return productDetailMapper.productDetailsToProductDetailRes(productDetails);
     }
 }

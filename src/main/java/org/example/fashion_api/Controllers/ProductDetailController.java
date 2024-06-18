@@ -29,7 +29,7 @@ public class ProductDetailController {
 
     @Operation(summary = "find product detail by keyword")
     @GetMapping()
-    public ResponseEntity<List<ProductDetailRes>> findByKey(@RequestParam String key) {
+    public ResponseEntity<List<ProductDetailRes>> findByKey(@RequestParam(defaultValue = "") String key) {
         return ResponseEntity.ok(productDetailService.findByKey(key));
     }
 

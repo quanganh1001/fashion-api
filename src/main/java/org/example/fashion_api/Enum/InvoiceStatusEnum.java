@@ -28,13 +28,5 @@ public enum InvoiceStatusEnum {
         return des;
     }
 
-    @JsonCreator
-    public static InvoiceStatusEnum fromDes(String des) {
-        for (InvoiceStatusEnum status : InvoiceStatusEnum.values()) {
-            if (status.getDes().equals(des)) {
-                return status;
-            }
-        }
-        throw new IllegalArgumentException("Unknown enum type " + des);
-    }
+
 }

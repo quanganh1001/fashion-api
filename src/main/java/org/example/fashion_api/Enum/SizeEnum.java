@@ -1,5 +1,6 @@
 package org.example.fashion_api.Enum;
 
+import com.fasterxml.jackson.annotation.JsonValue;
 import lombok.Getter;
 
 @Getter
@@ -25,5 +26,10 @@ public enum SizeEnum {
 
     SizeEnum(String size) {
         this.size = size;
+    }
+
+    @JsonValue
+    public String getSize() {
+        return size;
     }
 }

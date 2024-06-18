@@ -25,6 +25,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class InvoiceServiceImpl implements InvoiceService {
@@ -199,14 +200,15 @@ public class InvoiceServiceImpl implements InvoiceService {
     public InvoiceRes updateInvoice(Long invoiceId, UpdateInvoiceDto dto) {
         Invoice currentInvoice = invoiceRepo.findById(invoiceId).orElseThrow(() -> new NotFoundException("Invoice"));
 
-        if ((currentInvoice.getInvoiceStatus() == InvoiceStatusEnum.SUCCESS)
+        if ((currentInvoice.getInvoiceStatus() == InvoiceStatusEnum.SUCCESS
                 || currentInvoice.getInvoiceStatus() == InvoiceStatusEnum.DELIVERING
                 || currentInvoice.getInvoiceStatus() == InvoiceStatusEnum.RETURN
-                || currentInvoice.getInvoiceStatus() == InvoiceStatusEnum.ORDER_CREATED) {
+                || currentInvoice.getInvoiceStatus() == InvoiceStatusEnum.ORDER_CREATED)
+        && (!Objects.equals(currentInvoice.getName(), dto.getName()) || !Objects.equals(currentInvoice.getPhone(),
+                dto.getPhone()) || !Objects.equals(currentInvoice.getAddress(), dto.getAddress()) )) {
             throw new BadRequestException("Status " + currentInvoice.getInvoiceStatus() + " cannot update invoice");
         }
 
-        System.out.println(dto);
         if (dto.getAccountId() != null && !dto.getAccountId().equals(currentInvoice.getAccount().getId())) {
             Account newAccount = accountRepo.findById(dto.getAccountId())
                     .orElseThrow(() -> new NotFoundException("Account"));

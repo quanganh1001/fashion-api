@@ -114,7 +114,7 @@ public class InvoiceController {
     @PutMapping("/{invoiceId}")
     public ResponseEntity<InvoiceRes> updateInvoice(@PathVariable Long invoiceId,
                                                @Valid @RequestBody UpdateInvoiceDto dto){
-        ;
+        System.out.println(dto.getIsPaid());
         return ResponseEntity.ok(invoiceService.updateInvoice(invoiceId,dto));
     }
 }

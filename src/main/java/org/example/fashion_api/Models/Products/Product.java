@@ -14,6 +14,7 @@ import org.example.fashion_api.Models.RedisListener;
 import java.util.ArrayList;
 import java.util.List;
 
+@EqualsAndHashCode(callSuper = true)
 @Entity
 @Data
 @Table(name = "products")

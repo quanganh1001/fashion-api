@@ -11,12 +11,14 @@ import org.example.fashion_api.Models.RedisListener;
 
 import java.util.List;
 
+@EqualsAndHashCode(callSuper = true)
 @Entity
 @Builder
 @Data
 @AllArgsConstructor
 @NoArgsConstructor(force = true)
 @Table(name = "categories")
+@EntityListeners(RedisListener.class)
 public class Category extends BaseEntity {
     @NotNull
     private String categoryCode;

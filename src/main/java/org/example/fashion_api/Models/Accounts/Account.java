@@ -13,6 +13,7 @@ import org.example.fashion_api.Models.RedisListener;
 
 import java.util.List;
 
+@EqualsAndHashCode(callSuper = true)
 @AllArgsConstructor
 @NoArgsConstructor(force = true)
 @EntityListeners(RedisListener.class)

@@ -1,15 +1,13 @@
 package org.example.fashion_api.Models.InvoicesDetails;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.example.fashion_api.Models.BaseEntity;
 import org.example.fashion_api.Models.Invoices.Invoice;
 import org.example.fashion_api.Models.ProductsDetails.ProductDetail;
 
+@EqualsAndHashCode(callSuper = true)
 @Entity
 @Data
 @NoArgsConstructor(force = true)

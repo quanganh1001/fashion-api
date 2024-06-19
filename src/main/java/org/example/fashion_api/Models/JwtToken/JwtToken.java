@@ -1,24 +1,21 @@
 package org.example.fashion_api.Models.JwtToken;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.example.fashion_api.Models.Accounts.Account;
+import org.example.fashion_api.Models.BaseEntity;
 
 import java.util.Date;
 
+@EqualsAndHashCode(callSuper = true)
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
 @Entity
 @Table(name = "jwt_tokens")
-public class JwtToken {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class JwtToken extends BaseEntity {
+
 
     private String token;
 

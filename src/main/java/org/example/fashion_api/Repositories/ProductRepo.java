@@ -10,6 +10,8 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.util.List;
+
 public interface ProductRepo extends JpaRepository<Product,Long> {
 
     Boolean existsByProductCode(String productCode);
@@ -29,4 +31,6 @@ public interface ProductRepo extends JpaRepository<Product,Long> {
             "OR LOWER(product_code) LIKE LOWER(CONCAT('%', :keyword, '%')) ", nativeQuery = true)
     Page<Product> findAllProductByKey(@Param("keyword") String keyword, PageRequest pageRequest);
 
+    @Query(value = "SELECT * from products WHERE discount_price > 0 ",nativeQuery = true)
+    List<Product> findAllSale();
 }

@@ -155,17 +155,21 @@ public class ProductServiceImpl implements ProductService {
         // if redis with key = null -> create redis
         if (pageProductRes == null){
             List<Product> productList = new ArrayList<>();
-            List<CategoryRes> categories = categoryService.CatDescendants(catId, new ArrayList<>());
 
+            if (catId ==0){
+                productList = productRepo.findAllSale();
+            }else {
+                List<CategoryRes> categories = categoryService.CatDescendants(catId, new ArrayList<>());
 
-            categories.add(categoryMapper.categoryToCategoryRes(categoryRepo.findById(catId).orElseThrow(() -> new NotFoundException(catId.toString()))));
+                categories.add(categoryMapper.categoryToCategoryRes(categoryRepo.findById(catId).orElseThrow(() -> new NotFoundException(catId.toString()))));
 
-            PageRequest pageRequest = PageRequest.of(page,limit, Sort.by("id").ascending());
+                PageRequest pageRequest = PageRequest.of(page,limit, Sort.by("id").ascending());
 
-            for (CategoryRes cat : categories) {
-                Page<Product> productPage = productRepo.findAllByCategoryCatId(cat.getId(),keyword,pageRequest);
+                for (CategoryRes cat : categories) {
+                    Page<Product> productPage = productRepo.findAllByCategoryCatId(cat.getId(),keyword,pageRequest);
 
-                productList.addAll(productPage.getContent());
+                    productList.addAll(productPage.getContent());
+                }
             }
 
             // convert to PageDto

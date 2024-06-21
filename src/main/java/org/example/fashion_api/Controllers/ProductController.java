@@ -50,11 +50,9 @@ public class ProductController {
 
     @Operation(summary = "get product by catId ")
     @GetMapping("/getByCategory/{catId}")
-    public ResponseEntity<PageProductRes> getProductsByCategory(@RequestParam(defaultValue = "",required = false) String keyword,
-                                                @RequestParam(defaultValue = "1") int page,
-                                                @RequestParam(defaultValue = "10") int limit,
+    public ResponseEntity<List<ProductRes>> getProductsByCategory(@RequestParam(defaultValue = "")String keyword,
                                                 @PathVariable Long catId) throws JsonProcessingException {
-        return ResponseEntity.ok(productService.getAllProductsByCategory(keyword,page-1,limit,catId));
+        return ResponseEntity.ok(productService.getAllProductsByCategory(keyword,catId));
     }
 
     @Operation(summary = "create product (role MANAGER) ")

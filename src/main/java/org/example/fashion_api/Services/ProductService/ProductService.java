@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.List;
 
 
 public interface ProductService {
@@ -30,5 +31,5 @@ public interface ProductService {
     @Transactional
     ResponseEntity<String> updateProductBackground(String imageUrl, Long productId) throws IOException;
 
-    PageProductRes getAllProductsByCategory(String keyword, int page, int limit, Long catId) throws JsonProcessingException;
+    List<ProductRes> getAllProductsByCategory(String keyword,Long catId) throws JsonProcessingException;
 }

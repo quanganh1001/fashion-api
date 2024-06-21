@@ -9,6 +9,7 @@ import org.example.fashion_api.Models.Colors.Color;
 import org.example.fashion_api.Models.Products.Product;
 import org.example.fashion_api.Models.RedisListener;
 
+
 @EqualsAndHashCode(callSuper = true)
 @AllArgsConstructor
 @NoArgsConstructor(force = true)

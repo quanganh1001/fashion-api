@@ -13,7 +13,7 @@ public class PageProductRes {
 
     private int totalPages;
 
-    private int totalProduct;
+    private int totalProducts;
 
     private int currentPage;
 

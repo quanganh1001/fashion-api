@@ -2,6 +2,7 @@ package org.example.fashion_api.Models.Products;
 
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
+import org.example.fashion_api.Enum.ImgSizeEnum;
 
 @Data
 public class CreateProductDto {
@@ -23,8 +24,7 @@ public class CreateProductDto {
     private String description;
 
     @NotNull
-    private String imageChooseSize;
-
+    private ImgSizeEnum imageChooseSize;
 
     @NotNull
     private String catId;

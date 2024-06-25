@@ -1,6 +1,7 @@
 package org.example.fashion_api.Models;
 
 import jakarta.persistence.Id;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import org.example.fashion_api.Models.ProductsDetails.ProductDetailRes;
@@ -15,16 +16,11 @@ import java.util.Map;
 @RedisHash("carts")
 @Data
 @Builder
+@AllArgsConstructor
 public class CartItem {
 
     @Id
-    @Indexed
     private Long id;
 
     Map<Long, Integer> items = new HashMap<>();
-
-//    private Long productDetailId;
-
-//    private Integer quantity;
-
 }

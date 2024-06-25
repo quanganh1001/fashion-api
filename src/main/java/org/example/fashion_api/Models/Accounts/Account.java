@@ -10,9 +10,9 @@ import org.example.fashion_api.Models.BaseEntity;
 import org.example.fashion_api.Models.JwtToken.JwtToken;
 import org.example.fashion_api.Models.Products.Product;
 import org.example.fashion_api.Models.RedisListener;
+import org.springframework.data.redis.core.RedisHash;
 
 import java.util.List;
-
 
 @EqualsAndHashCode(callSuper = true)
 @AllArgsConstructor

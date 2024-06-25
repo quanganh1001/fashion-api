@@ -11,8 +11,9 @@ import org.example.fashion_api.Models.Products.ProductRes;
 @Getter
 @Setter
 @Builder
-@NoArgsConstructor
+@Data
 @AllArgsConstructor
+@NoArgsConstructor
 public class ProductDetailRes {
     private Long id;
 

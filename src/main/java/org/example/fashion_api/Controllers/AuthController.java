@@ -63,7 +63,6 @@ public class AuthController {
     @Operation(summary = "test auth")
     @GetMapping("/checkAuth")
     public ResponseEntity<AccountRes> checkAuth() {
-
         return ResponseEntity.ok(accountMapper.accountEntityToAccountRes(accountService.getAccountFromAuthentication()));
     }
 }

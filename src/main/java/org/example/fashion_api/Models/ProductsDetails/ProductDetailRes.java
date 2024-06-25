@@ -39,7 +39,4 @@ public class ProductDetailRes {
 
     private String imageBackground;
 
-    @Enumerated(EnumType.STRING)
-    private ImgSizeEnum imageChooseSize;
-
 }

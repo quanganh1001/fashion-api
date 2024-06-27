@@ -1,14 +1,13 @@
 package org.example.fashion_api.Services.CartService;
 
-import org.example.fashion_api.Exception.NotFoundException;
 import org.example.fashion_api.Mapper.ProductDetailMapper;
 import org.example.fashion_api.Models.Accounts.Account;
-import org.example.fashion_api.Models.CartItem;
+import org.example.fashion_api.Models.Carts.CartItem;
+import org.example.fashion_api.Models.Carts.CartItemRes;
 import org.example.fashion_api.Models.ProductsDetails.ProductDetailRes;
 import org.example.fashion_api.Repositories.CartRepo;
 import org.example.fashion_api.Repositories.ProductDetailRepo;
 import org.example.fashion_api.Services.AccountService.AccountService;
-import org.example.fashion_api.Services.RedisService.RedisService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -28,69 +27,92 @@ public class CartServiceImpl implements CartService {
     private ProductDetailRepo productDetailRepo;
 
     @Override
-    public List<Map.Entry<ProductDetailRes, Integer>> getCart() {
-        Account account = accountService.getAccountFromAuthentication();
+    public List<CartItemRes> getCart() {
+        CartItem cartItem = getCartItem();
 
-        Long accountId = account.getId();
-
-        CartItem cartItem = cartRepo.findById(accountId).orElse(new CartItem(accountId, new HashMap<>()));
-
-        List<Map.Entry<ProductDetailRes, Integer>> productDetailResList = new ArrayList<>();
+        List<CartItemRes> cartRes = new ArrayList<>();
 
         if (cartItem.getItems() != null) {
             for (Map.Entry<Long, Integer> entry : cartItem.getItems().entrySet()) {
-                Long productDetailId = entry.getKey();
-                Integer quantity = entry.getValue();
+                ProductDetailRes productDetailRes =
+                        productDetailMapper.productDetailToProductDetailRes(
+                                productDetailRepo.findById(entry.getKey()).orElseThrow()
+                        );
 
-                ProductDetailRes productDetailRes = productDetailMapper.productDetailToProductDetailRes(productDetailRepo.findById(productDetailId).orElseThrow(() -> new NotFoundException("Product detail not found")));
-
-                productDetailResList.add(new AbstractMap.SimpleEntry<>(productDetailRes, quantity));
+                var price = (productDetailRes.getDiscountPrice() != null ? productDetailRes.getDiscountPrice() :
+                        productDetailRes.getPrice());
+                cartRes.add(
+                        CartItemRes.builder().
+                                productDetail(productDetailRes)
+                                .quantity(entry.getValue())
+                                .totalPriceItem(price * entry.getValue())
+                                .build()
+                );
             }
         }
 
-        return productDetailResList;
+        return cartRes;
 
     }
 
     @Override
     public void addCart(Long productDetailId) {
-        Account account = accountService.getAccountFromAuthentication();
+        CartItem cartItem = getCartItem();
 
-        Long accountId = account.getId();
+        if (cartItem.getItems() == null) {
+            cartItem.setItems(new HashMap<>());
+        }
 
-        CartItem cartItem = cartRepo.findById(accountId).orElse(new CartItem(accountId, new HashMap<>()));
+        if (cartItem.getItems().containsKey(productDetailId)) {
+            cartItem.getItems().put(productDetailId, cartItem.getItems().get(productDetailId) + 1);
+        }else {
+            cartItem.getItems().put(productDetailId,1);
+        }
 
-        cartItem.getItems().put(productDetailId,1);
 
         cartRepo.save(cartItem);
+
     }
 
     @Override
     public void updateCart(Long productDetailId, Integer quantity) {
-        Account account = accountService.getAccountFromAuthentication();
-
-        Long accountId = account.getId();
-
-        CartItem cartItem = cartRepo.findById(accountId).orElse(CartItem.builder().id(accountId).items(new HashMap<>()).build());
-
-        if (cartItem.getItems().containsKey(productDetailId)) {
+        CartItem cartItem = getCartItem();
+        if (cartItem.getItems() == null) {
+            cartItem.setItems(new HashMap<>());
+        }
             cartItem.getItems().put(productDetailId, quantity);
             cartRepo.save(cartItem);
-        }
+
 
     }
 
     @Override
     public void removeCart(Long productDetailId) {
-        Account account = accountService.getAccountFromAuthentication();
-
-        Long accountId = account.getId();
-
-        CartItem cartItem = cartRepo.findById(accountId).orElseThrow();
+        CartItem cartItem = getCartItem();
 
         cartItem.getItems().remove(productDetailId);
 
         cartRepo.save(cartItem);
     }
 
+    @Override
+    public Integer getTotalItems() {
+        CartItem cartItem = getCartItem();
+        if (cartItem.getItems() == null) {
+            return 0;
+        }
+
+        int totalItems = 0;
+        for (Integer quantity : cartItem.getItems().values()) {
+            totalItems += quantity;
+        }
+
+        return totalItems;
+    }
+
+    public CartItem getCartItem() {
+        Account account = accountService.getAccountFromAuthentication();
+
+        return cartRepo.findById(account.getId()).orElse(CartItem.builder().id(account.getId()).items(new HashMap<>()).build());
+    }
 }

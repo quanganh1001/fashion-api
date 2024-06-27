@@ -34,7 +34,5 @@ public class CheckoutDto {
 
     private Long shippingFee;
 
-    private Long accountId;
-
     private List<InvoiceDetailDto> invoicesDetails;
 }

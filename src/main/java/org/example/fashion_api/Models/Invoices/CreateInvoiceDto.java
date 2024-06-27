@@ -33,7 +33,5 @@ public class CreateInvoiceDto {
     @NotNull
     private Long totalBill;
 
-    private Long accountId;
-
     private Boolean isPaid ;
 }

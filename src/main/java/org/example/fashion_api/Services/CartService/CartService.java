@@ -10,7 +10,7 @@ public interface CartService {
 
     List<CartItemRes> getCart();
 
-    void addCart(Long productDetailId);
+    void addCart(Long productDetailId,Integer quantity);
 
     void updateCart(Long productDetailId, Integer quantity);
 

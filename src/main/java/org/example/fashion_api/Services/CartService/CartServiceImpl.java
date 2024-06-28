@@ -56,7 +56,7 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public void addCart(Long productDetailId) {
+    public void addCart(Long productDetailId,Integer quantity) {
         CartItem cartItem = getCartItem();
 
         if (cartItem.getItems() == null) {
@@ -64,9 +64,9 @@ public class CartServiceImpl implements CartService {
         }
 
         if (cartItem.getItems().containsKey(productDetailId)) {
-            cartItem.getItems().put(productDetailId, cartItem.getItems().get(productDetailId) + 1);
+            cartItem.getItems().put(productDetailId, cartItem.getItems().get(productDetailId) + quantity);
         }else {
-            cartItem.getItems().put(productDetailId,1);
+            cartItem.getItems().put(productDetailId,quantity);
         }
 
 

@@ -28,7 +28,6 @@ public interface InvoiceMapper {
     @Mapping(target = "invoicesDetails", source = "invoicesDetails")
     InvoiceRes invoiceToInvoiceRes(Invoice invoice);
 
-    @Mapping(target = "account.id", source = "accountId")
     @Mapping(target = "invoicesDetails", ignore = true)
     Invoice checkoutDtoToInvoice(CheckoutDto checkoutDto, @MappingTarget Invoice invoice);
 

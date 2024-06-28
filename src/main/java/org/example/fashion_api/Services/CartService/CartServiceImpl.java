@@ -83,7 +83,6 @@ public class CartServiceImpl implements CartService {
             cartItem.getItems().put(productDetailId, quantity);
             cartRepo.save(cartItem);
 
-
     }
 
     @Override
@@ -108,6 +107,13 @@ public class CartServiceImpl implements CartService {
         }
 
         return totalItems;
+    }
+
+    @Override
+    public void clearCart() {
+        CartItem cartItem = getCartItem();
+        cartItem.setItems(new HashMap<>());
+        cartRepo.save(cartItem);
     }
 
     public CartItem getCartItem() {

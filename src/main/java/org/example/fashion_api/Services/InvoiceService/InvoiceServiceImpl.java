@@ -53,7 +53,7 @@ public class InvoiceServiceImpl implements InvoiceService {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
 
-        PageRequest pageRequest = PageRequest.of(page, pageSize, Sort.by("created_at").ascending());
+        PageRequest pageRequest = PageRequest.of(page, pageSize, Sort.by("created_at").descending());
 
         Page<Invoice> pageInvoices;
 

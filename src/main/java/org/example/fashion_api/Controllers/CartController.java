@@ -50,4 +50,11 @@ public class CartController {
         cartService.removeCart(productDetailId);
         return ResponseEntity.ok(cartService.getCart());
     }
+
+    @DeleteMapping("/clear")
+    @Operation(summary = "clear cart")
+    public ResponseEntity<List<CartItemRes>> clearCart() {
+        cartService.clearCart();
+        return ResponseEntity.ok(cartService.getCart());
+    }
 }

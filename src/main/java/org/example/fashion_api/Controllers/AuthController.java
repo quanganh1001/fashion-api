@@ -54,7 +54,7 @@ public class AuthController {
 
     @Operation(summary = "reset pass")
     @PutMapping("/resetPass")
-    public ResponseEntity<String> resetPass(String email) {
+    public ResponseEntity<String> resetPass(@RequestBody String email) {
         accountService.resetPass(email);
         return ResponseEntity.ok("New password has been sent to registered email");
     }

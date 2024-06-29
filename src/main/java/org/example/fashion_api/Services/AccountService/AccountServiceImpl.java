@@ -215,6 +215,7 @@ public class AccountServiceImpl implements AccountService {
     @Transactional
     @Override
     public void resetPass(String email) {
+        System.out.println(email);
         Account account = accountRepo.findByEmail(email).orElseThrow(() -> new NotFoundException("Email"));
 
         String newPass = RandomStringUtils.randomAlphanumeric(6);

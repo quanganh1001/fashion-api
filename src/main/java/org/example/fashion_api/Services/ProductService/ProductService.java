@@ -31,5 +31,5 @@ public interface ProductService {
     @Transactional
     ResponseEntity<String> updateProductBackground(String imageUrl, Long productId) throws IOException;
 
-    List<ProductRes> getAllProductsByCategory(String keyword,Long catId) throws JsonProcessingException;
+    List<ProductRes> getAllProductsByCategory(String keyword,String catId) throws JsonProcessingException;
 }

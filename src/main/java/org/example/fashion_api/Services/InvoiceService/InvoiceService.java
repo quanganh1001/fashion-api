@@ -11,6 +11,8 @@ public interface InvoiceService {
 
     InvoiceRes createInvoice(CheckoutDto checkoutDto);
 
+    String checkoutByCash(CheckoutDto checkoutDto);
+
     InvoiceRes getById(Long invoiceId);
 
     void updateShippingFee(Long invoiceId, Long shippingFee);

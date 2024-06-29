@@ -146,7 +146,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<ProductRes> getAllProductsByCategory(String keyword, Long catId) throws JsonProcessingException {
+    public List<ProductRes> getAllProductsByCategory(String keyword, String catId) throws JsonProcessingException {
         String redisKey = "productService.getAllProductsByCategory("+ keyword + "," + catId + ") - product";
 
         // get redis
@@ -156,18 +156,18 @@ public class ProductServiceImpl implements ProductService {
             List<Long> categoryIds = new ArrayList<>();
 
 
-            if(!Objects.equals(keyword, "")){
+            if(!Objects.equals(keyword, "") && Objects.equals(catId, "search")){
 
                 products = productMapper.productsToProductRes(productRepo.findAllProductByKey(keyword)) ;
 
             }else {
 
-                if (catId == 0) {
+                if (Objects.equals(catId, "0")) {
                     products = productMapper.productsToProductRes(productRepo.findAllSale());
 
                 } else {
-                    List<CategoryRes> categories = categoryService.CatDescendants(catId, new ArrayList<>());
-                    categories.add(categoryMapper.categoryToCategoryRes(categoryRepo.findById(catId).orElseThrow(() -> new NotFoundException(catId.toString()))));
+                    List<CategoryRes> categories = categoryService.CatDescendants( Long.parseLong(catId) , new ArrayList<>());
+                    categories.add(categoryMapper.categoryToCategoryRes(categoryRepo.findById(Long.parseLong(catId)).orElseThrow(() -> new NotFoundException(catId.toString()))));
                     for (CategoryRes cat : categories) {
                         categoryIds.add(cat.getId());
                     }

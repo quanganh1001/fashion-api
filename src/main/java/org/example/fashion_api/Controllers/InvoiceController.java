@@ -94,6 +94,18 @@ public class InvoiceController {
         return ResponseEntity.ok(vnpayUrl);
     }
 
+    @PostMapping("/checkoutByCash")
+    @Operation(summary = "checkout order", description = "accountId is the id of the employee who will be in charge of the order")
+    public ResponseEntity<String> checkoutByCash(@Valid @RequestBody CheckoutDto checkoutDto){
+        try {
+             return ResponseEntity.ok(invoiceService.checkoutByCash(checkoutDto));
+        }catch (Exception e) {
+            return ResponseEntity.ok("http://localhost:3000/response?success=0");
+        }
+
+
+    }
+
 
     @Operation(summary = "update status invoice (role MANAGER,EMPLOYEE)")
     @PreAuthorize("hasAnyRole('MANAGER','EMPLOYEE')")

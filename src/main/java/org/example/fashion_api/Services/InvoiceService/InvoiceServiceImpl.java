@@ -14,13 +14,11 @@ import org.example.fashion_api.Repositories.AccountRepo;
 import org.example.fashion_api.Repositories.InvoiceRepo;
 import org.example.fashion_api.Repositories.ProductDetailRepo;
 import org.example.fashion_api.Services.AccountService.AccountService;
-import org.example.fashion_api.Services.AccountService.AccountServiceImpl;
 import org.example.fashion_api.Services.InvoiceDetailService.InvoiceDetailService;
 import org.example.fashion_api.Services.VnpayService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.*;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
@@ -101,6 +99,18 @@ public class InvoiceServiceImpl implements InvoiceService {
         Invoice newInvoice = invoiceRepo.save(invoice);
 
         return invoiceMapper.invoiceToInvoiceRes(newInvoice);
+    }
+
+    @Override
+    public String checkoutByCash(CheckoutDto checkoutDto){
+        InvoiceRes invoiceRes = createInvoice(checkoutDto);
+
+        for (InvoiceDetailDto invoiceDetail : checkoutDto.getInvoicesDetails()) {
+            invoiceDetailService.createInvoiceDetail(invoiceRes.getId(), invoiceDetail.getProductDetailId());
+        }
+
+        return "http://localhost:3000/response?success=1";
+
     }
 
     @Override

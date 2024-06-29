@@ -51,7 +51,7 @@ public class ProductController {
     @Operation(summary = "get product by catId ")
     @GetMapping("/getByCategory/{catId}")
     public ResponseEntity<List<ProductRes>> getProductsByCategory(@RequestParam(defaultValue = "")String keyword,
-                                                @PathVariable Long catId) throws JsonProcessingException {
+                                                @PathVariable String catId) throws JsonProcessingException {
         return ResponseEntity.ok(productService.getAllProductsByCategory(keyword,catId));
     }
 

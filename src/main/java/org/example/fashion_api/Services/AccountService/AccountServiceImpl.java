@@ -121,7 +121,7 @@ public class AccountServiceImpl implements AccountService {
                         .builder()
                         .accountsRes(accountsRes)
                         .currentPage(page + 1)
-                        .totalAccount(totalAccount)
+                        .totalItems(totalAccount)
                         .totalPages(accountPage.getTotalPages())
                         .build();
 
@@ -149,11 +149,23 @@ public class AccountServiceImpl implements AccountService {
             throw new AlreadyExistException("Phone");
         }
 
-        accountRegisterDto.setPassword(passwordEncoder.encode(accountRegisterDto.getPassword()));
+        Account account = new Account();
 
-        // save db
-        Account account = accountMapper.accountRegisterDtoToAccount(accountRegisterDto, new Account());
+        var newPass = RandomStringUtils.randomAlphanumeric(8).toUpperCase();
+
+        account.setPassword(passwordEncoder.encode(newPass));
+
+        account.setRole(RoleEnum.ROLE_CUSTOMER);
+
+        accountMapper.accountRegisterDtoToAccount(accountRegisterDto,account);
+
         accountRepo.save(account);
+
+        mailProducer.send(MailTemplate.builder()
+                .to(accountRegisterDto.getEmail())
+                .subject("Account created successfully!")
+                .body("Your new Password is: " + newPass)
+                .build());
 
         // send mail to user
         MailTemplate mailTemplate = MailTemplate.builder()

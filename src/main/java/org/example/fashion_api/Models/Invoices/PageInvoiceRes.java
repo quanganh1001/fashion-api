@@ -12,7 +12,7 @@ import java.util.List;
 public class PageInvoiceRes {
     private List<InvoiceRes> invoices;
 
-    private Long totalInvoices;
+    private Long totalItems;
 
     private int totalPages;
 

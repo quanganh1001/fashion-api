@@ -72,7 +72,7 @@ public class ProductServiceImpl implements ProductService {
             var totalProduct = Integer.parseInt(String.valueOf(productsPage.getTotalElements()));
             pageProductRes = PageProductRes.builder()
                     .productsRes(productResList)
-                    .totalProducts(totalProduct)
+                    .totalItems(totalProduct)
                     .currentPage(page+1)
                     .totalPages(productsPage.getTotalPages())
                     .build();

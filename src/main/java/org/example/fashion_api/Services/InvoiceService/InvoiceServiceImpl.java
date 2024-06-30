@@ -87,7 +87,7 @@ public class InvoiceServiceImpl implements InvoiceService {
         return PageInvoiceRes.builder()
                 .currentPage(page + 1)
                 .totalPages(pageInvoices.getTotalPages())
-                .totalInvoices(totalInvoices)
+                .totalItems(totalInvoices)
                 .invoices(invoicesRes)
                 .build();
     }

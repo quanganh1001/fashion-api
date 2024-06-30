@@ -14,19 +14,14 @@ import lombok.Setter;
 @AllArgsConstructor
 public class AccountRegisterDto {
 
-    @Email
+    @NotBlank
+    private String name;
+
     @NotBlank
     private String email;
 
     @NotBlank
-    @NotNull
     private String phone;
-
-    @NotBlank
-    private String password;
-
-    @NotBlank
-    private String name;
 
     private String address;
 }

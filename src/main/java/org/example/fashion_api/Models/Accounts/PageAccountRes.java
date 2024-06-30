@@ -17,5 +17,5 @@ public class PageAccountRes {
 
     private int currentPage;
 
-    private Long totalAccount;
+    private Long totalItems;
 }

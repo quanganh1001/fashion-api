@@ -2,10 +2,10 @@
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Máy chủ: localhost
--- Thời gian đã tạo: Th6 16, 2024 lúc 08:12 AM
--- Phiên bản máy phục vụ: 10.4.28-MariaDB
--- Phiên bản PHP: 8.2.4
+-- Máy chủ: 127.0.0.1
+-- Thời gian đã tạo: Th7 01, 2024 lúc 07:17 AM
+-- Phiên bản máy phục vụ: 10.4.32-MariaDB
+-- Phiên bản PHP: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -47,12 +47,13 @@ CREATE TABLE `accounts` (
 --
 
 INSERT INTO `accounts` (`id`, `password`, `name`, `email`, `phone`, `address`, `role`, `is_activated`, `created_at`, `updated_at`) VALUES
-(1, '$2a$10$5C32JYodwPS87Qo2ZqTRBOb3NpDJyls3DEWLoEdb4i1oV5jjmNzNe', 'quang anh', 'quanganhnguyen100196@gmail.com', '0364100196', 'dsv', 'ROLE_MANAGER', b'1', '2024-05-14 10:45:53', '2024-06-14 09:43:35'),
+(1, '$2a$10$5C32JYodwPS87Qo2ZqTRBOb3NpDJyls3DEWLoEdb4i1oV5jjmNzNe', 'quang anh', 'quanganhnguyen100196@gmail.com', '0364100196', 'dsva', 'ROLE_MANAGER', b'1', '2024-05-14 10:45:53', '2024-06-25 17:59:48'),
 (2, '$2a$10$cIsfc/R8PIsJWzbgolJRheAfJ7hK9hxwxxpqplMP4CSlTBJhcoMk.', 'nhanvien1', 'nhanvien1@gmail.com', '0365151822', 'hanoi', 'ROLE_EMPLOYEE', b'1', '2024-05-14 10:45:53', '2024-06-14 09:45:19'),
 (4, '$2a$10$5D2B5O4CmS5RN4VxaTwJXOi9B83aa0lGwWy.sICls9O3LKRgNXyDm', 'quanganh', 'nhanvien2@gmail.com', '0364421123', 'hanoi', 'ROLE_EMPLOYEE', b'1', '2024-05-14 10:45:53', '2024-05-14 10:45:53'),
 (8, '$2a$10$Eh581hpIm67HRwTrHJDpi.iNlHtcbYIBOy313HikKSFJQ4BUPycNu', 'nhanvien3', 'nhanvien3@gmail.com', '0312646431', 'hanoi', 'ROLE_EMPLOYEE', b'1', '2024-05-14 10:45:53', '2024-05-14 10:45:53'),
 (14, '$2a$10$txuPDKVLcA7VGk5x9L8NfuLd2GcUeNAxRzZGl/pWgQl.LpFdcA8QK', 'khách hàng', 'khachhang@gmail.com', '0364431132', 'hanoi', 'ROLE_CUSTOMER', b'1', '2024-05-14 10:45:53', '2024-05-14 10:45:53'),
-(29, '$2a$10$rFqPbyKiX7ZAuhIde4opiukU4DQJ3s9zrUyzYyU3SHU44lzkRM2Ua', 'name', 'anhnqth2211019@fpt.edu.vn', '012345789', 'test', 'ROLE_CUSTOMER', b'1', '2024-06-01 06:13:05', '2024-06-01 06:13:05');
+(35, '$2a$10$DhbyS4lDOQ2H2uwcVRXELem3yR2MKPYSu8T6QwMj4a1kJXKDHzkAG', 'test', 'anh.nguyen43@iholding.org', '0364664322', '4dvsdsf', 'ROLE_EMPLOYEE', b'1', '2024-06-29 16:40:37', '2024-06-30 08:25:54'),
+(36, '$2a$10$EC0Uu6.c07tL5DJ/dIpVBeg.bmpyKZCpN17lJOCpvDK/eMs9IBhdC', 'khách', 'anhnqth2211019@fpt.edu.vn', '0346444332', 'sdfsd', 'ROLE_CUSTOMER', b'1', '2024-06-30 09:46:38', '2024-06-30 09:46:38');
 
 -- --------------------------------------------------------
 
@@ -75,7 +76,7 @@ CREATE TABLE `categories` (
 --
 
 INSERT INTO `categories` (`id`, `category_code`, `cat_name`, `parent_id`, `cat_background`, `created_at`, `updated_at`) VALUES
-(86, 'AK', 'Áo khoác', 96, NULL, '2024-05-14 10:46:05', '2024-06-11 05:12:45'),
+(86, 'AK', 'Áo khoác', 96, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1718859021/cadgpxtbfduvwwaxmlal.jpg', '2024-05-14 10:46:05', '2024-07-01 05:14:14'),
 (87, 'AKBB', 'Áo khoác Bomber', 86, NULL, '2024-05-14 10:46:05', '2024-06-11 05:12:45'),
 (88, 'AKCC', 'Áo khoác cổ cao', 86, NULL, '2024-05-14 10:46:05', '2024-06-11 05:12:45'),
 (89, 'AKG', 'Áo khoác gió', 86, NULL, '2024-05-14 10:46:05', '2024-06-11 05:12:45'),
@@ -116,7 +117,6 @@ INSERT INTO `categories` (`id`, `category_code`, `cat_name`, `parent_id`, `cat_b
 (124, 'THUN', 'Áo thun', 96, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711887206/weftgxxcytuuh11xtpj8.webp', '2024-05-14 10:46:05', '2024-06-11 05:12:18'),
 (125, 'TIH', 'Thun in hình', 124, NULL, '2024-05-14 10:46:05', '2024-06-11 05:12:18'),
 (126, 'TT', 'Tank top', 124, NULL, '2024-05-14 10:46:05', '2024-06-11 05:12:18'),
-(130, 'test3', 'test3', NULL, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1718100026/r1isydwalmavemtm6zoo.jpg', '2024-05-16 14:11:05', '2024-06-11 10:00:26'),
 (131, 'test4', 'test4', 98, 'a', '2024-05-16 14:11:22', '2024-06-11 05:12:18');
 
 -- --------------------------------------------------------
@@ -179,6 +179,64 @@ INSERT INTO `colors` (`id`, `color_code`, `name`, `created_at`, `updated_at`) VA
 (39, 'WCB', 'Phối Trắng - Xanh đá', '2024-05-14 10:46:22', '2024-05-14 10:46:22'),
 (40, 'WH', 'Trắng', '2024-05-14 10:46:22', '2024-05-14 10:46:22'),
 (41, 'WNV', 'Phối trắng-xanh navy', '2024-05-14 10:46:22', '2024-05-14 10:46:22');
+
+-- --------------------------------------------------------
+
+--
+-- Cấu trúc bảng cho bảng `customer_emails`
+--
+
+CREATE TABLE `customer_emails` (
+  `id` int(11) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `created_at` datetime NOT NULL DEFAULT current_timestamp(),
+  `updated_at` datetime NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `customer_emails`
+--
+
+INSERT INTO `customer_emails` (`id`, `email`, `created_at`, `updated_at`) VALUES
+(1, 'anhnqth2211019@fpt.edu.vn', '2024-06-30 00:00:00', '2024-06-30 00:00:00'),
+(3, 'anhnguyen43@ihoding.org', '2024-06-30 00:00:00', '2024-06-30 00:00:00'),
+(8, 'quanganhnguyen100196@gmail.com', '2024-06-30 00:00:00', '2024-06-30 00:00:00');
+
+-- --------------------------------------------------------
+
+--
+-- Cấu trúc bảng cho bảng `feedback_customers`
+--
+
+CREATE TABLE `feedback_customers` (
+  `id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `feedback` varchar(500) NOT NULL,
+  `is_readed` tinyint(1) NOT NULL,
+  `created_at` datetime NOT NULL DEFAULT current_timestamp(),
+  `updated_at` datetime NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `feedback_customers`
+--
+
+INSERT INTO `feedback_customers` (`id`, `name`, `email`, `feedback`, `is_readed`, `created_at`, `updated_at`) VALUES
+(1, 'quang anh', 'anhnguyen.43@iholding.org', 'sdfvd', 1, '2024-06-30 00:00:00', '2024-06-30 00:00:00'),
+(2, 'khách', 'anhnqth2211019@fpt.edu.vn', 'dsgsdcxvcxvcds', 0, '2024-06-30 00:00:00', '2024-06-30 00:00:00'),
+(3, 'khách', 'anhnqth2211019@fpt.edu.vn', 'xxzxxczxczxzxzz', 0, '2024-06-30 00:00:00', '2024-06-30 00:00:00'),
+(4, 'khách', 'anhnqth2211019@fpt.edu.vn', 'xzxvcxzcxrrrrrr', 0, '2024-06-30 22:30:08', '2024-06-30 22:30:08'),
+(5, 'khách', 'anhnqth2211019@fpt.edu.vn', 'bvvvvvvv', 0, '2024-06-30 22:30:11', '2024-06-30 22:30:11'),
+(6, 'khách', 'anhnqth2211019@fpt.edu.vn', 'qqqqq', 0, '2024-06-30 22:30:13', '2024-06-30 22:30:13'),
+(7, 'tk2', 'anhnguyen.43@iholding.org', 'fdsfsd', 0, '2024-06-30 23:06:10', '2024-06-30 23:06:10'),
+(8, 'tk2', 'anhnguyen.43@iholding.org', 'fdsfsd', 0, '2024-06-30 23:06:10', '2024-06-30 23:06:10'),
+(9, 'tk2', 'anhnguyen.43@iholding.org', 'xzczzz', 0, '2024-06-30 23:06:12', '2024-06-30 23:06:12'),
+(10, 'tk2', 'anhnguyen.43@iholding.org', ',jhjhgjg', 0, '2024-06-30 23:06:14', '2024-06-30 23:06:14'),
+(11, 'tk2', 'anhnguyen.43@iholding.org', 'cccxcvxcvcx', 0, '2024-06-30 23:06:16', '2024-06-30 23:06:16'),
+(12, 'tk2', 'anhnguyen.43@iholding.org', 'rtyrtyrttryr', 0, '2024-06-30 23:06:18', '2024-06-30 23:06:18'),
+(13, 'tk2', 'anhnguyen.43@iholding.org', '453543sffsdfdsfs', 0, '2024-06-30 23:06:20', '2024-06-30 23:06:20'),
+(14, 'tk2', 'anhnguyen.43@iholding.org', 'nbvnbvndgsdfsd', 0, '2024-06-30 23:06:22', '2024-06-30 23:06:22');
 
 -- --------------------------------------------------------
 
@@ -688,7 +746,8 @@ INSERT INTO `imgs_product` (`id`, `product_id`, `file_img`, `created_at`, `updat
 (678, 68, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711809996/1708267758748_ewte003-3_53295791637_o_480ba53e2ac94b97a948a4eacabd56ac_master.jpg.webp', '2024-05-14 10:46:32', '2024-05-14 10:46:32'),
 (679, 68, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711809999/1708267758753_ewte003-2_53295791657_o_78ef8b9c0744454ebaa261ef2461d146_master.jpg.webp', '2024-05-14 10:46:32', '2024-05-14 10:46:32'),
 (680, 68, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711810001/1708267758758_ewte003-4_53297045664_o_0700cdbe5f3342d5a10b2719f03c7ab1_master.jpg.webp', '2024-05-14 10:46:32', '2024-05-14 10:46:32'),
-(681, 68, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711810003/1708267758762_ewte003-10_53297045794_o_af9bd1f2fa8246dab498a75b2a976f04_master.jpg.jpg', '2024-05-14 10:46:32', '2024-05-14 10:46:32');
+(681, 68, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711810003/1708267758762_ewte003-10_53297045794_o_af9bd1f2fa8246dab498a75b2a976f04_master.jpg.jpg', '2024-05-14 10:46:32', '2024-05-14 10:46:32'),
+(721, 1, 'https://res.cloudinary.com/dmmvhjl0m/video/upload/v1719675386/ftvvtzvmfkefbxuhlrio.mp4', '2024-06-29 15:36:27', '2024-06-29 15:36:27');
 
 -- --------------------------------------------------------
 
@@ -720,10 +779,10 @@ CREATE TABLE `invoices` (
 --
 
 INSERT INTO `invoices` (`id`, `invoice_code`, `name`, `phone`, `address`, `note`, `customer_note`, `invoice_status`, `total_price`, `shipping_fee`, `total_bill`, `is_paid`, `created_at`, `updated_at`, `is_deleted`, `account_id`) VALUES
-(1, '41ZSPBHA', 'quang anh', '0365151822', '4dvsdsf', '', 'd', 'ORDER_CREATED', 1960000, 20000, 1980000, b'0', '2024-05-14 10:47:02', '2024-06-15 13:55:23', 0, 1),
-(2, '4LFFMS9V', 'quang anh', '0365151822', '4dvsdsf', '', 'd', 'NEW', 50000, 30000, 80000, b'0', '2024-05-14 10:47:02', '2024-06-15 13:55:03', 0, 2),
+(1, '41ZSPBHA', 'quang anh', '0365151822', '4dvsdsf', '', 'd', 'PROCESS', 3940000, 20000, 3960000, b'1', '2024-05-14 10:47:02', '2024-06-18 15:09:13', 0, 1),
+(2, '4LFFMS9V', 'quang anh', '0365151822', '4dvsdsf', '', 'd', 'NEW', 100000, 30000, 130000, b'0', '2024-05-14 10:47:02', '2024-06-17 17:40:22', 0, 4),
 (3, '56BKIMXY', 'quang anh', '0365151822', '4dvsdsf', '', 'f', 'NEW', 990000, 0, 990000, b'0', '2024-05-14 10:47:02', '2024-06-15 13:55:03', 0, 1),
-(4, '5CKTNJXP', 'quang anh', '0365151822', '4dvsdsf', '', 'd', 'NEW', 990000, 0, 990000, b'1', '2024-05-14 10:47:02', '2024-06-15 13:55:03', 0, 1),
+(4, '5CKTNJXP', 'quang anh', '0365151822', '4dvsdsf', '', 'd', 'ORDER_CREATED', 990000, 0, 990000, b'1', '2024-05-14 10:47:02', '2024-06-29 16:09:41', 0, 1),
 (5, '5FTZ8G2K', 'nguyễn quang anh', '0365151823', 'số 18 ngõ 222 tựu liệt,thanh trì, hà nội', '', 'fsd', 'DELIVERING', 1860000, 10000, 1870000, b'1', '2024-05-14 10:47:02', '2024-06-15 13:55:23', 0, 2),
 (6, '5J8RUFRZ', 'quang anh', '0365151822', '4dvsdsf', '', 'fs', 'NEW', 890000, 0, 890000, b'0', '2024-05-14 10:47:02', '2024-06-15 13:55:03', 0, 1),
 (7, '5RH2CLWH', 'quang anh', '0365151822', '4dvsdsf', '', 'sa', 'NEW', 1540000, 0, 1540000, b'0', '2024-05-14 10:47:02', '2024-06-15 13:55:03', 0, 2),
@@ -742,7 +801,7 @@ INSERT INTO `invoices` (`id`, `invoice_code`, `name`, `phone`, `address`, `note`
 (20, 'CK2RNNXU', 'quang anh', '0365151822', '4dvsdsf', '', 'd', 'NEW', 990000, 0, 990000, b'0', '2024-05-14 10:47:02', '2024-06-15 13:55:03', 0, 1),
 (21, 'CQK0DVXD', 'quang anh', '0365151822', '4dvsdsf', '', 's', 'NEW', 990000, 0, 990000, b'0', '2024-05-14 10:47:02', '2024-06-15 13:55:03', 0, 1),
 (22, 'CYFRIM6O', 'quang anh', '0365151822', '4dvsdsf', '', 's', 'NEW', 420000, 30000, 450000, b'0', '2024-05-14 10:47:02', '2024-06-15 13:55:03', 0, 2),
-(23, 'DMJHRKWM', 'nguyễn quang anh', '0999999999', 'số 18 ngõ 222 tựu liệt,thanh trì, hà nội', '', 'cs', 'NEW', 580000, 0, 580000, b'0', '2024-05-14 10:47:02', '2024-06-15 13:55:03', 0, 1),
+(23, 'DMJHRKWM', 'nguyễn quang anh', '0999999999', 'số 18 ngõ 222 tựu liệt,thanh trì, hà nội', '', 'cs', 'NEW', 580000, 0, 580000, b'0', '2024-05-14 10:47:02', '2024-06-17 13:33:56', 0, 1),
 (24, 'EAEUPXUE', 'quang anh', '0365151822', '4dvsdsf', '', 's', 'NEW', 990000, 0, 990000, b'0', '2024-05-14 10:47:02', '2024-06-15 13:55:03', 0, NULL),
 (25, 'EIIMQTNF', 'quang anh', '0365151822', '4dvsdsf', '', 'd', 'NEW', 400000, 30000, 430000, b'0', '2024-05-14 10:47:02', '2024-06-15 13:55:03', 0, 1),
 (26, 'EXAWZYY2', 'quang anh', '0365151822', '4dvsdsf', '', 's', 'NEW', 990000, 0, 990000, b'0', '2024-05-14 10:47:02', '2024-06-15 13:55:03', 0, 1),
@@ -807,7 +866,7 @@ INSERT INTO `invoices` (`id`, `invoice_code`, `name`, `phone`, `address`, `note`
 (86, '7K1RTIHD', 'string', '2538878580', 'string', NULL, 'string', 'NEW', 1040000, 10000, 1050000, b'0', '2024-06-01 04:17:24', '2024-06-15 13:55:03', 0, 1),
 (87, 'UPX8U4CZ', 'string', '2538878580', 'string', NULL, 'string', 'NEW', 1040000, 10000, 1050000, b'0', '2024-06-01 04:18:19', '2024-06-15 13:55:03', 0, 1),
 (88, 'O0VRCG1N', 'string', '2538878580', 'string', NULL, 'string', 'NEW', 1040000, 10000, 1050000, b'0', '2024-06-01 04:22:37', '2024-06-15 13:55:03', 0, 1),
-(89, '7ECXBCFQ', 'string', '2538878580', 'string', NULL, 'string', 'NEW', 1040000, 10000, 1050000, b'0', '2024-06-01 04:24:54', '2024-06-15 13:55:03', 0, 1),
+(89, '7ECXBCFQ', 'string', '2538878580', 'string', NULL, 'string', 'NEW', 1040000, 10000, 1050000, b'0', '2024-06-01 04:24:54', '2024-06-29 16:09:00', 0, 1),
 (90, 'DK9QJKRV', 'string', '2538878580', 'string', NULL, 'string', 'NEW', 1040000, 10000, 1050000, b'1', '2024-06-01 04:30:43', '2024-06-15 13:55:03', 0, 1);
 
 -- --------------------------------------------------------
@@ -880,7 +939,7 @@ INSERT INTO `invoices_detail` (`id`, `invoice_id`, `product_detail_id`, `price`,
 (386, 38, 522, 500000, 1, 500000, '2024-05-14 10:47:14', '2024-05-14 10:47:14'),
 (387, 7, 691, 990000, 1, 990000, '2024-05-14 10:47:14', '2024-05-14 10:47:14'),
 (388, 83, 709, 750000, 1, 750000, '2024-05-14 10:47:14', '2024-05-14 10:47:14'),
-(389, 1, 692, 990000, 1, 990000, '2024-05-14 10:47:14', '2024-05-14 10:47:14'),
+(389, 1, 692, 990000, 3, 2970000, '2024-05-14 10:47:14', '2024-06-17 17:23:16'),
 (390, 56, 691, 990000, 1, 990000, '2024-05-14 10:47:14', '2024-05-14 10:47:14'),
 (391, 20, 691, 990000, 1, 990000, '2024-05-14 10:47:14', '2024-05-14 10:47:14'),
 (392, 24, 691, 990000, 1, 990000, '2024-05-14 10:47:14', '2024-05-14 10:47:14'),
@@ -894,7 +953,7 @@ INSERT INTO `invoices_detail` (`id`, `invoice_id`, `product_detail_id`, `price`,
 (401, 62, 691, 990000, 1, 990000, '2024-05-14 10:47:14', '2024-05-14 10:47:14'),
 (402, 55, 709, 750000, 1, 750000, '2024-05-14 10:47:14', '2024-05-14 10:47:14'),
 (403, 76, 709, 750000, 1, 750000, '2024-05-14 10:47:14', '2024-05-14 10:47:14'),
-(404, 2, 687, 50000, 1, 50000, '2024-05-14 10:47:14', '2024-05-14 10:47:14'),
+(404, 2, 687, 50000, 2, 100000, '2024-05-14 10:47:14', '2024-06-17 17:40:22'),
 (405, 80, 691, 990000, 1, 990000, '2024-05-14 10:47:14', '2024-05-14 10:47:14'),
 (406, 59, 729, 400000, 1, 400000, '2024-05-14 10:47:14', '2024-05-14 10:47:14'),
 (407, 15, 709, 750000, 1, 750000, '2024-05-14 10:47:14', '2024-05-14 10:47:14'),
@@ -1021,12 +1080,11 @@ CREATE TABLE `jwt_tokens` (
 --
 
 INSERT INTO `jwt_tokens` (`id`, `token`, `expiration_date`, `refresh_token`, `account_id`, `refresh_expiration_date`, `revoked`, `created_at`, `updated_at`) VALUES
-(238, 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJuZ3V5ZW5xdWFuZ2FuaCIsInVzZXJuYW1lIjoia2hhY2hoYW5nIiwicm9sZSI6IlJPTEVfQ1VTVE9NRVIiLCJpYXQiOjE3MTgyODczNTAsImV4cCI6MTcxODI4Nzk1MH0.MBtQQmXdFsaTq9df4PONbzDrcuLkdbDnbUzXenZh7Mw', '2024-06-13 21:12:30', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJuZ3V5ZW5xdWFuZ2FuaCIsInVzZXJuYW1lIjoia2hhY2hoYW5nIiwicm9sZSI6IlJPTEVfQ1VTVE9NRVIiLCJpYXQiOjE3MTgyODczNTAsImV4cCI6MTcxODg5MjE1MH0.vomPZVTKgof4oZ2P-DE7ROAqsjSxEAvY-waJPFMqTAI', 14, '2024-06-20 21:02:30', 0, '2024-06-13 14:02:30', '2024-06-13 14:02:30'),
-(239, 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJuZ3V5ZW5xdWFuZ2FuaCIsInVzZXJuYW1lIjoia2hhY2hoYW5nIiwicm9sZSI6IlJPTEVfQ1VTVE9NRVIiLCJpYXQiOjE3MTgyODc0MDgsImV4cCI6MTcxODI4ODAwOH0.ZrjFfLfodYx3Uz_2-2U243bseY__EZmxUAhJ4NfU55Q', '2024-06-13 21:13:28', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJuZ3V5ZW5xdWFuZ2FuaCIsInVzZXJuYW1lIjoia2hhY2hoYW5nIiwicm9sZSI6IlJPTEVfQ1VTVE9NRVIiLCJpYXQiOjE3MTgyODc0MDgsImV4cCI6MTcxODg5MjIwOH0.k1MMiq8HjS1N3I2kjNyK2bEcgEVTSlp7ueyLW5jiEzs', 14, '2024-06-20 21:03:28', 0, '2024-06-13 14:03:28', '2024-06-13 14:03:28'),
-(304, 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJuZ3V5ZW5xdWFuZ2FuaCIsInBob25lIjoiMDM2NTE1MTgyMiIsInJvbGUiOiJST0xFX0VNUExPWUVFIiwiaWF0IjoxNzE4NDUzNDkzLCJleHAiOjE3MTg0NTQwOTN9._0VsRL6Q9csdSJWs_aqdFaPHaBtp_JcVgqj0XybXd2M', '2024-06-15 19:21:33', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJuZ3V5ZW5xdWFuZ2FuaCIsInBob25lIjoiMDM2NTE1MTgyMiIsInJvbGUiOiJST0xFX0VNUExPWUVFIiwiaWF0IjoxNzE4NDUzNDkzLCJleHAiOjE3MTkwNTgyOTN9.UJ13mPqX6e46OqvM6LG7pHwpGDX2uDq6AoK1mJ6I_t4', 2, '2024-06-22 19:11:33', 0, '2024-06-15 12:11:33', '2024-06-15 12:11:33'),
-(305, 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJuZ3V5ZW5xdWFuZ2FuaCIsInBob25lIjoiMDM2NTE1MTgyMiIsInJvbGUiOiJST0xFX0VNUExPWUVFIiwiaWF0IjoxNzE4NDU0NDY2LCJleHAiOjE3MTg0NTUwNjZ9.jvGgSMiCaASsqzbMoXfzFAP2Zv88CX7tmI9JAMSEpDU', '2024-06-15 19:37:46', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJuZ3V5ZW5xdWFuZ2FuaCIsInBob25lIjoiMDM2NTE1MTgyMiIsInJvbGUiOiJST0xFX0VNUExPWUVFIiwiaWF0IjoxNzE4NDU0NDY2LCJleHAiOjE3MTkwNTkyNjZ9.Ykm_EohnvsOJEW39xs2Gk6rOjtzQTVxBUC1SyUvm98w', 2, '2024-06-22 19:27:46', 0, '2024-06-15 12:27:46', '2024-06-15 12:27:46'),
-(307, 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJuZ3V5ZW5xdWFuZ2FuaCIsInBob25lIjoiMDM2NDEwMDE5NiIsInJvbGUiOiJST0xFX01BTkFHRVIiLCJpYXQiOjE3MTg0NTUxNzUsImV4cCI6MTcxODQ1NTc3NX0.fPvITPEoDXp88Ns7z7kiq2ThzzhGWHE4MrRoZmXE6yQ', '2024-06-15 19:49:35', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJuZ3V5ZW5xdWFuZ2FuaCIsInBob25lIjoiMDM2NDEwMDE5NiIsInJvbGUiOiJST0xFX01BTkFHRVIiLCJpYXQiOjE3MTg0NTUxNzUsImV4cCI6MTcxOTA1OTk3NX0.NECVBrmACPESJnp1s61AOt1pieqrEmTwJStsDvfxnQg', 1, '2024-06-22 19:39:35', 0, '2024-06-15 12:39:35', '2024-06-15 12:39:35'),
-(308, 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJuZ3V5ZW5xdWFuZ2FuaCIsInBob25lIjoiMDM2NDEwMDE5NiIsInJvbGUiOiJST0xFX01BTkFHRVIiLCJpYXQiOjE3MTg0NTgwMTAsImV4cCI6MTcxODQ1ODYxMH0.3quZYaCLas4Ge8UCYJ_umjEbCCaOcmi3jOzlEfMYZH4', '2024-06-15 20:36:50', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJuZ3V5ZW5xdWFuZ2FuaCIsInBob25lIjoiMDM2NDEwMDE5NiIsInJvbGUiOiJST0xFX01BTkFHRVIiLCJpYXQiOjE3MTg0NTgwMTAsImV4cCI6MTcxOTA2MjgxMH0.ZmERGEBl094IQC8KtHaobl90Qu21v-iH6VMJNXZp4fg', 1, '2024-06-22 20:26:50', 0, '2024-06-15 13:26:50', '2024-06-15 13:26:50');
+(339, 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJuZ3V5ZW5xdWFuZ2FuaCIsInBob25lIjoiMDM2NTE1MTgyMiIsInJvbGUiOiJST0xFX0VNUExPWUVFIiwiaWF0IjoxNzE4NTU3MzU0LCJleHAiOjE3MTg1NTc5NTR9.0iv96XMsBmqdMmsJl6mzcvPeHiBWsgj8FksuPOpszn4', '2024-06-17 00:12:34', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJuZ3V5ZW5xdWFuZ2FuaCIsInBob25lIjoiMDM2NTE1MTgyMiIsInJvbGUiOiJST0xFX0VNUExPWUVFIiwiaWF0IjoxNzE4NTU3MzU0LCJleHAiOjE3MTkxNjIxNTR9.DJuq1dcno7QTuumr0AVw36rWSXH7QIWKwnwWsC_dBxY', 2, '2024-06-24 00:02:34', 0, '2024-06-16 17:02:34', '2024-06-16 17:02:34'),
+(383, 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJuZ3V5ZW5xdWFuZ2FuaCIsInBob25lIjoiMDM2NDQzMTEzMiIsInJvbGUiOiJST0xFX0NVU1RPTUVSIiwiaWF0IjoxNzE4ODE0NDg4LCJleHAiOjE3MTg4MTUwODh9.IIPAcWD2yCBrailZFtV9O3NmbgBfP_OgVXgs3LudT14', '2024-06-19 23:38:08', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJuZ3V5ZW5xdWFuZ2FuaCIsInBob25lIjoiMDM2NDQzMTEzMiIsInJvbGUiOiJST0xFX0NVU1RPTUVSIiwiaWF0IjoxNzE4ODE0NDg4LCJleHAiOjE3MTk0MTkyODh9.GBVzD8JiaJFCtw9HfbpPfUFxXrh_IeozB6X0HdC50xE', 14, '2024-06-26 23:28:08', 0, '2024-06-19 16:28:08', '2024-06-19 16:28:08'),
+(464, 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJuZ3V5ZW5xdWFuZ2FuaCIsInBob25lIjoiMDM2NDQzMTEzMiIsInJvbGUiOiJST0xFX0NVU1RPTUVSIiwiaWF0IjoxNzE5ODA0MDczLCJleHAiOjE3MTk4MDQ2NzN9.6QB9IrTG4hShDTf5Z9mqlMDwtzYx4gMcpjLbd2UYsV0', '2024-07-01 10:31:13', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJuZ3V5ZW5xdWFuZ2FuaCIsInBob25lIjoiMDM2NDQzMTEzMiIsInJvbGUiOiJST0xFX0NVU1RPTUVSIiwiaWF0IjoxNzE5ODA0MDczLCJleHAiOjE3MjA0MDg4NzN9.4ctkSKj55DJqPLD_23nXDjktDLFIFTSWunVv-w1xSZY', 14, '2024-07-08 10:21:13', 0, '2024-07-01 03:21:13', '2024-07-01 03:21:13'),
+(471, 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJuZ3V5ZW5xdWFuZ2FuaCIsInBob25lIjoiMDM2NDEwMDE5NiIsInJvbGUiOiJST0xFX01BTkFHRVIiLCJpYXQiOjE3MTk4MDc3NDYsImV4cCI6MTcxOTgwODM0Nn0.h7FViRIo6_FjGOodX9kfM_6D3SLwhSTEpMdF038dxNw', '2024-07-01 11:32:26', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJuZ3V5ZW5xdWFuZ2FuaCIsInBob25lIjoiMDM2NDEwMDE5NiIsInJvbGUiOiJST0xFX01BTkFHRVIiLCJpYXQiOjE3MTk4MDc3NDYsImV4cCI6MTcyMDQxMjU0Nn0.0luNdwP0932FGtcKoFk3taxaxW1N-zwqX_qULQ1G5n8', 1, '2024-07-31 11:22:26', 0, '2024-07-01 04:02:44', '2024-07-01 04:22:26'),
+(472, 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJuZ3V5ZW5xdWFuZ2FuaCIsInBob25lIjoiMDM2NDEwMDE5NiIsInJvbGUiOiJST0xFX01BTkFHRVIiLCJpYXQiOjE3MTk4MTA1NjIsImV4cCI6MTcxOTgxMTE2Mn0.5Mt9V7KY4F5fO7ZR51rm2lF65h117YcVIVESl7Ex-xo', '2024-07-01 12:19:22', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJuZ3V5ZW5xdWFuZ2FuaCIsInBob25lIjoiMDM2NDEwMDE5NiIsInJvbGUiOiJST0xFX01BTkFHRVIiLCJpYXQiOjE3MTk4MTA1NjIsImV4cCI6MTcyMDQxNTM2Mn0.UheqysKQtKE3ThdgDrhdB7GyhpcE1dF5iyvtyxBecug', 1, '2024-07-08 12:09:22', 0, '2024-07-01 05:09:23', '2024-07-01 05:09:23');
 
 -- --------------------------------------------------------
 
@@ -1058,7 +1116,7 @@ CREATE TABLE `products` (
 --
 
 INSERT INTO `products` (`id`, `product_code`, `product_name`, `cat_id`, `price`, `discount_price`, `discount_percent`, `brand`, `description`, `total_size`, `total_color`, `image_background`, `image_choose_size`, `is_activated`, `created_at`, `updated_at`) VALUES
-(1, 'BI013', '423423', 114, 380000, NULL, NULL, 'TORANO', '', 6, 7, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711810365/1702814188840_tp038---bi013-_20__790f72cbd3d34a918920b73579e72ea5_master.jpg.webp', 'IMAGE_4', b'1', '2024-05-14 10:47:36', '2024-06-13 09:49:33'),
+(1, 'BI013', '423423', 114, 380000, NULL, NULL, 'TORANO', '', 6, 7, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711810365/1702814188840_tp038---bi013-_20__790f72cbd3d34a918920b73579e72ea5_master.jpg.webp', 'IMAGE_4', b'1', '2024-05-14 10:47:36', '2024-06-29 16:09:09'),
 (2, 'CABJ003', 'Quần Jeans rách Slim CABJ003', 109, 550000, NULL, NULL, 'TORANO', 'Quần Jeans rách Slim CABJ003\r\n', 5, 1, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711810773/1702810774291_cabj003_75aa0eb2e3ef4d7cb175dcef6ceae9cf_master.jpg.webp', 'IMAGE_4', b'1', '2024-05-14 10:47:36', '2024-05-14 10:47:36'),
 (3, 'DABJ004', 'Quần Jeans basic Slim DABJ004', 108, 550000, NULL, NULL, 'TORANO', 'Quần Jeans basic Slim CABJ004/2\r\n', 5, 1, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711810701/1702810004163_52706071935_8966d1e12f_o_a66489be76c949d791609a08ca73993f_master.jpg.webp', 'IMAGE_4', b'1', '2024-05-14 10:47:36', '2024-05-14 10:47:36'),
 (4, 'DABJ010', 'Quần Jeans basic Slim DABJ010', 108, 550000, NULL, NULL, 'TORANO', 'Quần Jeans basic Slim CABJ010/2', 5, 1, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711810727/1702810256808_52169110354_87bd6ccaa0_o_abf9f4cabd204376b1d1cba50d2deec9_master.jpg.webp', 'IMAGE_4', b'1', '2024-05-14 10:47:36', '2024-05-14 10:47:36'),
@@ -1894,6 +1952,18 @@ ALTER TABLE `colors`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Chỉ mục cho bảng `customer_emails`
+--
+ALTER TABLE `customer_emails`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Chỉ mục cho bảng `feedback_customers`
+--
+ALTER TABLE `feedback_customers`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Chỉ mục cho bảng `imgs_product`
 --
 ALTER TABLE `imgs_product`
@@ -1945,13 +2015,13 @@ ALTER TABLE `products_detail`
 -- AUTO_INCREMENT cho bảng `accounts`
 --
 ALTER TABLE `accounts`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
 
 --
 -- AUTO_INCREMENT cho bảng `categories`
 --
 ALTER TABLE `categories`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=133;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=135;
 
 --
 -- AUTO_INCREMENT cho bảng `colors`
@@ -1960,10 +2030,22 @@ ALTER TABLE `colors`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
 
 --
+-- AUTO_INCREMENT cho bảng `customer_emails`
+--
+ALTER TABLE `customer_emails`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+
+--
+-- AUTO_INCREMENT cho bảng `feedback_customers`
+--
+ALTER TABLE `feedback_customers`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+
+--
 -- AUTO_INCREMENT cho bảng `imgs_product`
 --
 ALTER TABLE `imgs_product`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=721;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=722;
 
 --
 -- AUTO_INCREMENT cho bảng `invoices`
@@ -1975,19 +2057,19 @@ ALTER TABLE `invoices`
 -- AUTO_INCREMENT cho bảng `invoices_detail`
 --
 ALTER TABLE `invoices_detail`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=465;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=466;
 
 --
 -- AUTO_INCREMENT cho bảng `jwt_tokens`
 --
 ALTER TABLE `jwt_tokens`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=309;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=473;
 
 --
 -- AUTO_INCREMENT cho bảng `products`
 --
 ALTER TABLE `products`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=80;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=81;
 
 --
 -- AUTO_INCREMENT cho bảng `products_detail`

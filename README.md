@@ -2,9 +2,12 @@
  Spring Boot Framework, MySQL, Redis, JWT, Rabbitmq, Cloudinary, Spring Mail, VNpay, Docker, Swagger
 
 # Hướng dẫn sử dụng:
-  - Clone dự án từ github về: git clone https://github.com/quanganh1001/fashion-api.git
-  - Chạy dự án trên Docker: docker-compose -f DockerCompose.yaml up -d
-  - Test api bằng Swagger: http://localhost:8080/swagger-ui/index.html
+  1. Clone dự án fashion-api từ github về: git clone https://github.com/quanganh1001/fashion-api.git
+  2. Clone dự án fashion-frontend từ github về: git clone https://github.com/quanganh1001/fashion-api.git
+  3. Chạy dự án fashion-api trên Docker: docker-compose -f DockerCompose.yaml up -d
+  4. Chạy dự án fashion-frontend sử dụng ReactJS
+  5. Truy cập http://localhost:3000/
+     Hoặc có thể Test api bằng Swagger: http://localhost:8080/swagger-ui/index.html
     
 # Tài khoản đăng nhập:
   - Admin:
@@ -16,23 +19,7 @@
   - Khách hàng:
     + username: 0364431132 / khachhang@gmail.com
     + pass: 123456
-      
-# Các entity
-  - products
-  - products_detail
-  - accounts
-  - categories
-  - colors
-  - imgs_product
-  - invoices
-  - invoices_detail
 
-
-# Các tính năng:
-
-+ Login, logout, tạo tài khoản, đổi mật khẩu, cấp lại mật khẩu qua mail
-
-+ CRUD account, product, category, invoice,...
-
-+ Checkout qua Vnpay
-  
+# Router: 
+ - Admin: http://localhost:3000/admin
+ - Home: http://localhost:3000/

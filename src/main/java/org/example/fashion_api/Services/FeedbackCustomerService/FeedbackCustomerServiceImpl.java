@@ -51,8 +51,8 @@ public class FeedbackCustomerServiceImpl implements FeedbackCustomerService {
 
     @Override
     public Integer countUnread(){
-//        return feedbackCustomerRepo.countByReaded();
-        return 1;
+        return feedbackCustomerRepo.countByIsReadedFalse();
+
     }
 
     @Override

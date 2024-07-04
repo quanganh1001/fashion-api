@@ -243,7 +243,7 @@ public class InvoiceServiceImpl implements InvoiceService {
             throw new BadRequestException("Status " + currentInvoice.getInvoiceStatus() + " cannot update invoice");
         }
 
-        if (dto.getAccountId() != null && !dto.getAccountId().equals(currentInvoice.getAccount().getId())) {
+        if (dto.getAccountId() != null && (currentInvoice.getAccount() == null || !dto.getAccountId().equals(currentInvoice.getAccount().getId()))) {
             Account newAccount = accountRepo.findById(dto.getAccountId())
                     .orElseThrow(() -> new NotFoundException("Account"));
             currentInvoice.setAccount(newAccount);

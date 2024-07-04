@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
@@ -17,12 +18,12 @@ import java.util.List;
 public class EnumController {
 
     @Operation(summary = "get Enum size image ")
-    @PreAuthorize("hasAnyRole('MANAGER')")
     @GetMapping("sizeImages")
+    @PreAuthorize("hasAnyRole('MANAGER')")
     public ResponseEntity<List<EnumDto>> sizeImage(){
         List<EnumDto> enumDtos = new ArrayList<>();
         for (ImgSizeEnum imgSizeEnum : ImgSizeEnum.values()) {
-            enumDtos.add(new EnumDto(imgSizeEnum.name(),imgSizeEnum.getName()));
+            enumDtos.add(new EnumDto(imgSizeEnum.name(),imgSizeEnum.getKey()));
         }
         return ResponseEntity.ok(enumDtos);
     }
@@ -47,6 +48,16 @@ public class EnumController {
             enumDtos.add(new EnumDto(roleEnum.name(), roleEnum.getRole()));
         }
         return ResponseEntity.ok(enumDtos);
+    }
+
+    @GetMapping("/getUrlImgEnum")
+    public ResponseEntity<String> getUrlImgEnum(@RequestParam String ImgEnum) {
+        ImgSizeEnum imgSizeEnum = ImgSizeEnum.fromKey(ImgEnum);
+        if (imgSizeEnum != null) {
+            return ResponseEntity.ok(imgSizeEnum.getValue());
+        } else {
+            return ResponseEntity.badRequest().body("Invalid ImgEnum value: " + ImgEnum);
+        }
     }
 
     @Operation(summary = "get invoice status ")

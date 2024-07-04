@@ -12,22 +12,34 @@ import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactor
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
+import org.springframework.data.redis.connection.lettuce.LettuceClientConfiguration;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 @Configuration
-public class RedisConfig {
+public class    RedisConfig {
     @Value("${spring.data.redis.host}")
     private String redisHost;
 
     @Value("${spring.data.redis.port}")
     private int redisPort;
 
+    @Value("${spring.data.redis.password}")
+    private String redisPass;
+
     @Bean
     public LettuceConnectionFactory redisConnectionFactory(){
-        RedisStandaloneConfiguration configuration = new RedisStandaloneConfiguration(redisHost,redisPort);
-        return new LettuceConnectionFactory(configuration);
+        RedisStandaloneConfiguration configuration = new RedisStandaloneConfiguration();
+        configuration.setHostName(redisHost);
+        configuration.setPort(redisPort);
+        configuration.setPassword(redisPass);
+
+        LettuceClientConfiguration clientConfig = LettuceClientConfiguration.builder()
+                .useSsl()
+                .build();
+
+        return new LettuceConnectionFactory(configuration, clientConfig);
     }
 
     @Bean

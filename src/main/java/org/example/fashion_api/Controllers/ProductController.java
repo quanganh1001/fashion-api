@@ -3,6 +3,7 @@ package org.example.fashion_api.Controllers;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
+import org.example.fashion_api.Enum.ImgSizeEnum;
 import org.example.fashion_api.Models.ImgsProducts.ImgProduct;
 import org.example.fashion_api.Models.ImgsProducts.ImgProductRes;
 import org.example.fashion_api.Models.Products.CreateProductDto;
@@ -106,5 +107,7 @@ public class ProductController {
         imgProductService.createImgProduct(productId, imgFiles);
         return ResponseEntity.ok("done");
     }
+
+
 
 }

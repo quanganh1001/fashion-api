@@ -114,6 +114,7 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-mail</artifactId>
 		</dependency>
+
 		<!-- https://mvnrepository.com/artifact/org.modelmapper/modelmapper -->
 		<dependency>
 			<groupId>org.modelmapper</groupId>
@@ -143,7 +144,16 @@
 			<artifactId>swagger-annotations</artifactId>
 			<version>1.6.2</version>
 		</dependency>
-
+		<dependency>
+			<groupId>io.lettuce</groupId>
+			<artifactId>lettuce-core</artifactId>
+			<version>6.3.2.RELEASE</version>
+		</dependency>
+		<dependency>
+			<groupId>com.rabbitmq</groupId>
+			<artifactId>amqp-client</artifactId>
+			<version>5.16.1</version> <!-- Điều chỉnh phiên bản tùy vào bạn -->
+		</dependency>
 
 	</dependencies>
 

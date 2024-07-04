@@ -4,6 +4,7 @@ package org.example.fashion_api.Configurations;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.springframework.amqp.core.*;
+import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
@@ -19,23 +20,47 @@ import java.text.SimpleDateFormat;
 @Configuration
 public class RabbitMqConfig {
 
-    @Value("${rabbitmq.mail.exchange}")
+    @Value("${spring.rabbitmq.mail.exchange}")
     private String mailExchange;
 
-    @Value("${rabbitmq.mail.queue}")
+    @Value("${spring.rabbitmq.mail.queue}")
     private String mailQueue;
 
-    @Value("${rabbitmq.mail.key}")
+    @Value("${spring.rabbitmq.mail.key}")
     private String mailKey;
 
-    @Value("${rabbitmq.dead_letter.exchange}")
+    @Value("${spring.rabbitmq.dead_letter.exchange}")
     private String deadLetterExchange;
 
-    @Value("${rabbitmq.dead_letter.queue}")
+    @Value("${spring.rabbitmq.dead_letter.queue}")
     private String deadLetterQueue;
 
-    @Value("${rabbitmq.dead_letter.key}")
+    @Value("${spring.rabbitmq.dead_letter.key}")
     private String deadLetterKey;
+
+    @Value("${spring.rabbitmq.host}")
+    private String rabbitHost;
+
+    @Value("${spring.rabbitmq.port}")
+    private int rabbitPort;
+
+    @Value("${spring.rabbitmq.username}")
+    private String rabbitUsername;
+
+    @Value("${spring.rabbitmq.password}")
+    private String rabbitPassword;
+
+    @Bean
+    public ConnectionFactory connectionFactory(){
+        CachingConnectionFactory factory = new CachingConnectionFactory();
+        factory.setHost(rabbitHost);
+        factory.setPort(rabbitPort);
+        factory.setUsername(rabbitUsername);
+        factory.setPassword(rabbitPassword);
+        return factory;
+    }
+
+
 
     @Bean
     public ObjectMapper objectMapper() {
@@ -79,6 +104,7 @@ public class RabbitMqConfig {
                 .durable(mailQueue)
                 .deadLetterExchange(deadLetterExchange)
                 .deadLetterRoutingKey(deadLetterKey)
+                .expires(10000)
                 .build();
     }
 
@@ -99,6 +125,7 @@ public class RabbitMqConfig {
     public Queue deadLetterQueue(){
         return QueueBuilder
                 .durable(deadLetterQueue)
+                .expires(10000)
                 .build();
     }
 

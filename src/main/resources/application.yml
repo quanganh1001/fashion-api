@@ -7,17 +7,28 @@ spring:
       redis:
         host: ${REDIS_HOST}
         port: ${REDIS_PORT}
-        cache-null-values: true
+        password: ${REDIS_PASS}
+        timeout: 3000  # Điều chỉnh timeout theo nhu cầu của bạn
+        cache-null-values: true  # Tùy chọn cache null values, nếu cần
     rabbitmq:
       host: ${RABBITMQ_HOST}
-      port: ${RABBITMQ_PORT}
-      username: ${RABBITMQ_USERNAME}
-      password: ${RABBITMQ_PASSWORD}
+      port:  ${RABBITMQ_PORT}
+      username:  ${RABBITMQ_USERNAME}
+      password:  ${RABBITMQ_PASSWORD}
+      mail:
+        exchange: ${RABBITMQ_MAIL_EXCHANGE}
+        queue: ${RABBITMQ_MAIL_QUEUE}
+        key: ${RABBITMQ_MAIL_KEY}
+
+      dead_letter:
+        exchange: ${RABBITMQ_DEAD_LETTER_EXCHANGE}
+        queue: ${RABBITMQ_DEAD_LETTER_QUEUE}
+        key: ${RABBITMQ_DEAD_LETTER_KEY}
     mail:
-      host: smtp.gmail.com
-      port: 587
-      username: your-email@gmail.com
-      password: your-email-password
+      host: ${SPRING_MAIL_HOST}
+      port: ${SPRING_MAIL_PORT}
+      username: ${SPRING_MAIL_USERNAME}
+      password: ${SPRING_MAIL_PASSWORD}
       properties:
         mail.smtp.auth: true
         mail.smtp.starttls.enable: true
@@ -34,16 +45,7 @@ secret:
 jwt:
   issuer: ${JWT_ISSUER}
 
-rabbitmq:
-    mail:
-      exchange: ${RABBITMQ_MAIL_EXCHANGE}
-      queue: ${RABBITMQ_MAIL_QUEUE}
-      key: ${RABBITMQ_MAIL_KEY}
 
-    dead_letter:
-      exchange: ${RABBITMQ_DEAD_LETTER_EXCHANGE}
-      queue: ${RABBITMQ_DEAD_LETTER_QUEUE}
-      key: ${RABBITMQ_DEAD_LETTER_KEY}
 
 
 

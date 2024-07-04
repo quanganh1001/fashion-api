@@ -11,16 +11,21 @@ public enum ImgSizeEnum {
     IMAGE_4("Size quần jean + kaki", "https://res.cloudinary.com/dmmvhjl0m/image/upload/v1719336198/gnd8iakarctefwwrccp8.jpg"),
     IMAGE_5("Size áo khoác", "https://res.cloudinary.com/dmmvhjl0m/image/upload/v1719336199/yy7moysyqvxf3ulyp4mt.webp");
 
-    private final String name;
-    private final String url;
+    private final String key;
+    private final String value;
 
-    ImgSizeEnum(String name, String url) {
-        this.name = name;
-        this.url = url;
+    ImgSizeEnum(String key, String value) {
+        this.key = key;
+        this.value = value;
     }
 
-    @JsonValue
-    public String getUrl() {
-        return url;
+
+    public static ImgSizeEnum fromKey(String key) {
+        for (ImgSizeEnum imgSizeEnum : ImgSizeEnum.values()) {
+            if (imgSizeEnum.name().equals(key)) {
+                return imgSizeEnum;
+            }
+        }
+        return null;
     }
 }

@@ -35,19 +35,22 @@ jobs:
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
     permissions:
       id-token: write #This is required for requesting the JWT
-  
+
     steps:
       - name: Download artifact from build job
         uses: actions/download-artifact@v3
         with:
           name: java-app
-      
-      - name: Login to Azure
+
+      - name: Azure Login
         uses: azure/login@v1
         with:
-          client-id: ${{ secrets.__clientidsecretname__ }}
-          tenant-id: ${{ secrets.__tenantidsecretname__ }}
-          subscription-id: ${{ secrets.__subscriptionidsecretname__ }}
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: Set up Azure CLI
+        uses: azure/CLI@v1
+        with:
+          azcliversion: latest
 
       - name: Display environment variables
         run: |
@@ -77,10 +80,7 @@ jobs:
           echo "FRONTEND_URL=${{ secrets.FRONTEND_URL }}"
           
 
-      - name: Deploy to Azure Web App
-        id: deploy-to-webapp
-        uses: azure/webapps-deploy@v2
-        with:
-          app-name: 'fashion-api'
-          slot-name: 'production'
-          package: '*.jar'
+      - name: Build and deploy to Azure App Service
+        run: |
+          mvn clean package
+          az webapp deployment zip --resource-group fashion --name fashion-api --src target/*.jar

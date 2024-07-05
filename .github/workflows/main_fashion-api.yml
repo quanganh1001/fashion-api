@@ -74,6 +74,7 @@ jobs:
           echo "SPRING_MAIL_PORT=${{ secrets.SPRING_MAIL_PORT }}"
           echo "SPRING_MAIL_USERNAME=${{ secrets.SPRING_MAIL_USERNAME }}"
           echo "URL_VNPAY_RESPONSE=${{ secrets.URL_VNPAY_RESPONSE }}"
+          echo "FRONTEND_URL=${{ secrets.FRONTEND_URL }}"
           
 
       - name: Deploy to Azure Web App

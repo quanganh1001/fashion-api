@@ -1,34 +1,34 @@
 spring:
     datasource:
-      url: "jdbc:mysql://fashiondb.mysql.database.azure.com:3306/fashion_api_project?useSSL=true",
-      username: fashion
-      password: quanganh123@
+      url: ${MYSQL_HOST}
+      username: ${MYSQL_USERNAME}
+      password: ${MYSQL_PASSWORD}
     data:
       redis:
-        host: "fashionredis.redis.cache.windows.net"
-        port: 6380
-        password: Cb9oNq6YTCkJoscMUWCGJ0AFcGrLPbKGyAzCaGLUhvs=
+        host: ${REDIS_HOST}
+        port: ${REDIS_PORT}
+        password: ${REDIS_PASS}
         timeout: 3000  # Điều chỉnh timeout theo nhu cầu của bạn
         cache-null-values: true  # Tùy chọn cache null values, nếu cần
     rabbitmq:
-      host: 20.6.72.148
-      port:  5672
-      username:  user
-      password:  :e9P33kMbRQq
+      host: ${RABBITMQ_HOST}
+      port:  ${RABBITMQ_PORT}
+      username:  ${RABBITMQ_USERNAME}
+      password:  ${RABBITMQ_PASSWORD}
       mail:
-        exchange: "mail.exchange"
-        queue: "mail.queue"
-        key: "mail.routingKey"
+        exchange: ${RABBITMQ_MAIL_EXCHANGE}
+        queue: ${RABBITMQ_MAIL_QUEUE}
+        key: ${RABBITMQ_MAIL_KEY}
 
       dead_letter:
-        exchange: "dead_letter.exchange"
-        queue: "dead_letter.queue"
-        key: "dead_letter.key"
+        exchange: ${RABBITMQ_DEAD_LETTER_EXCHANGE}
+        queue: ${RABBITMQ_DEAD_LETTER_QUEUE}
+        key: ${RABBITMQ_DEAD_LETTER_KEY}
     mail:
-      host: "smtp.gmail.com"
-      port: 6380
-      username: quanganhnguyen100196@gmail.com
-      password: xoje kkze axwa zzni
+      host: ${SPRING_MAIL_HOST}
+      port: ${SPRING_MAIL_PORT}
+      username: ${SPRING_MAIL_USERNAME}
+      password: ${SPRING_MAIL_PASSWORD}
       properties:
         mail.smtp.auth: true
         mail.smtp.starttls.enable: true
@@ -40,13 +40,13 @@ spring:
         max-request-size: 100MB
 
 secret:
-  key: "e82c73692e6fa99b1770cfd6605bfc5b9ec3a12b362d9de5459a2612191497c4"
+  key: ${JWT_SECRET_KEY}
 
 jwt:
-  issuer: "nguyenquanganh"
+  issuer: ${JWT_ISSUER}
 
 frontend:
-  url: "http://localhost:3000/"
+  url: ${FRONTEND_URL}
 
 
 

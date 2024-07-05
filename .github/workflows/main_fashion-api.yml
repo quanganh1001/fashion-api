@@ -49,6 +49,33 @@ jobs:
           tenant-id: ${{ secrets.__tenantidsecretname__ }}
           subscription-id: ${{ secrets.__subscriptionidsecretname__ }}
 
+      - name: Display environment variables
+        run: |
+          echo "JWT_ISSUER=${{ secrets.JWT_ISSUER }}"
+          echo "JWT_SECRET_KEY=${{ secrets.JWT_SECRET_KEY }}"
+          echo "MYSQL_HOST=${{ secrets.MYSQL_HOST }}"
+          echo "MYSQL_PASSWORD=${{ secrets.MYSQL_PASSWORD }}"
+          echo "MYSQL_USERNAME=${{ secrets.MYSQL_USERNAME }}"
+          echo "RABBITMQ_DEAD_LETTER_EXCHANGE=${{ secrets.RABBITMQ_DEAD_LETTER_EXCHANGE }}"
+          echo "RABBITMQ_DEAD_LETTER_KEY=${{ secrets.RABBITMQ_DEAD_LETTER_KEY }}"
+          echo "RABBITMQ_DEAD_LETTER_QUEUE=${{ secrets.RABBITMQ_DEAD_LETTER_QUEUE }}"
+          echo "RABBITMQ_HOST=${{ secrets.RABBITMQ_HOST }}"
+          echo "RABBITMQ_MAIL_EXCHANGE=${{ secrets.RABBITMQ_MAIL_EXCHANGE }}"
+          echo "RABBITMQ_MAIL_KEY=${{ secrets.RABBITMQ_MAIL_KEY }}"
+          echo "RABBITMQ_MAIL_QUEUE=${{ secrets.RABBITMQ_MAIL_QUEUE }}"
+          echo "RABBITMQ_PASSWORD=${{ secrets.RABBITMQ_PASSWORD }}"
+          echo "RABBITMQ_PORT=${{ secrets.RABBITMQ_PORT }}"
+          echo "RABBITMQ_USERNAME=${{ secrets.RABBITMQ_USERNAME }}"
+          echo "REDIS_HOST=${{ secrets.REDIS_HOST }}"
+          echo "REDIS_PASS=${{ secrets.REDIS_PASS }}"
+          echo "REDIS_PORT=${{ secrets.REDIS_PORT }}"
+          echo "SPRING_MAIL_HOST=${{ secrets.SPRING_MAIL_HOST }}"
+          echo "SPRING_MAIL_PASSWORD=${{ secrets.SPRING_MAIL_PASSWORD }}"
+          echo "SPRING_MAIL_PORT=${{ secrets.SPRING_MAIL_PORT }}"
+          echo "SPRING_MAIL_USERNAME=${{ secrets.SPRING_MAIL_USERNAME }}"
+          echo "URL_VNPAY_RESPONSE=${{ secrets.URL_VNPAY_RESPONSE }}"
+          
+
       - name: Deploy to Azure Web App
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v2

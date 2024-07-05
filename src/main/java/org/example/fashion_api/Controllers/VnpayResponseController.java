@@ -8,6 +8,7 @@ import org.example.fashion_api.Configurations.VnpayConfig;
 import org.example.fashion_api.Exception.BadRequestException;
 import org.example.fashion_api.Repositories.InvoiceRepo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,6 +26,9 @@ import java.util.Map;
 public class VnpayResponseController {
     @Autowired
     private InvoiceRepo invoiceRepo;
+
+    @Value("${frontend.url}")
+    private String frontendUrl;
 
     @GetMapping("/vnpay/response")
     @Hidden
@@ -65,7 +69,7 @@ public class VnpayResponseController {
             invoiceRepo.changeStatusIsPaid(Long.parseLong(invoiceId));
 
             return ResponseEntity.status(HttpStatus.FOUND)
-                    .header(HttpHeaders.LOCATION, "http://localhost:3000/response?success=1")
+                    .header(HttpHeaders.LOCATION, frontendUrl + "response?success=1")
                     .build();
 
         }
@@ -73,7 +77,7 @@ public class VnpayResponseController {
         //if payment fail -> delete invoice
         invoiceRepo.deleteById(Long.parseLong(invoiceId));
         return ResponseEntity.status(HttpStatus.FOUND)
-                .header(HttpHeaders.LOCATION, "http://localhost:3000/response?success=0")
+                .header(HttpHeaders.LOCATION, frontendUrl  + "response?success=0")
                 .build();
 
 

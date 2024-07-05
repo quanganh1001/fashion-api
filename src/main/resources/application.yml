@@ -45,6 +45,11 @@ secret:
 jwt:
   issuer: ${JWT_ISSUER}
 
+frontend:
+  url: ${FRONTEND_URL}
+
+
+
 
 
 

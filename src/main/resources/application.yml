@@ -1,34 +1,34 @@
 spring:
     datasource:
-      url: ${MYSQL_HOST}
-      username: ${MYSQL_USERNAME}
-      password: ${MYSQL_PASSWORD}
+      url: "jdbc:mysql://fashiondb.mysql.database.azure.com:3306/fashion_api_project?useSSL=true",
+      username: fashion
+      password: quanganh123@
     data:
       redis:
-        host: ${REDIS_HOST}
-        port: ${REDIS_PORT}
-        password: ${REDIS_PASS}
+        host: "fashionredis.redis.cache.windows.net"
+        port: 6380
+        password: Cb9oNq6YTCkJoscMUWCGJ0AFcGrLPbKGyAzCaGLUhvs=
         timeout: 3000  # Điều chỉnh timeout theo nhu cầu của bạn
         cache-null-values: true  # Tùy chọn cache null values, nếu cần
     rabbitmq:
-      host: ${RABBITMQ_HOST}
-      port:  ${RABBITMQ_PORT}
-      username:  ${RABBITMQ_USERNAME}
-      password:  ${RABBITMQ_PASSWORD}
+      host: 20.6.72.148
+      port:  5672
+      username:  user
+      password:  :e9P33kMbRQq
       mail:
-        exchange: ${RABBITMQ_MAIL_EXCHANGE}
-        queue: ${RABBITMQ_MAIL_QUEUE}
-        key: ${RABBITMQ_MAIL_KEY}
+        exchange: "mail.exchange"
+        queue: "mail.queue"
+        key: "mail.routingKey"
 
       dead_letter:
-        exchange: ${RABBITMQ_DEAD_LETTER_EXCHANGE}
-        queue: ${RABBITMQ_DEAD_LETTER_QUEUE}
-        key: ${RABBITMQ_DEAD_LETTER_KEY}
+        exchange: "dead_letter.exchange"
+        queue: "dead_letter.queue"
+        key: "dead_letter.key"
     mail:
-      host: ${SPRING_MAIL_HOST}
-      port: ${SPRING_MAIL_PORT}
-      username: ${SPRING_MAIL_USERNAME}
-      password: ${SPRING_MAIL_PASSWORD}
+      host: "smtp.gmail.com"
+      port: 6380
+      username: quanganhnguyen100196@gmail.com
+      password: xoje kkze axwa zzni
       properties:
         mail.smtp.auth: true
         mail.smtp.starttls.enable: true
@@ -40,13 +40,13 @@ spring:
         max-request-size: 100MB
 
 secret:
-  key: ${JWT_SECRET_KEY}
+  key: "e82c73692e6fa99b1770cfd6605bfc5b9ec3a12b362d9de5459a2612191497c4"
 
 jwt:
-  issuer: ${JWT_ISSUER}
+  issuer: "nguyenquanganh"
 
 frontend:
-  url: ${FRONTEND_URL}
+  url: "http://localhost:3000/"
 
 
 

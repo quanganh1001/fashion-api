@@ -1,3 +1,6 @@
+# Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
+# More GitHub Actions for Azure: https://github.com/Azure/actions
+
 name: Build and deploy JAR app to Azure Web App - fashion-api
 
 on:
@@ -31,56 +34,20 @@ jobs:
     runs-on: ubuntu-latest
     needs: build
     environment:
-      name: 'production'
+      name: 'Production'
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
-    permissions:
-      id-token: write #This is required for requesting the JWT
-
+      
     steps:
       - name: Download artifact from build job
         uses: actions/download-artifact@v3
         with:
           name: java-app
-
-      - name: Azure Login
-        uses: azure/login@v1
+      
+      - name: Deploy to Azure Web App
+        id: deploy-to-webapp
+        uses: azure/webapps-deploy@v2
         with:
-          creds: ${{ secrets.AZURE_CREDENTIALS }}
-
-      - name: Set up Azure CLI
-        uses: azure/CLI@v1
-        with:
-          azcliversion: latest
-
-      - name: Display environment variables
-        run: |
-          echo "JWT_ISSUER=${{ secrets.JWT_ISSUER }}"
-          echo "JWT_SECRET_KEY=${{ secrets.JWT_SECRET_KEY }}"
-          echo "MYSQL_HOST=${{ secrets.MYSQL_HOST }}"
-          echo "MYSQL_PASSWORD=${{ secrets.MYSQL_PASSWORD }}"
-          echo "MYSQL_USERNAME=${{ secrets.MYSQL_USERNAME }}"
-          echo "RABBITMQ_DEAD_LETTER_EXCHANGE=${{ secrets.RABBITMQ_DEAD_LETTER_EXCHANGE }}"
-          echo "RABBITMQ_DEAD_LETTER_KEY=${{ secrets.RABBITMQ_DEAD_LETTER_KEY }}"
-          echo "RABBITMQ_DEAD_LETTER_QUEUE=${{ secrets.RABBITMQ_DEAD_LETTER_QUEUE }}"
-          echo "RABBITMQ_HOST=${{ secrets.RABBITMQ_HOST }}"
-          echo "RABBITMQ_MAIL_EXCHANGE=${{ secrets.RABBITMQ_MAIL_EXCHANGE }}"
-          echo "RABBITMQ_MAIL_KEY=${{ secrets.RABBITMQ_MAIL_KEY }}"
-          echo "RABBITMQ_MAIL_QUEUE=${{ secrets.RABBITMQ_MAIL_QUEUE }}"
-          echo "RABBITMQ_PASSWORD=${{ secrets.RABBITMQ_PASSWORD }}"
-          echo "RABBITMQ_PORT=${{ secrets.RABBITMQ_PORT }}"
-          echo "RABBITMQ_USERNAME=${{ secrets.RABBITMQ_USERNAME }}"
-          echo "REDIS_HOST=${{ secrets.REDIS_HOST }}"
-          echo "REDIS_PASS=${{ secrets.REDIS_PASS }}"
-          echo "REDIS_PORT=${{ secrets.REDIS_PORT }}"
-          echo "SPRING_MAIL_HOST=${{ secrets.SPRING_MAIL_HOST }}"
-          echo "SPRING_MAIL_PASSWORD=${{ secrets.SPRING_MAIL_PASSWORD }}"
-          echo "SPRING_MAIL_PORT=${{ secrets.SPRING_MAIL_PORT }}"
-          echo "SPRING_MAIL_USERNAME=${{ secrets.SPRING_MAIL_USERNAME }}"
-          echo "URL_VNPAY_RESPONSE=${{ secrets.URL_VNPAY_RESPONSE }}"
-          echo "FRONTEND_URL=${{ secrets.FRONTEND_URL }}"
-          
-
-      - name: Build and deploy to Azure App Service
-        run: |
-          mvn clean package
-          az webapp deployment zip --resource-group fashion --name fashion-api --src target/*.jar
+          app-name: 'fashion-api'
+          slot-name: 'Production'
+          package: '*.jar'
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_5DD15C1133A84B1C8260E2D1EDB225DE }}

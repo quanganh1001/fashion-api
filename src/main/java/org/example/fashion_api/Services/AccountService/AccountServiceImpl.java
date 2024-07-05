@@ -210,6 +210,13 @@ public class AccountServiceImpl implements AccountService {
         Account account = this.getAccountFromAuthentication();
 
         if (Objects.equals(accountId, account.getId())) {
+            // Get current password from database
+            Account currentAccount = accountRepo.findById(accountId).orElseThrow(() -> new NotFoundException("Account"));
+
+            // Check if current password is correct
+            if (!passwordEncoder.matches(changePassDto.getCurrentPass(), currentAccount.getPassword())) {
+                throw new BadRequestException("Current password is incorrect");
+            }
 
             accountRepo.changePassword(accountId, passwordEncoder.encode(changePassDto.getNewPass()));
 

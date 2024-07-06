@@ -20,7 +20,7 @@ public class FeedbackCustomerController {
     private FeedbackCustomerService feedbackCustomerService;
 
     @GetMapping("count")
-    @PreAuthorize("hasAnyRole('MANAGER')")
+    @PreAuthorize("hasAnyRole('MANAGER','EMPLOYEE')")
     @Operation(summary = "get count feedback unread")
     public ResponseEntity<Integer> getCountFeedbackUnread() {
         return ResponseEntity.ok(feedbackCustomerService.countUnread());

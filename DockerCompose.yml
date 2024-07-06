@@ -65,6 +65,7 @@ services:
       JWT_ISSUER: nguyenquanganh
       FRONTEND_URL: http://localhost:3000/
       REDIS_PASS: NONE
+
     ports:
       - 8080:8080
     networks:

@@ -65,6 +65,9 @@ services:
       JWT_ISSUER: nguyenquanganh
       FRONTEND_URL: http://localhost:3000/
       REDIS_PASS: NONE
+      CLOUD_SECRET: kmkIN1OYarMbUDxotQK51o8W5FM
+      CLOUD_API: 478174116475553478174116475553
+      CLOUD_NAME: dmmvhjl0m
 
     ports:
       - 8080:8080

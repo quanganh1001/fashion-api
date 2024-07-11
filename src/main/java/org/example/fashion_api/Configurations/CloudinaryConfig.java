@@ -1,6 +1,7 @@
 package org.example.fashion_api.Configurations;
 
 import com.cloudinary.Cloudinary;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -9,13 +10,26 @@ import java.util.Map;
 
 @Configuration
 public class CloudinaryConfig {
+
+    @Value("${cloudinary.cloud_name}")
+    private String cloudName;
+
+    @Value("${cloudinary.api_key}")
+    private String apiKey;
+
+    @Value("${cloudinary.api_secret}")
+    private String apiSecret;
+
+    @Value("${cloudinary.secure}")
+    private boolean secure;
+
     @Bean
-    public Cloudinary getCloudinary(){
-        Map config = new HashMap();
-        config.put("cloud_name", "dmmvhjl0m");
-        config.put("api_key", "478174116475553");
-        config.put("api_secret", "kmkIN1OYarMbUDxotQK51o8W5FM");
-        config.put("secure", true);
+    public Cloudinary getCloudinary() {
+        Map<String, Object> config = new HashMap<>();
+        config.put("cloud_name", cloudName);
+        config.put("api_key", apiKey);
+        config.put("api_secret", apiSecret);
+        config.put("secure", secure);
         return new Cloudinary(config);
     }
 }

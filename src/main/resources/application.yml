@@ -48,6 +48,11 @@ jwt:
 frontend:
   url: ${FRONTEND_URL}
 
+cloudinary:
+  cloud_name: ${CLOUD_NAME}
+  api_key: ${CLOUD_API}
+  api_secret: ${CLOUD_SECRET}
+  secure: true
 
 
 

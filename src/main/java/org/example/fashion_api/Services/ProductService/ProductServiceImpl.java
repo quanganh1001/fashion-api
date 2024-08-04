@@ -30,6 +30,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.function.Predicate;
 
 @Service
 public class ProductServiceImpl implements ProductService {
@@ -68,7 +69,7 @@ public class ProductServiceImpl implements ProductService {
             Page<Product> productsPage = productRepo.findAllProductByKey(keyword,pageRequest);
 
             List<ProductRes> productResList = productMapper.productsToProductRes(productsPage.getContent());
-
+            
             var totalProduct = Integer.parseInt(String.valueOf(productsPage.getTotalElements()));
             pageProductRes = PageProductRes.builder()
                     .productsRes(productResList)

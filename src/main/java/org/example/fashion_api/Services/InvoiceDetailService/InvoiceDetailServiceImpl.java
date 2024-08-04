@@ -1,6 +1,9 @@
 package org.example.fashion_api.Services.InvoiceDetailService;
 
 import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
+import org.example.fashion_api.Enum.InvoiceStatusEnum;
+import org.example.fashion_api.Exception.BadRequestException;
 import org.example.fashion_api.Exception.NotFoundException;
 import org.example.fashion_api.Mapper.InvoiceDetailMapper;
 import org.example.fashion_api.Models.Invoices.Invoice;
@@ -10,21 +13,21 @@ import org.example.fashion_api.Models.ProductsDetails.ProductDetail;
 import org.example.fashion_api.Repositories.InvoiceDetailRepo;
 import org.example.fashion_api.Repositories.InvoiceRepo;
 import org.example.fashion_api.Repositories.ProductDetailRepo;
+import org.example.fashion_api.Services.InvoiceHistoryService.InvoiceHistoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class InvoiceDetailServiceImpl implements InvoiceDetailService{
-    @Autowired
-    private InvoiceDetailRepo invoiceDetailRepo;
-    @Autowired
-    private InvoiceDetailMapper invoiceDetailMapper ;
-    @Autowired
-    private InvoiceRepo invoiceRepo;
-    @Autowired
-    private ProductDetailRepo productDetailRepo;
+
+    private final InvoiceDetailRepo invoiceDetailRepo;
+    private final InvoiceDetailMapper invoiceDetailMapper ;
+    private final InvoiceRepo invoiceRepo;
+    private final ProductDetailRepo productDetailRepo;
+    private final InvoiceHistoryService invoiceHistoryService;
 
     @Override
     public List<InvoiceDetailRes> getAllInvoicesDetailsByInvoice(Long invoiceId){
@@ -42,10 +45,21 @@ public class InvoiceDetailServiceImpl implements InvoiceDetailService{
         Invoice invoice = invoiceRepo.findById(invoiceId).orElseThrow(()
                 ->new NotFoundException("Invoice not found"));
 
+        if( (invoice.getInvoiceStatus() != InvoiceStatusEnum.NEW &&
+                invoice.getInvoiceStatus() != InvoiceStatusEnum.CANCEL &&
+                invoice.getInvoiceStatus() != InvoiceStatusEnum.PROCESS) ||
+                invoice.getIsPaid()){
+            throw new BadRequestException("Order created or paid cannot add products");
+        }
+
+
         ProductDetail productDetail = productDetailRepo.findById(productDetailId).orElseThrow(()
                 ->new NotFoundException("Product detail not found"));
 
+
+
         InvoiceDetail invoiceDetail = invoiceDetailRepo.findByInvoiceIdAndProductDetailId(invoiceId,productDetailId);
+
 
         if (invoiceDetail != null){
             // quantity +1
@@ -65,6 +79,8 @@ public class InvoiceDetailServiceImpl implements InvoiceDetailService{
 
         }
 
+        invoiceHistoryService.setNameVarForTrigger();
+
         InvoiceDetail newInvoiceDetail = invoiceDetailRepo.save(invoiceDetail);
 
         return invoiceDetailMapper.invoiceDetailToInvoiceDetailRes(newInvoiceDetail);
@@ -77,6 +93,8 @@ public class InvoiceDetailServiceImpl implements InvoiceDetailService{
 
         invoiceDetail.setQuantity(quantity);
 
+        invoiceHistoryService.setNameVarForTrigger();
+
         invoiceDetailRepo.save(invoiceDetail);
     }
 
@@ -84,6 +102,7 @@ public class InvoiceDetailServiceImpl implements InvoiceDetailService{
     @Transactional
     public void deleteInvoiceDetail(Long invoiceDetailId) {
         InvoiceDetail invoiceDetail = invoiceDetailRepo.findById(invoiceDetailId).orElseThrow(()->new NotFoundException("Invoice detail"));
+        invoiceHistoryService.setNameVarForTrigger();
         invoiceDetailRepo.delete(invoiceDetail);
     }
 }

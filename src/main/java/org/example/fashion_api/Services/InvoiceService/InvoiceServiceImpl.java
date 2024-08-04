@@ -2,6 +2,7 @@ package org.example.fashion_api.Services.InvoiceService;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
 import org.example.fashion_api.Enum.InvoiceStatusEnum;
 import org.example.fashion_api.Exception.BadRequestException;
 import org.example.fashion_api.Exception.NotFoundException;
@@ -15,6 +16,7 @@ import org.example.fashion_api.Repositories.InvoiceRepo;
 import org.example.fashion_api.Repositories.ProductDetailRepo;
 import org.example.fashion_api.Services.AccountService.AccountService;
 import org.example.fashion_api.Services.InvoiceDetailService.InvoiceDetailService;
+import org.example.fashion_api.Services.InvoiceHistoryService.InvoiceHistoryService;
 import org.example.fashion_api.Services.VnpayService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.*;
@@ -26,21 +28,17 @@ import java.util.List;
 import java.util.Objects;
 
 @Service
+@RequiredArgsConstructor
 public class InvoiceServiceImpl implements InvoiceService {
-    @Autowired
-    private InvoiceRepo invoiceRepo;
-    @Autowired
-    private InvoiceMapper invoiceMapper;
-    @Autowired
-    private InvoiceDetailService invoiceDetailService;
-    @Autowired
-    private VnpayService vnpayService;
-    @Autowired
-    private ProductDetailRepo productDetailRepo;
-    @Autowired
-    private AccountService accountService;
-    @Autowired
-    private AccountRepo accountRepo;
+
+    private final InvoiceRepo invoiceRepo;
+    private final InvoiceMapper invoiceMapper;
+    private final InvoiceDetailService invoiceDetailService;
+    private final VnpayService vnpayService;
+    private final ProductDetailRepo productDetailRepo;
+    private final AccountService accountService;
+    private final AccountRepo accountRepo;
+    private final InvoiceHistoryService invoiceHistoryService;
 
     @Override
     public PageInvoiceRes getAllInvoices(String keyword, int page, int pageSize, Long accountId, InvoiceStatusEnum invoiceStatus) {
@@ -93,15 +91,18 @@ public class InvoiceServiceImpl implements InvoiceService {
     }
 
     @Override
+    @Transactional
     public InvoiceRes createInvoice(CheckoutDto checkoutDto) {
         Invoice invoice = invoiceMapper.checkoutDtoToInvoice(checkoutDto, new Invoice());
 
+        invoiceHistoryService.setNameVarForTrigger();
         Invoice newInvoice = invoiceRepo.save(invoice);
 
         return invoiceMapper.invoiceToInvoiceRes(newInvoice);
     }
 
     @Override
+    @Transactional
     public String checkoutByCash(CheckoutDto checkoutDto){
         InvoiceRes invoiceRes = createInvoice(checkoutDto);
 
@@ -120,6 +121,7 @@ public class InvoiceServiceImpl implements InvoiceService {
     }
 
     @Override
+    @Transactional
     public void updateShippingFee(Long invoiceId, Long shippingFee) {
         Invoice invoice = invoiceRepo.findById(invoiceId).orElseThrow(() -> new NotFoundException("Invoice"));
 
@@ -127,7 +129,10 @@ public class InvoiceServiceImpl implements InvoiceService {
 
         invoice.setTotalBill(invoice.getTotalPrice() + shippingFee);
 
+        invoiceHistoryService.setNameVarForTrigger();
+
         invoiceRepo.save(invoice);
+
 
     }
 
@@ -139,6 +144,7 @@ public class InvoiceServiceImpl implements InvoiceService {
     }
 
     @Override
+    @Transactional
     public String checkout(HttpServletRequest http, CheckoutDto checkoutDto) {
 
         InvoiceRes invoiceRes = createInvoice(checkoutDto);
@@ -189,11 +195,23 @@ public class InvoiceServiceImpl implements InvoiceService {
             throw new BadRequestException("Status " + currentInvoice.getInvoiceStatus() + " cannot update to " + status);
         }
 
+        // PROCESS cannot update status
+        if (currentInvoice.getInvoiceStatus() == InvoiceStatusEnum.PROCESS
+                && status.getValue() >= 4) {
+            throw new BadRequestException("Status " + currentInvoice.getInvoiceStatus() + " cannot update to " + status);
+        }
+
         // RETURN cannot update status
         if (currentInvoice.getInvoiceStatus() == InvoiceStatusEnum.RETURN
                 && status.getValue() != 6) {
             throw new BadRequestException("Status " + currentInvoice.getInvoiceStatus() + " cannot update to " + status);
         }
+
+        if(currentInvoice.getAccount() == null){
+            throw new BadRequestException("Please divide the order to the staff first.");
+        }
+
+        invoiceHistoryService.setNameVarForTrigger();
 
         invoiceRepo.changeStatusInvoice(invoiceId, status.name());
 
@@ -249,6 +267,7 @@ public class InvoiceServiceImpl implements InvoiceService {
             currentInvoice.setAccount(newAccount);
         }
 
+        invoiceHistoryService.setNameVarForTrigger();
 
         Invoice invoice = invoiceRepo.save(invoiceMapper.updateInvoiceToInvoice(dto, currentInvoice));
         return invoiceMapper.invoiceToInvoiceRes(invoice);

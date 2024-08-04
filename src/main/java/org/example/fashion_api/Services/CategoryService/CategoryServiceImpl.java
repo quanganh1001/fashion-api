@@ -55,6 +55,7 @@ public class CategoryServiceImpl implements CategoryService {
 
         Category currentCategory = categoryRepo.findById(catId).orElseThrow(() -> new NotFoundException(catId.toString()));
 
+
         //check exist by category code and category name
         if (!Objects.equals(updateCategoryDto.getCategoryCode(), currentCategory.getCategoryCode())
                 && categoryRepo.existsByCategoryCode(updateCategoryDto.getCategoryCode())) {

@@ -1,5 +1,6 @@
 package org.example.fashion_api.Services.ImgProductService;
 
+import lombok.RequiredArgsConstructor;
 import org.example.fashion_api.Exception.NotFoundException;
 import org.example.fashion_api.Models.ImgsProducts.ImgProduct;
 import org.example.fashion_api.Mapper.ImgProductMapper;
@@ -17,15 +18,12 @@ import java.util.List;
 import java.util.Map;
 
 @Service
+@RequiredArgsConstructor
 public class ImgProductServiceImpl implements ImgProductService {
-    @Autowired
-    private ImgProductRepo imgProductRepo;
-    @Autowired
-    private ImgProductMapper imgProductMapper;
-    @Autowired
-    private CloudinaryService cloudinaryService;
-    @Autowired
-    private ProductRepo productRepo;
+    private final ImgProductRepo imgProductRepo;
+    private final ImgProductMapper imgProductMapper;
+    private final CloudinaryService cloudinaryService;
+    private final ProductRepo productRepo;
 
     @Override
     public List<ImgProductRes> imgProductByProductId(Long productId) {

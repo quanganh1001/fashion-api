@@ -2,6 +2,7 @@ package org.example.fashion_api.Services.CategoryService;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
 import org.example.fashion_api.Exception.AlreadyExistException;
 import org.example.fashion_api.Exception.BadRequestException;
 import org.example.fashion_api.Exception.NotFoundException;
@@ -21,15 +22,12 @@ import java.io.IOException;
 import java.util.*;
 
 @Service
+@RequiredArgsConstructor
 public class CategoryServiceImpl implements CategoryService {
-    @Autowired
-    private CategoryRepo categoryRepo;
-    @Autowired
-    private CategoryMapper categoryMapper;
-    @Autowired
-    private CloudinaryService cloudinaryService;
-    @Autowired
-    private RedisService redisService;
+    private final CategoryRepo categoryRepo;
+    private final CategoryMapper categoryMapper;
+    private final CloudinaryService cloudinaryService;
+    private final RedisService redisService;
 
 
     @Override

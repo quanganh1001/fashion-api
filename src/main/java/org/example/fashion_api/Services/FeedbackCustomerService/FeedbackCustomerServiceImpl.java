@@ -1,6 +1,7 @@
 package org.example.fashion_api.Services.FeedbackCustomerService;
 
 import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
 import org.example.fashion_api.Models.FeedbackCustomers.FeedbackCustomer;
 import org.example.fashion_api.Models.FeedbackCustomers.PageFeedbackCustomer;
 import org.example.fashion_api.Models.MailTemplate;
@@ -13,11 +14,10 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 @Service
+@RequiredArgsConstructor
 public class FeedbackCustomerServiceImpl implements FeedbackCustomerService {
-    @Autowired
-    private FeedbackCustomerRepo feedbackCustomerRepo;
-    @Autowired
-    private MailProducer mailProducer;
+    private final FeedbackCustomerRepo feedbackCustomerRepo;
+    private final MailProducer mailProducer;
 
     @Override
     public PageFeedbackCustomer findAll(int page, int limit) {

@@ -1,5 +1,6 @@
 package org.example.fashion_api.Services.CartService;
 
+import lombok.RequiredArgsConstructor;
 import org.example.fashion_api.Mapper.ProductDetailMapper;
 import org.example.fashion_api.Models.Accounts.Account;
 import org.example.fashion_api.Models.Carts.CartItem;
@@ -14,17 +15,13 @@ import org.springframework.stereotype.Service;
 import java.util.*;
 
 @Service
+@RequiredArgsConstructor
 public class CartServiceImpl implements CartService {
 
-    @Autowired
-    private AccountService accountService;
-
-    @Autowired
-    private CartRepo cartRepo;
-    @Autowired
-    private ProductDetailMapper productDetailMapper;
-    @Autowired
-    private ProductDetailRepo productDetailRepo;
+    private final AccountService accountService;
+    private final CartRepo cartRepo;
+    private final ProductDetailMapper productDetailMapper;
+    private final ProductDetailRepo productDetailRepo;
 
     @Override
     public List<CartItemRes> getCart() {

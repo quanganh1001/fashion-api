@@ -3,6 +3,7 @@ package org.example.fashion_api.Services.ProductService;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
 import org.example.fashion_api.Exception.AlreadyExistException;
 import org.example.fashion_api.Exception.NotFoundException;
 import org.example.fashion_api.Mapper.CategoryMapper;
@@ -33,21 +34,15 @@ import java.util.Objects;
 import java.util.function.Predicate;
 
 @Service
+@RequiredArgsConstructor
 public class ProductServiceImpl implements ProductService {
-    @Autowired
-    private ProductMapper productMapper;
-    @Autowired
-    private ProductRepo productRepo;
-    @Autowired
-    private CategoryMapper categoryMapper;
-    @Autowired
-    private CategoryRepo categoryRepo;
-    @Autowired
-    private CategoryService categoryService;
-    @Autowired
-    private RedisService redisService;
-    @Autowired
-    private ProductDetailRepo productDetailRepo;
+    private final ProductMapper productMapper;
+    private final ProductRepo productRepo;
+    private final CategoryMapper categoryMapper;
+    private final CategoryRepo categoryRepo;
+    private final CategoryService categoryService;
+    private final RedisService redisService;
+    private final ProductDetailRepo productDetailRepo;
 
 
     @Override

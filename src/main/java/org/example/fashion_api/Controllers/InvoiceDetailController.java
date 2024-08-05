@@ -1,6 +1,7 @@
 package org.example.fashion_api.Controllers;
 
 import io.swagger.v3.oas.annotations.Operation;
+import lombok.RequiredArgsConstructor;
 import org.example.fashion_api.Models.InvoicesDetails.InvoiceDetailRes;
 import org.example.fashion_api.Services.InvoiceDetailService.InvoiceDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,11 +12,12 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("invoicesDetail")
 @PreAuthorize("hasAnyRole('MANAGER','EMPLOYEE')")
 public class InvoiceDetailController {
-    @Autowired
-    private InvoiceDetailService invoiceDetailService;
+
+    private final InvoiceDetailService invoiceDetailService;
 
     @Operation(summary = "get invoice detail (role MANAGER,EMPLOYEE)")
     @GetMapping("/{invoiceDetailId}")

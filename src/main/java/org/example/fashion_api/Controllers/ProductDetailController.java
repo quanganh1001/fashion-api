@@ -3,6 +3,7 @@ package org.example.fashion_api.Controllers;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.example.fashion_api.Models.ProductsDetails.CreateProductDetailDto;
 import org.example.fashion_api.Models.ProductsDetails.ProductDetailRes;
 import org.example.fashion_api.Models.ProductsDetails.UpdateProductDetailDto;
@@ -15,11 +16,11 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/productsDetail")
 public class ProductDetailController {
-    @Autowired
-    private ProductDetailService productDetailService;
 
+    private final ProductDetailService productDetailService;
 
     @Operation(summary = "get product detail")
     @GetMapping("/{productDetailId}")

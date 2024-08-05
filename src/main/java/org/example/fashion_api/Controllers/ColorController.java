@@ -2,6 +2,7 @@ package org.example.fashion_api.Controllers;
 
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.example.fashion_api.Models.Colors.ColorDto;
 import org.example.fashion_api.Models.Colors.ColorRes;
 import org.example.fashion_api.Services.ColorService.ColorService;
@@ -13,10 +14,10 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("colors")
 public class ColorController {
-    @Autowired
-    private ColorService colorService;
+    private final ColorService colorService;
 
     @Operation(summary = "get all colors (role MANAGER)")
     @PreAuthorize("hasAnyRole('MANAGER')")

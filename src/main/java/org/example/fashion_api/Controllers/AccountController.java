@@ -16,12 +16,10 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("accounts")
 public class AccountController {
-    @Autowired
-    private AccountService accountService;
-
-
+    private final AccountService accountService;
 
     @PreAuthorize("hasAnyRole('MANAGER')")
     @Operation(summary = "get all accounts (role MANAGER)")

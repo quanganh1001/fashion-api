@@ -3,6 +3,7 @@ package org.example.fashion_api.Controllers;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.example.fashion_api.Enum.ImgSizeEnum;
 import org.example.fashion_api.Models.ImgsProducts.ImgProduct;
 import org.example.fashion_api.Models.ImgsProducts.ImgProductRes;
@@ -25,14 +26,13 @@ import java.io.IOException;
 import java.util.List;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/products")
 public class ProductController {
-    @Autowired
-    private ProductService productService;
-    @Autowired
-    private ProductDetailService productDetailService;
-    @Autowired
-    private ImgProductService imgProductService;
+
+    private final ProductService productService;
+    private final ProductDetailService productDetailService;
+    private final ImgProductService imgProductService;
 
 
     @Operation(summary = "get all products ")

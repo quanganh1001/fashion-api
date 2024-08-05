@@ -1,6 +1,7 @@
 package org.example.fashion_api.Controllers;
 
 import io.swagger.v3.oas.annotations.Operation;
+import lombok.RequiredArgsConstructor;
 import org.example.fashion_api.Models.CustomerEmails.CustomerEmails;
 import org.example.fashion_api.Models.CustomerEmails.EmailTemplate;
 import org.example.fashion_api.Services.CustomerEmailService.CustomerEmailService;
@@ -11,10 +12,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("email")
 public class EmailController {
-    @Autowired
-    private CustomerEmailService customerEmailService;
+    private final CustomerEmailService customerEmailService;
 
     @PostMapping("/send")
     @PreAuthorize("hasAnyRole('MANAGER')")

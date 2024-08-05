@@ -4,6 +4,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.example.fashion_api.Mapper.AccountMapper;
 import org.example.fashion_api.Models.Accounts.AccountLoginDto;
 import org.example.fashion_api.Models.Accounts.AccountRegisterDto;
@@ -17,14 +18,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/auth")
 public class AuthController {
-    @Autowired
-    private AccountService accountService;
-    @Autowired
-    private JwtService jwtService;
-    @Autowired
-    private AccountMapper accountMapper;
+    private final AccountService accountService;
+    private final JwtService jwtService;
+    private final AccountMapper accountMapper;
 
 
     @PostMapping("/login")

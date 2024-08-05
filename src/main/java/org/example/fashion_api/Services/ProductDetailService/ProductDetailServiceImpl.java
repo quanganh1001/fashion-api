@@ -1,6 +1,7 @@
 package org.example.fashion_api.Services.ProductDetailService;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import lombok.RequiredArgsConstructor;
 import org.example.fashion_api.Exception.AlreadyExistException;
 import org.example.fashion_api.Exception.BadRequestException;
 import org.example.fashion_api.Exception.NotFoundException;
@@ -19,18 +20,12 @@ import java.util.Objects;
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class ProductDetailServiceImpl implements ProductDetailService{
-    @Autowired
-    private ProductDetailRepo productDetailRepo;
-    @Autowired
-    private ProductDetailMapper productDetailMapper;
-    @Autowired
-    private RedisService redisService;
-
-    @Autowired
-    private ProductRepo productRepo;
-    @Autowired
-    private InvoiceDetailRepo invoiceDetailRepo;
+    private final ProductDetailRepo productDetailRepo;
+    private final ProductDetailMapper productDetailMapper;
+    private final RedisService redisService;
+    private final ProductRepo productRepo;
 
     @Override
     public List<ProductDetailRes> findAllProductDetails(Long productId) throws JsonProcessingException {

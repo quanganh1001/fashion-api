@@ -2,6 +2,7 @@ package org.example.fashion_api.Controllers;
 
 
 import io.swagger.v3.oas.annotations.Operation;
+import lombok.RequiredArgsConstructor;
 import org.example.fashion_api.Models.ImgsProducts.ImgProductRes;
 import org.example.fashion_api.Services.ImgProductService.ImgProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,12 +15,11 @@ import java.io.IOException;
 import java.util.List;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/imgProducts")
 public class ImageProductController {
-    @Autowired
-    private ImgProductService imgProductService;
 
-
+    private final ImgProductService imgProductService;
 
 
     @Operation(summary = "delete image (role MANAGER)")

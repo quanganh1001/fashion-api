@@ -1,7 +1,6 @@
 package org.example.fashion_api.Repositories;
 
 
-import jakarta.transaction.Transactional;
 import org.example.fashion_api.Models.Products.Product;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -11,7 +10,6 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import java.awt.print.Pageable;
 import java.util.List;
 
 @Repository
@@ -38,5 +36,7 @@ public interface ProductRepo extends JpaRepository<Product,Long> {
 
     @Query(value = "SELECT * from products WHERE discount_price > 0 ",nativeQuery = true)
     List<Product> findAllSale();
+
+    List<Product> findAllByCategoryId(Long catId);
 }
 

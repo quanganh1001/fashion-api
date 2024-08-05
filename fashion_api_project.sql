@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: localhost
--- Thời gian đã tạo: Th8 05, 2024 lúc 09:54 AM
+-- Thời gian đã tạo: Th8 05, 2024 lúc 12:57 PM
 -- Phiên bản máy phục vụ: 10.4.28-MariaDB
 -- Phiên bản PHP: 8.2.4
 
@@ -1644,7 +1644,7 @@ CREATE TABLE `jwt_tokens` (
 --
 
 INSERT INTO `jwt_tokens` (`id`, `token`, `expiration_date`, `refresh_token`, `account_id`, `refresh_expiration_date`, `revoked`, `created_at`, `updated_at`) VALUES
-(520, 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJuZ3V5ZW5xdWFuZ2FuaCIsInBob25lIjoiMDM2NDEwMDE5NiIsInJvbGUiOiJST0xFX01BTkFHRVIiLCJpYXQiOjE3MjI4NDQxMjMsImV4cCI6MTcyMjg0NDcyM30.7unQxJUxIDrIQtxPpPeBzMyGJBjFAut8OuQtatXzm_k', '2024-08-05 14:58:43', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJuZ3V5ZW5xdWFuZ2FuaCIsInBob25lIjoiMDM2NDEwMDE5NiIsInJvbGUiOiJST0xFX01BTkFHRVIiLCJpYXQiOjE3MjI4NDQxMjMsImV4cCI6MTcyMzQ0ODkyM30.Yj10OPqESYGDZUFjpGHuCILQGC2ti-nGgqTTIenjVpQ', 1, '2024-09-04 14:48:43', 0, '2024-08-04 10:40:17', '2024-08-05 07:48:43'),
+(520, 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJuZ3V5ZW5xdWFuZ2FuaCIsInBob25lIjoiMDM2NDEwMDE5NiIsInJvbGUiOiJST0xFX01BTkFHRVIiLCJpYXQiOjE3MjI4NDU2MTEsImV4cCI6MTcyMjg0NjIxMX0.pu6JA9lF1jvHYCabK_V8a_pMBzPl_PZJ-DqgJlsLSGA', '2024-08-05 15:23:31', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJuZ3V5ZW5xdWFuZ2FuaCIsInBob25lIjoiMDM2NDEwMDE5NiIsInJvbGUiOiJST0xFX01BTkFHRVIiLCJpYXQiOjE3MjI4NDU2MTEsImV4cCI6MTcyMzQ1MDQxMX0.tEj1AKcZYRwWnPSZzQPZUSPYkrcYRL7zDELqEE7Wehc', 1, '2024-09-04 15:13:31', 0, '2024-08-04 10:40:17', '2024-08-05 08:13:31'),
 (525, 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJuZ3V5ZW5xdWFuZ2FuaCIsInBob25lIjoiMDM2NDEwMDE5NiIsInJvbGUiOiJST0xFX01BTkFHRVIiLCJpYXQiOjE3MjI3ODA4MTQsImV4cCI6MTcyMjc4MTQxNH0.k8iYuciJJwxBW1yKYzCKGMW0ZU-oGZAB0QswixQi_ZQ', '2024-08-04 21:23:34', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJuZ3V5ZW5xdWFuZ2FuaCIsInBob25lIjoiMDM2NDEwMDE5NiIsInJvbGUiOiJST0xFX01BTkFHRVIiLCJpYXQiOjE3MjI3ODA4MTQsImV4cCI6MTcyMzM4NTYxNH0.vD26sw813UYJSMRp-3W-CLKM344oz1PeAj-LIw-beyw', 1, '2024-08-11 21:13:34', 0, '2024-08-04 14:13:34', '2024-08-04 14:13:34');
 
 -- --------------------------------------------------------
@@ -2494,7 +2494,7 @@ INSERT INTO `products_detail` (`id`, `product_id`, `code`, `color_id`, `size`, `
 -- (See below for the actual view)
 --
 CREATE TABLE `selling_products` (
-`id` bigint(21)
+`id` int(11)
 ,`product_name` varchar(100)
 ,`price` int(11)
 ,`discount_price` int(11)
@@ -2503,6 +2503,7 @@ CREATE TABLE `selling_products` (
 ,`total_color` int(11)
 ,`image_background` varchar(255)
 ,`created_at` timestamp
+,`updated_at` timestamp
 ,`total_quantity_sold` decimal(32,0)
 ,`total_sales` decimal(41,0)
 );
@@ -2514,7 +2515,7 @@ CREATE TABLE `selling_products` (
 --
 DROP TABLE IF EXISTS `selling_products`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `selling_products`  AS SELECT row_number() over () AS `id`, `p`.`product_name` AS `product_name`, `p`.`price` AS `price`, `p`.`discount_price` AS `discount_price`, `p`.`discount_percent` AS `discount_percent`, `p`.`total_size` AS `total_size`, `p`.`total_color` AS `total_color`, `p`.`image_background` AS `image_background`, `i`.`created_at` AS `created_at`, coalesce(sum(`id`.`quantity`),0) AS `total_quantity_sold`, coalesce(sum(`id`.`total_price`),0) AS `total_sales` FROM (((`invoices_detail` `id` left join `products_detail` `pd` on(`id`.`product_detail_id` = `pd`.`id`)) left join `products` `p` on(`pd`.`product_id` = `p`.`id`)) left join `invoices` `i` on(`id`.`invoice_id` = `i`.`id`)) WHERE `i`.`invoice_status` = 'SUCCESS' GROUP BY `p`.`product_name` ;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `selling_products`  AS SELECT `p`.`id` AS `id`, `p`.`product_name` AS `product_name`, `p`.`price` AS `price`, `p`.`discount_price` AS `discount_price`, `p`.`discount_percent` AS `discount_percent`, `p`.`total_size` AS `total_size`, `p`.`total_color` AS `total_color`, `p`.`image_background` AS `image_background`, `i`.`created_at` AS `created_at`, `i`.`updated_at` AS `updated_at`, coalesce(sum(`id`.`quantity`),0) AS `total_quantity_sold`, coalesce(sum(`id`.`total_price`),0) AS `total_sales` FROM (((`invoices_detail` `id` left join `products_detail` `pd` on(`id`.`product_detail_id` = `pd`.`id`)) left join `products` `p` on(`pd`.`product_id` = `p`.`id`)) left join `invoices` `i` on(`id`.`invoice_id` = `i`.`id`)) WHERE `i`.`invoice_status` = 'SUCCESS' GROUP BY `p`.`product_name` ;
 
 --
 -- Chỉ mục cho các bảng đã đổ

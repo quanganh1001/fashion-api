@@ -12,10 +12,12 @@ import org.example.fashion_api.Models.Products.PageProductRes;
 import org.example.fashion_api.Models.Products.ProductRes;
 import org.example.fashion_api.Models.Products.UpdateProductDto;
 import org.example.fashion_api.Models.ProductsDetails.ProductDetailRes;
+import org.example.fashion_api.Models.SellingProductsView.SellingProductsView;
 import org.example.fashion_api.Services.ImgProductService.ImgProductService;
 import org.example.fashion_api.Services.ProductDetailService.ProductDetailService;
 import org.example.fashion_api.Services.ProductService.ProductService;
 import org.example.fashion_api.Services.RedisService.RedisService;
+import org.example.fashion_api.Services.SellingProductsViewService.SellingProductsViewService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -33,9 +35,10 @@ public class ProductController {
     private final ProductService productService;
     private final ProductDetailService productDetailService;
     private final ImgProductService imgProductService;
-
+    private final SellingProductsViewService sellingProductsViewService;
 
     @Operation(summary = "get all products ")
+    @PreAuthorize("hasAnyRole('MANAGER')")
     @GetMapping()
     public ResponseEntity<PageProductRes> getAllProducts(@RequestParam(defaultValue = "",required = false) String keyword,
                                          @RequestParam(defaultValue = "1") int page,
@@ -108,6 +111,11 @@ public class ProductController {
         return ResponseEntity.ok("done");
     }
 
+    @Operation(summary = "Get best selling products")
+    @GetMapping("/selectListProducts")
+    public ResponseEntity<List<ProductRes>> selectListProducts(@RequestParam String selected) throws JsonProcessingException {
+        return ResponseEntity.ok(sellingProductsViewService.selectListProducts(selected));
+    }
 
 
 }

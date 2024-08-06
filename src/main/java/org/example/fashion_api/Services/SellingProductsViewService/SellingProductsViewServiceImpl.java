@@ -52,7 +52,7 @@ public class SellingProductsViewServiceImpl implements SellingProductsViewServic
             List<Product> products = new ArrayList<>();
 
             for (CategoryRes categoryRes: categoryList){
-                products.addAll(productRepo.findAllByCategoryId(categoryRes.getId()));
+                products.addAll(productRepo.findAllByCategoryIdAndIsActivatedTrue(categoryRes.getId()));
             }
 
 
@@ -64,7 +64,7 @@ public class SellingProductsViewServiceImpl implements SellingProductsViewServic
             List<Product> products = new ArrayList<>();
 
             for (CategoryRes categoryRes: categoryList){
-                products.addAll(productRepo.findAllByCategoryId(categoryRes.getId()));
+                products.addAll(productRepo.findAllByCategoryIdAndIsActivatedTrue(categoryRes.getId()));
             }
 
             productResList = productMapper.productsToProductRes(products.stream().limit(10).toList());
@@ -75,7 +75,7 @@ public class SellingProductsViewServiceImpl implements SellingProductsViewServic
             List<Product> products = new ArrayList<>();
 
             for (CategoryRes categoryRes: categoryList){
-                products.addAll(productRepo.findAllByCategoryId(categoryRes.getId()));
+                products.addAll(productRepo.findAllByCategoryIdAndIsActivatedTrue(categoryRes.getId()));
             }
 
             productResList = productMapper.productsToProductRes(products.stream().limit(10).toList());

@@ -22,6 +22,6 @@ public interface ProductDetailRepo extends JpaRepository<ProductDetail, Long> {
     void setIsActivated(@Param("productDetailId") Long productDetailId, @Param("status") Boolean status);
 
 
-    List<ProductDetail> searchProductDetailByProductProductNameContainingIgnoreCase(String key);
+    List<ProductDetail> searchProductDetailByProductProductNameContainingIgnoreCaseAndIsActivatedTrue(String key);
 
 }

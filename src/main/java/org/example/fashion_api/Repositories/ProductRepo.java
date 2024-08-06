@@ -25,20 +25,22 @@ public interface ProductRepo extends JpaRepository<Product,Long> {
     void updateProductBackground(@Param("imageUrl") String imageUrl, @Param("id") Long id);
 
 
-    @Query(value = "SELECT * FROM products WHERE cat_id IN (:categoryIds)", nativeQuery = true)
+    @Query(value = "SELECT * FROM products WHERE (cat_id IN (:categoryIds)) AND is_activated = true", nativeQuery =
+            true)
     List<Product> findAllByCategoryIds(@Param("categoryIds") List<Long> categoryIds);
 
     @Query(value = "SELECT * FROM products WHERE LOWER(product_name) LIKE LOWER(CONCAT('%', :keyword, '%')) " +
             "OR LOWER(product_code) LIKE LOWER(CONCAT('%', :keyword, '%')) ", nativeQuery = true)
     Page<Product> findAllProductByKey(@Param("keyword") String keyword, PageRequest pageRequest);
 
-    @Query(value = "SELECT * FROM products WHERE LOWER(product_name) LIKE LOWER(CONCAT('%', :keyword, '%')) " +
-            "OR LOWER(product_code) LIKE LOWER(CONCAT('%', :keyword, '%')) ", nativeQuery = true)
+    @Query(value = "SELECT * FROM products WHERE (LOWER(product_name) LIKE LOWER(CONCAT('%', :keyword, '%')) " +
+            "OR LOWER(product_code) LIKE LOWER(CONCAT('%', :keyword, '%'))) AND is_activated = true ", nativeQuery =
+            true)
     List<Product> findAllProductByKey(@Param("keyword") String keyword);
 
     @Query(value = "SELECT * from products WHERE discount_price > 0 ",nativeQuery = true)
     List<Product> findAllSale();
 
-    List<Product> findAllByCategoryId(Long catId);
+    List<Product> findAllByCategoryIdAndIsActivatedTrue(Long catId);
 }
 

@@ -46,10 +46,16 @@ public class ProductController {
         return ResponseEntity.ok(productService.getAllProducts(keyword,page-1,limit));
     }
 
-    @Operation(summary = "get product ")
+    @Operation(summary = "get product for admin page")
     @GetMapping("/{productId}")
-    public ResponseEntity<ProductRes> getProduct(@PathVariable("productId") Long productId){
-        return ResponseEntity.ok(productService.getProduct(productId));
+    public ResponseEntity<ProductRes> getProductAdmin(@PathVariable("productId") Long productId){
+        return ResponseEntity.ok(productService.getProductForAdminPage(productId));
+    }
+
+    @Operation(summary = "get product for client page")
+    @GetMapping("/client/{productId}")
+    public ResponseEntity<ProductRes> getProductClient(@PathVariable("productId") Long productId){
+        return ResponseEntity.ok(productService.getProductForClientPage(productId));
     }
 
     @Operation(summary = "get product by catId ")

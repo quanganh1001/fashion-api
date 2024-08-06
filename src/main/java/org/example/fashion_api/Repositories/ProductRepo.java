@@ -14,6 +14,8 @@ import java.util.List;
 
 @Repository
 public interface ProductRepo extends JpaRepository<Product,Long> {
+    Product findByIdAndIsActivatedTrue(Long id);
+
 
     Boolean existsByProductCode(String productCode);
 

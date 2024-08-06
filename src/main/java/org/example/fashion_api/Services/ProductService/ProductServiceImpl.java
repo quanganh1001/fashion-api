@@ -79,8 +79,13 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public ProductRes getProduct(Long productId) {
+    public ProductRes getProductForAdminPage(Long productId) {
         return productMapper.productToProductRes(productRepo.findById(productId).orElseThrow(() -> new NotFoundException("product")));
+    }
+
+    @Override
+    public ProductRes getProductForClientPage(Long productId) {
+        return productMapper.productToProductRes(productRepo.findByIdAndIsActivatedTrue(productId));
     }
 
     @Override
@@ -93,7 +98,7 @@ public class ProductServiceImpl implements ProductService {
             throw new AlreadyExistException(updateProductDto.getProductCode());
         }
 
-        if (updateProductDto.getIsActivated() != currentProduct.getIsActivated() && !updateProductDto.getIsActivated()){
+        if (updateProductDto.getIsActivated() != currentProduct.getIsActivated()){
             List<ProductDetail> productDetails = productDetailRepo.findAllByProductId(productId);
             for (ProductDetail productDetail : productDetails) {
                 productDetailRepo.setIsActivated(productDetail.getId(),updateProductDto.getIsActivated());

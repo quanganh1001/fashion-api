@@ -1,4 +1,4 @@
-package org.example.fashion_api.Models.SellingProductsView;
+package org.example.fashion_api.Models.Views;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
@@ -9,8 +9,8 @@ import org.example.fashion_api.Models.BaseEntity;
 @Entity
 @Data
 @Builder
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "selling_products")
 public class SellingProductsView extends BaseEntity {
 

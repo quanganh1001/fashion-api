@@ -4,27 +4,24 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.example.fashion_api.Enum.ImgSizeEnum;
-import org.example.fashion_api.Models.ImgsProducts.ImgProduct;
 import org.example.fashion_api.Models.ImgsProducts.ImgProductRes;
 import org.example.fashion_api.Models.Products.CreateProductDto;
 import org.example.fashion_api.Models.Products.PageProductRes;
 import org.example.fashion_api.Models.Products.ProductRes;
 import org.example.fashion_api.Models.Products.UpdateProductDto;
 import org.example.fashion_api.Models.ProductsDetails.ProductDetailRes;
-import org.example.fashion_api.Models.SellingProductsView.SellingProductsView;
+import org.example.fashion_api.Models.Views.TopProductView;
 import org.example.fashion_api.Services.ImgProductService.ImgProductService;
 import org.example.fashion_api.Services.ProductDetailService.ProductDetailService;
 import org.example.fashion_api.Services.ProductService.ProductService;
-import org.example.fashion_api.Services.RedisService.RedisService;
-import org.example.fashion_api.Services.SellingProductsViewService.SellingProductsViewService;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.example.fashion_api.Services.ViewService.ViewService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -35,7 +32,7 @@ public class ProductController {
     private final ProductService productService;
     private final ProductDetailService productDetailService;
     private final ImgProductService imgProductService;
-    private final SellingProductsViewService sellingProductsViewService;
+    private final ViewService viewService;
 
     @Operation(summary = "get all products ")
     @PreAuthorize("hasAnyRole('MANAGER')")
@@ -120,7 +117,15 @@ public class ProductController {
     @Operation(summary = "Get best selling products")
     @GetMapping("/selectListProducts")
     public ResponseEntity<List<ProductRes>> selectListProducts(@RequestParam String selected) throws JsonProcessingException {
-        return ResponseEntity.ok(sellingProductsViewService.selectListProducts(selected));
+        return ResponseEntity.ok(viewService.selectListProducts(selected));
+    }
+
+    @Operation(summary = "Get best selling products by date")
+    @PreAuthorize("hasAnyRole('MANAGER')")
+    @GetMapping("/selectByDate")
+    public ResponseEntity<List<TopProductView>> selectTopProduct(@RequestParam LocalDate startDate,
+                                                                 @RequestParam LocalDate endDate) throws JsonProcessingException {
+        return ResponseEntity.ok(viewService.findTopProduct(startDate,endDate));
     }
 
 

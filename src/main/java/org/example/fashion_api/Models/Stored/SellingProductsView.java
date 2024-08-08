@@ -1,4 +1,4 @@
-package org.example.fashion_api.Models.Views;
+package org.example.fashion_api.Models.Stored;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;

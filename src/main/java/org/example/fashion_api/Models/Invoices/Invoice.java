@@ -47,9 +47,9 @@ public class Invoice extends BaseEntity {
     @NotNull
     private Long totalBill;
 
-    private LocalDateTime successfulAt;
+    private LocalDateTime successfulDate;
 
-    private LocalDateTime confirmationAt;
+    private LocalDateTime confirmationDate;
 
     private Boolean isPaid = Boolean.FALSE;
 

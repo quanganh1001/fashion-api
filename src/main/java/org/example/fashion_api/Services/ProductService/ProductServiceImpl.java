@@ -8,30 +8,26 @@ import org.example.fashion_api.Exception.AlreadyExistException;
 import org.example.fashion_api.Exception.NotFoundException;
 import org.example.fashion_api.Mapper.CategoryMapper;
 import org.example.fashion_api.Mapper.ProductMapper;
-import org.example.fashion_api.Models.Categories.Category;
 import org.example.fashion_api.Models.Categories.CategoryRes;
 import org.example.fashion_api.Models.Products.*;
 import org.example.fashion_api.Models.ProductsDetails.ProductDetail;
+import org.example.fashion_api.Models.Stored.SellingProductsView;
 import org.example.fashion_api.Repositories.CategoryRepo;
 import org.example.fashion_api.Repositories.ProductDetailRepo;
 import org.example.fashion_api.Repositories.ProductRepo;
+import org.example.fashion_api.Repositories.SellingProductsViewRepo;
 import org.example.fashion_api.Services.CategoryService.CategoryService;
-import org.example.fashion_api.Services.CloudinaryService;
 import org.example.fashion_api.Services.RedisService.RedisService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
-import java.util.function.Predicate;
 
 @Service
 @RequiredArgsConstructor
@@ -43,7 +39,7 @@ public class ProductServiceImpl implements ProductService {
     private final CategoryService categoryService;
     private final RedisService redisService;
     private final ProductDetailRepo productDetailRepo;
-
+    private final SellingProductsViewRepo sellingProductsViewRepo;
 
     @Override
     public PageProductRes getAllProducts(String keyword, int page, int limit) throws JsonProcessingException {
@@ -184,5 +180,63 @@ public class ProductServiceImpl implements ProductService {
         }
 
         return products;
+    }
+
+    @Override
+    public List<ProductRes> selectListProducts(String selected) throws JsonProcessingException {
+        List<ProductRes> productResList = new ArrayList<>();
+
+        if (Objects.equals(selected, "best")){
+            List<org.example.fashion_api.Models.Stored.SellingProductsView> sellingProductsView = this.sellingProductsViewRepo.findTop10ByOrderByTotalSalesDesc();
+            for (org.example.fashion_api.Models.Stored.SellingProductsView sellingProducts : sellingProductsView){
+                productResList.add(ProductRes.builder()
+                        .productName(sellingProducts.getProductName())
+                        .price(sellingProducts.getPrice())
+                        .discountPrice(sellingProducts.getDiscountPrice())
+                        .discountPercent(sellingProducts.getDiscountPercent())
+                        .imageBackground(sellingProducts.getImageBackground())
+                        .totalColor(sellingProducts.getTotalColor())
+                        .totalSize(sellingProducts.getTotalSize())
+                        .id(sellingProducts.getId())
+                        .build());
+            }
+
+
+        } else if (Objects.equals(selected, "shirt")) {
+            List<CategoryRes> categoryList = categoryService.CatDescendants(118L,new ArrayList<>());
+
+            List<Product> products = new ArrayList<>();
+
+            for (CategoryRes categoryRes: categoryList){
+                products.addAll(productRepo.findAllByCategoryIdAndIsActivatedTrue(categoryRes.getId()));
+            }
+
+
+            productResList = productMapper.productsToProductRes(products.stream().limit(10).toList());
+
+        } else if (Objects.equals(selected, "pants")) {
+            List<CategoryRes> categoryList = categoryService.CatDescendants(113L,new ArrayList<>());
+
+            List<Product> products = new ArrayList<>();
+
+            for (CategoryRes categoryRes: categoryList){
+                products.addAll(productRepo.findAllByCategoryIdAndIsActivatedTrue(categoryRes.getId()));
+            }
+
+            productResList = productMapper.productsToProductRes(products.stream().limit(10).toList());
+
+        }else {
+            List<CategoryRes> categoryList = categoryService.CatDescendants(103L,new ArrayList<>());
+
+            List<Product> products = new ArrayList<>();
+
+            for (CategoryRes categoryRes: categoryList){
+                products.addAll(productRepo.findAllByCategoryIdAndIsActivatedTrue(categoryRes.getId()));
+            }
+
+            productResList = productMapper.productsToProductRes(products.stream().limit(10).toList());
+        }
+
+        return productResList;
     }
 }

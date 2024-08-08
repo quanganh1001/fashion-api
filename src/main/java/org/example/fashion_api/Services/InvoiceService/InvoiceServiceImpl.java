@@ -25,6 +25,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
@@ -270,15 +271,15 @@ public class InvoiceServiceImpl implements InvoiceService {
 
     private void updateDateTime(Invoice currentInvoice, int value) {
         if(currentInvoice.getInvoiceStatus().getValue() != value && value == 3){
-            currentInvoice.setConfirmationAt(LocalDateTime.now());
+            currentInvoice.setConfirmationDate(LocalDate.now().atStartOfDay());
         }
 
         if(currentInvoice.getInvoiceStatus().getValue() == 3 && value < 3){
-            currentInvoice.setConfirmationAt(null);
+            currentInvoice.setConfirmationDate(null);
         }
 
         if(currentInvoice.getInvoiceStatus().getValue() != value && value == 5){
-            currentInvoice.setSuccessfulAt(LocalDateTime.now());
+            currentInvoice.setSuccessfulDate(LocalDate.now().atStartOfDay());
         }
     }
 

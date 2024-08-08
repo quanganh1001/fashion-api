@@ -34,4 +34,6 @@ public interface ProductService {
     ResponseEntity<String> updateProductBackground(String imageUrl, Long productId) throws IOException;
 
     List<ProductRes> getAllProductsByCategory(String keyword,String catId) throws JsonProcessingException;
+
+    List<ProductRes> selectListProducts(String selected) throws JsonProcessingException;
 }

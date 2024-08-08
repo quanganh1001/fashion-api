@@ -1,4 +1,4 @@
-package org.example.fashion_api.Models.Views;
+package org.example.fashion_api.Models.Stored;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.example.fashion_api.Models.BaseEntity;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 @Getter
 @Setter
@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Entity
 @Table(name = "top_products")
-public class TopProductView extends BaseEntity {
+public class TopProductStored extends BaseEntity {
     private String imageBackground;
     private String productName;
     private Long product_detail_id;
@@ -23,5 +23,5 @@ public class TopProductView extends BaseEntity {
     private String colorName;
     private Double totalSales;
     private Integer totalQuantitySold;
-    private LocalDateTime confirmationAt;
+    private LocalDate confirmationDate;
 }

@@ -1,7 +1,7 @@
 package org.example.fashion_api.Services;
 
 import lombok.RequiredArgsConstructor;
-import org.example.fashion_api.Models.AccountsAdmin.AccountAdmin;
+import org.example.fashion_api.Models.Accounts.Account;
 import org.example.fashion_api.Models.UserCustomDetail;
 import org.example.fashion_api.Repositories.AccountRepo;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -19,7 +19,7 @@ public class UserDetailServiceImpl implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Optional<AccountAdmin> findByUser = accountRepo.findByPhone(username);
-        return UserCustomDetail.builder().accountAdmin(findByUser.get()).build();
+        Optional<Account> findByUser = accountRepo.findByPhone(username);
+        return UserCustomDetail.builder().account(findByUser.get()).build();
     }
 }

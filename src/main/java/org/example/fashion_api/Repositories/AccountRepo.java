@@ -1,6 +1,6 @@
 package org.example.fashion_api.Repositories;
 
-import org.example.fashion_api.Models.AccountsAdmin.AccountAdmin;
+import org.example.fashion_api.Models.Accounts.Account;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -13,21 +13,21 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface AccountRepo extends JpaRepository<AccountAdmin, Long> {
+public interface AccountRepo extends JpaRepository<Account, Long> {
 
-    Optional<AccountAdmin> findByEmail(String email);
+    Optional<Account> findByEmail(String email);
 
-    Optional<AccountAdmin> findByPhone(String phone);
+    Optional<Account> findByPhone(String phone);
 
-    Optional<AccountAdmin> findByPhoneAndIsActivatedTrue(String phone);
+    Optional<Account> findByPhoneAndIsActivatedTrue(String phone);
 
     Boolean existsByEmail(String email);
 
     Boolean existsByPhone(String phone);
 
-    @Query(value = "SELECT * FROM accounts WHERE LOWER(name) LIKE LOWER(CONCAT('%', :keyword, '%')) " +
-                                            "OR LOWER(phone) LIKE LOWER(CONCAT('%', :keyword, '%'))", nativeQuery = true)
-    Page<AccountAdmin> findAllByKeyword(@Param("keyword") String keyword, PageRequest pageable);
+    @Query(value = "SELECT * FROM accounts WHERE (LOWER(name) LIKE LOWER(CONCAT('%', :keyword, '%')) " +
+                                            "OR LOWER(phone) LIKE LOWER(CONCAT('%', :keyword, '%'))) AND role LIKE LOWER(CONCAT('%', :role, '%'))", nativeQuery = true)
+    Page<Account> findAllByKeyword(@Param("keyword") String keyword,@Param("role") String role, PageRequest pageable);
 
     @Modifying
     @Query(value = "UPDATE accounts SET password = :newPass WHERE id = :accountId",nativeQuery = true)
@@ -42,5 +42,5 @@ public interface AccountRepo extends JpaRepository<AccountAdmin, Long> {
     void handleActivateStatus(@Param("accountId") Long accountId,@Param("status") Boolean status);
 
     @Query(value = "SELECT * FROM accounts WHERE role = 'ROLE_MANAGER' OR role = 'ROLE_EMPLOYEE'",nativeQuery = true)
-    List<AccountAdmin> findAllByRole();
+    List<Account> findAllByRole();
 }

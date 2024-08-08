@@ -2,7 +2,7 @@ package org.example.fashion_api.Models.JwtToken;
 
 
 import lombok.*;
-import org.example.fashion_api.Models.AccountsAdmin.AccountRes;
+import org.example.fashion_api.Models.Accounts.AccountRes;
 
 @Getter
 @Setter

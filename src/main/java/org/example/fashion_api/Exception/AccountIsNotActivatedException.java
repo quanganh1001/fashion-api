@@ -10,7 +10,7 @@ public class AccountIsNotActivatedException extends RuntimeException{
     private HttpStatus status;
 
     public AccountIsNotActivatedException() {
-        super("AccountAdmin has been deactivated");
+        super("Account has been deactivated");
         this.status = HttpStatus.UNAUTHORIZED;
     }
 }

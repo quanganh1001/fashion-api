@@ -7,7 +7,7 @@ import org.example.fashion_api.Enum.InvoiceStatusEnum;
 import org.example.fashion_api.Exception.BadRequestException;
 import org.example.fashion_api.Exception.NotFoundException;
 import org.example.fashion_api.Mapper.InvoiceMapper;
-import org.example.fashion_api.Models.AccountsAdmin.AccountAdmin;
+import org.example.fashion_api.Models.Accounts.Account;
 import org.example.fashion_api.Models.Invoices.*;
 import org.example.fashion_api.Models.InvoicesDetails.InvoiceDetail;
 import org.example.fashion_api.Models.InvoicesDetails.InvoiceDetailDto;
@@ -25,6 +25,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 
@@ -60,8 +61,8 @@ public class InvoiceServiceImpl implements InvoiceService {
                 .anyMatch(authority -> authority.getAuthority().equals("ROLE_MANAGER"));
 
         if (!isManager) {
-            AccountAdmin accountAdmin = accountService.getAccountFromAuthentication();
-            accountId = accountAdmin.getId();
+            Account account = accountService.getAccountFromAuthentication();
+            accountId = account.getId();
         }
 
 
@@ -173,18 +174,12 @@ public class InvoiceServiceImpl implements InvoiceService {
     public void updateStatus(Long invoiceId, InvoiceStatusEnum status) {
         Invoice currentInvoice = invoiceRepo.findById(invoiceId).orElseThrow(() -> new NotFoundException("Invoice"));
 
+        if (currentInvoice.getAccount() == null){
+            throw new BadRequestException("Please divide the order to the staff first.");
+        }
         checkValidStatus(currentInvoice,status);
 
-
-
-        if (status.getValue() == 3){
-            List<InvoiceDetail> invoiceDetails = invoiceDetailRepo.findAllByInvoiceId(invoiceId);
-
-            for (InvoiceDetail invoiceDetail : invoiceDetails) {
-                int currentQuantity = invoiceDetail.getProductDetail().getQuantity();
-                invoiceDetail.getProductDetail().setQuantity(currentQuantity - invoiceDetail.getQuantity());
-            }
-        }
+        updateDateTime(currentInvoice, status.getValue());
 
         updateQuantityProduct(status.getValue(),currentInvoice);
 
@@ -233,15 +228,14 @@ public class InvoiceServiceImpl implements InvoiceService {
             throw new BadRequestException("Status " + currentInvoice.getInvoiceStatus() + " cannot update to " + status);
         }
 
-        if(currentInvoice.getAccountAdmin() == null){
-            throw new BadRequestException("Please divide the order to the staff first.");
-        }
+
     }
 
     @Override
     public InvoiceRes updateInvoice(Long invoiceId, UpdateInvoiceDto dto) {
         Invoice currentInvoice = invoiceRepo.findById(invoiceId).orElseThrow(() -> new NotFoundException("Invoice"));
-
+        var newAccountId = dto.getAccountId();
+        var currentAccount = currentInvoice.getAccount();
         checkValidStatus(currentInvoice,dto.getInvoiceStatus());
 
         if ((currentInvoice.getInvoiceStatus() == InvoiceStatusEnum.SUCCESS
@@ -253,13 +247,20 @@ public class InvoiceServiceImpl implements InvoiceService {
             throw new BadRequestException("Status " + currentInvoice.getInvoiceStatus() + " cannot update invoice");
         }
 
-        if (dto.getAccountId() != null && (currentInvoice.getAccountAdmin() == null || !dto.getAccountId().equals(currentInvoice.getAccountAdmin().getId()))) {
-            AccountAdmin newAccountAdmin = accountRepo.findById(dto.getAccountId())
-                    .orElseThrow(() -> new NotFoundException("AccountAdmin"));
-            currentInvoice.setAccountAdmin(newAccountAdmin);
+        if (newAccountId != null && (currentAccount == null || !newAccountId.equals(currentAccount.getId()))) {
+            Account newAccount = accountRepo.findById(dto.getAccountId())
+                    .orElseThrow(() -> new NotFoundException("Account"));
+            currentInvoice.setAccount(newAccount);
         }
 
+        if(newAccountId == null){
+            throw new BadRequestException("Please divide the order to the staff first.");
+        }
+
+        updateDateTime(currentInvoice, dto.getInvoiceStatus().getValue());
+
         updateQuantityProduct(dto.getInvoiceStatus().getValue(),currentInvoice);
+
 
         invoiceHistoryService.setNameVarForTrigger();
 
@@ -267,8 +268,22 @@ public class InvoiceServiceImpl implements InvoiceService {
         return invoiceMapper.invoiceToInvoiceRes(invoice);
     }
 
+    private void updateDateTime(Invoice currentInvoice, int value) {
+        if(currentInvoice.getInvoiceStatus().getValue() != value && value == 3){
+            currentInvoice.setConfirmationAt(LocalDateTime.now());
+        }
+
+        if(currentInvoice.getInvoiceStatus().getValue() == 3 && value < 3){
+            currentInvoice.setConfirmationAt(null);
+        }
+
+        if(currentInvoice.getInvoiceStatus().getValue() != value && value == 5){
+            currentInvoice.setSuccessfulAt(LocalDateTime.now());
+        }
+    }
+
     public void updateQuantityProduct(int newStatus,Invoice currentInvoice){
-        if (newStatus == 3){
+        if ((newStatus != currentInvoice.getInvoiceStatus().getValue()) && newStatus == 3){
             List<InvoiceDetail> invoiceDetails = invoiceDetailRepo.findAllByInvoiceId(currentInvoice.getId());
 
             for (InvoiceDetail invoiceDetail : invoiceDetails) {
@@ -297,4 +312,5 @@ public class InvoiceServiceImpl implements InvoiceService {
             }
         }
     };
+
 }

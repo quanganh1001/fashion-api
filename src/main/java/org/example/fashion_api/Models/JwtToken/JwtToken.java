@@ -2,7 +2,7 @@ package org.example.fashion_api.Models.JwtToken;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.example.fashion_api.Models.AccountsAdmin.AccountAdmin;
+import org.example.fashion_api.Models.Accounts.Account;
 import org.example.fashion_api.Models.BaseEntity;
 
 import java.util.Date;
@@ -29,7 +29,7 @@ public class JwtToken extends BaseEntity {
 
     @ManyToOne
     @JoinColumn(name = "accountId")
-    private AccountAdmin accountAdmin;
+    private Account account;
 
     @PrePersist
     public void prePersist() {

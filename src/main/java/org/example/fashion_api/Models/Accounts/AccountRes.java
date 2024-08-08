@@ -1,4 +1,4 @@
-package org.example.fashion_api.Models.AccountsAdmin;
+package org.example.fashion_api.Models.Accounts;
 
 
 import jakarta.persistence.EnumType;

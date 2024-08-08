@@ -4,7 +4,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.example.fashion_api.Enum.RoleEnum;
-import org.example.fashion_api.Models.AccountsAdmin.*;
+import org.example.fashion_api.Models.Accounts.*;
 import org.example.fashion_api.Services.AccountService.AccountService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,9 +24,10 @@ public class AccountController {
     @GetMapping()
     public ResponseEntity<?> getAllAccount(@RequestParam(defaultValue = "",required = false) String keyword,
                                           @RequestParam(defaultValue = "1") int page,
-                                          @RequestParam(defaultValue = "10") int limit) {
+                                          @RequestParam(defaultValue = "10") int limit,
+                                          @RequestParam(defaultValue = "") String role) {
 
-        return accountService.getAllAccount(keyword,page-1,limit);
+        return accountService.getAllAccount(keyword,page-1,limit,role);
     }
 
     @PreAuthorize("hasAnyRole('MANAGER')")
@@ -38,27 +39,27 @@ public class AccountController {
 
 
     @GetMapping("/current")
-    @Operation(summary = "get current accountAdmin")
+    @Operation(summary = "get current account")
     public ResponseEntity<AccountRes> getCurrentAccount() {
         return ResponseEntity.ok(accountService.getCurrentAccount());
     }
 
     @PreAuthorize("hasAnyRole('MANAGER')")
-    @Operation(summary = "get accountAdmin (role MANAGER)")
+    @Operation(summary = "get account (role MANAGER)")
     @GetMapping("/{accountId}")
     public ResponseEntity<AccountRes> getAccount(@PathVariable("accountId") Long accountId) {
         return ResponseEntity.ok(accountService.getAccount(accountId));
     }
 
     @PreAuthorize("hasAnyRole('MANAGER')")
-    @Operation(summary = "delete accountAdmin (role MANAGER)")
+    @Operation(summary = "delete account (role MANAGER)")
     @DeleteMapping("/{accountId}")
     public ResponseEntity<String> deleteAccount(@PathVariable("accountId") Long accountId) {
-            accountService.deleteAccount(accountId);
+        accountService.deleteAccount(accountId);
             return ResponseEntity.ok("Deleted");
     }
 
-    @Operation(summary = "update accountAdmin (current accountAdmin)")
+    @Operation(summary = "update account (current account)")
     @PutMapping("edit")
     public ResponseEntity<AccountRes> updateAccount(@Valid @RequestBody AccountUpdateDto accountUpdateDto) {
         return accountService.updateAccount(accountUpdateDto);
@@ -81,18 +82,18 @@ public class AccountController {
     }
 
     @PreAuthorize("hasAnyRole('MANAGER')")
-    @Operation(summary = "activated or deactivated accountAdmin (role MANAGER)")
+    @Operation(summary = "activated or deactivated account (role MANAGER)")
     @PutMapping("/{accountId}/activated")
     public ResponseEntity<String> activatedAccount(@PathVariable("accountId") Long accountId) {
         if(accountId == 1){
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Cannot deactivate this accountAdmin");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Cannot deactivate this account");
         }
         Boolean handleActivateStatus = accountService.activatedAccount(accountId);
-        return ResponseEntity.ok(handleActivateStatus ? "AccountAdmin activated successfully" : "AccountAdmin deactivated successfully");
+        return ResponseEntity.ok(handleActivateStatus ? "Account activated successfully" : "Account deactivated successfully");
     }
 
     @PreAuthorize("hasAnyRole('MANAGER')")
-    @Operation(summary = "create an accountAdmin (role MANAGER)")
+    @Operation(summary = "create an account (role MANAGER)")
     @PostMapping()
     public ResponseEntity<AccountRes> createAccount(@Valid @RequestBody CreateAccountDto createAccountDto) {
         return ResponseEntity.ok(accountService.createAccount(createAccountDto));

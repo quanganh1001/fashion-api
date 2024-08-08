@@ -4,7 +4,7 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import org.example.fashion_api.Models.AccountsAdmin.AccountAdmin;
+import org.example.fashion_api.Models.Accounts.Account;
 import org.example.fashion_api.Models.InvoicesHistory.InvoiceHistory;
 import org.example.fashion_api.Models.InvoicesHistory.InvoiceHistoryRes;
 import org.example.fashion_api.Repositories.InvoiceHistoryRepo;
@@ -67,8 +67,8 @@ public class InvoiceHistoryServiceImpl implements InvoiceHistoryService {
     @Transactional
     public void setNameVarForTrigger() {
         try {
-            AccountAdmin accountAdmin = accountService.getAccountFromAuthentication();
-            String currentUsername = accountAdmin.getName();
+            Account account = accountService.getAccountFromAuthentication();
+            String currentUsername = account.getName();
             if (!Objects.equals(currentUsername, "anonymousUser")) {
                 entityManager.createNativeQuery("SET @current_user = :currentUsername")
                         .setParameter("currentUsername", currentUsername)

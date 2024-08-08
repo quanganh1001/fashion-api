@@ -1,6 +1,8 @@
-package org.example.fashion_api.Models.AccountsAdmin;
+package org.example.fashion_api.Models.Accounts;
 
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -10,16 +12,19 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class AccountRegisterDto {
+public class AccountUpdateDto {
 
-    @NotBlank
-    private String name;
-
+    @Email
     @NotBlank
     private String email;
 
     @NotBlank
+    @NotNull
     private String phone;
 
+    @NotBlank
+    private String name;
+
     private String address;
+
 }

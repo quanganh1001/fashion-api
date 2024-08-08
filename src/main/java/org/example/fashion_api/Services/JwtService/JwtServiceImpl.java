@@ -15,8 +15,8 @@ import org.example.fashion_api.Exception.BadRequestException;
 import org.example.fashion_api.Exception.ExpiredJwtException;
 import org.example.fashion_api.Exception.InvalidTokenException;
 import org.example.fashion_api.Mapper.AccountMapper;
-import org.example.fashion_api.Models.AccountsAdmin.AccountAdmin;
-import org.example.fashion_api.Models.AccountsAdmin.AccountRes;
+import org.example.fashion_api.Models.Accounts.Account;
+import org.example.fashion_api.Models.Accounts.AccountRes;
 import org.example.fashion_api.Models.JwtToken.JwtToken;
 import org.example.fashion_api.Models.JwtToken.JwtTokenRes;
 import org.example.fashion_api.Repositories.JwtTokenRepo;
@@ -79,8 +79,8 @@ public class JwtServiceImpl implements JwtService {
                 }
 
 
-                String newToken = generateToken(token.getAccountAdmin());
-                String newRefreshToken = generateRefreshToken(token.getAccountAdmin());
+                String newToken = generateToken(token.getAccount());
+                String newRefreshToken = generateRefreshToken(token.getAccount());
                 Date newRefreshExpirationDate = new Date(System.currentTimeMillis() + 1000L * 60 * 60 * 24 * 30);
 
                 token.setRefreshExpirationDate(newRefreshExpirationDate);
@@ -88,7 +88,7 @@ public class JwtServiceImpl implements JwtService {
                 token.setToken(newToken);
                 token.setExpirationDate(extractExpiration(newToken));
 
-                AccountRes accountRes = accountMapper.accountEntityToAccountRes(token.getAccountAdmin());
+                AccountRes accountRes = accountMapper.accountEntityToAccountRes(token.getAccount());
 
                 jwtTokenRepo.save(token);
                 return JwtTokenRes
@@ -105,31 +105,31 @@ public class JwtServiceImpl implements JwtService {
 
 
     @Override
-    public JwtTokenRes tokenRes(AccountAdmin accountAdmin) {
-        String jwtToken = generateToken(accountAdmin);
-        String refreshToken = generateRefreshToken(accountAdmin);
+    public JwtTokenRes tokenRes(Account account) {
+        String jwtToken = generateToken(account);
+        String refreshToken = generateRefreshToken(account);
 
         // Đếm số lượng token hiện có cho accountId
-        long tokenCount = jwtTokenRepo.countByAccount_Id(accountAdmin.getId());
+        long tokenCount = jwtTokenRepo.countByAccount_Id(account.getId());
 
         // Kiểm tra nếu số lượng token vượt quá ngưỡng
         int maxTokenCount = 2;
         if (tokenCount >= maxTokenCount) {
             // Lấy danh sách các token cũ nhất cho accountId
-            List<JwtToken> oldestTokens = jwtTokenRepo.findOldestTokensByAccountId(accountAdmin.getId(), tokenCount - maxTokenCount + 1);
+            List<JwtToken> oldestTokens = jwtTokenRepo.findOldestTokensByAccountId(account.getId(), tokenCount - maxTokenCount + 1);
 
             // Xóa các token cũ nhất cho accountId
             jwtTokenRepo.deleteAll(oldestTokens);
         }
 
         jwtTokenRepo.save(JwtToken.builder()
-                .accountAdmin(accountAdmin)
+                .account(account)
                 .token(jwtToken)
                 .expirationDate(extractExpiration(jwtToken))
                 .refreshToken(refreshToken)
                 .refreshExpirationDate(extractExpiration(refreshToken)).build());
 
-        AccountRes accountRes = accountMapper.accountEntityToAccountRes(accountAdmin);
+        AccountRes accountRes = accountMapper.accountEntityToAccountRes(account);
 
         return JwtTokenRes.builder()
                 .token(jwtToken)
@@ -139,23 +139,23 @@ public class JwtServiceImpl implements JwtService {
     }
 
     @Override
-    public String generateToken(AccountAdmin accountAdmin) {
+    public String generateToken(Account account) {
 
         return JWT.create()
                 .withIssuer(issuer)
-                .withClaim("phone", accountAdmin.getPhone())
-                .withClaim("role", accountAdmin.getRole().name())
+                .withClaim("phone", account.getPhone())
+                .withClaim("role", account.getRole().name())
                 .withIssuedAt(new Date(System.currentTimeMillis()))
                 .withExpiresAt(new Date(System.currentTimeMillis() + 1000 * 10 * 60))
                 .sign(algorithm);
     }
 
     @Override
-    public String generateRefreshToken(AccountAdmin accountAdmin) {
+    public String generateRefreshToken(Account account) {
         return JWT.create()
                 .withIssuer(issuer)
-                .withClaim("phone", accountAdmin.getPhone())
-                .withClaim("role", accountAdmin.getRole().name())
+                .withClaim("phone", account.getPhone())
+                .withClaim("role", account.getRole().name())
                 .withIssuedAt(new Date(System.currentTimeMillis()))
                 .withExpiresAt(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 24 * 7))
                 .sign(algorithm);

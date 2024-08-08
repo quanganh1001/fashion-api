@@ -6,10 +6,11 @@ import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.example.fashion_api.Enum.InvoiceStatusEnum;
-import org.example.fashion_api.Models.AccountsAdmin.AccountAdmin;
+import org.example.fashion_api.Models.Accounts.Account;
 import org.example.fashion_api.Models.BaseEntity;
 import org.example.fashion_api.Models.InvoicesDetails.InvoiceDetail;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -46,6 +47,10 @@ public class Invoice extends BaseEntity {
     @NotNull
     private Long totalBill;
 
+    private LocalDateTime successfulAt;
+
+    private LocalDateTime confirmationAt;
+
     private Boolean isPaid = Boolean.FALSE;
 
     @Enumerated(EnumType.STRING)
@@ -55,7 +60,7 @@ public class Invoice extends BaseEntity {
 
     @ManyToOne
     @JoinColumn(name = "account_id")
-    private AccountAdmin accountAdmin;
+    private Account account;
 
     @OneToMany(mappedBy = "invoice", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
     @JsonIgnore

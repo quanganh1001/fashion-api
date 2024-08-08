@@ -2,7 +2,7 @@ package org.example.fashion_api.Services.CustomerEmailService;
 
 import lombok.RequiredArgsConstructor;
 import org.example.fashion_api.Exception.AlreadyExistException;
-import org.example.fashion_api.Models.AccountsAdmin.AccountAdmin;
+import org.example.fashion_api.Models.Accounts.Account;
 import org.example.fashion_api.Models.CustomerEmails.CustomerEmails;
 import org.example.fashion_api.Models.CustomerEmails.EmailTemplate;
 import org.example.fashion_api.Models.MailTemplate;
@@ -42,11 +42,11 @@ public class CustomerEmailServiceImpl implements CustomerEmailService{
     @Override
     public void sendEmail(EmailTemplate emailTemplate) {
         List<CustomerEmails> customerMailList = customerEmailRepo.findAll();
-        List<AccountAdmin> accountAdmins = accountRepo.findAll();
+        List<Account> accounts = accountRepo.findAll();
         List<String> listEmail = new ArrayList<>();
 
-        for (AccountAdmin accountAdmin : accountAdmins) {
-            listEmail.add(accountAdmin.getEmail());
+        for (Account account : accounts) {
+            listEmail.add(account.getEmail());
         }
 
         for (CustomerEmails customerMail : customerMailList) {

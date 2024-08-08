@@ -1,4 +1,4 @@
-package org.example.fashion_api.Models.AccountsAdmin;
+package org.example.fashion_api.Models.Accounts;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -20,7 +20,7 @@ import java.util.List;
 @Entity
 @Data
 @Table(name = "accounts")
-public class AccountAdmin extends BaseEntity {
+public class Account extends BaseEntity {
 
     @NotNull
     private String password;

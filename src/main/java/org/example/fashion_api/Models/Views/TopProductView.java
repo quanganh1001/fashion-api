@@ -7,6 +7,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.example.fashion_api.Models.BaseEntity;
 
+import java.time.LocalDateTime;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -16,9 +18,10 @@ import org.example.fashion_api.Models.BaseEntity;
 public class TopProductView extends BaseEntity {
     private String imageBackground;
     private String productName;
-    private Long productId;
+    private Long product_detail_id;
     private String size;
     private String colorName;
     private Double totalSales;
     private Integer totalQuantitySold;
+    private LocalDateTime confirmationAt;
 }

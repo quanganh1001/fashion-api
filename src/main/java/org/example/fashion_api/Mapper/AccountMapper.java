@@ -1,7 +1,7 @@
 package org.example.fashion_api.Mapper;
 
 
-import org.example.fashion_api.Models.AccountsAdmin.*;
+import org.example.fashion_api.Models.Accounts.*;
 import org.mapstruct.Mapper;
 
 import org.mapstruct.Mapping;
@@ -12,17 +12,17 @@ import java.util.List;
 
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface AccountMapper {
-    AccountAdmin accountRegisterDtoToAccount(AccountRegisterDto accountRegisterDto, @MappingTarget AccountAdmin accountAdmin);
+    Account accountRegisterDtoToAccount(AccountRegisterDto accountRegisterDto, @MappingTarget Account account);
 
     @Mapping(target = "id", source = "id")
-    AccountRes accountEntityToAccountRes(AccountAdmin accountAdmin);
+    AccountRes accountEntityToAccountRes(Account account);
 
-    List<AccountRes> accountsToListAccountRes(List<AccountAdmin> accountAdmins);
-
-
-    AccountAdmin accountUpdateDtoToAccount(AccountUpdateDto accountUpdateDto, @MappingTarget AccountAdmin accountAdmin);
+    List<AccountRes> accountsToListAccountRes(List<Account> accounts);
 
 
-    AccountAdmin createAccountDtoToAccount(CreateAccountDto createAccountDto, @MappingTarget AccountAdmin accountAdmin);
+    Account accountUpdateDtoToAccount(AccountUpdateDto accountUpdateDto, @MappingTarget Account account);
+
+
+    Account createAccountDtoToAccount(CreateAccountDto createAccountDto, @MappingTarget Account account);
 
 }

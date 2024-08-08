@@ -1,7 +1,7 @@
 package org.example.fashion_api.Models;
 
 import lombok.*;
-import org.example.fashion_api.Models.AccountsAdmin.AccountAdmin;
+import org.example.fashion_api.Models.Accounts.Account;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -16,21 +16,21 @@ import java.util.List;
 @NoArgsConstructor
 public class UserCustomDetail implements UserDetails {
 
-    private AccountAdmin accountAdmin;
+    private Account account;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority(accountAdmin.getRole().name()));
+        return List.of(new SimpleGrantedAuthority(account.getRole().name()));
     }
 
     @Override
     public String getPassword() {
-        return accountAdmin.getPassword();
+        return account.getPassword();
     }
 
     @Override
     public String getUsername() {
-        return accountAdmin.getPhone();
+        return account.getPhone();
     }
 
     @Override
@@ -50,6 +50,6 @@ public class UserCustomDetail implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return accountAdmin.getIsActivated();
+        return account.getIsActivated();
     }
 }

@@ -12,7 +12,7 @@ import java.util.List;
 
 @Repository
 public interface TopProductViewRepo extends JpaRepository<TopProductView,Long> {
-    @Query(value = "SELECT * from top_products WHERE (created_at BETWEEN :startDate AND :endDate) LIMIT 10",
+    @Query(value = "SELECT * from top_products WHERE (confirmation_at BETWEEN :startDate AND :endDate) LIMIT 10",
             nativeQuery = true)
     List<TopProductView> findTopProduct(@Param("startDate") LocalDate startDate, @Param("endDate") LocalDate endDate);
 }

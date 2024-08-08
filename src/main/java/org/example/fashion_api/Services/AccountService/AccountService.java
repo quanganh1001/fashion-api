@@ -2,7 +2,7 @@ package org.example.fashion_api.Services.AccountService;
 
 import jakarta.transaction.Transactional;
 import org.example.fashion_api.Enum.RoleEnum;
-import org.example.fashion_api.Models.AccountsAdmin.*;
+import org.example.fashion_api.Models.Accounts.*;
 import org.example.fashion_api.Models.JwtToken.JwtTokenRes;
 import org.springframework.http.ResponseEntity;
 
@@ -12,7 +12,7 @@ import java.util.List;
 public interface AccountService {
     JwtTokenRes Login(AccountLoginDto user);
 
-    ResponseEntity<?> getAllAccount(String keyword, int page, int limit);
+    ResponseEntity<?> getAllAccount(String keyword, int page, int limit,String role);
 
     AccountRes getAccount(Long accountId);
 
@@ -30,7 +30,7 @@ public interface AccountService {
     @Transactional
     void Logout(String token);
 
-    AccountAdmin getAccountFromAuthentication();
+    Account getAccountFromAuthentication();
 
 
     void updateRole(Long accountId, RoleEnum role);

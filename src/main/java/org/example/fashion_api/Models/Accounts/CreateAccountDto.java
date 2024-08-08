@@ -1,4 +1,4 @@
-package org.example.fashion_api.Models.AccountsAdmin;
+package org.example.fashion_api.Models.Accounts;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -7,12 +7,13 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.example.fashion_api.Enum.RoleEnum;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class AccountUpdateDto {
+public class CreateAccountDto {
 
     @Email
     @NotBlank
@@ -27,4 +28,5 @@ public class AccountUpdateDto {
 
     private String address;
 
+    private RoleEnum role;
 }

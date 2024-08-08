@@ -3,7 +3,7 @@ package org.example.fashion_api.Services.JwtService;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.example.fashion_api.Models.AccountsAdmin.AccountAdmin;
+import org.example.fashion_api.Models.Accounts.Account;
 import org.example.fashion_api.Models.JwtToken.JwtTokenRes;
 
 import java.util.Date;
@@ -12,16 +12,16 @@ import java.util.Date;
 public interface JwtService {
 
     String generateToken(
-                         AccountAdmin accountAdmin);
+                         Account account);
 
     boolean isTokenValid(String token, Long accountId);
 
 
     JwtTokenRes RefreshToken(HttpServletRequest req, HttpServletResponse res);
 
-    JwtTokenRes tokenRes(AccountAdmin accountAdmin);
+    JwtTokenRes tokenRes(Account account);
 
-    String generateRefreshToken(AccountAdmin accountAdmin);
+    String generateRefreshToken(Account account);
 
     DecodedJWT decodeToken(String token);
 

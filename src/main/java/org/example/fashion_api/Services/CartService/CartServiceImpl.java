@@ -2,7 +2,7 @@ package org.example.fashion_api.Services.CartService;
 
 import lombok.RequiredArgsConstructor;
 import org.example.fashion_api.Mapper.ProductDetailMapper;
-import org.example.fashion_api.Models.AccountsAdmin.AccountAdmin;
+import org.example.fashion_api.Models.Accounts.Account;
 import org.example.fashion_api.Models.Carts.CartItem;
 import org.example.fashion_api.Models.Carts.CartItemRes;
 import org.example.fashion_api.Models.ProductsDetails.ProductDetailRes;
@@ -113,8 +113,8 @@ public class CartServiceImpl implements CartService {
     }
 
     public CartItem getCartItem() {
-        AccountAdmin accountAdmin = accountService.getAccountFromAuthentication();
+        Account account = accountService.getAccountFromAuthentication();
 
-        return cartRepo.findById(accountAdmin.getId()).orElse(CartItem.builder().id(accountAdmin.getId()).items(new HashMap<>()).build());
+        return cartRepo.findById(account.getId()).orElse(CartItem.builder().id(account.getId()).items(new HashMap<>()).build());
     }
 }

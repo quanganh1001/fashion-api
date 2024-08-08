@@ -21,15 +21,7 @@ import java.util.Objects;
 @Service
 @RequiredArgsConstructor
 public class StoredServiceImpl implements StoredService {
-
-    private final SellingProductsViewRepo sellingProductsViewRepo;
-    private final ProductRepo productRepo;
-    private final CategoryService categoryService;
-    private final ProductMapper productMapper;
     private final TopProductStoredRepo topProductStoredRepo;
-
-
-
 
     @Override
     public List<TopProductStored> findTopProduct(LocalDate startDate, LocalDate endDate) throws JsonProcessingException {

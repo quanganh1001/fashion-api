@@ -17,7 +17,9 @@ public interface ProductService {
 
     PageProductRes getAllProducts(String keyword, int page, int limit) throws JsonProcessingException;
 
-    ProductRes getProduct(Long productId);
+    ProductRes getProductForAdminPage(Long productId);
+
+    ProductRes getProductForClientPage(Long productId);
 
     @Transactional
     ProductRes updateProduct(Long productId, UpdateProductDto updateProductDto);

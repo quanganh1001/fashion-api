@@ -1,5 +1,6 @@
 package org.example.fashion_api.Services;
 
+import lombok.RequiredArgsConstructor;
 import org.example.fashion_api.Models.Accounts.Account;
 import org.example.fashion_api.Models.UserCustomDetail;
 import org.example.fashion_api.Repositories.AccountRepo;
@@ -12,10 +13,10 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class UserDetailServiceImpl implements UserDetailsService {
 
-    @Autowired
-    private AccountRepo accountRepo;
+    private final AccountRepo accountRepo;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

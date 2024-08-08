@@ -15,7 +15,6 @@ import java.util.*;
 public class VnpayService {
     public String createPaymentUrl(HttpServletRequest http,Long invoiceId,Long totalBill)   {
 
-
         Map<String, String> vnp_Params = new HashMap<>();
         vnp_Params.put("vnp_Version", VnpayConfig.vnp_Version);
         vnp_Params.put("vnp_Command", VnpayConfig.vnp_Command);

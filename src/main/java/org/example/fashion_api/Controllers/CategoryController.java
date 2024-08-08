@@ -3,6 +3,7 @@ package org.example.fashion_api.Controllers;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.example.fashion_api.Models.Categories.CreateCategoryDto;
 import org.example.fashion_api.Models.Categories.CategoryRes;
 import org.example.fashion_api.Models.Categories.UpdateCategoryDto;
@@ -17,10 +18,10 @@ import java.io.IOException;
 import java.util.List;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("categories")
 public class CategoryController {
-    @Autowired
-    private CategoryService categoryService;
+    private final CategoryService categoryService;
 
     @Operation(summary = "get all categories")
     @GetMapping()

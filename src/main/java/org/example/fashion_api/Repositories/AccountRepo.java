@@ -18,7 +18,11 @@ public interface AccountRepo extends JpaRepository<Account, Long> {
 
     Optional<Account> findByEmail(String email);
 
+    Optional<Account> findByEmailAndIsActivatedTrue(String email);
+
     Optional<Account> findByPhone(String phone);
+
+    Optional<Account> findByPhoneAndIsActivatedTrue(String phone);
 
     Boolean existsByEmail(String email);
 

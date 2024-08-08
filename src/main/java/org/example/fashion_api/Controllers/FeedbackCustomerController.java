@@ -2,6 +2,7 @@ package org.example.fashion_api.Controllers;
 
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.example.fashion_api.Models.FeedbackCustomers.FeedbackCustomer;
 import org.example.fashion_api.Models.FeedbackCustomers.PageFeedbackCustomer;
 import org.example.fashion_api.Services.FeedbackCustomerService.FeedbackCustomerService;
@@ -14,10 +15,11 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/feedback")
 public class FeedbackCustomerController {
-    @Autowired
-    private FeedbackCustomerService feedbackCustomerService;
+
+    private final FeedbackCustomerService feedbackCustomerService;
 
     @GetMapping("count")
     @PreAuthorize("hasAnyRole('MANAGER','EMPLOYEE')")

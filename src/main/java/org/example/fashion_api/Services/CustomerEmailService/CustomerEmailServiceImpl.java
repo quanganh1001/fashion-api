@@ -1,5 +1,6 @@
 package org.example.fashion_api.Services.CustomerEmailService;
 
+import lombok.RequiredArgsConstructor;
 import org.example.fashion_api.Exception.AlreadyExistException;
 import org.example.fashion_api.Models.Accounts.Account;
 import org.example.fashion_api.Models.CustomerEmails.CustomerEmails;
@@ -16,13 +17,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class CustomerEmailServiceImpl implements CustomerEmailService{
-    @Autowired
-    private CustomerEmailRepo customerEmailRepo;
-    @Autowired
-    private MailProducer mailProducer;
-    @Autowired
-    private AccountRepo accountRepo;
+    private final CustomerEmailRepo customerEmailRepo;
+    private final MailProducer mailProducer;
+    private final AccountRepo accountRepo;
 
     @Override
     public void save(String email){

@@ -37,22 +37,14 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class AccountServiceImpl implements AccountService {
 
-    @Autowired
-    private AuthenticationManager authenticationManager;
-    @Autowired
-    private JwtService jwtService;
-    @Autowired
-    private AccountRepo accountRepo;
-    @Autowired
-    private AccountMapper accountMapper;
-    @Autowired
-    private BCryptPasswordEncoder passwordEncoder;
-    @Autowired
-    private MailProducer mailProducer;
-    @Autowired
-    private RedisService redisService;
-    @Autowired
-    private JwtTokenRepo jwtTokenRepo;
+    private final AuthenticationManager authenticationManager;
+    private final JwtService jwtService;
+    private final AccountRepo accountRepo;
+    private final AccountMapper accountMapper;
+    private final BCryptPasswordEncoder passwordEncoder;
+    private final MailProducer mailProducer;
+    private final RedisService redisService;
+    private final JwtTokenRepo jwtTokenRepo;
 
     @Override
     public JwtTokenRes Login(AccountLoginDto loginRequest) {
@@ -272,10 +264,10 @@ public class AccountServiceImpl implements AccountService {
 
             String userName = authentication.getName();
 
-            Optional<Account> account = accountRepo.findByPhone(userName);
+            Optional<Account> account = accountRepo.findByPhoneAndIsActivatedTrue(userName);
 
             if (account.isEmpty()) {
-                account = accountRepo.findByEmail(userName);
+                account = accountRepo.findByPhoneAndIsActivatedTrue(userName);
                 if (account.isEmpty()) {
                     throw new AccessDeniedException(" Access Denied");
                 }
@@ -299,7 +291,6 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public AccountRes getCurrentAccount() {
         Account account = getAccountFromAuthentication();
-
         return accountMapper.accountEntityToAccountRes(account);
     }
 

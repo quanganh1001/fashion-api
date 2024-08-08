@@ -1,5 +1,6 @@
 package org.example.fashion_api.Consumer;
 
+import lombok.RequiredArgsConstructor;
 import org.example.fashion_api.Models.MailTemplate;
 import org.example.fashion_api.Services.EmailService;
 import org.slf4j.Logger;
@@ -9,12 +10,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
+@RequiredArgsConstructor
 public class MailConsumer {
 
     private static final Logger logger = LoggerFactory.getLogger(MailConsumer.class);
 
-    @Autowired
-    private EmailService mailService;
+    private final EmailService mailService;
 
     @RabbitListener(queues = "${rabbitmq.mail.queue}")
     public void consume(MailTemplate mailTemplate){

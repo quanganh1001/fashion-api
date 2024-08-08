@@ -10,6 +10,7 @@ import jakarta.annotation.PostConstruct;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
 import org.example.fashion_api.Exception.BadRequestException;
 import org.example.fashion_api.Exception.ExpiredJwtException;
 import org.example.fashion_api.Exception.InvalidTokenException;
@@ -27,6 +28,7 @@ import org.springframework.stereotype.Service;
 import java.util.*;
 
 @Service
+@RequiredArgsConstructor
 public class JwtServiceImpl implements JwtService {
 
     @Value("${secret.key}")
@@ -39,11 +41,9 @@ public class JwtServiceImpl implements JwtService {
 
     private static String issuer;
 
-    @Autowired
-    private JwtTokenRepo jwtTokenRepo;
+    private final JwtTokenRepo jwtTokenRepo;
 
-    @Autowired
-    private AccountMapper accountMapper;
+    private final AccountMapper accountMapper;
 
     private Algorithm algorithm;
 

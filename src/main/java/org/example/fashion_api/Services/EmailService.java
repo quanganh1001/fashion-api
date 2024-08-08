@@ -2,6 +2,7 @@ package org.example.fashion_api.Services;
 
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
+import lombok.RequiredArgsConstructor;
 import org.example.fashion_api.Exception.ServiceException;
 import org.example.fashion_api.Models.MailTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,9 +15,9 @@ import org.springframework.web.server.ServerErrorException;
 
 
 @Service
+@RequiredArgsConstructor
 public class EmailService {
-    @Autowired
-    private JavaMailSender javaMailSender;
+    private final JavaMailSender javaMailSender;
 
     public void sendEmail(MailTemplate mailTemplate){
         try{

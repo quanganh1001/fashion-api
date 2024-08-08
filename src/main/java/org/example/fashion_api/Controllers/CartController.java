@@ -1,6 +1,7 @@
 package org.example.fashion_api.Controllers;
 
 import io.swagger.v3.oas.annotations.Operation;
+import lombok.RequiredArgsConstructor;
 import org.example.fashion_api.Models.Carts.CartItemRes;
 import org.example.fashion_api.Models.ProductsDetails.ProductDetailRes;
 import org.example.fashion_api.Services.CartService.CartService;
@@ -12,10 +13,10 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/carts")
 public class CartController {
-    @Autowired
-    private CartService cartService;
+    private final CartService cartService;
 
 
     @GetMapping("/get")

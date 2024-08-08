@@ -28,8 +28,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig {
-    @Autowired
-    private AccountRepo accountRepo;
+    private final AccountRepo accountRepo;
 
     @Bean
     public BCryptPasswordEncoder passwordEncoder(){

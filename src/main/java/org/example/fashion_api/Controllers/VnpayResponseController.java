@@ -4,6 +4,7 @@ import io.swagger.annotations.Api;
 import io.swagger.v3.oas.annotations.Hidden;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
 import org.example.fashion_api.Configurations.VnpayConfig;
 import org.example.fashion_api.Exception.BadRequestException;
 import org.example.fashion_api.Repositories.InvoiceRepo;
@@ -23,12 +24,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 @RestController
+@RequiredArgsConstructor
 public class VnpayResponseController {
-    @Autowired
-    private InvoiceRepo invoiceRepo;
+    private final InvoiceRepo invoiceRepo;
 
     @Value("${frontend.url}")
-    private String frontendUrl;
+    private  String frontendUrl;
 
     @GetMapping("/vnpay/response")
     @Hidden

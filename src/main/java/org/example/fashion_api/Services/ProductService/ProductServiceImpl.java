@@ -3,6 +3,7 @@ package org.example.fashion_api.Services.ProductService;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
 import org.example.fashion_api.Exception.AlreadyExistException;
 import org.example.fashion_api.Exception.NotFoundException;
 import org.example.fashion_api.Mapper.CategoryMapper;
@@ -30,23 +31,18 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.function.Predicate;
 
 @Service
+@RequiredArgsConstructor
 public class ProductServiceImpl implements ProductService {
-    @Autowired
-    private ProductMapper productMapper;
-    @Autowired
-    private ProductRepo productRepo;
-    @Autowired
-    private CategoryMapper categoryMapper;
-    @Autowired
-    private CategoryRepo categoryRepo;
-    @Autowired
-    private CategoryService categoryService;
-    @Autowired
-    private RedisService redisService;
-    @Autowired
-    private ProductDetailRepo productDetailRepo;
+    private final ProductMapper productMapper;
+    private final ProductRepo productRepo;
+    private final CategoryMapper categoryMapper;
+    private final CategoryRepo categoryRepo;
+    private final CategoryService categoryService;
+    private final RedisService redisService;
+    private final ProductDetailRepo productDetailRepo;
 
 
     @Override
@@ -68,7 +64,7 @@ public class ProductServiceImpl implements ProductService {
             Page<Product> productsPage = productRepo.findAllProductByKey(keyword,pageRequest);
 
             List<ProductRes> productResList = productMapper.productsToProductRes(productsPage.getContent());
-
+            
             var totalProduct = Integer.parseInt(String.valueOf(productsPage.getTotalElements()));
             pageProductRes = PageProductRes.builder()
                     .productsRes(productResList)
@@ -83,11 +79,16 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public ProductRes getProduct(Long productId) {
+    public ProductRes getProductForAdminPage(Long productId) {
         return productMapper.productToProductRes(productRepo.findById(productId).orElseThrow(() -> new NotFoundException("product")));
     }
 
 
+
+    @Override
+    public ProductRes getProductForClientPage(Long productId) {
+        return productMapper.productToProductRes(productRepo.findByIdAndIsActivatedTrue(productId));
+    }
 
     @Override
     @Transactional
@@ -99,7 +100,7 @@ public class ProductServiceImpl implements ProductService {
             throw new AlreadyExistException(updateProductDto.getProductCode());
         }
 
-        if (updateProductDto.getIsActivated() != currentProduct.getIsActivated() && !updateProductDto.getIsActivated()){
+        if (updateProductDto.getIsActivated() != currentProduct.getIsActivated()){
             List<ProductDetail> productDetails = productDetailRepo.findAllByProductId(productId);
             for (ProductDetail productDetail : productDetails) {
                 productDetailRepo.setIsActivated(productDetail.getId(),updateProductDto.getIsActivated());

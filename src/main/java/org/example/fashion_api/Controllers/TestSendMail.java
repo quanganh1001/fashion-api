@@ -2,6 +2,7 @@ package org.example.fashion_api.Controllers;
 
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.example.fashion_api.Models.MailTemplate;
 import org.example.fashion_api.Models.ProductsDetails.ProductDetailRes;
 import org.example.fashion_api.Producer.MailProducer;
@@ -11,11 +12,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/testMail")
 public class TestSendMail {
-    @Autowired
-    private MailProducer mailProducer;
 
+    private final MailProducer mailProducer;
 
     @Operation(summary = "test send mail")
     @PostMapping("/sendMail")

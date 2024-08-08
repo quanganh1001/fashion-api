@@ -4,6 +4,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.apache.http.HttpRequest;
 import org.apache.http.client.methods.HttpTrace;
 import org.example.fashion_api.Enum.InvoiceStatusEnum;
@@ -13,9 +14,11 @@ import org.example.fashion_api.Models.Invoices.*;
 import org.example.fashion_api.Models.InvoicesDetails.InvoiceDetail;
 import org.example.fashion_api.Models.InvoicesDetails.InvoiceDetailDto;
 import org.example.fashion_api.Models.InvoicesDetails.InvoiceDetailRes;
+import org.example.fashion_api.Models.InvoicesHistory.InvoiceHistoryRes;
 import org.example.fashion_api.Repositories.InvoiceRepo;
 import org.example.fashion_api.Services.ColorService.ColorService;
 import org.example.fashion_api.Services.InvoiceDetailService.InvoiceDetailService;
+import org.example.fashion_api.Services.InvoiceHistoryService.InvoiceHistoryService;
 import org.example.fashion_api.Services.InvoiceService.InvoiceService;
 import org.example.fashion_api.Services.VnpayService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,11 +30,12 @@ import java.util.List;
 
 @RestController
 @RequestMapping("invoices")
+@RequiredArgsConstructor
 public class InvoiceController {
-    @Autowired
-    private InvoiceService invoiceService;
-    @Autowired
-    private InvoiceDetailService invoiceDetailService;
+
+    private final InvoiceService invoiceService;
+    private final InvoiceDetailService invoiceDetailService;
+    private final InvoiceHistoryService invoiceHistoryService;
 
     @Operation(summary = "get all Invoices (role MANAGER,EMPLOYEE)")
     @PreAuthorize("hasAnyRole('MANAGER','EMPLOYEE')")
@@ -102,8 +106,6 @@ public class InvoiceController {
         }catch (Exception e) {
             return ResponseEntity.ok("http://localhost:3000/response?success=0");
         }
-
-
     }
 
 
@@ -122,7 +124,13 @@ public class InvoiceController {
     @PutMapping("/{invoiceId}")
     public ResponseEntity<InvoiceRes> updateInvoice(@PathVariable Long invoiceId,
                                                @Valid @RequestBody UpdateInvoiceDto dto){
-        System.out.println(dto.getAccountId());
         return ResponseEntity.ok(invoiceService.updateInvoice(invoiceId,dto));
+    }
+
+    @Operation(summary = "show history (role MANAGER,EMPLOYEE)")
+    @PreAuthorize("hasAnyRole('MANAGER','EMPLOYEE')")
+    @GetMapping("history/{invoiceId}")
+    public ResponseEntity<List<InvoiceHistoryRes>> showHistory(@PathVariable Long invoiceId){
+        return ResponseEntity.ok(invoiceHistoryService.getInvoiceHistory(invoiceId));
     }
 }

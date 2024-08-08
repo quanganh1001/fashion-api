@@ -5,9 +5,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.example.fashion_api.Enum.RoleEnum;
 import org.example.fashion_api.Models.Accounts.*;
-import org.example.fashion_api.Repositories.AccountRepo;
 import org.example.fashion_api.Services.AccountService.AccountService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -16,12 +14,10 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("accounts")
 public class AccountController {
-    @Autowired
-    private AccountService accountService;
-
-
+    private final AccountService accountService;
 
     @PreAuthorize("hasAnyRole('MANAGER')")
     @Operation(summary = "get all accounts (role MANAGER)")
@@ -29,6 +25,7 @@ public class AccountController {
     public ResponseEntity<?> getAllAccount(@RequestParam(defaultValue = "",required = false) String keyword,
                                           @RequestParam(defaultValue = "1") int page,
                                           @RequestParam(defaultValue = "10") int limit) {
+
         return accountService.getAllAccount(keyword,page-1,limit);
     }
 

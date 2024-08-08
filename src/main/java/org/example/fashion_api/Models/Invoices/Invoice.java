@@ -2,18 +2,14 @@ package org.example.fashion_api.Models.Invoices;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Pattern;
 import lombok.*;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.example.fashion_api.Enum.InvoiceStatusEnum;
-import org.example.fashion_api.Models.Accounts.Account;
+import org.example.fashion_api.Models.AccountsAdmin.AccountAdmin;
 import org.example.fashion_api.Models.BaseEntity;
 import org.example.fashion_api.Models.InvoicesDetails.InvoiceDetail;
-import org.example.fashion_api.Models.ProductsDetails.ProductDetail;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -59,7 +55,7 @@ public class Invoice extends BaseEntity {
 
     @ManyToOne
     @JoinColumn(name = "account_id")
-    private Account account;
+    private AccountAdmin accountAdmin;
 
     @OneToMany(mappedBy = "invoice", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
     @JsonIgnore

@@ -6,13 +6,11 @@ import lombok.RequiredArgsConstructor;
 import org.example.fashion_api.Enum.InvoiceStatusEnum;
 import org.example.fashion_api.Exception.BadRequestException;
 import org.example.fashion_api.Exception.NotFoundException;
-import org.example.fashion_api.Mapper.InvoiceDetailMapper;
 import org.example.fashion_api.Mapper.InvoiceMapper;
-import org.example.fashion_api.Models.Accounts.Account;
+import org.example.fashion_api.Models.AccountsAdmin.AccountAdmin;
 import org.example.fashion_api.Models.Invoices.*;
 import org.example.fashion_api.Models.InvoicesDetails.InvoiceDetail;
 import org.example.fashion_api.Models.InvoicesDetails.InvoiceDetailDto;
-import org.example.fashion_api.Models.InvoicesDetails.InvoiceDetailRes;
 import org.example.fashion_api.Models.ProductsDetails.ProductDetail;
 import org.example.fashion_api.Repositories.AccountRepo;
 import org.example.fashion_api.Repositories.InvoiceDetailRepo;
@@ -22,7 +20,6 @@ import org.example.fashion_api.Services.AccountService.AccountService;
 import org.example.fashion_api.Services.InvoiceDetailService.InvoiceDetailService;
 import org.example.fashion_api.Services.InvoiceHistoryService.InvoiceHistoryService;
 import org.example.fashion_api.Services.VnpayService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.*;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -63,8 +60,8 @@ public class InvoiceServiceImpl implements InvoiceService {
                 .anyMatch(authority -> authority.getAuthority().equals("ROLE_MANAGER"));
 
         if (!isManager) {
-            Account account = accountService.getAccountFromAuthentication();
-            accountId = account.getId();
+            AccountAdmin accountAdmin = accountService.getAccountFromAuthentication();
+            accountId = accountAdmin.getId();
         }
 
 
@@ -236,7 +233,7 @@ public class InvoiceServiceImpl implements InvoiceService {
             throw new BadRequestException("Status " + currentInvoice.getInvoiceStatus() + " cannot update to " + status);
         }
 
-        if(currentInvoice.getAccount() == null){
+        if(currentInvoice.getAccountAdmin() == null){
             throw new BadRequestException("Please divide the order to the staff first.");
         }
     }
@@ -256,10 +253,10 @@ public class InvoiceServiceImpl implements InvoiceService {
             throw new BadRequestException("Status " + currentInvoice.getInvoiceStatus() + " cannot update invoice");
         }
 
-        if (dto.getAccountId() != null && (currentInvoice.getAccount() == null || !dto.getAccountId().equals(currentInvoice.getAccount().getId()))) {
-            Account newAccount = accountRepo.findById(dto.getAccountId())
-                    .orElseThrow(() -> new NotFoundException("Account"));
-            currentInvoice.setAccount(newAccount);
+        if (dto.getAccountId() != null && (currentInvoice.getAccountAdmin() == null || !dto.getAccountId().equals(currentInvoice.getAccountAdmin().getId()))) {
+            AccountAdmin newAccountAdmin = accountRepo.findById(dto.getAccountId())
+                    .orElseThrow(() -> new NotFoundException("AccountAdmin"));
+            currentInvoice.setAccountAdmin(newAccountAdmin);
         }
 
         updateQuantityProduct(dto.getInvoiceStatus().getValue(),currentInvoice);

@@ -23,8 +23,8 @@ public interface InvoiceMapper {
     @Mapping(target = "invoice.invoicesDetails", ignore = true)
     List<InvoiceRes> toResList(List<Invoice> invoices);
 
-    @Mapping(target = "accountId", source = "account.id")
-    @Mapping(target = "accountName", source = "account.name")
+    @Mapping(target = "accountId", source = "accountAdmin.id")
+    @Mapping(target = "accountName", source = "accountAdmin.name")
     @Mapping(target = "invoicesDetails", source = "invoicesDetails")
     InvoiceRes invoiceToInvoiceRes(Invoice invoice);
 
@@ -32,7 +32,7 @@ public interface InvoiceMapper {
     Invoice checkoutDtoToInvoice(CheckoutDto checkoutDto, @MappingTarget Invoice invoice);
 
     @Mapping(target = "isPaid", source = "isPaid")
-    @Mapping(target = "account.id", source = "accountId")
+    @Mapping(target = "accountAdmin.id", source = "accountId")
     Invoice updateInvoiceToInvoice(UpdateInvoiceDto updateInvoiceDto, @MappingTarget Invoice invoice);
 
 }

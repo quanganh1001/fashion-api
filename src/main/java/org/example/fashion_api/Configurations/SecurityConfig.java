@@ -1,10 +1,9 @@
 package org.example.fashion_api.Configurations;
 
 import lombok.RequiredArgsConstructor;
-import org.example.fashion_api.Models.Accounts.Account;
+import org.example.fashion_api.Models.AccountsAdmin.AccountAdmin;
 import org.example.fashion_api.Models.UserCustomDetail;
 import org.example.fashion_api.Repositories.AccountRepo;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -38,13 +37,13 @@ public class SecurityConfig {
     @Bean
     public UserDetailsService userDetailsService() {
         return subject -> {
-            Optional<Account> accountByPhone = accountRepo.findByPhone(subject);
+            Optional<AccountAdmin> accountByPhone = accountRepo.findByPhone(subject);
 
             if (accountByPhone.isPresent()){
                 return new UserCustomDetail(accountByPhone.get());
             }
 
-            Optional<Account> accountByEmail = accountRepo.findByEmail(subject);
+            Optional<AccountAdmin> accountByEmail = accountRepo.findByEmail(subject);
             if (accountByEmail.isPresent()){
                 return new UserCustomDetail(accountByEmail.get());
             }

@@ -1,7 +1,6 @@
 package org.example.fashion_api.Models.FeedbackCustomers;
 
 import lombok.*;
-import org.example.fashion_api.Models.Accounts.AccountRes;
 
 import java.util.List;
 

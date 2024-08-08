@@ -1,20 +1,10 @@
 package org.example.fashion_api.Models.Invoices;
 
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Temporal;
-import jakarta.persistence.TemporalType;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Pattern;
 import lombok.*;
 import org.example.fashion_api.Enum.InvoiceStatusEnum;
-import org.example.fashion_api.Models.Accounts.Account;
-import org.example.fashion_api.Models.Accounts.AccountRes;
-import org.example.fashion_api.Models.InvoicesDetails.InvoiceDetail;
 import org.example.fashion_api.Models.InvoicesDetails.InvoiceDetailRes;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 @Getter

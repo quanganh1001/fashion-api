@@ -2,14 +2,13 @@ package org.example.fashion_api.Services.CartService;
 
 import lombok.RequiredArgsConstructor;
 import org.example.fashion_api.Mapper.ProductDetailMapper;
-import org.example.fashion_api.Models.Accounts.Account;
+import org.example.fashion_api.Models.AccountsAdmin.AccountAdmin;
 import org.example.fashion_api.Models.Carts.CartItem;
 import org.example.fashion_api.Models.Carts.CartItemRes;
 import org.example.fashion_api.Models.ProductsDetails.ProductDetailRes;
 import org.example.fashion_api.Repositories.CartRepo;
 import org.example.fashion_api.Repositories.ProductDetailRepo;
 import org.example.fashion_api.Services.AccountService.AccountService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -114,8 +113,8 @@ public class CartServiceImpl implements CartService {
     }
 
     public CartItem getCartItem() {
-        Account account = accountService.getAccountFromAuthentication();
+        AccountAdmin accountAdmin = accountService.getAccountFromAuthentication();
 
-        return cartRepo.findById(account.getId()).orElse(CartItem.builder().id(account.getId()).items(new HashMap<>()).build());
+        return cartRepo.findById(accountAdmin.getId()).orElse(CartItem.builder().id(accountAdmin.getId()).items(new HashMap<>()).build());
     }
 }

@@ -26,10 +26,10 @@ USE `fashion_api_project`;
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `accounts`
+-- Cấu trúc bảng cho bảng `accountAdmins`
 --
 
-CREATE TABLE `accounts` (
+CREATE TABLE `accountAdmins` (
   `id` int(11) NOT NULL,
   `password` varchar(255) NOT NULL,
   `name` varchar(255) NOT NULL,
@@ -43,10 +43,10 @@ CREATE TABLE `accounts` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Đang đổ dữ liệu cho bảng `accounts`
+-- Đang đổ dữ liệu cho bảng `accountAdmins`
 --
 
-INSERT INTO `accounts` (`id`, `password`, `name`, `email`, `phone`, `address`, `role`, `is_activated`, `created_at`, `updated_at`) VALUES
+INSERT INTO `accountAdmins` (`id`, `password`, `name`, `email`, `phone`, `address`, `role`, `is_activated`, `created_at`, `updated_at`) VALUES
 (1, '$2a$10$5C32JYodwPS87Qo2ZqTRBOb3NpDJyls3DEWLoEdb4i1oV5jjmNzNe', 'quang anh', 'quanganhnguyen100196@gmail.com', '0364100196', 'dsva', 'ROLE_MANAGER', b'1', '2024-05-14 10:45:53', '2024-06-25 17:59:48'),
 (2, '$2a$10$cIsfc/R8PIsJWzbgolJRheAfJ7hK9hxwxxpqplMP4CSlTBJhcoMk.', 'nhanvien1', 'nhanvien1@gmail.com', '0365151822', 'hanoi', 'ROLE_EMPLOYEE', b'1', '2024-05-14 10:45:53', '2024-08-06 12:30:47'),
 (4, '$2a$10$5D2B5O4CmS5RN4VxaTwJXOi9B83aa0lGwWy.sICls9O3LKRgNXyDm', 'nhavien2', 'nhanvien2@gmail.com', '0364421123', 'hanoi', 'ROLE_EMPLOYEE', b'1', '2024-05-14 10:45:53', '2024-08-04 12:36:30'),
@@ -959,8 +959,8 @@ CREATE TRIGGER `update_history` AFTER UPDATE ON `invoices` FOR EACH ROW BEGIN
     DECLARE new_is_paid_status VARCHAR(55);
     DECLARE old_is_paid_status VARCHAR(55);
     
-    SET old_account = (SELECT accounts.name FROM accounts WHERE id = OLD.account_id);
-    SET new_account = (SELECT accounts.name FROM accounts WHERE id = NEW.account_id);
+    SET old_account = (SELECT accountAdmins.name FROM accountAdmins WHERE id = OLD.account_id);
+    SET new_account = (SELECT accountAdmins.name FROM accountAdmins WHERE id = NEW.account_id);
     SET invoice_id = NEW.id;
     
 	IF NEW.is_paid = 0 THEN
@@ -2607,9 +2607,9 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 --
 
 --
--- Chỉ mục cho bảng `accounts`
+-- Chỉ mục cho bảng `accountAdmins`
 --
-ALTER TABLE `accounts`
+ALTER TABLE `accountAdmins`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `email` (`email`),
   ADD UNIQUE KEY `phone` (`phone`);
@@ -2694,9 +2694,9 @@ ALTER TABLE `products_detail`
 --
 
 --
--- AUTO_INCREMENT cho bảng `accounts`
+-- AUTO_INCREMENT cho bảng `accountAdmins`
 --
-ALTER TABLE `accounts`
+ALTER TABLE `accountAdmins`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
 
 --
@@ -2785,7 +2785,7 @@ ALTER TABLE `imgs_product`
 -- Các ràng buộc cho bảng `invoices`
 --
 ALTER TABLE `invoices`
-  ADD CONSTRAINT `invoices_ibfk_1` FOREIGN KEY (`account_id`) REFERENCES `accounts` (`id`);
+  ADD CONSTRAINT `invoices_ibfk_1` FOREIGN KEY (`account_id`) REFERENCES `accountAdmins` (`id`);
 
 --
 -- Các ràng buộc cho bảng `invoices_detail`
@@ -2798,7 +2798,7 @@ ALTER TABLE `invoices_detail`
 -- Các ràng buộc cho bảng `jwt_tokens`
 --
 ALTER TABLE `jwt_tokens`
-  ADD CONSTRAINT `jwt_tokens_ibfk_1` FOREIGN KEY (`account_id`) REFERENCES `accounts` (`id`);
+  ADD CONSTRAINT `jwt_tokens_ibfk_1` FOREIGN KEY (`account_id`) REFERENCES `accountAdmins` (`id`);
 
 --
 -- Các ràng buộc cho bảng `products`

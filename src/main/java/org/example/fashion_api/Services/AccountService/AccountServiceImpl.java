@@ -6,7 +6,7 @@ import org.apache.commons.lang3.RandomStringUtils;
 import org.example.fashion_api.Enum.RoleEnum;
 import org.example.fashion_api.Exception.*;
 import org.example.fashion_api.Mapper.AccountMapper;
-import org.example.fashion_api.Models.Accounts.*;
+import org.example.fashion_api.Models.AccountsAdmin.*;
 import org.example.fashion_api.Models.JwtToken.JwtToken;
 import org.example.fashion_api.Models.JwtToken.JwtTokenRes;
 import org.example.fashion_api.Models.MailTemplate;
@@ -15,7 +15,6 @@ import org.example.fashion_api.Repositories.AccountRepo;
 import org.example.fashion_api.Repositories.JwtTokenRepo;
 import org.example.fashion_api.Services.JwtService.JwtService;
 import org.example.fashion_api.Services.RedisService.RedisService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -48,7 +47,7 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public JwtTokenRes Login(AccountLoginDto loginRequest) {
-        Optional<Account> optionalAccount = Optional.empty();
+        Optional<AccountAdmin> optionalAccount = Optional.empty();
         String subject = null;
 
 
@@ -68,26 +67,26 @@ public class AccountServiceImpl implements AccountService {
             throw new BadCredentialsException();
         }
 
-        Account existingAccount = optionalAccount.get();
+        AccountAdmin existingAccountAdmin = optionalAccount.get();
 
-        if (!passwordEncoder.matches(loginRequest.getPassword(), existingAccount.getPassword())) {
+        if (!passwordEncoder.matches(loginRequest.getPassword(), existingAccountAdmin.getPassword())) {
             throw new BadCredentialsException();
         }
 
-        if (!existingAccount.getIsActivated()) {
+        if (!existingAccountAdmin.getIsActivated()) {
             throw new AccountIsNotActivatedException();
         }
 
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
                 subject, loginRequest.getPassword(),
-                List.of(new SimpleGrantedAuthority(existingAccount.getRole().name()))
+                List.of(new SimpleGrantedAuthority(existingAccountAdmin.getRole().name()))
         );
 
         authenticationManager.authenticate(authenticationToken);
 
         SecurityContextHolder.getContext().setAuthentication(authenticationToken);
 
-        return jwtService.tokenRes(existingAccount);
+        return jwtService.tokenRes(existingAccountAdmin);
     }
 
     @Override
@@ -97,14 +96,14 @@ public class AccountServiceImpl implements AccountService {
                 page = 0;
             }
 
-            String keyRedis = "getAllAccount(" + keyword + "," + page + "," + limit + ") - account";
+            String keyRedis = "getAllAccount(" + keyword + "," + page + "," + limit + ") - accountAdmin";
 
             PageAccountRes pageAccountResRes = redisService.getRedis(keyRedis, PageAccountRes.class);
 
             if (pageAccountResRes == null) {
                 PageRequest pageRequest = PageRequest.of(page, limit, Sort.by("id").ascending());
 
-                Page<Account> accountPage = accountRepo.findAllByKeyword(keyword, pageRequest);
+                Page<AccountAdmin> accountPage = accountRepo.findAllByKeyword(keyword, pageRequest);
 
                 List<AccountRes> accountsRes = accountMapper.accountsToListAccountRes(accountPage.getContent());
 
@@ -130,7 +129,7 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public AccountRes getAccount(Long accountId) {
-        return accountMapper.accountEntityToAccountRes(accountRepo.findById(accountId).orElseThrow(() -> new NotFoundException("Accounts")));
+        return accountMapper.accountEntityToAccountRes(accountRepo.findById(accountId).orElseThrow(() -> new NotFoundException("AccountsAdmin")));
     }
 
     @Override
@@ -141,57 +140,57 @@ public class AccountServiceImpl implements AccountService {
             throw new AlreadyExistException("Phone");
         }
 
-        Account account = new Account();
+        AccountAdmin accountAdmin = new AccountAdmin();
 
         var newPass = RandomStringUtils.randomAlphanumeric(8).toUpperCase();
 
-        account.setPassword(passwordEncoder.encode(newPass));
+        accountAdmin.setPassword(passwordEncoder.encode(newPass));
 
-        account.setRole(RoleEnum.ROLE_CUSTOMER);
+        accountAdmin.setRole(RoleEnum.ROLE_CUSTOMER);
 
-        accountMapper.accountRegisterDtoToAccount(accountRegisterDto,account);
+        accountMapper.accountRegisterDtoToAccount(accountRegisterDto, accountAdmin);
 
-        accountRepo.save(account);
+        accountRepo.save(accountAdmin);
 
         mailProducer.send(MailTemplate.builder()
                 .to(accountRegisterDto.getEmail())
-                .subject("Account created successfully!")
+                .subject("AccountAdmin created successfully!")
                 .body("Your new Password is: " + newPass)
                 .build());
 
         // send mail to user
         MailTemplate mailTemplate = MailTemplate.builder()
                 .to(accountRegisterDto.getEmail())
-                .subject("Accounts has been successfully registered!")
-                .body("Accounts has been successfully registered!")
+                .subject("AccountsAdmin has been successfully registered!")
+                .body("AccountsAdmin has been successfully registered!")
                 .build();
 
         mailProducer.send(mailTemplate);
 
-        return accountMapper.accountEntityToAccountRes(account);
+        return accountMapper.accountEntityToAccountRes(accountAdmin);
     }
 
 
     @Override
     public void deleteAccount(Long accountId) {
-        Account account = accountRepo.findById(accountId).orElseThrow(() -> new NotFoundException("Accounts"));
-        accountRepo.delete(account);
+        AccountAdmin accountAdmin = accountRepo.findById(accountId).orElseThrow(() -> new NotFoundException("AccountsAdmin"));
+        accountRepo.delete(accountAdmin);
     }
 
     @Override
     @Transactional
     public ResponseEntity<AccountRes> updateAccount(AccountUpdateDto dto) {
-        Account account = getAccountFromAuthentication();
+        AccountAdmin accountAdmin = getAccountFromAuthentication();
         // check exist
-        if (!Objects.equals(account.getEmail(), dto.getEmail()) && accountRepo.existsByEmail(dto.getEmail())) {
+        if (!Objects.equals(accountAdmin.getEmail(), dto.getEmail()) && accountRepo.existsByEmail(dto.getEmail())) {
             throw new AlreadyExistException("Email");
-        } else if (!Objects.equals(account.getPhone(), dto.getPhone()) && accountRepo.existsByPhone(dto.getPhone())) {
+        } else if (!Objects.equals(accountAdmin.getPhone(), dto.getPhone()) && accountRepo.existsByPhone(dto.getPhone())) {
             throw new AlreadyExistException("Phone");
         }
 
-        accountRepo.save(accountMapper.accountUpdateDtoToAccount(dto, account));
+        accountRepo.save(accountMapper.accountUpdateDtoToAccount(dto, accountAdmin));
 
-        return ResponseEntity.ok(accountMapper.accountEntityToAccountRes(account));
+        return ResponseEntity.ok(accountMapper.accountEntityToAccountRes(accountAdmin));
     }
 
     @Transactional
@@ -199,14 +198,14 @@ public class AccountServiceImpl implements AccountService {
     public void changePass(Long accountId, ChangePassDto changePassDto) {
 
         //check auth
-        Account account = this.getAccountFromAuthentication();
+        AccountAdmin accountAdmin = this.getAccountFromAuthentication();
 
-        if (Objects.equals(accountId, account.getId())) {
+        if (Objects.equals(accountId, accountAdmin.getId())) {
             // Get current password from database
-            Account currentAccount = accountRepo.findById(accountId).orElseThrow(() -> new NotFoundException("Account"));
+            AccountAdmin currentAccountAdmin = accountRepo.findById(accountId).orElseThrow(() -> new NotFoundException("AccountAdmin"));
 
             // Check if current password is correct
-            if (!passwordEncoder.matches(changePassDto.getCurrentPass(), currentAccount.getPassword())) {
+            if (!passwordEncoder.matches(changePassDto.getCurrentPass(), currentAccountAdmin.getPassword())) {
                 throw new BadRequestException("Current password is incorrect");
             }
 
@@ -214,7 +213,7 @@ public class AccountServiceImpl implements AccountService {
 
 
             MailTemplate mailTemplate = MailTemplate.builder()
-                    .to(account.getEmail())
+                    .to(accountAdmin.getEmail())
                     .subject("Password changed successfully!")
                     .body("Password changed successfully!")
                     .build();
@@ -227,15 +226,15 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public void resetPass(String email) {
         System.out.println(email);
-        Account account = accountRepo.findByEmail(email).orElseThrow(() -> new NotFoundException("Email"));
+        AccountAdmin accountAdmin = accountRepo.findByEmail(email).orElseThrow(() -> new NotFoundException("Email"));
 
         String newPass = RandomStringUtils.randomAlphanumeric(6);
 
-        accountRepo.changePassword(account.getId(), passwordEncoder.encode(newPass));
+        accountRepo.changePassword(accountAdmin.getId(), passwordEncoder.encode(newPass));
 
         // send password to mail of user
         MailTemplate mailTemplate = MailTemplate.builder()
-                .to(account.getEmail())
+                .to(accountAdmin.getEmail())
                 .subject("Password changed successfully!")
                 .body("Your new Password is: " + newPass)
                 .build();
@@ -257,14 +256,14 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public Account getAccountFromAuthentication() {
+    public AccountAdmin getAccountFromAuthentication() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
         if (authentication != null && authentication.isAuthenticated()) {
 
             String userName = authentication.getName();
 
-            Optional<Account> account = accountRepo.findByPhoneAndIsActivatedTrue(userName);
+            Optional<AccountAdmin> account = accountRepo.findByPhoneAndIsActivatedTrue(userName);
 
             if (account.isEmpty()) {
                 account = accountRepo.findByPhoneAndIsActivatedTrue(userName);
@@ -290,16 +289,16 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public AccountRes getCurrentAccount() {
-        Account account = getAccountFromAuthentication();
-        return accountMapper.accountEntityToAccountRes(account);
+        AccountAdmin accountAdmin = getAccountFromAuthentication();
+        return accountMapper.accountEntityToAccountRes(accountAdmin);
     }
 
     @Override
     @Transactional
     public Boolean activatedAccount(Long accountId) {
-        Account account = accountRepo.findById(accountId).orElseThrow(() -> new NotFoundException("Accounts"));
+        AccountAdmin accountAdmin = accountRepo.findById(accountId).orElseThrow(() -> new NotFoundException("AccountsAdmin"));
 
-        Boolean handleActivateStatus = !account.getIsActivated();
+        Boolean handleActivateStatus = !accountAdmin.getIsActivated();
 
         accountRepo.handleActivateStatus(accountId, handleActivateStatus);
 
@@ -317,30 +316,30 @@ public class AccountServiceImpl implements AccountService {
             throw new AlreadyExistException("Phone");
         }
 
-        Account account = new Account();
+        AccountAdmin accountAdmin = new AccountAdmin();
 
         var newPass = RandomStringUtils.randomAlphanumeric(8).toUpperCase();
 
-        account.setPassword(passwordEncoder.encode(newPass));
+        accountAdmin.setPassword(passwordEncoder.encode(newPass));
 
-        accountMapper.createAccountDtoToAccount(createAccountDto,account);
+        accountMapper.createAccountDtoToAccount(createAccountDto, accountAdmin);
 
-        Account newAccount = accountRepo.save(account);
+        AccountAdmin newAccountAdmin = accountRepo.save(accountAdmin);
 
         mailProducer.send(MailTemplate.builder()
                         .to(createAccountDto.getEmail())
-                        .subject("Account created successfully!")
+                        .subject("AccountAdmin created successfully!")
                         .body("Your new Password is: " + newPass)
                 .build());
 
-        return accountMapper.accountEntityToAccountRes(newAccount);
+        return accountMapper.accountEntityToAccountRes(newAccountAdmin);
 
     }
 
     @Override
     public List<AccountRes> getAllAccountEmployees() {
-        List<Account> accounts = accountRepo.findAllByRole();
-        return accountMapper.accountsToListAccountRes(accounts);
+        List<AccountAdmin> accountAdmins = accountRepo.findAllByRole();
+        return accountMapper.accountsToListAccountRes(accountAdmins);
     }
 
 

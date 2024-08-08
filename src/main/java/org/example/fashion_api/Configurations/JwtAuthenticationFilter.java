@@ -12,7 +12,6 @@ import org.example.fashion_api.Models.UserCustomDetail;
 import org.example.fashion_api.Services.JwtService.JwtService;
 import org.example.fashion_api.Services.UserDetailServiceImpl;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
@@ -47,8 +46,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             if (phone != null && SecurityContextHolder.getContext().getAuthentication() == null) {
                 UserCustomDetail userCustomDetail = (UserCustomDetail) this.userDetailService.loadUserByUsername(phone);
 
-                if (jwtService.isTokenValid(jwt, userCustomDetail.getAccount().getId())) {
-                    if (!jwtService.isTokenExpiredInDatabase(jwt, userCustomDetail.getAccount().getId())) {
+                if (jwtService.isTokenValid(jwt, userCustomDetail.getAccountAdmin().getId())) {
+                    if (!jwtService.isTokenExpiredInDatabase(jwt, userCustomDetail.getAccountAdmin().getId())) {
                         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
                                 userCustomDetail,
                                 null,

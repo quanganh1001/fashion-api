@@ -1,7 +1,6 @@
 package org.example.fashion_api.Repositories;
 
-import org.example.fashion_api.Enum.RoleEnum;
-import org.example.fashion_api.Models.Accounts.Account;
+import org.example.fashion_api.Models.AccountsAdmin.AccountAdmin;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -14,15 +13,13 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface AccountRepo extends JpaRepository<Account, Long> {
+public interface AccountRepo extends JpaRepository<AccountAdmin, Long> {
 
-    Optional<Account> findByEmail(String email);
+    Optional<AccountAdmin> findByEmail(String email);
 
-    Optional<Account> findByEmailAndIsActivatedTrue(String email);
+    Optional<AccountAdmin> findByPhone(String phone);
 
-    Optional<Account> findByPhone(String phone);
-
-    Optional<Account> findByPhoneAndIsActivatedTrue(String phone);
+    Optional<AccountAdmin> findByPhoneAndIsActivatedTrue(String phone);
 
     Boolean existsByEmail(String email);
 
@@ -30,7 +27,7 @@ public interface AccountRepo extends JpaRepository<Account, Long> {
 
     @Query(value = "SELECT * FROM accounts WHERE LOWER(name) LIKE LOWER(CONCAT('%', :keyword, '%')) " +
                                             "OR LOWER(phone) LIKE LOWER(CONCAT('%', :keyword, '%'))", nativeQuery = true)
-    Page<Account> findAllByKeyword(@Param("keyword") String keyword, PageRequest pageable);
+    Page<AccountAdmin> findAllByKeyword(@Param("keyword") String keyword, PageRequest pageable);
 
     @Modifying
     @Query(value = "UPDATE accounts SET password = :newPass WHERE id = :accountId",nativeQuery = true)
@@ -45,5 +42,5 @@ public interface AccountRepo extends JpaRepository<Account, Long> {
     void handleActivateStatus(@Param("accountId") Long accountId,@Param("status") Boolean status);
 
     @Query(value = "SELECT * FROM accounts WHERE role = 'ROLE_MANAGER' OR role = 'ROLE_EMPLOYEE'",nativeQuery = true)
-    List<Account> findAllByRole();
+    List<AccountAdmin> findAllByRole();
 }

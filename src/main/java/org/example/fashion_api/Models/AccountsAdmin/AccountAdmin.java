@@ -1,4 +1,4 @@
-package org.example.fashion_api.Models.Accounts;
+package org.example.fashion_api.Models.AccountsAdmin;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -8,9 +8,7 @@ import lombok.*;
 import org.example.fashion_api.Enum.RoleEnum;
 import org.example.fashion_api.Models.BaseEntity;
 import org.example.fashion_api.Models.JwtToken.JwtToken;
-import org.example.fashion_api.Models.Products.Product;
 import org.example.fashion_api.Models.RedisListener;
-import org.springframework.data.redis.core.RedisHash;
 
 import java.util.List;
 
@@ -22,7 +20,7 @@ import java.util.List;
 @Entity
 @Data
 @Table(name = "accounts")
-public class Account extends BaseEntity {
+public class AccountAdmin extends BaseEntity {
 
     @NotNull
     private String password;

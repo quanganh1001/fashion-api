@@ -1,4 +1,4 @@
-package org.example.fashion_api.Models.Accounts;
+package org.example.fashion_api.Models.AccountsAdmin;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;

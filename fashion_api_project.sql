@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: localhost
--- Thời gian đã tạo: Th8 05, 2024 lúc 12:57 PM
+-- Thời gian đã tạo: Th8 08, 2024 lúc 09:53 AM
 -- Phiên bản máy phục vụ: 10.4.28-MariaDB
 -- Phiên bản PHP: 8.2.4
 
@@ -48,7 +48,7 @@ CREATE TABLE `accounts` (
 
 INSERT INTO `accounts` (`id`, `password`, `name`, `email`, `phone`, `address`, `role`, `is_activated`, `created_at`, `updated_at`) VALUES
 (1, '$2a$10$5C32JYodwPS87Qo2ZqTRBOb3NpDJyls3DEWLoEdb4i1oV5jjmNzNe', 'quang anh', 'quanganhnguyen100196@gmail.com', '0364100196', 'dsva', 'ROLE_MANAGER', b'1', '2024-05-14 10:45:53', '2024-06-25 17:59:48'),
-(2, '$2a$10$cIsfc/R8PIsJWzbgolJRheAfJ7hK9hxwxxpqplMP4CSlTBJhcoMk.', 'nhanvien1', 'nhanvien1@gmail.com', '0365151822', 'hanoi', 'ROLE_EMPLOYEE', b'1', '2024-05-14 10:45:53', '2024-06-14 09:45:19'),
+(2, '$2a$10$cIsfc/R8PIsJWzbgolJRheAfJ7hK9hxwxxpqplMP4CSlTBJhcoMk.', 'nhanvien1', 'nhanvien1@gmail.com', '0365151822', 'hanoi', 'ROLE_EMPLOYEE', b'1', '2024-05-14 10:45:53', '2024-08-06 12:30:47'),
 (4, '$2a$10$5D2B5O4CmS5RN4VxaTwJXOi9B83aa0lGwWy.sICls9O3LKRgNXyDm', 'nhavien2', 'nhanvien2@gmail.com', '0364421123', 'hanoi', 'ROLE_EMPLOYEE', b'1', '2024-05-14 10:45:53', '2024-08-04 12:36:30'),
 (8, '$2a$10$Eh581hpIm67HRwTrHJDpi.iNlHtcbYIBOy313HikKSFJQ4BUPycNu', 'nhanvien3', 'nhanvien3@gmail.com', '0312646431', 'hanoi', 'ROLE_EMPLOYEE', b'1', '2024-05-14 10:45:53', '2024-05-14 10:45:53'),
 (14, '$2a$10$txuPDKVLcA7VGk5x9L8NfuLd2GcUeNAxRzZGl/pWgQl.LpFdcA8QK', 'khách hàng', 'khachhang@gmail.com', '0364431132', 'hanoi', 'ROLE_CUSTOMER', b'1', '2024-05-14 10:45:53', '2024-05-14 10:45:53'),
@@ -805,7 +805,7 @@ INSERT INTO `invoices` (`id`, `invoice_code`, `name`, `phone`, `address`, `note`
 (22, 'CYFRIM6O', 'quang anh', '0365151822', '4dvsdsf', '', 's', 'NEW', 420000, 30000, 450000, b'0', '2024-05-14 10:47:02', '2024-06-15 13:55:03', 0, 2),
 (23, 'DMJHRKWM', 'nguyễn quang anh', '0999999999', 'số 18 ngõ 222 tựu liệt,thanh trì, hà nội', '', 'cs', 'NEW', 580000, 0, 580000, b'0', '2024-05-14 10:47:02', '2024-06-17 13:33:56', 0, 1),
 (24, 'EAEUPXUE', 'quang anh', '0365151822', '4dvsdsf', '', 's', 'NEW', 990000, 0, 990000, b'0', '2024-05-14 10:47:02', '2024-06-15 13:55:03', 0, NULL),
-(25, 'EIIMQTNF', 'quang anh', '0365151822', '4dvsdsf', '', 'd', 'NEW', 400000, 30000, 430000, b'0', '2024-05-14 10:47:02', '2024-06-15 13:55:03', 0, 1),
+(25, 'EIIMQTNF', 'quang anh', '0365151822', '4dvsdsf', '', 'd', 'SUCCESS', 1150000, 30000, 1180000, b'0', '2024-05-14 10:47:02', '2024-08-07 10:02:50', 0, 1),
 (26, 'EXAWZYY2', 'quang anh', '0365151822', '4dvsdsf', '', 's', 'NEW', 990000, 0, 990000, b'0', '2024-05-14 10:47:02', '2024-06-15 13:55:03', 0, 1),
 (27, 'EYCDR8PC', 'nguyễn quang anh', '0999999999', 'số 18 ngõ 222 tựu liệt,thanh trì, hà nội', '                        fsd', NULL, 'NEW', 0, 0, 0, b'0', '2024-05-14 10:47:02', '2024-08-01 10:45:22', 0, 2),
 (28, 'F6GYDSV1', 'nguyễn quang anh', '0365151821', 'số 18 ngõ 222 tựu liệt,thanh trì, hà nội', '', NULL, 'NEW', 0, 0, 0, b'0', '2024-05-14 10:47:02', '2024-06-15 13:55:03', 0, 1),
@@ -837,7 +837,7 @@ INSERT INTO `invoices` (`id`, `invoice_code`, `name`, `phone`, `address`, `note`
 (54, 'ROSWZNSR', 'quang anh', '0365151822', '4dvsdsf', '', 'sd', 'NEW', 380000, 30000, 410000, b'0', '2024-05-14 10:47:02', '2024-06-15 13:55:03', 0, 1),
 (55, 'S9BQOPOP', 'quang anh', '0365151822', '4dvsdsf', '', 'f', 'NEW', 750000, 0, 750000, b'0', '2024-05-14 10:47:02', '2024-06-15 13:55:03', 0, 1),
 (56, 'SGVWGKLQ', 'quang anh', '0365151822', '4dvsdsf', '', 'd', 'NEW', 990000, 0, 990000, b'0', '2024-05-14 10:47:02', '2024-06-15 13:55:03', 0, 1),
-(57, 'SMMKHRU1', 'dfsd', '0999999999', 'sdf', '', 'fds', 'NEW', 0, 30000, 30000, b'0', '2024-05-14 10:47:02', '2024-08-01 10:45:22', 0, 1),
+(57, 'SMMKHRU1', 'dfsd', '0999999999', 'sdf', '', 'fds', 'SUCCESS', 750000, 30000, 780000, b'0', '2024-05-14 10:47:02', '2024-08-07 10:00:14', 0, 1),
 (58, 'SNGWGR4V', 'quang anh', '0365151822', '4dvsdsf', '', 'd', 'NEW', 750000, 0, 750000, b'0', '2024-05-14 10:47:02', '2024-06-15 13:55:03', 0, 1),
 (59, 'SRXO1SSG', 'quang anh', '0365151822', '4dvsdsf', '', 'h', 'NEW', 400000, 30000, 430000, b'0', '2024-05-14 10:47:02', '2024-06-15 13:55:03', 0, 1),
 (60, 'T1VCKYYG', 'sser', '0999999999', 'f', 'dfs', NULL, 'ORDER_CREATED', 0, 0, 0, b'0', '2024-05-14 10:47:02', '2024-06-15 13:55:23', 0, 1),
@@ -869,59 +869,59 @@ INSERT INTO `invoices` (`id`, `invoice_code`, `name`, `phone`, `address`, `note`
 (87, 'UPX8U4CZ', 'string', '2538878580', 'string', NULL, 'string', 'NEW', 1040000, 10000, 1050000, b'0', '2024-06-01 04:18:19', '2024-06-15 13:55:03', 0, 1),
 (88, 'O0VRCG1N', 'string', '2538878580', 'string', NULL, 'string', 'NEW', 1040000, 10000, 1050000, b'0', '2024-06-01 04:22:37', '2024-06-15 13:55:03', 0, 1),
 (89, '7ECXBCFQ', 'string', '2538878580', 'string', NULL, 'string', 'NEW', 1040000, 10000, 1050000, b'0', '2024-06-01 04:24:54', '2024-06-29 16:09:00', 0, 1),
-(90, 'DK9QJKRV', 'string', '2538878580', 'string', NULL, 'string', 'NEW', 1040000, 10000, 1050000, b'1', '2024-06-01 04:30:43', '2024-06-15 13:55:03', 0, 1),
+(90, 'DK9QJKRV', 'stringr', '2538878580', 'string', NULL, 'string', 'PROCESS', 1040000, 10000, 1050000, b'1', '2024-06-01 04:30:43', '2024-08-07 13:14:39', 0, 1),
 (94, 'BJSVA1HD', 'quang anh', '0364100196', 'dsva', NULL, '', 'NEW', 550000, 0, 550000, b'0', '2024-07-04 13:41:14', '2024-07-04 13:41:14', 0, NULL),
-(95, 'E71SLKFT', 'quang anh', '0364100196', 'dsva', NULL, '', 'NEW', 42000, 30000, 72000, b'0', '2024-07-04 13:41:55', '2024-07-04 13:41:55', 0, NULL),
-(186, 'E71SLKFT', 'John Doe', '0912345678', '123 Main St', 'Note 1', 'Custom Note 1', 'NEW', 3230000, 0, 3230000, b'1', '2024-08-04 13:10:15', '2024-08-04 13:50:54', 0, 1),
-(187, 'D92KLMN1', 'Jane Smith', '0923456789', '456 Elm St', 'Note 2', 'Custom Note 2', 'PROCESS', 3550000, 0, 3550000, b'0', '2024-08-04 13:10:15', '2024-08-04 13:50:54', 0, 2),
-(188, 'B84NOPQR', 'Alice Johnson', '0934567890', '789 Pine St', 'Note 3', 'Custom Note 3', 'DELIVERING', 2452000, 0, 2452000, b'1', '2024-08-04 13:10:15', '2024-08-04 13:50:54', 0, 4),
-(189, 'C75QRSTU', 'Bob Brown', '0945678901', '101 Maple St', 'Note 4', 'Custom Note 4', 'SUCCESS', 3230000, 0, 3230000, b'1', '2024-08-04 13:10:15', '2024-08-04 13:50:54', 0, 1),
-(190, 'A63UVWX1', 'Charlie Davis', '0956789012', '202 Oak St', 'Note 5', 'Custom Note 5', 'ORDER_CREATED', 2248000, 0, 2248000, b'0', '2024-08-04 13:10:15', '2024-08-04 13:50:54', 0, 2),
-(191, 'F48YZAB2', 'David Evans', '0967890123', '303 Birch St', 'Note 6', 'Custom Note 6', 'RETURN', 3232000, 0, 3232000, b'1', '2024-08-04 13:10:15', '2024-08-04 13:50:54', 0, 4),
-(192, 'G57CDE3F', 'Eva White', '0978901234', '404 Cedar St', 'Note 7', 'Custom Note 7', 'CANCEL', 2628000, 0, 2628000, b'0', '2024-08-04 13:10:15', '2024-08-04 14:14:58', 0, 8),
-(193, 'H82FGHI4', 'Frank Black', '0989012345', '505 Willow St', 'Note 8', 'Custom Note 8', 'NEW', 3480000, 0, 3480000, b'1', '2024-08-04 13:10:15', '2024-08-04 14:14:06', 0, 1),
-(194, 'J19IJKL5', 'Grace Green', '0990123456', '606 Fir St', 'Note 9', 'Custom Note 9', 'PROCESS', 2870000, 0, 2870000, b'0', '2024-08-04 13:10:15', '2024-08-04 13:54:35', 0, 2),
-(195, 'K23LMNO6', 'Henry Clark', '0901234567', '707 Redwood St', 'Note 10', 'Custom Note 10', 'DELIVERING', 1810000, 0, 1810000, b'0', '2024-08-04 13:10:15', '2024-08-04 13:50:54', 0, 4),
-(196, 'L34NOPQ7', 'Ivy Lewis', '0912345670', '808 Cypress St', 'Note 11', 'Custom Note 11', 'SUCCESS', 2560000, 0, 2560000, b'1', '2024-08-04 13:10:15', '2024-08-04 13:50:54', 0, 8),
-(197, 'M45OPQR8', 'Jack Martin', '0923456781', '909 Palm St', 'Note 12', 'Custom Note 12', 'ORDER_CREATED', 2290000, 0, 2290000, b'0', '2024-08-04 13:10:15', '2024-08-04 13:50:54', 0, 1),
-(198, 'N56PQRS9', 'Kathy Walker', '0934567892', '1010 Spruce St', 'Note 13', 'Custom Note 13', 'RETURN', 1242000, 0, 1242000, b'1', '2024-08-04 13:10:15', '2024-08-04 13:50:54', 0, 2),
-(199, 'O67RST0A', 'Leo Adams', '0945678903', '1111 Pine St', 'Note 14', 'Custom Note 14', 'CANCEL', 2040000, 0, 2040000, b'0', '2024-08-04 13:10:15', '2024-08-04 13:50:54', 0, 4),
-(200, 'P78STU1B', 'Mona Young', '0956789014', '1212 Maple St', 'Note 15', 'Custom Note 15', 'NEW', 1750000, 0, 1750000, b'1', '2024-08-04 13:10:15', '2024-08-04 13:50:54', 0, 8),
-(201, 'Q89TUV2C', 'Nina Scott', '0967890125', '1313 Birch St', 'Note 16', 'Custom Note 16', 'PROCESS', 750000, 0, 750000, b'0', '2024-08-04 13:10:15', '2024-08-04 13:50:54', 0, 1),
-(202, 'R90UVW3D', 'Oscar King', '0978901236', '1414 Cedar St', 'Note 17', 'Custom Note 17', 'DELIVERING', 400000, 0, 400000, b'1', '2024-08-04 13:10:15', '2024-08-04 13:50:54', 0, 2),
-(203, 'S12VWX4E', 'Pamela Harris', '0989012347', '1515 Willow St', 'Note 18', 'Custom Note 18', 'SUCCESS', 400000, 0, 400000, b'1', '2024-08-04 13:10:15', '2024-08-04 13:50:54', 0, 4),
-(204, 'T23WXY5F', 'Quincy Allen', '0990123458', '1616 Fir St', 'Note 19', 'Custom Note 19', 'ORDER_CREATED', 550000, 0, 550000, b'0', '2024-08-04 13:10:15', '2024-08-04 13:50:54', 0, 8),
-(205, 'U34XYZ6G', 'Rachel Baker', '0901234568', '1717 Redwood St', 'Note 20', 'Custom Note 20', 'RETURN', 380000, 0, 380000, b'1', '2024-08-04 13:10:15', '2024-08-04 13:50:54', 0, 1),
-(206, 'V45YZA7H', 'Steve Carter', '0912345679', '1818 Cypress St', 'Note 21', 'Custom Note 21', 'CANCEL', 400000, 0, 400000, b'0', '2024-08-04 13:10:15', '2024-08-04 13:50:54', 0, 2),
-(207, 'W56ZAB8I', 'Tina Murphy', '0923456782', '1919 Palm St', 'Note 22', 'Custom Note 22', 'NEW', 480000, 0, 480000, b'1', '2024-08-04 13:10:15', '2024-08-04 13:50:54', 0, 4),
-(208, 'X67ABC9J', 'Ursula Fisher', '0934567893', '2020 Spruce St', 'Note 23', 'Custom Note 23', 'PROCESS', 990000, 0, 990000, b'1', '2024-08-04 13:10:15', '2024-08-04 13:50:54', 0, 8),
-(209, 'Y78BCD0K', 'Victor Gomez', '0945678904', '2121 Pine St', 'Note 24', 'Custom Note 24', 'DELIVERING', 890000, 0, 890000, b'0', '2024-08-04 13:10:15', '2024-08-04 13:50:54', 0, 1),
-(210, 'Z89CDE1L', 'Wendy Peterson', '0956789015', '2222 Maple St', 'Note 25', 'Custom Note 25', 'SUCCESS', 480000, 0, 480000, b'1', '2024-08-04 13:10:15', '2024-08-04 13:50:54', 0, 2),
-(211, 'A90DEF2M', 'Xander Price', '0967890126', '2323 Birch St', 'Note 26', 'Custom Note 26', 'ORDER_CREATED', 480000, 0, 480000, b'0', '2024-08-04 13:10:15', '2024-08-04 13:50:54', 0, 4),
-(212, 'B12EFG3N', 'Yvonne Bennett', '0978901237', '2424 Cedar St', 'Note 27', 'Custom Note 27', 'RETURN', 250000, 0, 250000, b'1', '2024-08-04 13:10:15', '2024-08-04 13:50:54', 0, 8),
-(213, 'C23FGH4O', 'Zachary Collins', '0989012348', '2525 Willow St', 'Note 28', 'Custom Note 28', 'CANCEL', 500000, 0, 500000, b'0', '2024-08-04 13:10:15', '2024-08-04 13:50:54', 0, 1),
-(214, 'D34GHI5P', 'Alice Morgan', '0990123459', '2626 Fir St', 'Note 29', 'Custom Note 29', 'NEW', 750000, 0, 750000, b'1', '2024-08-04 13:10:15', '2024-08-04 13:50:54', 0, 2),
-(215, 'E45HIJ6Q', 'Brian Cooper', '0901234569', '2727 Redwood St', 'Note 30', 'Custom Note 30', 'PROCESS', 450000, 0, 450000, b'1', '2024-08-04 13:10:15', '2024-08-04 13:50:54', 0, 4),
-(216, 'F56IJK7R', 'Clara Ramirez', '0912345670', '2828 Cypress St', 'Note 31', 'Custom Note 31', 'DELIVERING', 400000, 0, 400000, b'0', '2024-08-04 13:10:15', '2024-08-04 13:50:54', 0, 8),
-(217, 'G67JKL8S', 'Daniel Cox', '0923456783', '2929 Palm St', 'Note 32', 'Custom Note 32', 'SUCCESS', 450000, 0, 450000, b'1', '2024-08-04 13:10:15', '2024-08-04 13:50:55', 0, 1),
-(218, 'H78KLM9T', 'Ella Ward', '0934567894', '3030 Spruce St', 'Note 33', 'Custom Note 33', 'ORDER_CREATED', 550000, 0, 550000, b'0', '2024-08-04 13:10:15', '2024-08-04 13:50:55', 0, 2),
-(219, 'I89LMN0U', 'Frank Morris', '0945678905', '3131 Pine St', 'Note 34', 'Custom Note 34', 'RETURN', 500000, 0, 500000, b'1', '2024-08-04 13:10:15', '2024-08-04 13:50:55', 0, 4),
-(220, 'J90MNO1V', 'Grace Rogers', '0956789016', '3232 Maple St', 'Note 35', 'Custom Note 35', 'CANCEL', 450000, 0, 450000, b'0', '2024-08-04 13:10:15', '2024-08-04 13:50:55', 0, 8),
-(221, 'K12NOP2W', 'Henry Murphy', '0967890127', '3333 Birch St', 'Note 36', 'Custom Note 36', 'NEW', 400000, 0, 400000, b'1', '2024-08-04 13:10:15', '2024-08-04 13:50:55', 0, 1),
-(222, 'L23OPQ3X', 'Ivy Sanders', '0978901238', '3434 Cedar St', 'Note 37', 'Custom Note 37', 'PROCESS', 300000, 0, 300000, b'1', '2024-08-04 13:10:15', '2024-08-04 13:50:55', 0, 2),
-(223, 'M34PQR4Y', 'Jack Barnes', '0989012349', '3535 Willow St', 'Note 38', 'Custom Note 38', 'DELIVERING', 450000, 0, 450000, b'0', '2024-08-04 13:10:15', '2024-08-04 13:50:55', 0, 4),
-(224, 'N45QRS5Z', 'Kathy Hayes', '0990123460', '3636 Fir St', 'Note 39', 'Custom Note 39', 'SUCCESS', 520000, 0, 520000, b'1', '2024-08-04 13:10:15', '2024-08-04 13:50:55', 0, 8),
-(225, 'O56RST6A', 'Leo Bennett', '0901234570', '3737 Redwood St', 'Note 40', 'Custom Note 40', 'ORDER_CREATED', 300000, 0, 300000, b'0', '2024-08-04 13:10:15', '2024-08-04 13:50:55', 0, 1),
-(226, 'P67STU7B', 'Mona Kelly', '0912345671', '3838 Cypress St', 'Note 41', 'Custom Note 41', 'RETURN', 520000, 0, 520000, b'1', '2024-08-04 13:10:15', '2024-08-04 13:50:55', 0, 2),
-(227, 'Q78TUV8C', 'Nina Hughes', '0923456784', '3939 Palm St', 'Note 42', 'Custom Note 42', 'CANCEL', 750000, 0, 750000, b'0', '2024-08-04 13:10:15', '2024-08-04 13:50:55', 0, 4),
-(228, 'R89UVW9D', 'Oscar Ward', '0934567895', '4040 Spruce St', 'Note 43', 'Custom Note 43', 'NEW', 450000, 0, 450000, b'1', '2024-08-04 13:10:15', '2024-08-04 13:50:55', 0, 8),
-(229, 'S90VWX0E', 'Pamela Cook', '0945678906', '4141 Pine St', 'Note 44', 'Custom Note 44', 'PROCESS', 400000, 0, 400000, b'1', '2024-08-04 13:10:15', '2024-08-04 13:50:55', 0, 1),
-(230, 'T12WXY1F', 'Quincy Diaz', '0956789017', '4242 Maple St', 'Note 45', 'Custom Note 45', 'DELIVERING', 480000, 0, 480000, b'0', '2024-08-04 13:10:15', '2024-08-04 13:50:55', 0, 2),
-(231, 'U23XYZ2G', 'Rachel Lee', '0967890128', '4343 Birch St', 'Note 46', 'Custom Note 46', 'SUCCESS', 400000, 0, 400000, b'1', '2024-08-04 13:10:15', '2024-08-04 13:50:55', 0, 4),
-(232, 'V34YZA3H', 'Steve Scott', '0978901239', '4444 Cedar St', 'Note 47', 'Custom Note 47', 'ORDER_CREATED', 400000, 0, 400000, b'0', '2024-08-04 13:10:15', '2024-08-04 13:50:55', 0, 8),
-(233, 'W45ZAB4I', 'Tina Mitchell', '0989012350', '4545 Willow St', 'Note 48', 'Custom Note 48', 'RETURN', 480000, 0, 480000, b'1', '2024-08-04 13:10:15', '2024-08-04 13:50:55', 0, 1),
-(234, 'X56ABC5J', 'Ursula Lopez', '0990123461', '4646 Fir St', 'Note 49', 'Custom Note 49', 'CANCEL', 550000, 0, 550000, b'0', '2024-08-04 13:10:15', '2024-08-04 13:50:55', 0, 2),
-(235, 'Y67BCD6K', 'Victor Young', '0901234571', '4747 Redwood St', 'Note 50', 'Custom Note 50', 'NEW', 380000, 0, 380000, b'1', '2024-08-04 13:10:15', '2024-08-04 13:50:55', 0, 4);
+(95, 'E71SLKFT', 'quang anh', '0364100196', 'dsva', NULL, '', 'SUCCESS', 932000, 30000, 962000, b'0', '2024-07-04 13:41:55', '2024-08-07 09:36:30', 0, 1),
+(186, 'E71SLKFT', 'John Doe', '0912345678', '123 Main St', 'Note 1', 'Custom Note 1', 'RETURN', 3630000, 0, 3630000, b'0', '2024-07-04 11:39:43', '2024-08-07 13:04:10', 0, 1),
+(187, 'D92KLMN1', 'Jane Smith', '0923456789', '456 Elm St', 'Note 2', 'Custom Note 2', 'PROCESS', 3550000, 0, 3550000, b'0', '2024-07-21 13:52:41', '2024-07-21 13:52:41', 0, 2),
+(188, 'B84NOPQR', 'Alice Johnson', '0934567890', '789 Pine St', 'Note 3', 'Custom Note 3', 'DELIVERING', 2452000, 0, 2452000, b'1', '2024-07-17 17:24:20', '2024-07-17 17:24:20', 0, 4),
+(189, 'C75QRSTU', 'Bob Brown', '0945678901', '101 Maple St', 'Note 4', 'Custom Note 4', 'SUCCESS', 3230000, 0, 3230000, b'1', '2024-07-23 04:23:36', '2024-07-23 04:23:36', 0, 1),
+(190, 'A63UVWX1', 'Charlie Davis', '0956789012', '202 Oak St', 'Note 5', 'Custom Note 5', 'ORDER_CREATED', 2248000, 0, 2248000, b'0', '2024-07-24 00:45:01', '2024-07-24 00:45:01', 0, 2),
+(191, 'F48YZAB2', 'David Evans', '0967890123', '303 Birch St', 'Note 6', 'Custom Note 6', 'RETURN', 3232000, 0, 3232000, b'1', '2024-07-11 21:34:18', '2024-07-11 21:34:18', 0, 4),
+(192, 'G57CDE3F', 'Eva White', '0978901234', '404 Cedar St', 'Note 7', 'Custom Note 7', 'CANCEL', 2628000, 0, 2628000, b'0', '2024-07-24 16:36:27', '2024-07-24 16:36:27', 0, 8),
+(193, 'H82FGHI4', 'Frank Black', '0989012345', '505 Willow St', 'Note 8', 'Custom Note 8', 'NEW', 3480000, 0, 3480000, b'1', '2024-07-11 01:19:25', '2024-07-11 01:19:25', 0, 1),
+(194, 'J19IJKL5', 'Grace Green', '0990123456', '606 Fir St', 'Note 9', 'Custom Note 9', 'PROCESS', 2870000, 0, 2870000, b'0', '2024-07-18 11:47:44', '2024-07-18 11:47:44', 0, 2),
+(195, 'K23LMNO6', 'Henry Clark', '0901234567', '707 Redwood St', 'Note 10', 'Custom Note 10', 'DELIVERING', 1810000, 0, 1810000, b'0', '2024-07-20 14:00:25', '2024-07-20 14:00:25', 0, 4),
+(196, 'L34NOPQ7', 'Ivy Lewis', '0912345670', '808 Cypress St', 'Note 11', 'Custom Note 11', 'SUCCESS', 2560000, 0, 2560000, b'1', '2024-07-08 17:38:54', '2024-07-08 17:38:54', 0, 8),
+(197, 'M45OPQR8', 'Jack Martin', '0923456781', '909 Palm St', 'Note 12', 'Custom Note 12', 'ORDER_CREATED', 2290000, 0, 2290000, b'0', '2024-07-19 05:13:15', '2024-07-19 05:13:15', 0, 1),
+(198, 'N56PQRS9', 'Kathy Walker', '0934567892', '1010 Spruce St', 'Note 13', 'Custom Note 13', 'RETURN', 1242000, 0, 1242000, b'1', '2024-07-31 04:09:33', '2024-07-31 04:09:33', 0, 2),
+(199, 'O67RST0A', 'Leo Adams', '0945678903', '1111 Pine St', 'Note 14', 'Custom Note 14', 'CANCEL', 2040000, 0, 2040000, b'0', '2024-07-21 12:08:04', '2024-07-21 12:08:04', 0, 4),
+(200, 'P78STU1B', 'Mona Young', '0956789014', '1212 Maple St', 'Note 15', 'Custom Note 15', 'NEW', 1750000, 0, 1750000, b'1', '2024-07-13 07:11:42', '2024-07-13 07:11:42', 0, 8),
+(201, 'Q89TUV2C', 'Nina Scott', '0967890125', '1313 Birch St', 'Note 16', 'Custom Note 16', 'PROCESS', 750000, 0, 750000, b'0', '2024-07-01 06:34:16', '2024-07-01 06:34:16', 0, 1),
+(202, 'R90UVW3D', 'Oscar King', '0978901236', '1414 Cedar St', 'Note 17', 'Custom Note 17', 'DELIVERING', 400000, 0, 400000, b'1', '2024-07-03 18:16:16', '2024-07-03 18:16:16', 0, 2),
+(203, 'S12VWX4E', 'Pamela Harris', '0989012347', '1515 Willow St', 'Note 18', 'Custom Note 18', 'SUCCESS', 400000, 0, 400000, b'1', '2024-07-14 06:38:32', '2024-07-14 06:38:32', 0, 4),
+(204, 'T23WXY5F', 'Quincy Allen', '0990123458', '1616 Fir St', 'Note 19', 'Custom Note 19', 'ORDER_CREATED', 550000, 0, 550000, b'0', '2024-07-21 09:23:53', '2024-07-21 09:23:53', 0, 8),
+(205, 'U34XYZ6G', 'Rachel Baker', '0901234568', '1717 Redwood St', 'Note 20', 'Custom Note 20', 'RETURN', 380000, 0, 380000, b'1', '2024-07-25 10:03:50', '2024-07-25 10:03:50', 0, 1),
+(206, 'V45YZA7H', 'Steve Carter', '0912345679', '1818 Cypress St', 'Note 21', 'Custom Note 21', 'CANCEL', 400000, 0, 400000, b'0', '2024-07-24 05:07:34', '2024-07-24 05:07:34', 0, 2),
+(207, 'W56ZAB8I', 'Tina Murphy', '0923456782', '1919 Palm St', 'Note 22', 'Custom Note 22', 'SUCCESS', 960000, 0, 960000, b'0', '2024-07-06 02:26:19', '2024-08-07 09:44:39', 0, 4),
+(208, 'X67ABC9J', 'Ursula Fisher', '0934567893', '2020 Spruce St', 'Note 23', 'Custom Note 23', 'PROCESS', 990000, 0, 990000, b'1', '2024-08-02 03:48:54', '2024-08-02 03:48:54', 0, 8),
+(209, 'Y78BCD0K', 'Victor Gomez', '0945678904', '2121 Pine St', 'Note 24', 'Custom Note 24', 'SUCCESS', 890000, 0, 890000, b'0', '2024-08-01 18:45:36', '2024-08-07 09:35:12', 0, 1),
+(210, 'Z89CDE1L', 'Wendy Peterson', '0956789015', '2222 Maple St', 'Note 25', 'Custom Note 25', 'SUCCESS', 480000, 0, 480000, b'1', '2024-07-25 17:21:20', '2024-07-25 17:21:20', 0, 2),
+(211, 'A90DEF2M', 'Xander Price', '0967890126', '2323 Birch St', 'Note 26', 'Custom Note 26', 'ORDER_CREATED', 480000, 0, 480000, b'0', '2024-07-29 13:29:53', '2024-07-29 13:29:53', 0, 4),
+(212, 'B12EFG3N', 'Yvonne Bennett', '0978901237', '2424 Cedar St', 'Note 27', 'Custom Note 27', 'RETURN', 250000, 0, 250000, b'1', '2024-07-31 22:25:27', '2024-07-31 22:25:27', 0, 8),
+(213, 'C23FGH4O', 'Zachary Collins', '0989012348', '2525 Willow St', 'Note 28', 'Custom Note 28', 'CANCEL', 1250000, 0, 1250000, b'0', '2024-08-01 06:37:36', '2024-08-07 10:40:51', 0, 1),
+(214, 'D34GHI5P', 'Alice Morgan', '0990123459', '2626 Fir St', 'Note 29', 'Custom Note 29', 'NEW', 750000, 0, 750000, b'1', '2024-07-26 20:51:43', '2024-07-26 20:51:43', 0, 2),
+(215, 'E45HIJ6Q', 'Brian Cooper', '0901234569', '2727 Redwood St', 'Note 30', 'Custom Note 30', 'PROCESS', 450000, 0, 450000, b'1', '2024-08-05 19:25:48', '2024-08-05 19:25:48', 0, 4),
+(216, 'F56IJK7R', 'Clara Ramirez', '0912345670', '2828 Cypress St', 'Note 31', 'Custom Note 31', 'DELIVERING', 400000, 0, 400000, b'0', '2024-07-26 17:33:51', '2024-07-26 17:33:51', 0, 8),
+(217, 'G67JKL8S', 'Daniel Cox', '0923456783', '2929 Palm St', 'Note 32', 'Custom Note 32', 'SUCCESS', 450000, 0, 450000, b'1', '2024-07-22 12:31:53', '2024-07-22 12:31:53', 0, 1),
+(218, 'H78KLM9T', 'Ella Ward', '0934567894', '3030 Spruce St', 'Note 33', 'Custom Note 33', 'ORDER_CREATED', 550000, 0, 550000, b'0', '2024-07-31 16:57:53', '2024-07-31 16:57:53', 0, 2),
+(219, 'I89LMN0U', 'Frank Morris', '0945678905', '3131 Pine St', 'Note 34', 'Custom Note 34', 'RETURN', 500000, 0, 500000, b'1', '2024-07-14 06:13:49', '2024-07-14 06:13:49', 0, 4),
+(220, 'J90MNO1V', 'Grace Rogers', '0956789016', '3232 Maple St', 'Note 35', 'Custom Note 35', 'CANCEL', 450000, 0, 450000, b'0', '2024-07-13 11:15:25', '2024-07-13 11:15:25', 0, 8),
+(221, 'K12NOP2W', 'Henry Murphy', '0967890127', '3333 Birch St', 'Note 36', 'Custom Note 36', 'NEW', 400000, 0, 400000, b'1', '2024-07-23 20:35:37', '2024-07-23 20:35:37', 0, 1),
+(222, 'L23OPQ3X', 'Ivy Sanders', '0978901238', '3434 Cedar St', 'Note 37', 'Custom Note 37', 'PROCESS', 300000, 0, 300000, b'1', '2024-07-02 04:11:52', '2024-07-02 04:11:52', 0, 2),
+(223, 'M34PQR4Y', 'Jack Barnes', '0989012349', '3535 Willow St', 'Note 38', 'Custom Note 38', 'DELIVERING', 450000, 0, 450000, b'0', '2024-07-14 14:12:28', '2024-07-14 14:12:28', 0, 4),
+(224, 'N45QRS5Z', 'Kathy Hayes', '0990123460', '3636 Fir St', 'Note 39', 'Custom Note 39', 'SUCCESS', 520000, 0, 520000, b'1', '2024-07-27 17:26:46', '2024-07-27 17:26:46', 0, 8),
+(225, 'O56RST6A', 'Leo Bennett', '0901234570', '3737 Redwood St', 'Note 40', 'Custom Note 40', 'ORDER_CREATED', 300000, 0, 300000, b'0', '2024-07-18 03:36:30', '2024-07-18 03:36:30', 0, 1),
+(226, 'P67STU7B', 'Mona Kelly', '0912345671', '3838 Cypress St', 'Note 41', 'Custom Note 41', 'RETURN', 520000, 0, 520000, b'1', '2024-07-06 20:42:13', '2024-07-06 20:42:13', 0, 2),
+(227, 'Q78TUV8C', 'Nina Hughes', '0923456784', '3939 Palm St', 'Note 42', 'Custom Note 42', 'CANCEL', 750000, 0, 750000, b'0', '2024-07-17 03:41:36', '2024-07-17 03:41:36', 0, 4),
+(228, 'R89UVW9D', 'Oscar Ward', '0934567895', '4040 Spruce St', 'Note 43', 'Custom Note 43', 'NEW', 450000, 0, 450000, b'1', '2024-07-26 11:21:20', '2024-07-26 11:21:20', 0, 8),
+(229, 'S90VWX0E', 'Pamela Cook', '0945678906', '4141 Pine St', 'Note 44', 'Custom Note 44', 'PROCESS', 400000, 0, 400000, b'1', '2024-07-04 04:41:54', '2024-07-04 04:41:54', 0, 1),
+(230, 'T12WXY1F', 'Quincy Diaz', '0956789017', '4242 Maple St', 'Note 45', 'Custom Note 45', 'DELIVERING', 480000, 0, 480000, b'0', '2024-07-16 20:25:30', '2024-07-16 20:25:30', 0, 2),
+(231, 'U23XYZ2G', 'Rachel Lee', '0967890128', '4343 Birch St', 'Note 46', 'Custom Note 46', 'SUCCESS', 400000, 0, 400000, b'1', '2024-08-01 23:01:51', '2024-08-01 23:01:51', 0, 4),
+(232, 'V34YZA3H', 'Steve Scott', '0978901239', '4444 Cedar St', 'Note 47', 'Custom Note 47', 'ORDER_CREATED', 400000, 0, 400000, b'0', '2024-08-06 12:52:45', '2024-08-06 12:52:45', 0, 8),
+(233, 'W45ZAB4I', 'Tina Mitchell', '0989012350', '4545 Willow St', 'Note 48', 'Custom Note 48', 'RETURN', 480000, 0, 480000, b'1', '2024-07-12 02:18:15', '2024-07-12 02:18:15', 0, 1),
+(234, 'X56ABC5J', 'Ursula Lopez', '0990123461', '4646 Fir St', 'Note 49', 'Custom Note 49', 'CANCEL', 550000, 0, 550000, b'0', '2024-07-23 03:52:58', '2024-07-23 03:52:58', 0, 2),
+(235, 'Y67BCD6K', 'Victor Young', '0901234571', '4747 Redwood St', 'Note 50', 'Custom Note 50', 'NEW', 380000, 0, 380000, b'1', '2024-07-02 19:30:08', '2024-07-02 19:30:08', 0, 4);
 
 --
 -- Bẫy `invoices`
@@ -1197,7 +1197,7 @@ INSERT INTO `invoices_detail` (`id`, `invoice_id`, `product_detail_id`, `price`,
 (589, 194, 758, 380000, 1, 380000, '2024-08-04 13:46:03', '2024-08-04 13:46:03'),
 (590, 195, 689, 50000, 1, 50000, '2024-08-04 13:46:03', '2024-08-04 13:46:03'),
 (591, 196, 625, 380000, 1, 380000, '2024-08-04 13:46:03', '2024-08-04 13:46:03'),
-(592, 186, 588, 400000, 1, 400000, '2024-08-04 13:50:54', '2024-08-04 13:50:54'),
+(592, 186, 588, 400000, 2, 800000, '2024-08-04 13:50:54', '2024-08-07 13:03:44'),
 (593, 187, 248, 500000, 1, 500000, '2024-08-04 13:50:54', '2024-08-04 13:50:54'),
 (594, 188, 333, 300000, 1, 300000, '2024-08-04 13:50:54', '2024-08-04 13:50:54'),
 (595, 189, 659, 380000, 1, 380000, '2024-08-04 13:50:54', '2024-08-04 13:50:54'),
@@ -1249,7 +1249,12 @@ INSERT INTO `invoices_detail` (`id`, `invoice_id`, `product_detail_id`, `price`,
 (641, 235, 603, 380000, 1, 380000, '2024-08-04 13:50:55', '2024-08-04 13:50:55'),
 (642, 194, 532, 550000, 1, 550000, '2024-08-04 13:54:35', '2024-08-04 13:54:35'),
 (643, 193, 615, 380000, 1, 380000, '2024-08-04 14:14:06', '2024-08-04 14:14:06'),
-(644, 192, 528, 550000, 1, 550000, '2024-08-04 14:14:58', '2024-08-04 14:14:58');
+(644, 192, 528, 550000, 1, 550000, '2024-08-04 14:14:58', '2024-08-04 14:14:58'),
+(645, 95, 716, 890000, 1, 890000, '2024-08-07 09:36:06', '2024-08-07 09:36:06'),
+(646, 207, 426, 480000, 1, 480000, '2024-08-07 09:44:13', '2024-08-07 09:44:13'),
+(647, 57, 704, 750000, 1, 750000, '2024-08-07 10:00:04', '2024-08-07 10:00:04'),
+(648, 25, 704, 750000, 1, 750000, '2024-08-07 10:02:42', '2024-08-07 10:02:42'),
+(651, 213, 703, 750000, 1, 750000, '2024-08-07 10:40:51', '2024-08-07 10:40:51');
 
 --
 -- Bẫy `invoices_detail`
@@ -1611,15 +1616,66 @@ INSERT INTO `invoices_history` (`id`, `invoice_id`, `content`, `created_at`, `up
 (738, 234, 'quang anh đã thêm sản phẩm: DABJ90801CT19SB_DBU-32 (giá = 550,000 VND)', '2024-08-04 13:50:55', '2024-08-04 13:50:55'),
 (741, 235, 'quang anh đã thêm sản phẩm: ESBK00202CT00RB_BL-30 (giá = 380,000 VND)', '2024-08-04 13:50:55', '2024-08-04 13:50:55'),
 (742, 194, 'quang anh đã thay đổi trạng thái thanh toán: Đã thanh toán -> Chưa thanh toán<br>', '2024-08-04 13:54:30', '2024-08-04 13:54:30'),
-(743, 194, NULL, '2024-08-04 13:54:35', '2024-08-04 13:54:35'),
-(744, 194, NULL, '2024-08-04 13:54:35', '2024-08-04 13:54:35'),
 (745, 194, 'quang anh đã thêm sản phẩm: DABJ01001CT00SB_BU-29 (giá = 550,000 VND)', '2024-08-04 13:54:35', '2024-08-04 13:54:35'),
-(746, 193, NULL, '2024-08-04 14:14:06', '2024-08-04 14:14:06'),
-(747, 193, NULL, '2024-08-04 14:14:06', '2024-08-04 14:14:06'),
 (748, 193, 'quang anh đã thêm sản phẩm: DSBI01302LI00SB_BE-32 (giá = 380,000 VND)', '2024-08-04 14:14:06', '2024-08-04 14:14:06'),
-(749, 192, NULL, '2024-08-04 14:14:58', '2024-08-04 14:14:58'),
-(750, 192, NULL, '2024-08-04 14:14:58', '2024-08-04 14:14:58'),
-(751, 192, 'quang anh đã thêm sản phẩm: DABJ00401CT00SB_NV-30 (giá = 550,000 VND)', '2024-08-04 14:14:58', '2024-08-04 14:14:58');
+(751, 192, 'quang anh đã thêm sản phẩm: DABJ00401CT00SB_NV-30 (giá = 550,000 VND)', '2024-08-04 14:14:58', '2024-08-04 14:14:58'),
+(902, 209, NULL, '2024-08-07 09:35:12', '2024-08-07 09:35:12'),
+(903, 95, NULL, '2024-08-07 09:36:06', '2024-08-07 09:36:06'),
+(904, 95, NULL, '2024-08-07 09:36:06', '2024-08-07 09:36:06'),
+(905, 95, 'quang anh đã thêm sản phẩm: EWCL00361PE00RB_CR-XL (giá = 890,000 VND)', '2024-08-07 09:36:06', '2024-08-07 09:36:06'),
+(906, 95, NULL, '2024-08-07 09:36:22', '2024-08-07 09:36:22'),
+(907, 95, NULL, '2024-08-07 09:36:22', '2024-08-07 09:36:22'),
+(908, 95, NULL, '2024-08-07 09:36:27', '2024-08-07 09:36:27'),
+(909, 95, NULL, '2024-08-07 09:36:30', '2024-08-07 09:36:30'),
+(910, 207, 'quang anh đã thay đổi trạng thái thanh toán: Đã thanh toán -> Chưa thanh toán<br>', '2024-08-07 09:44:08', '2024-08-07 09:44:08'),
+(911, 207, NULL, '2024-08-07 09:44:13', '2024-08-07 09:44:13'),
+(912, 207, NULL, '2024-08-07 09:44:13', '2024-08-07 09:44:13'),
+(913, 207, 'quang anh đã thêm sản phẩm: EATB00671LI13RB_DNV-42 (giá = 480,000 VND)', '2024-08-07 09:44:13', '2024-08-07 09:44:13'),
+(914, 207, NULL, '2024-08-07 09:44:33', '2024-08-07 09:44:33'),
+(915, 207, NULL, '2024-08-07 09:44:37', '2024-08-07 09:44:37'),
+(916, 207, NULL, '2024-08-07 09:44:39', '2024-08-07 09:44:39'),
+(917, 57, NULL, '2024-08-07 10:00:04', '2024-08-07 10:00:04'),
+(918, 57, NULL, '2024-08-07 10:00:04', '2024-08-07 10:00:04'),
+(919, 57, 'quang anh đã thêm sản phẩm: DWCT00431PE32SB_WH-XL (giá = 750,000 VND)', '2024-08-07 10:00:04', '2024-08-07 10:00:04'),
+(920, 57, NULL, '2024-08-07 10:00:08', '2024-08-07 10:00:08'),
+(921, 57, NULL, '2024-08-07 10:00:12', '2024-08-07 10:00:12'),
+(922, 57, NULL, '2024-08-07 10:00:14', '2024-08-07 10:00:14'),
+(923, 25, NULL, '2024-08-07 10:02:42', '2024-08-07 10:02:42'),
+(924, 25, NULL, '2024-08-07 10:02:42', '2024-08-07 10:02:42'),
+(925, 25, 'quang anh đã thêm sản phẩm: DWCT00431PE32SB_WH-XL (giá = 750,000 VND)', '2024-08-07 10:02:42', '2024-08-07 10:02:42'),
+(926, 25, NULL, '2024-08-07 10:02:45', '2024-08-07 10:02:45'),
+(927, 25, NULL, '2024-08-07 10:02:48', '2024-08-07 10:02:48'),
+(928, 25, NULL, '2024-08-07 10:02:50', '2024-08-07 10:02:50'),
+(929, 213, NULL, '2024-08-07 10:20:16', '2024-08-07 10:20:16'),
+(930, 213, NULL, '2024-08-07 10:20:16', '2024-08-07 10:20:16'),
+(931, 213, 'quang anh đã thêm sản phẩm: DWCT00431PE32SB_WH-XL (giá = 750,000 VND)', '2024-08-07 10:20:16', '2024-08-07 10:20:16'),
+(932, 213, 'quang anh đã xóa sản phẩm: DWCT00431PE32SB_WH-XL (giá = 750,000),số lượng: 1', '2024-08-07 10:20:20', '2024-08-07 10:20:20'),
+(933, 213, NULL, '2024-08-07 10:20:20', '2024-08-07 10:20:20'),
+(934, 213, NULL, '2024-08-07 10:20:20', '2024-08-07 10:20:20'),
+(935, 213, NULL, '2024-08-07 10:39:53', '2024-08-07 10:39:53'),
+(936, 213, NULL, '2024-08-07 10:39:53', '2024-08-07 10:39:53'),
+(937, 213, 'quang anh đã thêm sản phẩm: DWCT00431PE32SB_WH-XL (giá = 750,000 VND)', '2024-08-07 10:39:53', '2024-08-07 10:39:53'),
+(938, 213, 'quang anh đã xóa sản phẩm: DWCT00431PE32SB_WH-XL (giá = 750,000),số lượng: 1', '2024-08-07 10:39:58', '2024-08-07 10:39:58'),
+(939, 213, NULL, '2024-08-07 10:39:58', '2024-08-07 10:39:58'),
+(940, 213, NULL, '2024-08-07 10:39:58', '2024-08-07 10:39:58'),
+(941, 213, NULL, '2024-08-07 10:40:51', '2024-08-07 10:40:51'),
+(942, 213, NULL, '2024-08-07 10:40:51', '2024-08-07 10:40:51'),
+(943, 213, 'quang anh đã thêm sản phẩm: DWCT00431PE32SB_WH-L (giá = 750,000 VND)', '2024-08-07 10:40:51', '2024-08-07 10:40:51'),
+(944, 186, NULL, '2024-08-07 13:00:17', '2024-08-07 13:00:17'),
+(945, 186, NULL, '2024-08-07 13:01:06', '2024-08-07 13:01:06'),
+(946, 186, NULL, '2024-08-07 13:02:53', '2024-08-07 13:02:53'),
+(947, 186, NULL, '2024-08-07 13:03:17', '2024-08-07 13:03:17'),
+(948, 186, 'quang anh đã thay đổi trạng thái thanh toán: Đã thanh toán -> Chưa thanh toán<br>', '2024-08-07 13:03:39', '2024-08-07 13:03:39'),
+(949, 186, ' đã thay đổi Số lượng (ESBK00702CT00RB_BL-30) :1 -> 2', '2024-08-07 13:03:44', '2024-08-07 13:03:44'),
+(950, 186, NULL, '2024-08-07 13:03:44', '2024-08-07 13:03:44'),
+(951, 186, NULL, '2024-08-07 13:03:44', '2024-08-07 13:03:44'),
+(952, 186, NULL, '2024-08-07 13:03:49', '2024-08-07 13:03:49'),
+(953, 186, NULL, '2024-08-07 13:04:08', '2024-08-07 13:04:08'),
+(954, 186, NULL, '2024-08-07 13:04:10', '2024-08-07 13:04:10'),
+(955, 90, NULL, '2024-08-07 13:14:21', '2024-08-07 13:14:21'),
+(956, 90, 'quang anh đã thay đổi Tên khách hàng: string -> stringa<br>', '2024-08-07 13:14:30', '2024-08-07 13:14:30'),
+(957, 90, NULL, '2024-08-07 13:14:32', '2024-08-07 13:14:32'),
+(958, 90, 'quang anh đã thay đổi Tên khách hàng: stringa -> stringr<br>quang anh đã thay đổi Trạng thái đơn hàng: NEW -> PROCESS<br>', '2024-08-07 13:14:39', '2024-08-07 13:14:39');
 
 -- --------------------------------------------------------
 
@@ -1644,8 +1700,10 @@ CREATE TABLE `jwt_tokens` (
 --
 
 INSERT INTO `jwt_tokens` (`id`, `token`, `expiration_date`, `refresh_token`, `account_id`, `refresh_expiration_date`, `revoked`, `created_at`, `updated_at`) VALUES
-(520, 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJuZ3V5ZW5xdWFuZ2FuaCIsInBob25lIjoiMDM2NDEwMDE5NiIsInJvbGUiOiJST0xFX01BTkFHRVIiLCJpYXQiOjE3MjI4NDU2MTEsImV4cCI6MTcyMjg0NjIxMX0.pu6JA9lF1jvHYCabK_V8a_pMBzPl_PZJ-DqgJlsLSGA', '2024-08-05 15:23:31', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJuZ3V5ZW5xdWFuZ2FuaCIsInBob25lIjoiMDM2NDEwMDE5NiIsInJvbGUiOiJST0xFX01BTkFHRVIiLCJpYXQiOjE3MjI4NDU2MTEsImV4cCI6MTcyMzQ1MDQxMX0.tEj1AKcZYRwWnPSZzQPZUSPYkrcYRL7zDELqEE7Wehc', 1, '2024-09-04 15:13:31', 0, '2024-08-04 10:40:17', '2024-08-05 08:13:31'),
-(525, 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJuZ3V5ZW5xdWFuZ2FuaCIsInBob25lIjoiMDM2NDEwMDE5NiIsInJvbGUiOiJST0xFX01BTkFHRVIiLCJpYXQiOjE3MjI3ODA4MTQsImV4cCI6MTcyMjc4MTQxNH0.k8iYuciJJwxBW1yKYzCKGMW0ZU-oGZAB0QswixQi_ZQ', '2024-08-04 21:23:34', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJuZ3V5ZW5xdWFuZ2FuaCIsInBob25lIjoiMDM2NDEwMDE5NiIsInJvbGUiOiJST0xFX01BTkFHRVIiLCJpYXQiOjE3MjI3ODA4MTQsImV4cCI6MTcyMzM4NTYxNH0.vD26sw813UYJSMRp-3W-CLKM344oz1PeAj-LIw-beyw', 1, '2024-08-11 21:13:34', 0, '2024-08-04 14:13:34', '2024-08-04 14:13:34');
+(527, 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJuZ3V5ZW5xdWFuZ2FuaCIsInBob25lIjoiMDM2NTE1MTgyMiIsInJvbGUiOiJST0xFX0VNUExPWUVFIiwiaWF0IjoxNzIyOTM2NTgxLCJleHAiOjE3MjI5MzcxODF9.JHDr7u1wF5VRb5m8MdSzW-HqnXyZSltKDUjJ-uH-XW4', '2024-08-06 16:39:41', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJuZ3V5ZW5xdWFuZ2FuaCIsInBob25lIjoiMDM2NTE1MTgyMiIsInJvbGUiOiJST0xFX0VNUExPWUVFIiwiaWF0IjoxNzIyOTM2NTgxLCJleHAiOjE3MjM1NDEzODF9.bHeup8lKMk-jxg7fPuGfFWCvX_DGpOTYV3_vk-CmSlw', 2, '2024-08-13 16:29:41', 0, '2024-08-06 09:29:41', '2024-08-06 09:29:41'),
+(531, 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJuZ3V5ZW5xdWFuZ2FuaCIsInBob25lIjoiMDM2NTE1MTgyMiIsInJvbGUiOiJST0xFX0VNUExPWUVFIiwiaWF0IjoxNzIyOTQ3NDUxLCJleHAiOjE3MjI5NDgwNTF9.nFEdpbXTF0tUkGwyB8DcIDtotql2UBxIxvWTifMPH9s', '2024-08-06 19:40:51', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJuZ3V5ZW5xdWFuZ2FuaCIsInBob25lIjoiMDM2NTE1MTgyMiIsInJvbGUiOiJST0xFX0VNUExPWUVFIiwiaWF0IjoxNzIyOTQ3NDUxLCJleHAiOjE3MjM1NTIyNTF9.vMzV_eI2Nf0Gezi8VaHIOCJtvRbAcJfamr3z3O6nF3U', 2, '2024-08-13 19:30:51', 0, '2024-08-06 12:30:51', '2024-08-06 12:30:51'),
+(544, 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJuZ3V5ZW5xdWFuZ2FuaCIsInBob25lIjoiMDM2NDEwMDE5NiIsInJvbGUiOiJST0xFX01BTkFHRVIiLCJpYXQiOjE3MjMwMzQ4NzMsImV4cCI6MTcyMzAzNTQ3M30.bKjdsXc74PBoGyBIeQdAkRPr3Wb27s5Cfd0Wj5VXYnE', '2024-08-07 19:57:53', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJuZ3V5ZW5xdWFuZ2FuaCIsInBob25lIjoiMDM2NDEwMDE5NiIsInJvbGUiOiJST0xFX01BTkFHRVIiLCJpYXQiOjE3MjMwMzQ4NzMsImV4cCI6MTcyMzYzOTY3M30.iniycF8QWvWsfN6RpHVXILxREEl47MBoGOgVT0sN5y4', 1, '2024-09-06 19:47:53', 0, '2024-08-07 12:38:01', '2024-08-07 12:47:53'),
+(545, 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJuZ3V5ZW5xdWFuZ2FuaCIsInBob25lIjoiMDM2NDEwMDE5NiIsInJvbGUiOiJST0xFX01BTkFHRVIiLCJpYXQiOjE3MjMwMzYxMDcsImV4cCI6MTcyMzAzNjcwN30.7fsFZEFbYtodJMPErRQjYphfJU142LC_u8JM9VoWzSE', '2024-08-07 20:18:27', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJuZ3V5ZW5xdWFuZ2FuaCIsInBob25lIjoiMDM2NDEwMDE5NiIsInJvbGUiOiJST0xFX01BTkFHRVIiLCJpYXQiOjE3MjMwMzYxMDcsImV4cCI6MTcyMzY0MDkwN30.GVT_-SFNNyyjpITOgy9F9FXKwsGFKxKa7hR6fF_mpQ4', 1, '2024-09-06 20:08:27', 0, '2024-08-07 12:58:36', '2024-08-07 13:08:27');
 
 -- --------------------------------------------------------
 
@@ -1677,7 +1735,7 @@ CREATE TABLE `products` (
 --
 
 INSERT INTO `products` (`id`, `product_code`, `product_name`, `cat_id`, `price`, `discount_price`, `discount_percent`, `brand`, `description`, `total_size`, `total_color`, `image_background`, `image_choose_size`, `is_activated`, `created_at`, `updated_at`) VALUES
-(1, 'BI013', 'Quần short đũi BI013', 114, 380000, NULL, NULL, 'TORANO', '', 6, 7, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711810365/1702814188840_tp038---bi013-_20__790f72cbd3d34a918920b73579e72ea5_master.jpg.webp', 'IMAGE_4', b'1', '2024-05-14 10:47:36', '2024-08-04 10:05:26'),
+(1, 'BI013', 'Quần short đũi BI013', 114, 380000, NULL, NULL, 'TORANO', '', 6, 7, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711810365/1702814188840_tp038---bi013-_20__790f72cbd3d34a918920b73579e72ea5_master.jpg.webp', 'IMAGE_4', b'1', '2024-05-14 10:47:36', '2024-08-06 12:45:59'),
 (2, 'CABJ003', 'Quần Jeans rách Slim CABJ003', 109, 550000, NULL, NULL, 'TORANO', 'Quần Jeans rách Slim CABJ003\r\n', 5, 1, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711810773/1702810774291_cabj003_75aa0eb2e3ef4d7cb175dcef6ceae9cf_master.jpg.webp', 'IMAGE_4', b'1', '2024-05-14 10:47:36', '2024-05-14 10:47:36'),
 (3, 'DABJ004', 'Quần Jeans basic Slim DABJ004', 108, 550000, NULL, NULL, 'TORANO', 'Quần Jeans basic Slim CABJ004/2\r\n', 5, 1, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711810701/1702810004163_52706071935_8966d1e12f_o_a66489be76c949d791609a08ca73993f_master.jpg.webp', 'IMAGE_4', b'1', '2024-05-14 10:47:36', '2024-05-14 10:47:36'),
 (4, 'DABJ010', 'Quần Jeans basic Slim DABJ010', 108, 550000, NULL, NULL, 'TORANO', 'Quần Jeans basic Slim CABJ010/2', 5, 1, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711810727/1702810256808_52169110354_87bd6ccaa0_o_abf9f4cabd204376b1d1cba50d2deec9_master.jpg.webp', 'IMAGE_4', b'1', '2024-05-14 10:47:36', '2024-05-14 10:47:36'),
@@ -1686,7 +1744,7 @@ INSERT INTO `products` (`id`, `product_code`, `product_name`, `cat_id`, `price`,
 (7, 'DABJ908', 'Quần Jeans rách Slim 1.DABJ908', 109, 550000, NULL, NULL, 'TORANO', '', 5, 1, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711810768/1702810648513_bj908-2_53198051989_o_d8c0aeb3be18470c95b4e19e4481b38d_master.jpg.webp', 'IMAGE_4', b'1', '2024-05-14 10:47:36', '2024-05-14 10:47:36'),
 (8, 'DABK906', 'Quần kaki dài basic cạp tender túi lé DABK906', 110, 500000, NULL, NULL, 'TORANO', '', 5, 4, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711810591/1702808414194_dabk906-1_6be1255f7e6b427094e410388cb5f6a1_master.jpg.webp', 'IMAGE_4', b'1', '2024-05-14 10:47:36', '2024-05-14 10:47:36'),
 (9, 'DABK908', 'Quần kaki dài basic DABK908', 110, 500000, NULL, NULL, 'TORANO', '', 5, 4, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711810628/1702808850360_tp038---bk908-_20__de063447c1d34cf0a62c34b18ed2ffe6_master.jpg.webp', 'IMAGE_4', b'1', '2024-05-14 10:47:36', '2024-05-14 10:47:36'),
-(10, 'DATB416', 'Sơ mi dài tay kẻ Checkerboard 2.DATB416', 122, 480000, NULL, NULL, 'TORANO', '', 5, 1, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711810249/1703435106886_52695741049_ab53170a62_o_d4d8d423351a4330b41d0fc19ade0513_master.jpg.webp', 'IMAGE_2', b'1', '2024-05-14 10:47:36', '2024-05-14 10:47:36'),
+(10, 'DATB416', 'Sơ mi dài tay kẻ Checkerboard 2.DATB416', 122, 480000, NULL, NULL, 'TORANO', '', 5, 1, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711810249/1703435106886_52695741049_ab53170a62_o_d4d8d423351a4330b41d0fc19ade0513_master.jpg.webp', 'IMAGE_2', b'1', '2024-05-14 10:47:36', '2024-08-06 12:13:37'),
 (11, 'DATB614', 'Áo sơ mi dài tay trơn Bamboo 4.DATB614', 123, 450000, NULL, NULL, 'TORANO', '', 5, 4, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711810494/1702806015812_52660558534_e1239eeb1b_o_786802e53d3843e19392b3f4e5199c71_master.jpg.webp', 'IMAGE_2', b'1', '2024-05-14 10:47:36', '2024-05-14 10:47:36'),
 (12, 'DATB920', 'Áo sơ mi dài tay trơn Bamboo 4.DATB920', 123, 42000, NULL, NULL, 'TORANO', '', 5, 4, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711810527/1702806426640_untitled_design__5__5744f2809b2c4d3499ef8f70899e3c18_master.jpg.webp', 'IMAGE_2', b'1', '2024-05-14 10:47:36', '2024-05-14 10:47:36'),
 (13, 'DSTP611', 'Áo polo trơn bo kẻ DSTP611', 98, 333333, NULL, NULL, 'Torano', '', 4, 1, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711811554/tp611_59ea616328234a9b969ce2d1c48c482f_master.jpg.webp', 'IMAGE_1', b'1', '2024-05-14 10:47:36', '2024-05-14 10:47:36'),
@@ -2000,7 +2058,7 @@ INSERT INTO `products_detail` (`id`, `product_id`, `code`, `color_id`, `size`, `
 (248, 54, 'ESTP04772CA00SB_DCR-S', 12, 'SIZE_S', 999, b'1', '2024-05-14 10:47:45', '2024-05-16 12:28:59'),
 (249, 54, 'ESTP04772CA00SB_DCR-M', 12, 'SIZE_M', 999, b'1', '2024-05-14 10:47:45', '2024-05-16 12:28:59'),
 (250, 54, 'ESTP04772CA00SB_DCR-L', 12, 'SIZE_L', 999, b'1', '2024-05-14 10:47:45', '2024-05-16 12:28:59'),
-(251, 54, 'ESTP04772CA00SB_DCR-XL', 12, 'SIZE_XL', 999, b'1', '2024-05-14 10:47:45', '2024-05-16 12:28:59'),
+(251, 54, 'ESTP04772CA00SB_DCR-XL', 12, 'SIZE_XL', 999, b'1', '2024-05-14 10:47:45', '2024-08-07 13:04:10'),
 (252, 54, 'ESTP04772CA00SB_BL-S', 4, 'SIZE_S', 999, b'1', '2024-05-14 10:47:45', '2024-05-16 12:28:59'),
 (253, 54, 'ESTP04772CA00SB_BL-M', 4, 'SIZE_M', 999, b'1', '2024-05-14 10:47:45', '2024-05-16 12:28:59'),
 (254, 54, 'ESTP04772CA00SB_BL-L', 4, 'SIZE_L', 999, b'1', '2024-05-14 10:47:45', '2024-05-16 12:28:59'),
@@ -2077,7 +2135,7 @@ INSERT INTO `products_detail` (`id`, `product_id`, `code`, `color_id`, `size`, `
 (352, 33, 'ESTB02672LI00RB_WH-40', 40, 'SIZE_40', 999, b'1', '2024-05-14 10:47:45', '2024-05-16 12:28:59'),
 (353, 33, 'ESTB02672LI00RB_WH-39', 40, 'SIZE_39', 0, b'1', '2024-05-14 10:47:45', '2024-05-16 12:28:59'),
 (354, 33, 'ESTB02672LI00RB_WH-38', 40, 'SIZE_38', 0, b'1', '2024-05-14 10:47:45', '2024-05-16 12:28:59'),
-(355, 33, 'ESTB02672LI00RB_WH-41', 40, 'SIZE_41', 0, b'1', '2024-05-14 10:47:45', '2024-05-16 12:28:59'),
+(355, 33, 'ESTB02672LI00RB_WH-41', 40, 'SIZE_41', 0, b'1', '2024-05-14 10:47:45', '2024-08-07 13:04:10'),
 (356, 33, 'ESTB02672LI00RB_WH-42', 40, 'SIZE_XL', 999, b'1', '2024-05-14 10:47:45', '2024-05-16 12:28:59'),
 (357, 33, 'ESTB02672LI00RB_LG-38', 27, 'SIZE_38', 999, b'1', '2024-05-14 10:47:45', '2024-05-16 12:28:59'),
 (358, 33, 'ESTB02672LI00RB_LG-39', 27, 'SIZE_39', 0, b'1', '2024-05-14 10:47:45', '2024-05-16 12:28:59'),
@@ -2147,7 +2205,7 @@ INSERT INTO `products_detail` (`id`, `product_id`, `code`, `color_id`, `size`, `
 (422, 23, 'EATB00671LI13RB_DNV-38', 15, 'SIZE_38', 999, b'1', '2024-05-14 10:47:45', '2024-05-16 12:28:59'),
 (423, 23, 'EATB00671LI13RB_DNV-39', 15, 'SIZE_39', 999, b'1', '2024-05-14 10:47:45', '2024-05-16 12:28:59'),
 (424, 23, 'EATB00671LI13RB_DNV-40', 15, 'SIZE_40', 0, b'1', '2024-05-14 10:47:45', '2024-05-16 12:28:59'),
-(425, 23, 'EATB00671LI13RB_DNV-41', 15, 'SIZE_41', 999, b'1', '2024-05-14 10:47:45', '2024-05-16 12:28:59'),
+(425, 23, 'EATB00671LI13RB_DNV-41', 15, 'SIZE_41', 999, b'1', '2024-05-14 10:47:45', '2024-08-07 13:04:10'),
 (426, 23, 'EATB00671LI13RB_DNV-42', 15, 'SIZE_42', 999, b'1', '2024-05-14 10:47:45', '2024-05-16 12:28:59'),
 (427, 23, 'EATB00671LI13RB_WH-38', 40, 'SIZE_38', 999, b'1', '2024-05-14 10:47:45', '2024-05-16 12:28:59'),
 (428, 23, 'EATB00671LI13RB_WH-39', 40, 'SIZE_39', 999, b'1', '2024-05-14 10:47:45', '2024-05-16 12:28:59'),
@@ -2164,11 +2222,11 @@ INSERT INTO `products_detail` (`id`, `product_id`, `code`, `color_id`, `size`, `
 (439, 23, 'EATB00671LI13RB_LB-40', 22, 'SIZE_40', 999, b'1', '2024-05-14 10:47:45', '2024-05-16 12:28:59'),
 (440, 23, 'EATB00671LI13RB_LB-41', 22, 'SIZE_41', 999, b'1', '2024-05-14 10:47:45', '2024-05-16 12:28:59'),
 (441, 23, 'EATB00671LI13RB_LB-42', 22, 'SIZE_42', 999, b'1', '2024-05-14 10:47:45', '2024-05-16 12:28:59'),
-(442, 10, 'DATB41671CA11RB_NBX-38', 32, 'SIZE_38', 992, b'1', '2024-05-14 10:47:45', '2024-05-16 12:28:59'),
-(443, 10, 'DATB41671CA11RB_NBX-39', 32, 'SIZE_39', 996, b'1', '2024-05-14 10:47:45', '2024-05-16 12:28:59'),
-(444, 10, 'DATB41671CA11RB_NBX-40', 32, 'SIZE_40', 999, b'1', '2024-05-14 10:47:45', '2024-05-16 12:28:59'),
-(445, 10, 'DATB41671CA11RB_NBX-41', 32, 'SIZE_41', 999, b'1', '2024-05-14 10:47:45', '2024-05-16 12:28:59'),
-(446, 10, 'DATB41671CA11RB_NBX-42', 32, 'SIZE_42', 999, b'1', '2024-05-14 10:47:45', '2024-05-16 12:28:59'),
+(442, 10, 'DATB41671CA11RB_NBX-38', 32, 'SIZE_38', 992, b'1', '2024-05-14 10:47:45', '2024-08-06 12:13:37'),
+(443, 10, 'DATB41671CA11RB_NBX-39', 32, 'SIZE_39', 996, b'1', '2024-05-14 10:47:45', '2024-08-06 12:13:37'),
+(444, 10, 'DATB41671CA11RB_NBX-40', 32, 'SIZE_40', 999, b'1', '2024-05-14 10:47:45', '2024-08-06 12:13:37'),
+(445, 10, 'DATB41671CA11RB_NBX-41', 32, 'SIZE_41', 999, b'1', '2024-05-14 10:47:45', '2024-08-06 12:13:37'),
+(446, 10, 'DATB41671CA11RB_NBX-42', 32, 'SIZE_42', 999, b'1', '2024-05-14 10:47:45', '2024-08-06 12:13:37'),
 (447, 22, 'EATB00371CA11SB_GN-38', 18, 'SIZE_38', 999, b'1', '2024-05-14 10:47:45', '2024-05-16 12:28:59'),
 (448, 22, 'EATB00371CA11SB_GN-39', 18, 'SIZE_39', 999, b'1', '2024-05-14 10:47:45', '2024-05-16 12:28:59'),
 (449, 22, 'EATB00371CA11SB_GN-40', 18, 'SIZE_40', 0, b'1', '2024-05-14 10:47:45', '2024-05-16 12:28:59'),
@@ -2192,7 +2250,7 @@ INSERT INTO `products_detail` (`id`, `product_id`, `code`, `color_id`, `size`, `
 (467, 8, 'DABK90601CT00SB_LG-29', 27, 'SIZE_29', 999, b'1', '2024-05-14 10:47:45', '2024-05-16 12:28:59'),
 (468, 8, 'DABK90601CT00SB_LG-30', 27, 'SIZE_30', 999, b'1', '2024-05-14 10:47:45', '2024-05-16 12:28:59'),
 (469, 8, 'DABK90601CT00SB_LG-31', 27, 'SIZE_31', 999, b'1', '2024-05-14 10:47:45', '2024-05-16 12:28:59'),
-(470, 8, 'DABK90601CT00SB_LG-32', 27, 'SIZE_32', 999, b'1', '2024-05-14 10:47:45', '2024-05-16 12:28:59'),
+(470, 8, 'DABK90601CT00SB_LG-32', 27, 'SIZE_32', 999, b'1', '2024-05-14 10:47:45', '2024-08-07 13:04:10'),
 (471, 8, 'DABK90601CT00SB_LG-33', 27, 'SIZE_33', 999, b'1', '2024-05-14 10:47:45', '2024-05-16 12:28:59'),
 (472, 8, 'DABK90601CT00SB_CN-29', 8, 'SIZE_29', 999, b'1', '2024-05-14 10:47:45', '2024-05-16 12:28:59'),
 (473, 8, 'DABK90601CT00SB_CN-30', 8, 'SIZE_30', 999, b'1', '2024-05-14 10:47:45', '2024-05-16 12:28:59'),
@@ -2233,7 +2291,7 @@ INSERT INTO `products_detail` (`id`, `product_id`, `code`, `color_id`, `size`, `
 (508, 20, 'EABT01901PE00SB_DNV-30', 15, 'SIZE_30', 999, b'1', '2024-05-14 10:47:45', '2024-05-16 12:28:59'),
 (509, 20, 'EABT01901PE00SB_DNV-31', 15, 'SIZE_31', 999, b'1', '2024-05-14 10:47:45', '2024-05-16 12:28:59'),
 (510, 20, 'EABT01901PE00SB_DNV-32', 15, 'SIZE_32', 999, b'1', '2024-05-14 10:47:45', '2024-05-16 12:28:59'),
-(511, 20, 'EABT01901PE00SB_DNV-33', 15, 'SIZE_33', 999, b'1', '2024-05-14 10:47:45', '2024-05-16 12:28:59'),
+(511, 20, 'EABT01901PE00SB_DNV-33', 15, 'SIZE_33', 999, b'1', '2024-05-14 10:47:45', '2024-08-07 13:04:10'),
 (512, 20, 'EABT01901PE00SB_LBL-29', 24, 'SIZE_29', 999, b'1', '2024-05-14 10:47:45', '2024-05-16 12:28:59'),
 (513, 20, 'EABT01901PE00SB_LBL-30', 24, 'SIZE_30', 999, b'1', '2024-05-14 10:47:45', '2024-05-16 12:28:59'),
 (514, 20, 'EABT01901PE00SB_LBL-31', 24, 'SIZE_31', 999, b'1', '2024-05-14 10:47:45', '2024-05-16 12:28:59'),
@@ -2289,7 +2347,7 @@ INSERT INTO `products_detail` (`id`, `product_id`, `code`, `color_id`, `size`, `
 (563, 28, 'ESBW00502PE00RB_NV-L', 33, 'SIZE_L', 999, b'1', '2024-05-14 10:47:45', '2024-05-16 12:28:59'),
 (564, 28, 'ESBW00502PE00RB_NV-XL', 33, 'SIZE_XL', 999, b'1', '2024-05-14 10:47:45', '2024-05-16 12:28:59'),
 (565, 27, 'ESBW00402PE01MB_LG-S', 27, 'SIZE_S', 999, b'1', '2024-05-14 10:47:45', '2024-05-16 12:28:59'),
-(566, 27, 'ESBW00402PE01MB_LG-M', 27, 'SIZE_M', 0, b'1', '2024-05-14 10:47:45', '2024-05-16 12:28:59'),
+(566, 27, 'ESBW00402PE01MB_LG-M', 27, 'SIZE_M', 0, b'1', '2024-05-14 10:47:45', '2024-08-07 13:04:10'),
 (567, 27, 'ESBW00402PE01MB_LG-L', 27, 'SIZE_L', 999, b'1', '2024-05-14 10:47:45', '2024-05-16 12:28:59'),
 (568, 27, 'ESBW00402PE01MB_LG-XL', 27, 'SIZE_XL', 999, b'1', '2024-05-14 10:47:45', '2024-05-16 12:28:59'),
 (569, 27, 'ESBW00402PE01MB_NV-S', 33, 'SIZE_S', 999, b'1', '2024-05-14 10:47:45', '2024-05-16 12:28:59'),
@@ -2311,7 +2369,7 @@ INSERT INTO `products_detail` (`id`, `product_id`, `code`, `color_id`, `size`, `
 (585, 26, 'ESBK00702CT00RB_LG-32', 27, 'SIZE_32', 999, b'1', '2024-05-14 10:47:45', '2024-05-16 12:28:59'),
 (586, 26, 'ESBK00702CT00RB_LG-33', 27, 'SIZE_33', 0, b'1', '2024-05-14 10:47:45', '2024-05-16 12:28:59'),
 (587, 26, 'ESBK00702CT00RB_BL-29', 4, 'SIZE_29', 999, b'1', '2024-05-14 10:47:45', '2024-05-16 12:28:59'),
-(588, 26, 'ESBK00702CT00RB_BL-30', 4, 'SIZE_30', 999, b'1', '2024-05-14 10:47:45', '2024-05-16 12:28:59'),
+(588, 26, 'ESBK00702CT00RB_BL-30', 4, 'SIZE_30', 999, b'1', '2024-05-14 10:47:45', '2024-08-07 13:04:10'),
 (589, 26, 'ESBK00702CT00RB_BL-31', 4, 'SIZE_31', 0, b'1', '2024-05-14 10:47:45', '2024-05-16 12:28:59'),
 (590, 26, 'ESBK00702CT00RB_BL-32', 4, 'SIZE_32', 999, b'1', '2024-05-14 10:47:45', '2024-05-16 12:28:59'),
 (591, 26, 'ESBK00702CT00RB_BL-33', 4, 'SIZE_33', 999, b'1', '2024-05-14 10:47:45', '2024-05-16 12:28:59'),
@@ -2335,35 +2393,34 @@ INSERT INTO `products_detail` (`id`, `product_id`, `code`, `color_id`, `size`, `
 (609, 25, 'ESBK00202CT00RB_BE-31', 3, 'SIZE_31', 999, b'1', '2024-05-14 10:47:45', '2024-05-16 12:28:59'),
 (610, 25, 'ESBK00202CT00RB_BE-32', 3, 'SIZE_32', 999, b'1', '2024-05-14 10:47:45', '2024-05-16 12:28:59'),
 (611, 25, 'ESBK00202CT00RB_BE-33', 3, 'SIZE_33', 999, b'1', '2024-05-14 10:47:45', '2024-05-16 12:28:59'),
-(613, 1, 'DSBI01302LI00SB_BE-30', 3, 'SIZE_30', 999, b'0', '2024-05-14 10:47:45', '2024-06-11 12:03:46'),
-(614, 1, 'DSBI01302LI00SB_BE-31', 3, 'SIZE_31', 991, b'0', '2024-05-14 10:47:45', '2024-06-11 12:03:46'),
-(615, 1, 'DSBI01302LI00SB_BE-32', 3, 'SIZE_32', 999, b'0', '2024-05-14 10:47:45', '2024-06-11 12:03:46'),
-(616, 1, 'DSBI01302LI00SB_BE-33', 3, 'SIZE_33', 999, b'0', '2024-05-14 10:47:45', '2024-06-11 12:03:46'),
-(617, 1, 'DSBI01302LI00SB_WH-29', 40, 'SIZE_29', 999, b'0', '2024-05-14 10:47:45', '2024-06-11 12:03:46'),
-(618, 1, 'DSBI01302LI00SB_WH-31', 40, 'SIZE_31', 999, b'0', '2024-05-14 10:47:45', '2024-06-11 12:03:46'),
-(619, 1, 'DSBI01302LI00SB_WH-30', 40, 'SIZE_30', 999, b'0', '2024-05-14 10:47:45', '2024-06-11 12:03:46'),
-(620, 1, 'DSBI01302LI00SB_WH-32', 40, 'SIZE_32', 999, b'0', '2024-05-14 10:47:45', '2024-06-11 12:03:46'),
-(621, 1, 'DSBI01302LI00SB_WH-33', 40, 'SIZE_33', 999, b'0', '2024-05-14 10:47:45', '2024-06-11 12:03:46'),
-(622, 1, 'DSBI01302LI00SB_LB-31', 22, 'SIZE_31', 999, b'0', '2024-05-14 10:47:45', '2024-06-11 12:03:46'),
-(623, 1, 'DSBI01302LI00SB_LB-30', 22, 'SIZE_30', 999, b'0', '2024-05-14 10:47:45', '2024-06-11 12:03:46'),
-(624, NULL, 'DSBI01302LI00SB_LB-29', 22, 'SIZE_29', 0, b'1', '2024-05-14 10:47:45', '2024-05-16 12:28:59'),
-(625, 1, 'DSBI01302LI00SB_LB-32', 22, 'SIZE_32', 999, b'0', '2024-05-14 10:47:45', '2024-06-11 12:03:46'),
-(626, 1, 'DSBI01302LI00SB_LB-33', 22, 'SIZE_33', 999, b'0', '2024-05-14 10:47:45', '2024-06-11 12:03:46'),
-(627, 1, 'DSBI01302LI00SB_LG-29', 27, 'SIZE_29', 999, b'0', '2024-05-14 10:47:45', '2024-06-11 12:03:46'),
-(628, 1, 'DSBI01302LI00SB_LG-30', 27, 'SIZE_30', 0, b'0', '2024-05-14 10:47:45', '2024-06-11 12:03:46'),
-(629, 1, 'DSBI01302LI00SB_LG-31', 27, 'SIZE_31', 999, b'0', '2024-05-14 10:47:45', '2024-06-11 12:03:46'),
-(630, 1, 'DSBI01302LI00SB_LG-32', 27, 'SIZE_32', 999, b'0', '2024-05-14 10:47:45', '2024-06-11 12:03:46'),
-(631, 1, 'DSBI01302LI00SB_LG-33', 27, 'SIZE_33', 999, b'0', '2024-05-14 10:47:45', '2024-06-11 12:03:46'),
-(632, 1, 'DSBI01302LI00SB_NV-29', 33, 'SIZE_29', 999, b'0', '2024-05-14 10:47:45', '2024-06-11 12:03:46'),
-(633, 1, 'DSBI01302LI00SB_NV-30', 33, 'SIZE_30', 999, b'0', '2024-05-14 10:47:45', '2024-06-11 12:03:46'),
-(634, 1, 'DSBI01302LI00SB_NV-31', 33, 'SIZE_31', 999, b'0', '2024-05-14 10:47:45', '2024-06-11 12:03:46'),
-(635, 1, 'DSBI01302LI00SB_NV-32', 33, 'SIZE_32', 999, b'0', '2024-05-14 10:47:45', '2024-06-11 12:03:46'),
-(636, 1, 'DSBI01302LI00SB_NV-33', 33, 'SIZE_33', 999, b'0', '2024-05-14 10:47:45', '2024-06-11 12:03:46'),
-(637, 1, 'DSBI01302LI00SB_BL-29', 4, 'SIZE_29', 999, b'0', '2024-05-14 10:47:45', '2024-06-11 12:03:46'),
-(638, 1, 'DSBI01302LI00SB_BL-30', 4, 'SIZE_30', 999, b'0', '2024-05-14 10:47:45', '2024-06-11 12:03:46'),
-(639, 1, 'DSBI01302LI00SB_BL-31', 4, 'SIZE_31', 999, b'0', '2024-05-14 10:47:45', '2024-06-11 12:03:46'),
-(640, 1, 'DSBI01302LI00SB_BL-32', 4, 'SIZE_31', 999, b'0', '2024-05-14 10:47:45', '2024-06-11 12:03:46'),
-(641, 1, 'DSBI01302LI00SB_BL-33', 4, 'SIZE_33', 999, b'0', '2024-05-14 10:47:45', '2024-06-11 12:03:46'),
+(613, 1, 'DSBI01302LI00SB_BE-30', 3, 'SIZE_30', 999, b'1', '2024-05-14 10:47:45', '2024-08-06 12:45:59'),
+(614, 1, 'DSBI01302LI00SB_BE-31', 3, 'SIZE_31', 991, b'1', '2024-05-14 10:47:45', '2024-08-06 12:45:59'),
+(615, 1, 'DSBI01302LI00SB_BE-32', 3, 'SIZE_32', 999, b'1', '2024-05-14 10:47:45', '2024-08-06 12:45:59'),
+(616, 1, 'DSBI01302LI00SB_BE-33', 3, 'SIZE_33', 999, b'1', '2024-05-14 10:47:45', '2024-08-06 12:45:59'),
+(617, 1, 'DSBI01302LI00SB_WH-29', 40, 'SIZE_29', 999, b'1', '2024-05-14 10:47:45', '2024-08-06 12:45:59'),
+(618, 1, 'DSBI01302LI00SB_WH-31', 40, 'SIZE_31', 999, b'1', '2024-05-14 10:47:45', '2024-08-06 12:45:59'),
+(619, 1, 'DSBI01302LI00SB_WH-30', 40, 'SIZE_30', 999, b'1', '2024-05-14 10:47:45', '2024-08-06 12:45:59'),
+(620, 1, 'DSBI01302LI00SB_WH-32', 40, 'SIZE_32', 999, b'1', '2024-05-14 10:47:45', '2024-08-06 12:45:59'),
+(621, 1, 'DSBI01302LI00SB_WH-33', 40, 'SIZE_33', 999, b'1', '2024-05-14 10:47:45', '2024-08-06 12:45:59'),
+(622, 1, 'DSBI01302LI00SB_LB-31', 22, 'SIZE_31', 999, b'1', '2024-05-14 10:47:45', '2024-08-06 12:45:59'),
+(623, 1, 'DSBI01302LI00SB_LB-30', 22, 'SIZE_30', 999, b'1', '2024-05-14 10:47:45', '2024-08-06 12:45:59'),
+(625, 1, 'DSBI01302LI00SB_LB-32', 22, 'SIZE_32', 999, b'1', '2024-05-14 10:47:45', '2024-08-06 12:45:59'),
+(626, 1, 'DSBI01302LI00SB_LB-33', 22, 'SIZE_33', 999, b'1', '2024-05-14 10:47:45', '2024-08-06 12:45:59'),
+(627, 1, 'DSBI01302LI00SB_LG-29', 27, 'SIZE_29', 999, b'1', '2024-05-14 10:47:45', '2024-08-06 12:45:59'),
+(628, 1, 'DSBI01302LI00SB_LG-30', 27, 'SIZE_30', 0, b'1', '2024-05-14 10:47:45', '2024-08-06 12:45:59'),
+(629, 1, 'DSBI01302LI00SB_LG-31', 27, 'SIZE_31', 999, b'1', '2024-05-14 10:47:45', '2024-08-06 12:45:59'),
+(630, 1, 'DSBI01302LI00SB_LG-32', 27, 'SIZE_32', 999, b'1', '2024-05-14 10:47:45', '2024-08-06 12:45:59'),
+(631, 1, 'DSBI01302LI00SB_LG-33', 27, 'SIZE_33', 999, b'1', '2024-05-14 10:47:45', '2024-08-06 12:45:59'),
+(632, 1, 'DSBI01302LI00SB_NV-29', 33, 'SIZE_29', 999, b'1', '2024-05-14 10:47:45', '2024-08-06 12:45:59'),
+(633, 1, 'DSBI01302LI00SB_NV-30', 33, 'SIZE_30', 999, b'1', '2024-05-14 10:47:45', '2024-08-06 12:45:59'),
+(634, 1, 'DSBI01302LI00SB_NV-31', 33, 'SIZE_31', 999, b'1', '2024-05-14 10:47:45', '2024-08-06 12:45:59'),
+(635, 1, 'DSBI01302LI00SB_NV-32', 33, 'SIZE_32', 999, b'1', '2024-05-14 10:47:45', '2024-08-06 12:45:59'),
+(636, 1, 'DSBI01302LI00SB_NV-33', 33, 'SIZE_33', 999, b'1', '2024-05-14 10:47:45', '2024-08-06 12:45:59'),
+(637, 1, 'DSBI01302LI00SB_BL-29', 4, 'SIZE_29', 999, b'1', '2024-05-14 10:47:45', '2024-08-06 12:45:59'),
+(638, 1, 'DSBI01302LI00SB_BL-30', 4, 'SIZE_30', 999, b'1', '2024-05-14 10:47:45', '2024-08-06 12:45:59'),
+(639, 1, 'DSBI01302LI00SB_BL-31', 4, 'SIZE_31', 999, b'1', '2024-05-14 10:47:45', '2024-08-06 12:45:59'),
+(640, 1, 'DSBI01302LI00SB_BL-32', 4, 'SIZE_31', 999, b'1', '2024-05-14 10:47:45', '2024-08-06 12:45:59'),
+(641, 1, 'DSBI01302LI00SB_BL-33', 4, 'SIZE_33', 999, b'1', '2024-05-14 10:47:45', '2024-08-06 12:45:59'),
 (642, 24, 'ESBI00602CA00SB_BL-29', 4, 'SIZE_29', 999, b'1', '2024-05-14 10:47:45', '2024-05-16 12:28:59'),
 (643, 24, 'ESBI00602CA00SB_BL-30', 4, 'SIZE_29', 999, b'1', '2024-05-14 10:47:45', '2024-05-16 12:28:59'),
 (644, 24, 'ESBI00602CA00SB_BL-31', 4, 'SIZE_31', 999, b'1', '2024-05-14 10:47:45', '2024-05-16 12:28:59'),
@@ -2407,7 +2464,7 @@ INSERT INTO `products_detail` (`id`, `product_id`, `code`, `color_id`, `size`, `
 (682, 67, 'EWCW00751PE00SB_LG-XL', 27, 'SIZE_XL', 999, b'1', '2024-05-14 10:47:45', '2024-05-16 12:28:59'),
 (683, 67, 'EWCW00751PE00SB_NV-S', 33, 'SIZE_S', 0, b'1', '2024-05-14 10:47:45', '2024-05-16 12:28:59'),
 (684, 67, 'EWCW00751PE00SB_NV-M', 33, 'SIZE_M', 0, b'1', '2024-05-14 10:47:45', '2024-05-16 12:28:59'),
-(685, 67, 'EWCW00751PE00SB_NV-L', 33, 'SIZE_L', 0, b'1', '2024-05-14 10:47:45', '2024-05-16 12:28:59'),
+(685, 67, 'EWCW00751PE00SB_NV-L', 33, 'SIZE_L', 0, b'1', '2024-05-14 10:47:45', '2024-08-07 13:04:10'),
 (686, 67, 'EWCW00751PE00SB_NV-XL', 33, 'SIZE_XL', 0, b'1', '2024-05-14 10:47:45', '2024-05-16 12:28:59'),
 (687, 67, 'EWCW00751PE00SB_BL-S', 4, 'SIZE_S', 999, b'1', '2024-05-14 10:47:45', '2024-05-16 12:28:59'),
 (688, 67, 'EWCW00751PE00SB_BL-M', 4, 'SIZE_M', 0, b'1', '2024-05-14 10:47:45', '2024-05-16 12:28:59'),
@@ -2511,11 +2568,39 @@ CREATE TABLE `selling_products` (
 -- --------------------------------------------------------
 
 --
+-- Cấu trúc đóng vai cho view `top_products`
+-- (See below for the actual view)
+--
+CREATE TABLE `top_products` (
+`id` double(17,0)
+,`image_background` varchar(255)
+,`product_name` varchar(100)
+,`product_id` int(11)
+,`size` varchar(10)
+,`color_name` varchar(50)
+,`created_at` timestamp
+,`updated_at` timestamp
+,`total_sales` decimal(41,0)
+,`total_quantity_sold` decimal(32,0)
+);
+
+-- --------------------------------------------------------
+
+--
 -- Cấu trúc cho view `selling_products`
 --
 DROP TABLE IF EXISTS `selling_products`;
 
 CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `selling_products`  AS SELECT `p`.`id` AS `id`, `p`.`product_name` AS `product_name`, `p`.`price` AS `price`, `p`.`discount_price` AS `discount_price`, `p`.`discount_percent` AS `discount_percent`, `p`.`total_size` AS `total_size`, `p`.`total_color` AS `total_color`, `p`.`image_background` AS `image_background`, `i`.`created_at` AS `created_at`, `i`.`updated_at` AS `updated_at`, coalesce(sum(`id`.`quantity`),0) AS `total_quantity_sold`, coalesce(sum(`id`.`total_price`),0) AS `total_sales` FROM (((`invoices_detail` `id` left join `products_detail` `pd` on(`id`.`product_detail_id` = `pd`.`id`)) left join `products` `p` on(`pd`.`product_id` = `p`.`id`)) left join `invoices` `i` on(`id`.`invoice_id` = `i`.`id`)) WHERE `i`.`invoice_status` = 'SUCCESS' GROUP BY `p`.`product_name` ;
+
+-- --------------------------------------------------------
+
+--
+-- Cấu trúc cho view `top_products`
+--
+DROP TABLE IF EXISTS `top_products`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `top_products`  AS SELECT floor(rand() * 1000000000) AS `id`, `p`.`image_background` AS `image_background`, `p`.`product_name` AS `product_name`, `p`.`id` AS `product_id`, `pd`.`size` AS `size`, `c`.`name` AS `color_name`, min(`i`.`created_at`) AS `created_at`, max(`i`.`updated_at`) AS `updated_at`, sum(`id`.`total_price`) AS `total_sales`, sum(`id`.`quantity`) AS `total_quantity_sold` FROM ((((`invoices_detail` `id` join `invoices` `i` on(`id`.`invoice_id` = `i`.`id`)) join `products_detail` `pd` on(`id`.`product_detail_id` = `pd`.`id`)) join `products` `p` on(`pd`.`product_id` = `p`.`id`)) join `colors` `c` on(`pd`.`color_id` = `c`.`id`)) WHERE `i`.`invoice_status` = 'SUCCESS' GROUP BY `p`.`image_background`, `p`.`product_name`, `p`.`id`, `pd`.`size`, `c`.`name` ORDER BY sum(`id`.`total_price`) DESC ;
 
 --
 -- Chỉ mục cho các bảng đã đổ
@@ -2654,19 +2739,19 @@ ALTER TABLE `invoices`
 -- AUTO_INCREMENT cho bảng `invoices_detail`
 --
 ALTER TABLE `invoices_detail`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=645;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=652;
 
 --
 -- AUTO_INCREMENT cho bảng `invoices_history`
 --
 ALTER TABLE `invoices_history`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=752;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=959;
 
 --
 -- AUTO_INCREMENT cho bảng `jwt_tokens`
 --
 ALTER TABLE `jwt_tokens`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=526;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=546;
 
 --
 -- AUTO_INCREMENT cho bảng `products`

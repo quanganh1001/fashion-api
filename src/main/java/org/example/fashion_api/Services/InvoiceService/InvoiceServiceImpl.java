@@ -198,15 +198,20 @@ public class InvoiceServiceImpl implements InvoiceService {
         Invoice currentInvoice = invoiceRepo.findById(invoiceId).orElseThrow(() -> new NotFoundException("Invoice"));
         var newAccountId = dto.getAccountId();
         var currentAccount = currentInvoice.getAccount();
+
         checkValidStatus(currentInvoice,dto.getInvoiceStatus());
 
         if ((currentInvoice.getInvoiceStatus() == InvoiceStatusEnum.SUCCESS
                 || currentInvoice.getInvoiceStatus() == InvoiceStatusEnum.DELIVERING
                 || currentInvoice.getInvoiceStatus() == InvoiceStatusEnum.RETURN
                 || currentInvoice.getInvoiceStatus() == InvoiceStatusEnum.ORDER_CREATED)
-        && (!Objects.equals(currentInvoice.getName(), dto.getName()) || !Objects.equals(currentInvoice.getPhone(),
-                dto.getPhone()) || !Objects.equals(currentInvoice.getAddress(), dto.getAddress()) )) {
+        && (!Objects.equals(currentInvoice.getName(), dto.getName()) || !Objects.equals(currentInvoice.getAddress(), dto.getAddress()) )) {
             throw new BadRequestException("Status " + currentInvoice.getInvoiceStatus() + " cannot update invoice");
+        }
+
+        if(!Objects.equals(currentInvoice.getPhone(),
+                dto.getPhone()) ){
+            throw new BadRequestException("Can't update phone");
         }
 
         if (newAccountId != null && (currentAccount == null || !newAccountId.equals(currentAccount.getId()))) {

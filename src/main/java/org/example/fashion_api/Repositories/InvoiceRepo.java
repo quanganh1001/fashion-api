@@ -48,4 +48,7 @@ public interface InvoiceRepo extends JpaRepository<Invoice,Long> {
     @Query(value = "UPDATE invoices SET invoice_status = :status WHERE id = :invoiceId",
             nativeQuery = true)
     void changeStatusInvoice(@Param("invoiceId") Long invoiceId,@Param("status") String status);
+
+
+    Page<Invoice> findAllByPhoneOrderByCreatedAtDesc(String phone, Pageable pageable);
 }

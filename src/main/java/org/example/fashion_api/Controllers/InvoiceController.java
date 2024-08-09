@@ -41,11 +41,11 @@ public class InvoiceController {
     @PreAuthorize("hasAnyRole('MANAGER','EMPLOYEE')")
     @GetMapping()
     public ResponseEntity<PageInvoiceRes> findAll(@RequestParam(defaultValue = "1") int page,
-                                  @RequestParam(defaultValue = "10") int pageSize,
+                                  @RequestParam(defaultValue = "10") int limit,
                                   @RequestParam(defaultValue = "") String keyword,
                                   @RequestParam(required = false) Long accountId,
                                   @RequestParam(required = false) InvoiceStatusEnum invoiceStatus){
-        return ResponseEntity.ok(invoiceService.getAllInvoices(keyword, page-1, pageSize, accountId, invoiceStatus));
+        return ResponseEntity.ok(invoiceService.getAllInvoices(keyword, page-1, limit, accountId, invoiceStatus));
     }
 
     @Operation(summary = "get Invoice (role MANAGER,EMPLOYEE)")
@@ -132,5 +132,12 @@ public class InvoiceController {
     @GetMapping("history/{invoiceId}")
     public ResponseEntity<List<InvoiceHistoryRes>> showHistory(@PathVariable Long invoiceId){
         return ResponseEntity.ok(invoiceHistoryService.getInvoiceHistory(invoiceId));
+    }
+
+    @Operation(summary = "View Purchased Orders  (auth)")
+    @GetMapping("/viewPurchasedOrders")
+    public ResponseEntity<PageInvoiceRes> viewPurchasedOrders(@RequestParam(defaultValue = "1") int page,
+                                                              @RequestParam(defaultValue = "10") int limit){
+        return ResponseEntity.ok(invoiceService.viewPurchasedOrders(page -1 ,limit));
     }
 }

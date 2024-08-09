@@ -10,11 +10,13 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class PageInvoiceRes {
-    private List<InvoiceRes> invoices;
+
 
     private Long totalItems;
 
     private int totalPages;
 
     private int currentPage;
+
+    private List<InvoiceRes> invoices;
 }

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th8 09, 2024 lúc 11:55 AM
+-- Thời gian đã tạo: Th8 09, 2024 lúc 04:12 PM
 -- Phiên bản máy phục vụ: 10.4.32-MariaDB
 -- Phiên bản PHP: 8.2.12
 
@@ -922,7 +922,7 @@ INSERT INTO `invoices` (`id`, `invoice_code`, `name`, `phone`, `address`, `note`
 (46, 'NHMSP1VU', 'nguyễn quang anh', '0365151822', 'số 18 ngõ 222 tựu liệt,thanh trì, hà nội', '', NULL, 'NEW', 0, 0, 0, b'0', '2024-05-14 10:47:02', '2024-06-15 13:55:03', 0, 1, NULL, NULL),
 (47, 'NQHLQRH4', 'quang anh', '0365151822', '4dvsdsf', '', NULL, 'NEW', 0, 0, 0, b'0', '2024-05-14 10:47:02', '2024-06-15 13:55:03', 0, 1, NULL, NULL),
 (48, 'NV7CM7AY', 'quang anh', '0365151822', '4dvsdsf', '', 'gh', 'NEW', 750000, 0, 750000, b'0', '2024-05-14 10:47:02', '2024-06-15 13:55:03', 0, 1, NULL, NULL),
-(49, 'OCFAOWMB', 'fsdfsd', '0999999999', 'vd', '', 'd', 'NEW', 0, 30000, 30000, b'0', '2024-05-14 10:47:02', '2024-08-01 10:45:22', 0, 1, NULL, NULL),
+(49, 'OCFAOWMB', 'fsdfsd', '0364100196', 'vd', '', 'd', 'NEW', 0, 30000, 30000, b'0', '2024-05-14 10:47:02', '2024-08-09 13:57:32', 0, 1, NULL, NULL),
 (50, 'OUFWELJT', 'quang anh', '0365151822', '4dvsdsf', '', '', 'NEW', 990000, 0, 990000, b'0', '2024-05-14 10:47:02', '2024-06-15 13:55:03', 0, 1, NULL, NULL),
 (51, 'PPKY3TZA', 'quang anh', '0365151822', '4dvsdsf', '', 'g', 'NEW', 990000, 0, 990000, b'0', '2024-05-14 10:47:02', '2024-06-15 13:55:03', 0, 1, NULL, NULL),
 (52, 'QIPTDMTO', 'nguyễn quang anh', '5342423432', 'số 18 ngõ 222 tựu liệt,thanh trì, hà nội', '', '', 'NEW', 990000, 0, 990000, b'0', '2024-05-14 10:47:02', '2024-06-15 13:55:03', 0, 1, NULL, NULL),
@@ -936,10 +936,10 @@ INSERT INTO `invoices` (`id`, `invoice_code`, `name`, `phone`, `address`, `note`
 (60, 'T1VCKYYG', 'sser', '0999999999', 'f', 'dfs', NULL, 'ORDER_CREATED', 0, 0, 0, b'0', '2024-05-14 10:47:02', '2024-08-08 13:46:21', 0, 1, '2024-05-14', NULL),
 (61, 'TFWOAP9I', 'nguyễn quang anh', '4343222342', 'số 18 ngõ 222 tựu liệt,thanh trì, hà nội', '', '', 'NEW', 1046666, 0, 1046666, b'0', '2024-05-14 10:47:02', '2024-06-15 13:55:03', 0, 1, NULL, NULL),
 (62, 'TGPIGVXB', 'quang anh', '0365151822', '4dvsdsf', '', 'd', 'NEW', 990000, 0, 990000, b'0', '2024-05-14 10:47:02', '2024-06-15 13:55:03', 0, 1, NULL, NULL),
-(63, 'TLSY7TFT', 'dfgdf', '0999999999', 'fds', '', 'f', 'NEW', 0, 0, 0, b'0', '2024-05-14 10:47:02', '2024-08-01 10:45:22', 0, 1, NULL, NULL),
+(63, 'TLSY7TFT', 'dfgdf', '0364100196', 'fds', '', 'f', 'NEW', 0, 0, 0, b'0', '2024-05-14 10:47:02', '2024-08-09 13:58:56', 0, 1, NULL, NULL),
 (64, 'U0F7TYG1', 'quang anh', '0365151822', '4dvsdsf', '', 'vs', 'NEW', 890000, 0, 890000, b'0', '2024-05-14 10:47:02', '2024-06-15 13:55:03', 0, 1, NULL, NULL),
 (65, 'U7DZUREO', 'quang anh', '0365151822', '4dvsdsf', '', 'gd', 'NEW', 500000, 0, 500000, b'0', '2024-05-14 10:47:02', '2024-06-15 13:55:03', 0, 1, NULL, NULL),
-(66, 'UAEZV8YX', 'gdfgfdg', '0999999999', 'số 18 ngõ 222 tựu liệt,thanh trì, hà nội', '', 'vsd', 'NEW', 0, 30000, 30000, b'0', '2024-05-14 10:47:02', '2024-08-01 10:45:22', 0, 1, NULL, NULL),
+(66, 'UAEZV8YX', 'gdfgfdg', '0364100196', 'số 18 ngõ 222 tựu liệt,thanh trì, hà nội', '', 'vsd', 'NEW', 0, 30000, 30000, b'0', '2024-05-14 10:47:02', '2024-08-09 13:57:48', 0, 1, NULL, NULL),
 (67, 'UAGHYL6A', 'quang anh', '0365151822', '4dvsdsf', '', 'd', 'NEW', 750000, 0, 750000, b'0', '2024-05-14 10:47:02', '2024-06-15 13:55:03', 0, 1, NULL, NULL),
 (68, 'UZZHM3TR', 'nguyễn quang anh', '0999999999', 'số 18 ngõ 222 tựu liệt,thanh trì, hà nội', '', 'fs', 'NEW', 0, 30000, 30000, b'0', '2024-05-14 10:47:02', '2024-08-01 10:45:22', 0, 1, NULL, NULL),
 (69, 'V2PBUUIU', 'quang anh', '2313121312', '4dvsdsf', '', NULL, 'NEW', NULL, 0, NULL, b'0', '2024-05-14 10:47:02', '2024-06-15 13:55:03', 0, 1, NULL, NULL),
@@ -959,9 +959,9 @@ INSERT INTO `invoices` (`id`, `invoice_code`, `name`, `phone`, `address`, `note`
 (83, 'YZSGNG1E', 'quang anh', '0365151822', '4dvsdsf', '', 'd', 'NEW', 750000, 0, 750000, b'0', '2024-05-14 10:47:02', '2024-06-15 13:55:03', 0, 1, NULL, NULL),
 (84, 'ZUI23NIT', 'nguyễn quang anh', '0999999999', 'số 18 ngõ 222 tựu liệt,thanh trì, hà nội', '                        dsf', NULL, 'NEW', 0, 20000, 20000, b'0', '2024-05-14 10:47:02', '2024-08-01 10:45:22', 0, 1, NULL, NULL),
 (86, '7K1RTIHD', 'string', '2538878580', 'string', NULL, 'string', 'NEW', 1040000, 10000, 1050000, b'0', '2024-06-01 04:17:24', '2024-06-15 13:55:03', 0, 1, NULL, NULL),
-(87, 'UPX8U4CZ', 'string', '2538878580', 'string', NULL, 'string', 'NEW', 1040000, 10000, 1050000, b'0', '2024-06-01 04:18:19', '2024-06-15 13:55:03', 0, 1, NULL, NULL),
+(87, 'UPX8U4CZ', 'string', '0364100196', 'string', NULL, 'string', 'NEW', 1040000, 10000, 1050000, b'0', '2024-06-01 04:18:19', '2024-08-09 13:56:57', 0, 1, NULL, NULL),
 (88, 'O0VRCG1N', 'string', '2538878580', 'string', NULL, 'string', 'NEW', 1040000, 10000, 1050000, b'0', '2024-06-01 04:22:37', '2024-06-15 13:55:03', 0, 1, NULL, NULL),
-(89, '7ECXBCFQ', 'string', '2538878580', 'string', NULL, 'string', 'NEW', 1040000, 10000, 1050000, b'0', '2024-06-01 04:24:54', '2024-06-29 16:09:00', 0, 1, NULL, NULL),
+(89, '7ECXBCFQ', 'string', '0364100196', 'string', NULL, 'string', 'NEW', 1040000, 10000, 1050000, b'0', '2024-06-01 04:24:54', '2024-08-09 13:56:25', 0, 1, NULL, NULL),
 (90, 'DK9QJKRV', 'stringr', '2538878580', 'string', NULL, 'string', 'PROCESS', 1040000, 10000, 1050000, b'1', '2024-06-01 04:30:43', '2024-08-07 13:14:39', 0, 1, NULL, NULL),
 (94, 'BJSVA1HD', 'quang anh', '0364100196', 'dsva', NULL, '', 'NEW', 550000, 0, 550000, b'0', '2024-07-04 13:41:14', '2024-07-04 13:41:14', 0, NULL, NULL, NULL),
 (95, 'E71SLKFT', 'quang anh', '0364100196', 'dsva', NULL, '', 'SUCCESS', 932000, 30000, 962000, b'0', '2024-07-04 13:41:55', '2024-08-08 13:46:34', 0, 1, '2024-07-04', '2024-07-04'),
@@ -1014,8 +1014,10 @@ INSERT INTO `invoices` (`id`, `invoice_code`, `name`, `phone`, `address`, `note`
 (232, 'V34YZA3H', 'Steve Scott', '0978901239', '4444 Cedar St', 'Note 47', 'Custom Note 47', 'ORDER_CREATED', 400000, 0, 400000, b'0', '2024-08-06 12:52:45', '2024-08-08 13:46:21', 0, 8, '2024-08-06', NULL),
 (233, 'W45ZAB4I', 'Tina Mitchell', '0989012350', '4545 Willow St', 'Note 48', 'Custom Note 48', 'RETURN', 480000, 0, 480000, b'1', '2024-07-12 02:18:15', '2024-08-08 13:46:21', 0, 1, '2024-07-12', NULL),
 (234, 'X56ABC5J', 'Ursula Lopez', '0990123461', '4646 Fir St', 'Note 49', 'Custom Note 49', 'CANCEL', 550000, 0, 550000, b'0', '2024-07-23 03:52:58', '2024-07-23 03:52:58', 0, 2, NULL, NULL),
-(235, 'Y67BCD6K', 'Victor Young', '0901234571', '4747 Redwood St', 'Note 50', 'Custom Note 50', 'NEW', 380000, 0, 380000, b'1', '2024-07-02 19:30:08', '2024-07-02 19:30:08', 0, 4, NULL, NULL),
-(236, 'EO0LZ3UG', 'quang anh', '0364100196', 'dsva', NULL, '', 'ORDER_CREATED', 750000, 0, 750000, b'0', '2024-08-08 13:58:08', '2024-08-08 15:38:12', 0, 1, '2024-08-08', '2024-08-08');
+(235, 'Y67BCD6K', 'Victor Young', '0364100196', '4747 Redwood St', 'Note 50', 'Custom Note 50', 'NEW', 380000, 0, 380000, b'1', '2024-07-02 19:30:08', '2024-08-09 13:56:45', 0, 4, NULL, NULL),
+(236, 'EO0LZ3UG', 'quang anh', '0364100196', 'dfssfdsfsdfsdgsdgwdergswgfsdfsdfsdfsdkjgfksdgfkjsdgfkjsdbcxkbvisdgvkshvgsdvjbsdkvhbsdkvhbsdkvjsdsdfsdfsdf', NULL, '', 'PROCESS', 750000, 0, 750000, b'1', '2024-08-08 13:58:08', '2024-08-09 13:54:14', 0, 1, NULL, '2024-08-08'),
+(237, 'P4NCRICO', 'quang anh', '0364100196', 'dsva', NULL, '', 'NEW', 1580000, 0, 1580000, b'0', '2024-08-09 11:42:56', '2024-08-09 11:42:56', 0, NULL, NULL, NULL),
+(238, '5XJSKETR', 'quang anh', '0364100196', 'dsva', NULL, '', 'NEW', 760000, 30000, 790000, b'0', '2024-08-09 11:44:11', '2024-08-09 12:52:09', 0, NULL, NULL, NULL);
 
 --
 -- Bẫy `invoices`
@@ -1352,7 +1354,11 @@ INSERT INTO `invoices_detail` (`id`, `invoice_id`, `product_detail_id`, `price`,
 (648, 25, 704, 750000, 1, 750000, '2024-08-07 10:02:42', '2024-08-07 10:02:42'),
 (651, 213, 703, 750000, 1, 750000, '2024-08-07 10:40:51', '2024-08-07 10:40:51'),
 (652, 236, 700, 750000, 1, 750000, '2024-08-08 13:58:08', '2024-08-08 13:58:08'),
-(653, 213, 700, 750000, 1, 750000, '2024-08-08 15:24:11', '2024-08-08 15:24:11');
+(653, 213, 700, 750000, 1, 750000, '2024-08-08 15:24:11', '2024-08-08 15:24:11'),
+(654, 237, 443, 480000, 1, 480000, '2024-08-09 11:42:56', '2024-08-09 11:42:56'),
+(655, 237, 527, 550000, 1, 550000, '2024-08-09 11:42:56', '2024-08-09 11:42:56'),
+(656, 237, 528, 550000, 1, 550000, '2024-08-09 11:42:56', '2024-08-09 11:42:56'),
+(657, 238, 636, 380000, 2, 760000, '2024-08-09 11:44:11', '2024-08-09 12:52:09');
 
 --
 -- Bẫy `invoices_detail`
@@ -1783,7 +1789,23 @@ INSERT INTO `invoices_history` (`id`, `invoice_id`, `content`, `created_at`, `up
 (965, 213, 'quang anh đã thêm sản phẩm: DWCT00431PE32SB_BL-XL (giá = 750,000 VND)', '2024-08-08 15:24:11', '2024-08-08 15:24:11'),
 (966, 213, 'quang anh đã thay đổi Trạng thái đơn hàng: CANCEL -> ORDER_CREATED<br>', '2024-08-08 15:24:14', '2024-08-08 15:24:14'),
 (967, 236, 'quang anh đã thay đổi Trạng thái đơn hàng: ORDER_CREATED -> PROCESS<br>', '2024-08-08 15:33:20', '2024-08-08 15:33:20'),
-(968, 236, 'quang anh đã thay đổi Trạng thái đơn hàng: PROCESS -> ORDER_CREATED<br>', '2024-08-08 15:38:12', '2024-08-08 15:38:12');
+(968, 236, 'quang anh đã thay đổi Trạng thái đơn hàng: PROCESS -> ORDER_CREATED<br>', '2024-08-08 15:38:12', '2024-08-08 15:38:12'),
+(969, 237, 'quang anh đã tạo đơn hàng: <br>Mã đơn: P4NCRICO,<br>Tên khách hàng: quang anh,<br>Số điện thoại: 0364100196,<br>Địa chỉ: dsva,<br>Trạng thái thanh toán: Chưa thanh toán', '2024-08-09 11:42:56', '2024-08-09 11:42:56'),
+(970, 237, 'quang anh đã thêm sản phẩm: DATB41671CA11RB_NBX-39 (giá = 480,000 VND)', '2024-08-09 11:42:56', '2024-08-09 11:42:56'),
+(971, 237, 'quang anh đã thêm sản phẩm: DABJ00401CT00SB_NV-29 (giá = 550,000 VND)', '2024-08-09 11:42:56', '2024-08-09 11:42:56'),
+(972, 237, 'quang anh đã thêm sản phẩm: DABJ00401CT00SB_NV-30 (giá = 550,000 VND)', '2024-08-09 11:42:56', '2024-08-09 11:42:56'),
+(973, 238, 'quang anh đã tạo đơn hàng: <br>Mã đơn: 5XJSKETR,<br>Tên khách hàng: quang anh,<br>Số điện thoại: 0364100196,<br>Địa chỉ: dsva,<br>Trạng thái thanh toán: Chưa thanh toán', '2024-08-09 11:44:11', '2024-08-09 11:44:11'),
+(974, 238, 'quang anh đã thêm sản phẩm: DSBI01302LI00SB_NV-33 (giá = 380,000 VND)', '2024-08-09 11:44:11', '2024-08-09 11:44:11'),
+(975, 238, ' đã thay đổi Số lượng (DSBI01302LI00SB_NV-33) :1 -> 2', '2024-08-09 12:52:09', '2024-08-09 12:52:09'),
+(976, 236, 'quang anh đã thay đổi trạng thái thanh toán: Chưa thanh toán -> Đã thanh toán<br>', '2024-08-09 13:52:00', '2024-08-09 13:52:00'),
+(977, 236, 'quang anh đã thay đổi Trạng thái đơn hàng: ORDER_CREATED -> PROCESS<br>', '2024-08-09 13:54:05', '2024-08-09 13:54:05'),
+(978, 236, 'quang anh đã thay đổi Địa chỉ: dsva -> dfssfdsfsdfsdgsdgwdergswgfsdfsdfsdfsdkjgfksdgfkjsdgfkjsdbcxkbvisdgvkshvgsdvjbsdkvhbsdkvhbsdkvjsdsdfsdfsdf<br>', '2024-08-09 13:54:14', '2024-08-09 13:54:14'),
+(979, 89, 'quang anh đã thay đổi Số điện thoại: 2538878580 -> 0364100196<br>', '2024-08-09 13:56:25', '2024-08-09 13:56:25'),
+(980, 235, 'quang anh đã thay đổi Số điện thoại: 0901234571 -> 0364100196<br>', '2024-08-09 13:56:45', '2024-08-09 13:56:45'),
+(981, 87, 'quang anh đã thay đổi Số điện thoại: 2538878580 -> 0364100196<br>', '2024-08-09 13:56:57', '2024-08-09 13:56:57'),
+(982, 49, 'quang anh đã thay đổi Số điện thoại: 0999999999 -> 0364100196<br>', '2024-08-09 13:57:32', '2024-08-09 13:57:32'),
+(983, 66, 'quang anh đã thay đổi Số điện thoại: 0999999999 -> 0364100196<br>', '2024-08-09 13:57:48', '2024-08-09 13:57:48'),
+(984, 63, 'quang anh đã thay đổi Số điện thoại: 0999999999 -> 0364100196<br>', '2024-08-09 13:58:56', '2024-08-09 13:58:56');
 
 -- --------------------------------------------------------
 
@@ -1810,8 +1832,8 @@ CREATE TABLE `jwt_tokens` (
 INSERT INTO `jwt_tokens` (`id`, `token`, `expiration_date`, `refresh_token`, `account_id`, `refresh_expiration_date`, `revoked`, `created_at`, `updated_at`) VALUES
 (527, 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJuZ3V5ZW5xdWFuZ2FuaCIsInBob25lIjoiMDM2NTE1MTgyMiIsInJvbGUiOiJST0xFX0VNUExPWUVFIiwiaWF0IjoxNzIyOTM2NTgxLCJleHAiOjE3MjI5MzcxODF9.JHDr7u1wF5VRb5m8MdSzW-HqnXyZSltKDUjJ-uH-XW4', '2024-08-06 16:39:41', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJuZ3V5ZW5xdWFuZ2FuaCIsInBob25lIjoiMDM2NTE1MTgyMiIsInJvbGUiOiJST0xFX0VNUExPWUVFIiwiaWF0IjoxNzIyOTM2NTgxLCJleHAiOjE3MjM1NDEzODF9.bHeup8lKMk-jxg7fPuGfFWCvX_DGpOTYV3_vk-CmSlw', 2, '2024-08-13 16:29:41', 0, '2024-08-06 09:29:41', '2024-08-06 09:29:41'),
 (531, 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJuZ3V5ZW5xdWFuZ2FuaCIsInBob25lIjoiMDM2NTE1MTgyMiIsInJvbGUiOiJST0xFX0VNUExPWUVFIiwiaWF0IjoxNzIyOTQ3NDUxLCJleHAiOjE3MjI5NDgwNTF9.nFEdpbXTF0tUkGwyB8DcIDtotql2UBxIxvWTifMPH9s', '2024-08-06 19:40:51', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJuZ3V5ZW5xdWFuZ2FuaCIsInBob25lIjoiMDM2NTE1MTgyMiIsInJvbGUiOiJST0xFX0VNUExPWUVFIiwiaWF0IjoxNzIyOTQ3NDUxLCJleHAiOjE3MjM1NTIyNTF9.vMzV_eI2Nf0Gezi8VaHIOCJtvRbAcJfamr3z3O6nF3U', 2, '2024-08-13 19:30:51', 0, '2024-08-06 12:30:51', '2024-08-06 12:30:51'),
-(562, 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJuZ3V5ZW5xdWFuZ2FuaCIsInBob25lIjoiMDM2NDEwMDE5NiIsInJvbGUiOiJST0xFX01BTkFHRVIiLCJpYXQiOjE3MjMxOTYwMTQsImV4cCI6MTcyMzE5NjYxNH0.auETF9FIcJ_ZlEJHN10LRGgTMEeh9WK2yBOwEREV5xM', '2024-08-09 16:43:34', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJuZ3V5ZW5xdWFuZ2FuaCIsInBob25lIjoiMDM2NDEwMDE5NiIsInJvbGUiOiJST0xFX01BTkFHRVIiLCJpYXQiOjE3MjMxOTYwMTQsImV4cCI6MTcyMzgwMDgxNH0.oKmyNoGvgKqoyhmxzkgEOjquebsg8tDly1w5MVL88PU', 1, '2024-08-16 16:33:34', 0, '2024-08-09 09:33:34', '2024-08-09 09:33:34'),
-(563, 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJuZ3V5ZW5xdWFuZ2FuaCIsInBob25lIjoiMDM2NDEwMDE5NiIsInJvbGUiOiJST0xFX01BTkFHRVIiLCJpYXQiOjE3MjMxOTcyMTcsImV4cCI6MTcyMzE5NzgxN30.BLvBF6TXHnTv87BddSvj2LDZ7Cvdpg-v6JKrTCxgHLA', '2024-08-09 17:03:37', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJuZ3V5ZW5xdWFuZ2FuaCIsInBob25lIjoiMDM2NDEwMDE5NiIsInJvbGUiOiJST0xFX01BTkFHRVIiLCJpYXQiOjE3MjMxOTcyMTcsImV4cCI6MTcyMzgwMjAxN30.tIftrghC80d-fsN8s1Udd1cx_0mT9_QrTS49kQ3v5YQ', 1, '2024-09-08 16:53:37', 0, '2024-08-09 09:43:47', '2024-08-09 09:53:37');
+(577, 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJuZ3V5ZW5xdWFuZ2FuaCIsInBob25lIjoiMDM2NDEwMDE5NiIsInJvbGUiOiJST0xFX01BTkFHRVIiLCJpYXQiOjE3MjMyMTE1MTAsImV4cCI6MTcyMzIxMjExMH0.GUAeweFS790CTOVTcFgZZ5crYK3neXvaplIwM654iYw', '2024-08-09 21:01:50', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJuZ3V5ZW5xdWFuZ2FuaCIsInBob25lIjoiMDM2NDEwMDE5NiIsInJvbGUiOiJST0xFX01BTkFHRVIiLCJpYXQiOjE3MjMyMTE1MTAsImV4cCI6MTcyMzgxNjMxMH0.hanp_CHk2r93PSRxRrD22wjqsI0quEiVhfYUyM7L28U', 1, '2024-08-16 20:51:50', 0, '2024-08-09 13:51:50', '2024-08-09 13:51:50'),
+(578, 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJuZ3V5ZW5xdWFuZ2FuaCIsInBob25lIjoiMDM2NDEwMDE5NiIsInJvbGUiOiJST0xFX01BTkFHRVIiLCJpYXQiOjE3MjMyMTIyMjksImV4cCI6MTcyMzIxMjgyOX0.1-6tyhFGyThBiwFw9WX-y4oJrHHso7faRxqduzBPxIg', '2024-08-09 21:13:49', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJuZ3V5ZW5xdWFuZ2FuaCIsInBob25lIjoiMDM2NDEwMDE5NiIsInJvbGUiOiJST0xFX01BTkFHRVIiLCJpYXQiOjE3MjMyMTIyMjksImV4cCI6MTcyMzgxNzAyOX0.r-fk7xEtyjfCuA5XWOrolWR5jylHbWcTLexwO0CxdFg', 1, '2024-09-08 21:03:49', 0, '2024-08-09 13:53:58', '2024-08-09 14:03:49');
 
 -- --------------------------------------------------------
 
@@ -2587,7 +2609,7 @@ INSERT INTO `products_detail` (`id`, `product_id`, `code`, `color_id`, `size`, `
 (697, 18, 'DWCT00431PE32SB_BL-S', 4, 'SIZE_S', 999, b'1', '2024-05-14 10:47:45', '2024-05-16 12:28:59'),
 (698, 18, 'DWCT00431PE32SB_BL-M', 4, 'SIZE_M', 0, b'1', '2024-05-14 10:47:45', '2024-05-16 12:28:59'),
 (699, 18, 'DWCT00431PE32SB_BL-L', 4, 'SIZE_L', 999, b'1', '2024-05-14 10:47:45', '2024-05-16 12:28:59'),
-(700, 18, 'DWCT00431PE32SB_BL-XL', 4, 'SIZE_XL', 996, b'1', '2024-05-14 10:47:45', '2024-08-08 15:38:12'),
+(700, 18, 'DWCT00431PE32SB_BL-XL', 4, 'SIZE_XL', 997, b'1', '2024-05-14 10:47:45', '2024-08-09 13:54:05'),
 (701, 18, 'DWCT00431PE32SB_WH-S', 40, 'SIZE_S', 999, b'1', '2024-05-14 10:47:45', '2024-05-16 12:28:59'),
 (702, 18, 'DWCT00431PE32SB_WH-M', 40, 'SIZE_M', 999, b'1', '2024-05-14 10:47:45', '2024-05-16 12:28:59'),
 (703, 18, 'DWCT00431PE32SB_WH-L', 40, 'SIZE_L', 998, b'1', '2024-05-14 10:47:45', '2024-08-08 15:24:14'),
@@ -2837,25 +2859,25 @@ ALTER TABLE `imgs_product`
 -- AUTO_INCREMENT cho bảng `invoices`
 --
 ALTER TABLE `invoices`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=237;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=239;
 
 --
 -- AUTO_INCREMENT cho bảng `invoices_detail`
 --
 ALTER TABLE `invoices_detail`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=654;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=658;
 
 --
 -- AUTO_INCREMENT cho bảng `invoices_history`
 --
 ALTER TABLE `invoices_history`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=969;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=985;
 
 --
 -- AUTO_INCREMENT cho bảng `jwt_tokens`
 --
 ALTER TABLE `jwt_tokens`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=564;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=579;
 
 --
 -- AUTO_INCREMENT cho bảng `products`

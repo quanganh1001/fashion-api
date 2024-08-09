@@ -191,46 +191,7 @@ public class InvoiceServiceImpl implements InvoiceService {
 
     }
 
-    private void checkValidStatus(Invoice currentInvoice, InvoiceStatusEnum status) {
-        // CANCEL or NEW cannot update to DELIVERING,SUCCESS,RETURN
-        if ((currentInvoice.getInvoiceStatus() == InvoiceStatusEnum.CANCEL
-                || currentInvoice.getInvoiceStatus() == InvoiceStatusEnum.NEW)
-                && status.getValue() >= 4) {
-            throw new BadRequestException("Status " + currentInvoice.getInvoiceStatus() + " cannot update to " + status);
-        }
 
-        // ORDER_CREATED cannot update to SUCCESS,RETURN
-        if (currentInvoice.getInvoiceStatus() == InvoiceStatusEnum.ORDER_CREATED
-                && status.getValue() >= 5) {
-            throw new BadRequestException("Status " + currentInvoice.getInvoiceStatus() + " cannot update to " + status);
-        }
-
-        // DELIVERING cannot update to CANCEL,ORDER_CREATED,NEW
-        if (currentInvoice.getInvoiceStatus() == InvoiceStatusEnum.DELIVERING
-                && status.getValue() <= 3) {
-            throw new BadRequestException("Status " + currentInvoice.getInvoiceStatus() + " cannot update to " + status);
-        }
-
-        // SUCCESS cannot update status
-        if (currentInvoice.getInvoiceStatus() == InvoiceStatusEnum.SUCCESS
-                && status.getValue() != 6) {
-            throw new BadRequestException("Status " + currentInvoice.getInvoiceStatus() + " cannot update to " + status);
-        }
-
-        // PROCESS cannot update status
-        if (currentInvoice.getInvoiceStatus() == InvoiceStatusEnum.PROCESS
-                && status.getValue() >= 4) {
-            throw new BadRequestException("Status " + currentInvoice.getInvoiceStatus() + " cannot update to " + status);
-        }
-
-        // RETURN cannot update status
-        if (currentInvoice.getInvoiceStatus() == InvoiceStatusEnum.RETURN
-                && status.getValue() != 6) {
-            throw new BadRequestException("Status " + currentInvoice.getInvoiceStatus() + " cannot update to " + status);
-        }
-
-
-    }
 
     @Override
     public InvoiceRes updateInvoice(Long invoiceId, UpdateInvoiceDto dto) {
@@ -267,6 +228,27 @@ public class InvoiceServiceImpl implements InvoiceService {
 
         Invoice invoice = invoiceRepo.save(invoiceMapper.updateInvoiceToInvoice(dto, currentInvoice));
         return invoiceMapper.invoiceToInvoiceRes(invoice);
+    }
+
+    @Override
+    public PageInvoiceRes viewPurchasedOrders(int page,int limit) {
+        if (page < 0) {
+            page = 0;
+        }
+        Account account = accountService.getAccountFromAuthentication();
+
+        Pageable pageable = PageRequest.of(page, limit);
+        System.out.println(account);
+        Page<Invoice> invoicesPage = invoiceRepo.findAllByPhoneOrderByCreatedAtDesc(account.getPhone(),pageable);
+        System.out.println(invoicesPage.getContent());
+        List<InvoiceRes> invoiceRes = invoiceMapper.toResList(invoicesPage.getContent());
+
+        return PageInvoiceRes.builder()
+                .invoices(invoiceRes)
+                .currentPage(page+1)
+                .totalPages(invoicesPage.getTotalPages())
+                .totalItems(invoicesPage.getTotalElements())
+                .build();
     }
 
     private void updateDateTime(Invoice currentInvoice, int value) {
@@ -314,4 +296,44 @@ public class InvoiceServiceImpl implements InvoiceService {
         }
     };
 
+    private void checkValidStatus(Invoice currentInvoice, InvoiceStatusEnum status) {
+        // CANCEL or NEW cannot update to DELIVERING,SUCCESS,RETURN
+        if ((currentInvoice.getInvoiceStatus() == InvoiceStatusEnum.CANCEL
+                || currentInvoice.getInvoiceStatus() == InvoiceStatusEnum.NEW)
+                && status.getValue() >= 4) {
+            throw new BadRequestException("Status " + currentInvoice.getInvoiceStatus() + " cannot update to " + status);
+        }
+
+        // ORDER_CREATED cannot update to SUCCESS,RETURN
+        if (currentInvoice.getInvoiceStatus() == InvoiceStatusEnum.ORDER_CREATED
+                && status.getValue() >= 5) {
+            throw new BadRequestException("Status " + currentInvoice.getInvoiceStatus() + " cannot update to " + status);
+        }
+
+        // DELIVERING cannot update to CANCEL,ORDER_CREATED,NEW
+        if (currentInvoice.getInvoiceStatus() == InvoiceStatusEnum.DELIVERING
+                && status.getValue() <= 3) {
+            throw new BadRequestException("Status " + currentInvoice.getInvoiceStatus() + " cannot update to " + status);
+        }
+
+        // SUCCESS cannot update status
+        if (currentInvoice.getInvoiceStatus() == InvoiceStatusEnum.SUCCESS
+                && status.getValue() != 6) {
+            throw new BadRequestException("Status " + currentInvoice.getInvoiceStatus() + " cannot update to " + status);
+        }
+
+        // PROCESS cannot update status
+        if (currentInvoice.getInvoiceStatus() == InvoiceStatusEnum.PROCESS
+                && status.getValue() >= 4) {
+            throw new BadRequestException("Status " + currentInvoice.getInvoiceStatus() + " cannot update to " + status);
+        }
+
+        // RETURN cannot update status
+        if (currentInvoice.getInvoiceStatus() == InvoiceStatusEnum.RETURN
+                && status.getValue() != 6) {
+            throw new BadRequestException("Status " + currentInvoice.getInvoiceStatus() + " cannot update to " + status);
+        }
+
+
+    }
 }

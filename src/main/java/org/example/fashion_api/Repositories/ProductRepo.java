@@ -38,7 +38,7 @@ public interface ProductRepo extends JpaRepository<Product,Long> {
             true)
     List<Product> findAllProductByKey(@Param("keyword") String keyword);
 
-    @Query(value = "SELECT * from products WHERE discount_price > 0 ",nativeQuery = true)
+    @Query(value = "SELECT * from products WHERE discount_price > 0 AND is_activated = true",nativeQuery = true)
     List<Product> findAllSale();
 
     List<Product> findAllByCategoryIdAndIsActivatedTrue(Long catId);

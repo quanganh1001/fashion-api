@@ -185,8 +185,8 @@ public class AccountServiceImpl implements AccountService {
         // check exist
         if (!Objects.equals(account.getEmail(), dto.getEmail()) && accountRepo.existsByEmail(dto.getEmail())) {
             throw new AlreadyExistException("Email");
-        } else if (!Objects.equals(account.getPhone(), dto.getPhone()) && accountRepo.existsByPhone(dto.getPhone())) {
-            throw new AlreadyExistException("Phone");
+        } else if (!Objects.equals(account.getPhone(), dto.getPhone())) {
+            throw new BadRequestException("Can not change Phone");
         }
 
         accountRepo.save(accountMapper.accountUpdateDtoToAccount(dto, account));

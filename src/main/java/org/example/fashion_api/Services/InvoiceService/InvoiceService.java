@@ -4,6 +4,9 @@ import jakarta.servlet.http.HttpServletRequest;
 import org.example.fashion_api.Enum.InvoiceStatusEnum;
 import org.example.fashion_api.Models.Invoices.*;
 import org.mapstruct.MappingTarget;
+import org.springframework.data.domain.Page;
+
+import java.util.List;
 
 public interface InvoiceService {
 
@@ -24,4 +27,6 @@ public interface InvoiceService {
     void updateStatus(Long invoiceId, InvoiceStatusEnum status);
 
     InvoiceRes updateInvoice(Long invoiceId, UpdateInvoiceDto dto);
+
+    PageInvoiceRes viewPurchasedOrders(int page,int limit);
 }

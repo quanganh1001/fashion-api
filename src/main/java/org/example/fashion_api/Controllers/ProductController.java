@@ -120,13 +120,7 @@ public class ProductController {
         return ResponseEntity.ok(productService.selectListProducts(selected));
     }
 
-    @Operation(summary = "Get best selling products by date")
-    @PreAuthorize("hasAnyRole('MANAGER')")
-    @GetMapping("/selectByDate")
-    public ResponseEntity<List<TopProductStored>> selectTopProduct(@RequestParam LocalDate startDate,
-                                                                   @RequestParam LocalDate endDate) throws JsonProcessingException {
-        return ResponseEntity.ok(storedService.findTopProduct(startDate,endDate));
-    }
+
 
 
 }

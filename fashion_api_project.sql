@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th8 08, 2024 lúc 07:14 PM
+-- Thời gian đã tạo: Th8 09, 2024 lúc 11:55 AM
 -- Phiên bản máy phục vụ: 10.4.32-MariaDB
 -- Phiên bản PHP: 8.2.12
 
@@ -27,6 +27,41 @@ DELIMITER $$
 --
 -- Thủ tục
 --
+CREATE DEFINER=`root`@`localhost` PROCEDURE `GetSalesSent` (IN `startDate` DATE, IN `endDate` DATE)   BEGIN
+    SELECT
+        FLOOR(RAND() * 1000000000) AS `id`,
+        SUM(`id`.`total_price`) AS `total_sales`,
+        COUNT(DISTINCT `i`.`id`) AS `total_invoices`,
+        `i`.`confirmation_date` AS `date`,
+        `i`.`created_at` AS `created_at`,
+        `i`.`updated_at` AS `updated_at`
+    FROM
+        `invoices_detail` `id`
+        JOIN `invoices` `i`
+        ON `id`.`invoice_id` = `i`.`id`
+    WHERE
+        `i`.`confirmation_date` IS NOT NULL
+        AND `i`.`confirmation_date` BETWEEN startDate AND endDate;
+    
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `GetSalesSuccess` (IN `startDate` DATE, IN `endDate` DATE)   BEGIN
+    SELECT
+        FLOOR(RAND() * 1000000000) AS `id`,
+        SUM(`id`.`total_price`) AS `total_sales`,
+        COUNT(DISTINCT `i`.`id`) AS `total_invoices`,
+        `i`.`successful_date` AS `date`,
+        `i`.`created_at` AS `created_at`,
+        `i`.`updated_at` AS `updated_at`
+    FROM
+        `invoices_detail` `id`
+        JOIN `invoices` `i`
+        ON `id`.`invoice_id` = `i`.`id`
+    WHERE
+        `i`.`successful_date` IS NOT NULL
+        AND `i`.`successful_date` BETWEEN startDate AND endDate;
+END$$
+
 CREATE DEFINER=`root`@`localhost` PROCEDURE `GetTopProduct` (IN `startDate` DATE, IN `endDate` DATE)   BEGIN
 SELECT
     FLOOR(RAND() * 1000000000) AS `id`,
@@ -1775,8 +1810,8 @@ CREATE TABLE `jwt_tokens` (
 INSERT INTO `jwt_tokens` (`id`, `token`, `expiration_date`, `refresh_token`, `account_id`, `refresh_expiration_date`, `revoked`, `created_at`, `updated_at`) VALUES
 (527, 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJuZ3V5ZW5xdWFuZ2FuaCIsInBob25lIjoiMDM2NTE1MTgyMiIsInJvbGUiOiJST0xFX0VNUExPWUVFIiwiaWF0IjoxNzIyOTM2NTgxLCJleHAiOjE3MjI5MzcxODF9.JHDr7u1wF5VRb5m8MdSzW-HqnXyZSltKDUjJ-uH-XW4', '2024-08-06 16:39:41', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJuZ3V5ZW5xdWFuZ2FuaCIsInBob25lIjoiMDM2NTE1MTgyMiIsInJvbGUiOiJST0xFX0VNUExPWUVFIiwiaWF0IjoxNzIyOTM2NTgxLCJleHAiOjE3MjM1NDEzODF9.bHeup8lKMk-jxg7fPuGfFWCvX_DGpOTYV3_vk-CmSlw', 2, '2024-08-13 16:29:41', 0, '2024-08-06 09:29:41', '2024-08-06 09:29:41'),
 (531, 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJuZ3V5ZW5xdWFuZ2FuaCIsInBob25lIjoiMDM2NTE1MTgyMiIsInJvbGUiOiJST0xFX0VNUExPWUVFIiwiaWF0IjoxNzIyOTQ3NDUxLCJleHAiOjE3MjI5NDgwNTF9.nFEdpbXTF0tUkGwyB8DcIDtotql2UBxIxvWTifMPH9s', '2024-08-06 19:40:51', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJuZ3V5ZW5xdWFuZ2FuaCIsInBob25lIjoiMDM2NTE1MTgyMiIsInJvbGUiOiJST0xFX0VNUExPWUVFIiwiaWF0IjoxNzIyOTQ3NDUxLCJleHAiOjE3MjM1NTIyNTF9.vMzV_eI2Nf0Gezi8VaHIOCJtvRbAcJfamr3z3O6nF3U', 2, '2024-08-13 19:30:51', 0, '2024-08-06 12:30:51', '2024-08-06 12:30:51'),
-(552, 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJuZ3V5ZW5xdWFuZ2FuaCIsInBob25lIjoiMDM2NDEwMDE5NiIsInJvbGUiOiJST0xFX01BTkFHRVIiLCJpYXQiOjE3MjMxMzYyMTEsImV4cCI6MTcyMzEzNjgxMX0.5r13EOiL_gXS7phdtrp2hHEU0FZubdso9e_xYbK_zag', '2024-08-09 00:06:51', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJuZ3V5ZW5xdWFuZ2FuaCIsInBob25lIjoiMDM2NDEwMDE5NiIsInJvbGUiOiJST0xFX01BTkFHRVIiLCJpYXQiOjE3MjMxMzYyMTEsImV4cCI6MTcyMzc0MTAxMX0.jdC_meBKeAP6iW_LjagiDxXe6AVYRJas8F685Usr0Is', 1, '2024-09-07 23:56:51', 0, '2024-08-08 16:07:08', '2024-08-08 16:56:51'),
-(553, 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJuZ3V5ZW5xdWFuZ2FuaCIsInBob25lIjoiMDM2NDEwMDE5NiIsInJvbGUiOiJST0xFX01BTkFHRVIiLCJpYXQiOjE3MjMxMzY4NjEsImV4cCI6MTcyMzEzNzQ2MX0.Mff4rFqSEKnLYFUAJRyEBP5PYT1648fRAEV6GK9kHJU', '2024-08-09 00:17:41', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJuZ3V5ZW5xdWFuZ2FuaCIsInBob25lIjoiMDM2NDEwMDE5NiIsInJvbGUiOiJST0xFX01BTkFHRVIiLCJpYXQiOjE3MjMxMzY4NjEsImV4cCI6MTcyMzc0MTY2MX0.LWpOkgPf2UJIhFzZzTQc01ej3W6oCLkiHn1Bb27Ws3I', 1, '2024-08-16 00:07:41', 0, '2024-08-08 17:07:41', '2024-08-08 17:07:41');
+(562, 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJuZ3V5ZW5xdWFuZ2FuaCIsInBob25lIjoiMDM2NDEwMDE5NiIsInJvbGUiOiJST0xFX01BTkFHRVIiLCJpYXQiOjE3MjMxOTYwMTQsImV4cCI6MTcyMzE5NjYxNH0.auETF9FIcJ_ZlEJHN10LRGgTMEeh9WK2yBOwEREV5xM', '2024-08-09 16:43:34', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJuZ3V5ZW5xdWFuZ2FuaCIsInBob25lIjoiMDM2NDEwMDE5NiIsInJvbGUiOiJST0xFX01BTkFHRVIiLCJpYXQiOjE3MjMxOTYwMTQsImV4cCI6MTcyMzgwMDgxNH0.oKmyNoGvgKqoyhmxzkgEOjquebsg8tDly1w5MVL88PU', 1, '2024-08-16 16:33:34', 0, '2024-08-09 09:33:34', '2024-08-09 09:33:34'),
+(563, 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJuZ3V5ZW5xdWFuZ2FuaCIsInBob25lIjoiMDM2NDEwMDE5NiIsInJvbGUiOiJST0xFX01BTkFHRVIiLCJpYXQiOjE3MjMxOTcyMTcsImV4cCI6MTcyMzE5NzgxN30.BLvBF6TXHnTv87BddSvj2LDZ7Cvdpg-v6JKrTCxgHLA', '2024-08-09 17:03:37', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJuZ3V5ZW5xdWFuZ2FuaCIsInBob25lIjoiMDM2NDEwMDE5NiIsInJvbGUiOiJST0xFX01BTkFHRVIiLCJpYXQiOjE3MjMxOTcyMTcsImV4cCI6MTcyMzgwMjAxN30.tIftrghC80d-fsN8s1Udd1cx_0mT9_QrTS49kQ3v5YQ', 1, '2024-09-08 16:53:37', 0, '2024-08-09 09:43:47', '2024-08-09 09:53:37');
 
 -- --------------------------------------------------------
 
@@ -2820,7 +2855,7 @@ ALTER TABLE `invoices_history`
 -- AUTO_INCREMENT cho bảng `jwt_tokens`
 --
 ALTER TABLE `jwt_tokens`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=554;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=564;
 
 --
 -- AUTO_INCREMENT cho bảng `products`

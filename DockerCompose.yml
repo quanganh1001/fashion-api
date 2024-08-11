@@ -2,7 +2,7 @@ version: '2.23.3'
 services:
   mysql8-container:
     container_name: mysql8-container-api
-    image: mysql:8.0.2
+    image: mariadb:10.4.28
     environment:
       MYSQL_ROOT_PASSWORD: quanganh123
     ports:
@@ -12,17 +12,17 @@ services:
     networks:
       - fashion-api-network
 
-#  phpmyadmin8-container:
-#    image: phpmyadmin/phpmyadmin:latest
-#    container_name: phpmyadmin8-container-api
-#    depends_on:
-#      - mysql8-container
-#    ports:
-#      - "8100:80"
-#    environment:
-#      PMA_HOST: mysql8-container-api
-#    networks:
-#      - fashion-api-network
+  phpmyadmin8-container:
+    image: phpmyadmin/phpmyadmin:latest
+    container_name: phpmyadmin8-container-api
+    depends_on:
+      - mysql8-container
+    ports:
+      - "8100:80"
+    environment:
+      PMA_HOST: mysql8-container-api
+    networks:
+      - fashion-api-network
 
   redis-container:
     image: docker.io/redis:7.2.3

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th8 09, 2024 lúc 04:12 PM
+-- Thời gian đã tạo: Th8 11, 2024 lúc 09:00 AM
 -- Phiên bản máy phục vụ: 10.4.32-MariaDB
 -- Phiên bản PHP: 8.2.12
 
@@ -27,6 +27,7 @@ DELIMITER $$
 --
 -- Thủ tục
 --
+DROP PROCEDURE IF EXISTS `GetSalesSent`$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `GetSalesSent` (IN `startDate` DATE, IN `endDate` DATE)   BEGIN
     SELECT
         FLOOR(RAND() * 1000000000) AS `id`,
@@ -45,6 +46,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `GetSalesSent` (IN `startDate` DATE,
     
 END$$
 
+DROP PROCEDURE IF EXISTS `GetSalesSuccess`$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `GetSalesSuccess` (IN `startDate` DATE, IN `endDate` DATE)   BEGIN
     SELECT
         FLOOR(RAND() * 1000000000) AS `id`,
@@ -62,6 +64,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `GetSalesSuccess` (IN `startDate` DA
         AND `i`.`successful_date` BETWEEN startDate AND endDate;
 END$$
 
+DROP PROCEDURE IF EXISTS `GetTopProduct`$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `GetTopProduct` (IN `startDate` DATE, IN `endDate` DATE)   BEGIN
 SELECT
     FLOOR(RAND() * 1000000000) AS `id`,
@@ -120,6 +123,7 @@ DELIMITER ;
 -- Cấu trúc bảng cho bảng `accounts`
 --
 
+DROP TABLE IF EXISTS `accounts`;
 CREATE TABLE `accounts` (
   `id` int(11) NOT NULL,
   `password` varchar(255) NOT NULL,
@@ -152,6 +156,7 @@ INSERT INTO `accounts` (`id`, `password`, `name`, `email`, `phone`, `address`, `
 -- Cấu trúc bảng cho bảng `categories`
 --
 
+DROP TABLE IF EXISTS `categories`;
 CREATE TABLE `categories` (
   `id` int(11) NOT NULL,
   `category_code` varchar(10) NOT NULL,
@@ -216,6 +221,7 @@ INSERT INTO `categories` (`id`, `category_code`, `cat_name`, `parent_id`, `cat_b
 -- Cấu trúc bảng cho bảng `colors`
 --
 
+DROP TABLE IF EXISTS `colors`;
 CREATE TABLE `colors` (
   `id` int(11) NOT NULL,
   `color_code` varchar(5) NOT NULL,
@@ -277,6 +283,7 @@ INSERT INTO `colors` (`id`, `color_code`, `name`, `created_at`, `updated_at`) VA
 -- Cấu trúc bảng cho bảng `customer_emails`
 --
 
+DROP TABLE IF EXISTS `customer_emails`;
 CREATE TABLE `customer_emails` (
   `id` int(11) NOT NULL,
   `email` varchar(255) NOT NULL,
@@ -301,6 +308,7 @@ INSERT INTO `customer_emails` (`id`, `email`, `created_at`, `updated_at`) VALUES
 -- Cấu trúc bảng cho bảng `feedback_customers`
 --
 
+DROP TABLE IF EXISTS `feedback_customers`;
 CREATE TABLE `feedback_customers` (
   `id` int(11) NOT NULL,
   `name` varchar(255) NOT NULL,
@@ -337,6 +345,7 @@ INSERT INTO `feedback_customers` (`id`, `name`, `email`, `feedback`, `is_readed`
 -- Cấu trúc bảng cho bảng `imgs_product`
 --
 
+DROP TABLE IF EXISTS `imgs_product`;
 CREATE TABLE `imgs_product` (
   `id` int(11) NOT NULL,
   `product_id` int(11) DEFAULT NULL,
@@ -848,6 +857,7 @@ INSERT INTO `imgs_product` (`id`, `product_id`, `file_img`, `created_at`, `updat
 -- Cấu trúc bảng cho bảng `invoices`
 --
 
+DROP TABLE IF EXISTS `invoices`;
 CREATE TABLE `invoices` (
   `id` int(11) NOT NULL,
   `invoice_code` varchar(8) NOT NULL,
@@ -1022,6 +1032,7 @@ INSERT INTO `invoices` (`id`, `invoice_code`, `name`, `phone`, `address`, `note`
 --
 -- Bẫy `invoices`
 --
+DROP TRIGGER IF EXISTS `insert_history`;
 DELIMITER $$
 CREATE TRIGGER `insert_history` AFTER INSERT ON `invoices` FOR EACH ROW BEGIN
     DECLARE content TEXT;
@@ -1046,6 +1057,7 @@ CREATE TRIGGER `insert_history` AFTER INSERT ON `invoices` FOR EACH ROW BEGIN
 END
 $$
 DELIMITER ;
+DROP TRIGGER IF EXISTS `update_history`;
 DELIMITER $$
 CREATE TRIGGER `update_history` AFTER UPDATE ON `invoices` FOR EACH ROW BEGIN
 	DECLARE content TEXT;
@@ -1121,6 +1133,7 @@ DELIMITER ;
 -- Cấu trúc bảng cho bảng `invoices_detail`
 --
 
+DROP TABLE IF EXISTS `invoices_detail`;
 CREATE TABLE `invoices_detail` (
   `id` int(11) NOT NULL,
   `invoice_id` int(11) DEFAULT NULL,
@@ -1363,6 +1376,7 @@ INSERT INTO `invoices_detail` (`id`, `invoice_id`, `product_detail_id`, `price`,
 --
 -- Bẫy `invoices_detail`
 --
+DROP TRIGGER IF EXISTS `delete_detail_history`;
 DELIMITER $$
 CREATE TRIGGER `delete_detail_history` BEFORE DELETE ON `invoices_detail` FOR EACH ROW BEGIN
 	DECLARE content VARCHAR(255);
@@ -1377,6 +1391,7 @@ CREATE TRIGGER `delete_detail_history` BEFORE DELETE ON `invoices_detail` FOR EA
 END
 $$
 DELIMITER ;
+DROP TRIGGER IF EXISTS `delete_invoice_detail`;
 DELIMITER $$
 CREATE TRIGGER `delete_invoice_detail` AFTER DELETE ON `invoices_detail` FOR EACH ROW BEGIN
     UPDATE invoices
@@ -1395,6 +1410,7 @@ CREATE TRIGGER `delete_invoice_detail` AFTER DELETE ON `invoices_detail` FOR EAC
 END
 $$
 DELIMITER ;
+DROP TRIGGER IF EXISTS `insert_detail_history`;
 DELIMITER $$
 CREATE TRIGGER `insert_detail_history` AFTER INSERT ON `invoices_detail` FOR EACH ROW BEGIN
 	DECLARE content VARCHAR(255);
@@ -1410,6 +1426,7 @@ SET content = CONCAT(IFNULL(@current_user, 'Hệ thống'), ' đã thêm sản p
 END
 $$
 DELIMITER ;
+DROP TRIGGER IF EXISTS `insert_invoice_detail`;
 DELIMITER $$
 CREATE TRIGGER `insert_invoice_detail` AFTER INSERT ON `invoices_detail` FOR EACH ROW BEGIN
     UPDATE invoices
@@ -1426,6 +1443,7 @@ CREATE TRIGGER `insert_invoice_detail` AFTER INSERT ON `invoices_detail` FOR EAC
 END
 $$
 DELIMITER ;
+DROP TRIGGER IF EXISTS `update_invoice_detail`;
 DELIMITER $$
 CREATE TRIGGER `update_invoice_detail` AFTER UPDATE ON `invoices_detail` FOR EACH ROW BEGIN
     UPDATE invoices
@@ -1443,6 +1461,7 @@ CREATE TRIGGER `update_invoice_detail` AFTER UPDATE ON `invoices_detail` FOR EAC
 END
 $$
 DELIMITER ;
+DROP TRIGGER IF EXISTS `update_quantity_history`;
 DELIMITER $$
 CREATE TRIGGER `update_quantity_history` BEFORE UPDATE ON `invoices_detail` FOR EACH ROW BEGIN
 	DECLARE content VARCHAR(255);
@@ -1466,6 +1485,7 @@ DELIMITER ;
 -- Cấu trúc bảng cho bảng `invoices_history`
 --
 
+DROP TABLE IF EXISTS `invoices_history`;
 CREATE TABLE `invoices_history` (
   `id` int(11) NOT NULL,
   `invoice_id` int(11) NOT NULL,
@@ -1813,6 +1833,7 @@ INSERT INTO `invoices_history` (`id`, `invoice_id`, `content`, `created_at`, `up
 -- Cấu trúc bảng cho bảng `jwt_tokens`
 --
 
+DROP TABLE IF EXISTS `jwt_tokens`;
 CREATE TABLE `jwt_tokens` (
   `id` int(11) NOT NULL,
   `token` varchar(255) NOT NULL,
@@ -1832,8 +1853,8 @@ CREATE TABLE `jwt_tokens` (
 INSERT INTO `jwt_tokens` (`id`, `token`, `expiration_date`, `refresh_token`, `account_id`, `refresh_expiration_date`, `revoked`, `created_at`, `updated_at`) VALUES
 (527, 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJuZ3V5ZW5xdWFuZ2FuaCIsInBob25lIjoiMDM2NTE1MTgyMiIsInJvbGUiOiJST0xFX0VNUExPWUVFIiwiaWF0IjoxNzIyOTM2NTgxLCJleHAiOjE3MjI5MzcxODF9.JHDr7u1wF5VRb5m8MdSzW-HqnXyZSltKDUjJ-uH-XW4', '2024-08-06 16:39:41', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJuZ3V5ZW5xdWFuZ2FuaCIsInBob25lIjoiMDM2NTE1MTgyMiIsInJvbGUiOiJST0xFX0VNUExPWUVFIiwiaWF0IjoxNzIyOTM2NTgxLCJleHAiOjE3MjM1NDEzODF9.bHeup8lKMk-jxg7fPuGfFWCvX_DGpOTYV3_vk-CmSlw', 2, '2024-08-13 16:29:41', 0, '2024-08-06 09:29:41', '2024-08-06 09:29:41'),
 (531, 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJuZ3V5ZW5xdWFuZ2FuaCIsInBob25lIjoiMDM2NTE1MTgyMiIsInJvbGUiOiJST0xFX0VNUExPWUVFIiwiaWF0IjoxNzIyOTQ3NDUxLCJleHAiOjE3MjI5NDgwNTF9.nFEdpbXTF0tUkGwyB8DcIDtotql2UBxIxvWTifMPH9s', '2024-08-06 19:40:51', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJuZ3V5ZW5xdWFuZ2FuaCIsInBob25lIjoiMDM2NTE1MTgyMiIsInJvbGUiOiJST0xFX0VNUExPWUVFIiwiaWF0IjoxNzIyOTQ3NDUxLCJleHAiOjE3MjM1NTIyNTF9.vMzV_eI2Nf0Gezi8VaHIOCJtvRbAcJfamr3z3O6nF3U', 2, '2024-08-13 19:30:51', 0, '2024-08-06 12:30:51', '2024-08-06 12:30:51'),
-(577, 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJuZ3V5ZW5xdWFuZ2FuaCIsInBob25lIjoiMDM2NDEwMDE5NiIsInJvbGUiOiJST0xFX01BTkFHRVIiLCJpYXQiOjE3MjMyMTE1MTAsImV4cCI6MTcyMzIxMjExMH0.GUAeweFS790CTOVTcFgZZ5crYK3neXvaplIwM654iYw', '2024-08-09 21:01:50', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJuZ3V5ZW5xdWFuZ2FuaCIsInBob25lIjoiMDM2NDEwMDE5NiIsInJvbGUiOiJST0xFX01BTkFHRVIiLCJpYXQiOjE3MjMyMTE1MTAsImV4cCI6MTcyMzgxNjMxMH0.hanp_CHk2r93PSRxRrD22wjqsI0quEiVhfYUyM7L28U', 1, '2024-08-16 20:51:50', 0, '2024-08-09 13:51:50', '2024-08-09 13:51:50'),
-(578, 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJuZ3V5ZW5xdWFuZ2FuaCIsInBob25lIjoiMDM2NDEwMDE5NiIsInJvbGUiOiJST0xFX01BTkFHRVIiLCJpYXQiOjE3MjMyMTIyMjksImV4cCI6MTcyMzIxMjgyOX0.1-6tyhFGyThBiwFw9WX-y4oJrHHso7faRxqduzBPxIg', '2024-08-09 21:13:49', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJuZ3V5ZW5xdWFuZ2FuaCIsInBob25lIjoiMDM2NDEwMDE5NiIsInJvbGUiOiJST0xFX01BTkFHRVIiLCJpYXQiOjE3MjMyMTIyMjksImV4cCI6MTcyMzgxNzAyOX0.r-fk7xEtyjfCuA5XWOrolWR5jylHbWcTLexwO0CxdFg', 1, '2024-09-08 21:03:49', 0, '2024-08-09 13:53:58', '2024-08-09 14:03:49');
+(578, 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJuZ3V5ZW5xdWFuZ2FuaCIsInBob25lIjoiMDM2NDEwMDE5NiIsInJvbGUiOiJST0xFX01BTkFHRVIiLCJpYXQiOjE3MjMyMTIyMjksImV4cCI6MTcyMzIxMjgyOX0.1-6tyhFGyThBiwFw9WX-y4oJrHHso7faRxqduzBPxIg', '2024-08-09 21:13:49', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJuZ3V5ZW5xdWFuZ2FuaCIsInBob25lIjoiMDM2NDEwMDE5NiIsInJvbGUiOiJST0xFX01BTkFHRVIiLCJpYXQiOjE3MjMyMTIyMjksImV4cCI6MTcyMzgxNzAyOX0.r-fk7xEtyjfCuA5XWOrolWR5jylHbWcTLexwO0CxdFg', 1, '2024-09-08 21:03:49', 0, '2024-08-09 13:53:58', '2024-08-09 14:03:49'),
+(579, 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJuZ3V5ZW5xdWFuZ2FuaCIsInBob25lIjoiMDM2NDEwMDE5NiIsInJvbGUiOiJST0xFX01BTkFHRVIiLCJpYXQiOjE3MjMyMTM0MzYsImV4cCI6MTcyMzIxNDAzNn0.reJU8iT5i5gN2lMfeI3-dIEsjwPGaCtRh9RXdKd566Y', '2024-08-09 21:33:56', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJuZ3V5ZW5xdWFuZ2FuaCIsInBob25lIjoiMDM2NDEwMDE5NiIsInJvbGUiOiJST0xFX01BTkFHRVIiLCJpYXQiOjE3MjMyMTM0MzYsImV4cCI6MTcyMzgxODIzNn0.1CEPw3IYAhQW5g37sOffKnUUgJmL3fJ_zRAJrZ5TmbY', 1, '2024-08-16 21:23:56', 0, '2024-08-09 14:23:56', '2024-08-09 14:23:56');
 
 -- --------------------------------------------------------
 
@@ -1841,6 +1862,7 @@ INSERT INTO `jwt_tokens` (`id`, `token`, `expiration_date`, `refresh_token`, `ac
 -- Cấu trúc bảng cho bảng `products`
 --
 
+DROP TABLE IF EXISTS `products`;
 CREATE TABLE `products` (
   `id` int(11) NOT NULL,
   `product_code` varchar(15) NOT NULL,
@@ -1942,6 +1964,7 @@ INSERT INTO `products` (`id`, `product_code`, `product_name`, `cat_id`, `price`,
 -- Cấu trúc bảng cho bảng `products_detail`
 --
 
+DROP TABLE IF EXISTS `products_detail`;
 CREATE TABLE `products_detail` (
   `id` int(11) NOT NULL,
   `product_id` int(11) DEFAULT NULL,
@@ -2680,6 +2703,7 @@ INSERT INTO `products_detail` (`id`, `product_id`, `code`, `color_id`, `size`, `
 -- Cấu trúc đóng vai cho view `sales_sent_view`
 -- (See below for the actual view)
 --
+DROP VIEW IF EXISTS `sales_sent_view`;
 CREATE TABLE `sales_sent_view` (
 `id` double(17,0)
 ,`total_sales` decimal(41,0)
@@ -2695,6 +2719,7 @@ CREATE TABLE `sales_sent_view` (
 -- Cấu trúc đóng vai cho view `selling_products`
 -- (See below for the actual view)
 --
+DROP VIEW IF EXISTS `selling_products`;
 CREATE TABLE `selling_products` (
 `id` int(11)
 ,`product_name` varchar(100)
@@ -2717,6 +2742,7 @@ CREATE TABLE `selling_products` (
 --
 DROP TABLE IF EXISTS `sales_sent_view`;
 
+DROP VIEW IF EXISTS `sales_sent_view`;
 CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `sales_sent_view`  AS SELECT floor(rand() * 1000000000) AS `id`, sum(`id`.`total_price`) AS `total_sales`, count(distinct `i`.`id`) AS `total_invoices`, `i`.`confirmation_date` AS `confirmation_date`, `i`.`created_at` AS `created_at`, `i`.`updated_at` AS `updated_at` FROM (`invoices_detail` `id` join `invoices` `i` on(`id`.`invoice_id` = `i`.`id`)) WHERE `i`.`confirmation_date` is not null GROUP BY `i`.`confirmation_date` ;
 
 -- --------------------------------------------------------
@@ -2726,6 +2752,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 --
 DROP TABLE IF EXISTS `selling_products`;
 
+DROP VIEW IF EXISTS `selling_products`;
 CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `selling_products`  AS SELECT `p`.`id` AS `id`, `p`.`product_name` AS `product_name`, `p`.`price` AS `price`, `p`.`discount_price` AS `discount_price`, `p`.`discount_percent` AS `discount_percent`, `p`.`total_size` AS `total_size`, `p`.`total_color` AS `total_color`, `p`.`image_background` AS `image_background`, `i`.`created_at` AS `created_at`, `i`.`updated_at` AS `updated_at`, coalesce(sum(`id`.`quantity`),0) AS `total_quantity_sold`, coalesce(sum(`id`.`total_price`),0) AS `total_sales` FROM (((`invoices_detail` `id` left join `products_detail` `pd` on(`id`.`product_detail_id` = `pd`.`id`)) left join `products` `p` on(`pd`.`product_id` = `p`.`id`)) left join `invoices` `i` on(`id`.`invoice_id` = `i`.`id`)) WHERE `i`.`invoice_status` = 'SUCCESS' GROUP BY `p`.`product_name` ;
 
 --
@@ -2877,7 +2904,7 @@ ALTER TABLE `invoices_history`
 -- AUTO_INCREMENT cho bảng `jwt_tokens`
 --
 ALTER TABLE `jwt_tokens`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=579;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=580;
 
 --
 -- AUTO_INCREMENT cho bảng `products`

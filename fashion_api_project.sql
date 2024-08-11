@@ -43,7 +43,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `GetSalesSent` (IN `startDate` DATE,
     WHERE
         `i`.`confirmation_date` IS NOT NULL
         AND `i`.`confirmation_date` BETWEEN startDate AND endDate;
-    
+
 END$$
 
 DROP PROCEDURE IF EXISTS `GetSalesSuccess`$$
@@ -1039,20 +1039,20 @@ CREATE TRIGGER `insert_history` AFTER INSERT ON `invoices` FOR EACH ROW BEGIN
     DECLARE invoice_id INT;
     DECLARE account_name VARCHAR(255);
     DECLARE is_paid_status VARCHAR(55);
-    
+
 	IF NEW.is_paid = 0 THEN
     	SET is_paid_status = 'Chưa thanh toán';
     ELSEIF NEW.is_paid = 1 THEN
         SET is_paid_status = 'Đã thanh toán';
     ELSE
-        SET is_paid_status = 'Giá trị không hợp lệ'; 
+        SET is_paid_status = 'Giá trị không hợp lệ';
     END IF;
-    
+
     SET invoice_id = NEW.id;
-    
+
     SET content = CONCAT(
         IFNULL(@current_user, 'Hệ thống'), ' đã tạo đơn hàng: <br>Mã đơn: ', NEW.invoice_code, ',<br>Tên khách hàng: ', NEW.name, ',<br>Số điện thoại: ', NEW.phone, ',<br>Địa chỉ: ', NEW.address,',<br>Trạng thái thanh toán: ',is_paid_status);
-    
+
     INSERT INTO invoices_history (invoice_id, content) VALUES (invoice_id, content);
 END
 $$
@@ -1066,60 +1066,60 @@ CREATE TRIGGER `update_history` AFTER UPDATE ON `invoices` FOR EACH ROW BEGIN
     DECLARE new_account VARCHAR(25);
     DECLARE new_is_paid_status VARCHAR(55);
     DECLARE old_is_paid_status VARCHAR(55);
-    
+
     SET old_account = (SELECT accounts.name FROM accounts WHERE id = OLD.account_id);
     SET new_account = (SELECT accounts.name FROM accounts WHERE id = NEW.account_id);
     SET invoice_id = NEW.id;
     SET content = "";
-    
+
 	IF NEW.is_paid = 0 THEN
     	SET new_is_paid_status = 'Chưa thanh toán';
     ELSEIF NEW.is_paid = 1 THEN
         SET new_is_paid_status = 'Đã thanh toán';
     ELSE
-        SET new_is_paid_status = 'Giá trị không hợp lệ'; 
+        SET new_is_paid_status = 'Giá trị không hợp lệ';
     END IF;
-    
+
     IF OLD.is_paid = 0 THEN
     	SET old_is_paid_status = 'Chưa thanh toán';
     ELSEIF OLD.is_paid = 1 THEN
         SET old_is_paid_status = 'Đã thanh toán';
     ELSE
-        SET old_is_paid_status = 'Giá trị không hợp lệ'; 
+        SET old_is_paid_status = 'Giá trị không hợp lệ';
     END IF;
-    
+
 	IF NEW.name != OLD.name THEN
         SET content = CONCAT(@current_user , ' đã thay đổi Tên khách hàng: ', OLD.name, ' -> ', NEW.name,'<br>');
     END IF;
-    
+
     IF NEW.phone != OLD.phone THEN
         SET content = CONCAT(content,@current_user ,' đã thay đổi Số điện thoại: ', OLD.phone, ' -> ', NEW.phone,'<br>');
     END IF;
-    
+
     IF NEW.address != OLD.address THEN
         SET content = CONCAT(content,@current_user , ' đã thay đổi Địa chỉ: ', OLD.address, ' -> ', NEW.address,'<br>');
     END IF;
-    
+
     IF NEW.note != OLD.note THEN
         SET content = CONCAT(content,@current_user , ' đã thay đổi Ghi chú: ', OLD.note, ' -> ', NEW.note,'<br>');
     END IF;
-    
+
     IF NEW.invoice_status != OLD.invoice_status THEN
         SET content = CONCAT(content,@current_user , ' đã thay đổi Trạng thái đơn hàng: ', OLD.invoice_status , ' -> ', NEW.invoice_status,'<br>');
     END IF;
-    
+
     IF NEW.account_id != OLD.account_id THEN
         SET content = CONCAT(content,@current_user , ' đã thay đổi nhân viên phụ trách đơn hàng: ', old_account , ' -> ', new_account,'<br>');
     END IF;
-    
+
     IF NEW.shipping_fee != OLD.shipping_fee THEN
     SET content = CONCAT(content,@current_user , ' đã thay đổi Phí ship: ', FORMAT(OLD.shipping_fee, 0), ' VND)', ' -> ', FORMAT(NEW.shipping_fee, 0), ' VND) <br>');
     END IF;
-    
+
     IF NEW.is_paid != OLD.is_paid THEN
     SET content = CONCAT(@current_user , ' đã thay đổi trạng thái thanh toán: ',old_is_paid_status,' -> ',new_is_paid_status,'<br>');
     END IF;
-    
+
     IF content != "" THEN
     INSERT INTO invoices_history (invoice_id,content) VALUES (invoice_id,content);
     END IF;
@@ -1384,7 +1384,7 @@ CREATE TRIGGER `delete_detail_history` BEFORE DELETE ON `invoices_detail` FOR EA
     DECLARE invoice_id VARCHAR(25);
     SET invoice_id = OLD.invoice_id;
     SET product_code = (SELECT products_detail.code FROM products_detail WHERE id = OLD.product_detail_id);
-    
+
     SET content = CONCAT(@current_user, ' đã xóa sản phẩm: ',product_code,' (giá = ',FORMAT(OLD.price, 0),')',',số lượng: ', OLD.quantity);
 
     INSERT INTO invoices_history (invoice_id,content) VALUES (invoice_id,content);
@@ -1401,12 +1401,12 @@ CREATE TRIGGER `delete_invoice_detail` AFTER DELETE ON `invoices_detail` FOR EAC
         WHERE invoice_id = OLD.invoice_id
     )
     WHERE id = OLD.invoice_id;
-    
+
     UPDATE invoices
     SET total_bill = total_price + shipping_fee
     WHERE id = OLD.invoice_id;
-    
-    
+
+
 END
 $$
 DELIMITER ;
@@ -1418,7 +1418,7 @@ CREATE TRIGGER `insert_detail_history` AFTER INSERT ON `invoices_detail` FOR EAC
     DECLARE invoice_id VARCHAR(25);
     SET invoice_id = NEW.invoice_id;
     SET product_code = (SELECT products_detail.code FROM products_detail WHERE id = NEW.product_detail_id);
-    
+
 SET content = CONCAT(IFNULL(@current_user, 'Hệ thống'), ' đã thêm sản phẩm: ', product_code, ' (giá = ', FORMAT(NEW.price, 0), ' VND)');
 
 
@@ -1436,7 +1436,7 @@ CREATE TRIGGER `insert_invoice_detail` AFTER INSERT ON `invoices_detail` FOR EAC
        	WHERE invoice_id = NEW.invoice_id
     )
     WHERE id = NEW.invoice_id;
-    
+
     UPDATE invoices
     SET total_bill = total_price + shipping_fee
     WHERE id = NEW.invoice_id;
@@ -1448,13 +1448,13 @@ DELIMITER $$
 CREATE TRIGGER `update_invoice_detail` AFTER UPDATE ON `invoices_detail` FOR EACH ROW BEGIN
     UPDATE invoices
     	SET total_price = (
-        SELECT 
+        SELECT
         COALESCE(SUM(invoices_detail.total_price),0)
         FROM invoices_detail
         WHERE invoice_id = NEW.invoice_id
     	)
     WHERE id = NEW.invoice_id;
-    
+
     UPDATE invoices
     SET total_bill = total_price + shipping_fee
     WHERE id = NEW.invoice_id;
@@ -1469,10 +1469,10 @@ CREATE TRIGGER `update_quantity_history` BEFORE UPDATE ON `invoices_detail` FOR 
     DECLARE invoice_id VARCHAR(25);
     SET invoice_id = NEW.invoice_id;
     SET product_code = (SELECT products_detail.code FROM products_detail WHERE id = NEW.product_detail_id);
-    
+
 	IF NEW.quantity != OLD.quantity THEN
     SET content = CONCAT( ' đã thay đổi Số lượng (', product_code,') :' , OLD.quantity, ' -> ', NEW.quantity);
-    
+
     INSERT INTO invoices_history (invoice_id,content) VALUES (invoice_id,content);
     END IF;
 END

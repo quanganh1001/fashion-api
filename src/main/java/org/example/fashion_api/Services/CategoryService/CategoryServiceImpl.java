@@ -60,7 +60,20 @@ public class CategoryServiceImpl implements CategoryService {
             throw new AlreadyExistException(updateCategoryDto.getCategoryCode());
         }
 
+        List<CategoryRes> categories = CatDescendants( catId , new ArrayList<>());
+        categories.add(categoryMapper.categoryToCategoryRes(currentCategory));
+        for (CategoryRes category : categories) {
+            if(Objects.equals(category.getId(), catId)){
+                throw new BadRequestException("Không thể chọn danh mục cha là chính nó hoặc danh mục con của nó");
+            }
+        }
+
+
         currentCategory = categoryMapper.updateCategoryDtoToCategory(updateCategoryDto, currentCategory);
+
+        Category catParent = categoryRepo.findById(updateCategoryDto.getCatParent()).orElseThrow(() -> new NotFoundException(updateCategoryDto.getCatParent().toString()));
+
+        currentCategory.setCatParent(catParent);
 
         Category category = categoryRepo.save(currentCategory);
 

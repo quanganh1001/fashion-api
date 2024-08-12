@@ -8,6 +8,7 @@ import org.example.fashion_api.Exception.AlreadyExistException;
 import org.example.fashion_api.Exception.NotFoundException;
 import org.example.fashion_api.Mapper.CategoryMapper;
 import org.example.fashion_api.Mapper.ProductMapper;
+import org.example.fashion_api.Models.Categories.Category;
 import org.example.fashion_api.Models.Categories.CategoryRes;
 import org.example.fashion_api.Models.Products.*;
 import org.example.fashion_api.Models.ProductsDetails.ProductDetail;
@@ -104,6 +105,10 @@ public class ProductServiceImpl implements ProductService {
 
 
         }
+
+        Category newCategory = categoryRepo.findById(updateProductDto.getCatId()).orElseThrow(() -> new NotFoundException("Category"));
+
+        currentProduct.setCategory(newCategory);
 
         Product product = productRepo.save(productMapper.updateProductDtoToProduct(updateProductDto, currentProduct));
 

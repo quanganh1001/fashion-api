@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th8 11, 2024 lúc 09:00 AM
+-- Thời gian đã tạo: Th8 12, 2024 lúc 04:07 PM
 -- Phiên bản máy phục vụ: 10.4.32-MariaDB
 -- Phiên bản PHP: 8.2.12
 
@@ -43,7 +43,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `GetSalesSent` (IN `startDate` DATE,
     WHERE
         `i`.`confirmation_date` IS NOT NULL
         AND `i`.`confirmation_date` BETWEEN startDate AND endDate;
-
+    
 END$$
 
 DROP PROCEDURE IF EXISTS `GetSalesSuccess`$$
@@ -172,7 +172,7 @@ CREATE TABLE `categories` (
 --
 
 INSERT INTO `categories` (`id`, `category_code`, `cat_name`, `parent_id`, `cat_background`, `created_at`, `updated_at`) VALUES
-(86, 'AK', 'Áo khoác', 96, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1718859021/cadgpxtbfduvwwaxmlal.jpg', '2024-05-14 10:46:05', '2024-07-01 05:14:14'),
+(86, 'AK', 'Áo khoác', 96, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1718859021/cadgpxtbfduvwwaxmlal.jpg', '2024-05-14 10:46:05', '2024-08-12 11:02:36'),
 (87, 'AKBB', 'Áo khoác Bomber', 86, NULL, '2024-05-14 10:46:05', '2024-06-11 05:12:45'),
 (88, 'AKCC', 'Áo khoác cổ cao', 86, NULL, '2024-05-14 10:46:05', '2024-06-11 05:12:45'),
 (89, 'AKG', 'Áo khoác gió', 86, NULL, '2024-05-14 10:46:05', '2024-06-11 05:12:45'),
@@ -1039,20 +1039,20 @@ CREATE TRIGGER `insert_history` AFTER INSERT ON `invoices` FOR EACH ROW BEGIN
     DECLARE invoice_id INT;
     DECLARE account_name VARCHAR(255);
     DECLARE is_paid_status VARCHAR(55);
-
+    
 	IF NEW.is_paid = 0 THEN
     	SET is_paid_status = 'Chưa thanh toán';
     ELSEIF NEW.is_paid = 1 THEN
         SET is_paid_status = 'Đã thanh toán';
     ELSE
-        SET is_paid_status = 'Giá trị không hợp lệ';
+        SET is_paid_status = 'Giá trị không hợp lệ'; 
     END IF;
-
+    
     SET invoice_id = NEW.id;
-
+    
     SET content = CONCAT(
         IFNULL(@current_user, 'Hệ thống'), ' đã tạo đơn hàng: <br>Mã đơn: ', NEW.invoice_code, ',<br>Tên khách hàng: ', NEW.name, ',<br>Số điện thoại: ', NEW.phone, ',<br>Địa chỉ: ', NEW.address,',<br>Trạng thái thanh toán: ',is_paid_status);
-
+    
     INSERT INTO invoices_history (invoice_id, content) VALUES (invoice_id, content);
 END
 $$
@@ -1066,60 +1066,60 @@ CREATE TRIGGER `update_history` AFTER UPDATE ON `invoices` FOR EACH ROW BEGIN
     DECLARE new_account VARCHAR(25);
     DECLARE new_is_paid_status VARCHAR(55);
     DECLARE old_is_paid_status VARCHAR(55);
-
+    
     SET old_account = (SELECT accounts.name FROM accounts WHERE id = OLD.account_id);
     SET new_account = (SELECT accounts.name FROM accounts WHERE id = NEW.account_id);
     SET invoice_id = NEW.id;
     SET content = "";
-
+    
 	IF NEW.is_paid = 0 THEN
     	SET new_is_paid_status = 'Chưa thanh toán';
     ELSEIF NEW.is_paid = 1 THEN
         SET new_is_paid_status = 'Đã thanh toán';
     ELSE
-        SET new_is_paid_status = 'Giá trị không hợp lệ';
+        SET new_is_paid_status = 'Giá trị không hợp lệ'; 
     END IF;
-
+    
     IF OLD.is_paid = 0 THEN
     	SET old_is_paid_status = 'Chưa thanh toán';
     ELSEIF OLD.is_paid = 1 THEN
         SET old_is_paid_status = 'Đã thanh toán';
     ELSE
-        SET old_is_paid_status = 'Giá trị không hợp lệ';
+        SET old_is_paid_status = 'Giá trị không hợp lệ'; 
     END IF;
-
+    
 	IF NEW.name != OLD.name THEN
         SET content = CONCAT(@current_user , ' đã thay đổi Tên khách hàng: ', OLD.name, ' -> ', NEW.name,'<br>');
     END IF;
-
+    
     IF NEW.phone != OLD.phone THEN
         SET content = CONCAT(content,@current_user ,' đã thay đổi Số điện thoại: ', OLD.phone, ' -> ', NEW.phone,'<br>');
     END IF;
-
+    
     IF NEW.address != OLD.address THEN
         SET content = CONCAT(content,@current_user , ' đã thay đổi Địa chỉ: ', OLD.address, ' -> ', NEW.address,'<br>');
     END IF;
-
+    
     IF NEW.note != OLD.note THEN
         SET content = CONCAT(content,@current_user , ' đã thay đổi Ghi chú: ', OLD.note, ' -> ', NEW.note,'<br>');
     END IF;
-
+    
     IF NEW.invoice_status != OLD.invoice_status THEN
         SET content = CONCAT(content,@current_user , ' đã thay đổi Trạng thái đơn hàng: ', OLD.invoice_status , ' -> ', NEW.invoice_status,'<br>');
     END IF;
-
+    
     IF NEW.account_id != OLD.account_id THEN
         SET content = CONCAT(content,@current_user , ' đã thay đổi nhân viên phụ trách đơn hàng: ', old_account , ' -> ', new_account,'<br>');
     END IF;
-
+    
     IF NEW.shipping_fee != OLD.shipping_fee THEN
     SET content = CONCAT(content,@current_user , ' đã thay đổi Phí ship: ', FORMAT(OLD.shipping_fee, 0), ' VND)', ' -> ', FORMAT(NEW.shipping_fee, 0), ' VND) <br>');
     END IF;
-
+    
     IF NEW.is_paid != OLD.is_paid THEN
     SET content = CONCAT(@current_user , ' đã thay đổi trạng thái thanh toán: ',old_is_paid_status,' -> ',new_is_paid_status,'<br>');
     END IF;
-
+    
     IF content != "" THEN
     INSERT INTO invoices_history (invoice_id,content) VALUES (invoice_id,content);
     END IF;
@@ -1384,7 +1384,7 @@ CREATE TRIGGER `delete_detail_history` BEFORE DELETE ON `invoices_detail` FOR EA
     DECLARE invoice_id VARCHAR(25);
     SET invoice_id = OLD.invoice_id;
     SET product_code = (SELECT products_detail.code FROM products_detail WHERE id = OLD.product_detail_id);
-
+    
     SET content = CONCAT(@current_user, ' đã xóa sản phẩm: ',product_code,' (giá = ',FORMAT(OLD.price, 0),')',',số lượng: ', OLD.quantity);
 
     INSERT INTO invoices_history (invoice_id,content) VALUES (invoice_id,content);
@@ -1401,12 +1401,12 @@ CREATE TRIGGER `delete_invoice_detail` AFTER DELETE ON `invoices_detail` FOR EAC
         WHERE invoice_id = OLD.invoice_id
     )
     WHERE id = OLD.invoice_id;
-
+    
     UPDATE invoices
     SET total_bill = total_price + shipping_fee
     WHERE id = OLD.invoice_id;
-
-
+    
+    
 END
 $$
 DELIMITER ;
@@ -1418,7 +1418,7 @@ CREATE TRIGGER `insert_detail_history` AFTER INSERT ON `invoices_detail` FOR EAC
     DECLARE invoice_id VARCHAR(25);
     SET invoice_id = NEW.invoice_id;
     SET product_code = (SELECT products_detail.code FROM products_detail WHERE id = NEW.product_detail_id);
-
+    
 SET content = CONCAT(IFNULL(@current_user, 'Hệ thống'), ' đã thêm sản phẩm: ', product_code, ' (giá = ', FORMAT(NEW.price, 0), ' VND)');
 
 
@@ -1436,7 +1436,7 @@ CREATE TRIGGER `insert_invoice_detail` AFTER INSERT ON `invoices_detail` FOR EAC
        	WHERE invoice_id = NEW.invoice_id
     )
     WHERE id = NEW.invoice_id;
-
+    
     UPDATE invoices
     SET total_bill = total_price + shipping_fee
     WHERE id = NEW.invoice_id;
@@ -1448,13 +1448,13 @@ DELIMITER $$
 CREATE TRIGGER `update_invoice_detail` AFTER UPDATE ON `invoices_detail` FOR EACH ROW BEGIN
     UPDATE invoices
     	SET total_price = (
-        SELECT
+        SELECT 
         COALESCE(SUM(invoices_detail.total_price),0)
         FROM invoices_detail
         WHERE invoice_id = NEW.invoice_id
     	)
     WHERE id = NEW.invoice_id;
-
+    
     UPDATE invoices
     SET total_bill = total_price + shipping_fee
     WHERE id = NEW.invoice_id;
@@ -1469,10 +1469,10 @@ CREATE TRIGGER `update_quantity_history` BEFORE UPDATE ON `invoices_detail` FOR 
     DECLARE invoice_id VARCHAR(25);
     SET invoice_id = NEW.invoice_id;
     SET product_code = (SELECT products_detail.code FROM products_detail WHERE id = NEW.product_detail_id);
-
+    
 	IF NEW.quantity != OLD.quantity THEN
     SET content = CONCAT( ' đã thay đổi Số lượng (', product_code,') :' , OLD.quantity, ' -> ', NEW.quantity);
-
+    
     INSERT INTO invoices_history (invoice_id,content) VALUES (invoice_id,content);
     END IF;
 END
@@ -1853,8 +1853,8 @@ CREATE TABLE `jwt_tokens` (
 INSERT INTO `jwt_tokens` (`id`, `token`, `expiration_date`, `refresh_token`, `account_id`, `refresh_expiration_date`, `revoked`, `created_at`, `updated_at`) VALUES
 (527, 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJuZ3V5ZW5xdWFuZ2FuaCIsInBob25lIjoiMDM2NTE1MTgyMiIsInJvbGUiOiJST0xFX0VNUExPWUVFIiwiaWF0IjoxNzIyOTM2NTgxLCJleHAiOjE3MjI5MzcxODF9.JHDr7u1wF5VRb5m8MdSzW-HqnXyZSltKDUjJ-uH-XW4', '2024-08-06 16:39:41', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJuZ3V5ZW5xdWFuZ2FuaCIsInBob25lIjoiMDM2NTE1MTgyMiIsInJvbGUiOiJST0xFX0VNUExPWUVFIiwiaWF0IjoxNzIyOTM2NTgxLCJleHAiOjE3MjM1NDEzODF9.bHeup8lKMk-jxg7fPuGfFWCvX_DGpOTYV3_vk-CmSlw', 2, '2024-08-13 16:29:41', 0, '2024-08-06 09:29:41', '2024-08-06 09:29:41'),
 (531, 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJuZ3V5ZW5xdWFuZ2FuaCIsInBob25lIjoiMDM2NTE1MTgyMiIsInJvbGUiOiJST0xFX0VNUExPWUVFIiwiaWF0IjoxNzIyOTQ3NDUxLCJleHAiOjE3MjI5NDgwNTF9.nFEdpbXTF0tUkGwyB8DcIDtotql2UBxIxvWTifMPH9s', '2024-08-06 19:40:51', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJuZ3V5ZW5xdWFuZ2FuaCIsInBob25lIjoiMDM2NTE1MTgyMiIsInJvbGUiOiJST0xFX0VNUExPWUVFIiwiaWF0IjoxNzIyOTQ3NDUxLCJleHAiOjE3MjM1NTIyNTF9.vMzV_eI2Nf0Gezi8VaHIOCJtvRbAcJfamr3z3O6nF3U', 2, '2024-08-13 19:30:51', 0, '2024-08-06 12:30:51', '2024-08-06 12:30:51'),
-(578, 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJuZ3V5ZW5xdWFuZ2FuaCIsInBob25lIjoiMDM2NDEwMDE5NiIsInJvbGUiOiJST0xFX01BTkFHRVIiLCJpYXQiOjE3MjMyMTIyMjksImV4cCI6MTcyMzIxMjgyOX0.1-6tyhFGyThBiwFw9WX-y4oJrHHso7faRxqduzBPxIg', '2024-08-09 21:13:49', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJuZ3V5ZW5xdWFuZ2FuaCIsInBob25lIjoiMDM2NDEwMDE5NiIsInJvbGUiOiJST0xFX01BTkFHRVIiLCJpYXQiOjE3MjMyMTIyMjksImV4cCI6MTcyMzgxNzAyOX0.r-fk7xEtyjfCuA5XWOrolWR5jylHbWcTLexwO0CxdFg', 1, '2024-09-08 21:03:49', 0, '2024-08-09 13:53:58', '2024-08-09 14:03:49'),
-(579, 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJuZ3V5ZW5xdWFuZ2FuaCIsInBob25lIjoiMDM2NDEwMDE5NiIsInJvbGUiOiJST0xFX01BTkFHRVIiLCJpYXQiOjE3MjMyMTM0MzYsImV4cCI6MTcyMzIxNDAzNn0.reJU8iT5i5gN2lMfeI3-dIEsjwPGaCtRh9RXdKd566Y', '2024-08-09 21:33:56', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJuZ3V5ZW5xdWFuZ2FuaCIsInBob25lIjoiMDM2NDEwMDE5NiIsInJvbGUiOiJST0xFX01BTkFHRVIiLCJpYXQiOjE3MjMyMTM0MzYsImV4cCI6MTcyMzgxODIzNn0.1CEPw3IYAhQW5g37sOffKnUUgJmL3fJ_zRAJrZ5TmbY', 1, '2024-08-16 21:23:56', 0, '2024-08-09 14:23:56', '2024-08-09 14:23:56');
+(586, 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJuZ3V5ZW5xdWFuZ2FuaCIsInBob25lIjoiMDM2NDEwMDE5NiIsInJvbGUiOiJST0xFX01BTkFHRVIiLCJpYXQiOjE3MjM0NjA1NjAsImV4cCI6MTcyMzQ2MTE2MH0.zMMw3xzyJP62LoBZOd7S4t5HZIOe75i2Mof_HbJopz8', '2024-08-12 18:12:40', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJuZ3V5ZW5xdWFuZ2FuaCIsInBob25lIjoiMDM2NDEwMDE5NiIsInJvbGUiOiJST0xFX01BTkFHRVIiLCJpYXQiOjE3MjM0NjA1NjAsImV4cCI6MTcyNDA2NTM2MH0.ERWQN2e-RVmxcJzztf2hhdQlUpiosKL82rXzcELP6s0', 1, '2024-08-19 18:02:40', 0, '2024-08-12 11:02:40', '2024-08-12 11:02:40'),
+(587, 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJuZ3V5ZW5xdWFuZ2FuaCIsInBob25lIjoiMDM2NDEwMDE5NiIsInJvbGUiOiJST0xFX01BTkFHRVIiLCJpYXQiOjE3MjM0NzE1MzIsImV4cCI6MTcyMzQ3MjEzMn0.DJbjwIBaD5qKd4R-7EzihhuF-RNA4OXLAf7SUqiW7VY', '2024-08-12 21:15:32', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJuZ3V5ZW5xdWFuZ2FuaCIsInBob25lIjoiMDM2NDEwMDE5NiIsInJvbGUiOiJST0xFX01BTkFHRVIiLCJpYXQiOjE3MjM0NzE1MzIsImV4cCI6MTcyNDA3NjMzMn0.rdgCaUM7O2dJnUQmAnF_tPsUXDqOiDe2o280BFTKNAw', 1, '2024-09-11 21:05:32', 0, '2024-08-12 11:13:36', '2024-08-12 14:05:32');
 
 -- --------------------------------------------------------
 
@@ -1887,7 +1887,7 @@ CREATE TABLE `products` (
 --
 
 INSERT INTO `products` (`id`, `product_code`, `product_name`, `cat_id`, `price`, `discount_price`, `discount_percent`, `brand`, `description`, `total_size`, `total_color`, `image_background`, `image_choose_size`, `is_activated`, `created_at`, `updated_at`) VALUES
-(1, 'BI013', 'Quần short đũi BI013', 114, 380000, NULL, NULL, 'TORANO', '', 6, 7, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711810365/1702814188840_tp038---bi013-_20__790f72cbd3d34a918920b73579e72ea5_master.jpg.webp', 'IMAGE_4', b'1', '2024-05-14 10:47:36', '2024-08-06 12:45:59'),
+(1, 'BI013', 'Quần short đũi BI013', 112, 380000, NULL, NULL, 'TORANO', '', 6, 7, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711810365/1702814188840_tp038---bi013-_20__790f72cbd3d34a918920b73579e72ea5_master.jpg.webp', 'IMAGE_4', b'1', '2024-05-14 10:47:36', '2024-08-12 10:38:42'),
 (2, 'CABJ003', 'Quần Jeans rách Slim CABJ003', 109, 550000, NULL, NULL, 'TORANO', 'Quần Jeans rách Slim CABJ003\r\n', 5, 1, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711810773/1702810774291_cabj003_75aa0eb2e3ef4d7cb175dcef6ceae9cf_master.jpg.webp', 'IMAGE_4', b'1', '2024-05-14 10:47:36', '2024-05-14 10:47:36'),
 (3, 'DABJ004', 'Quần Jeans basic Slim DABJ004', 108, 550000, NULL, NULL, 'TORANO', 'Quần Jeans basic Slim CABJ004/2\r\n', 5, 1, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711810701/1702810004163_52706071935_8966d1e12f_o_a66489be76c949d791609a08ca73993f_master.jpg.webp', 'IMAGE_4', b'1', '2024-05-14 10:47:36', '2024-05-14 10:47:36'),
 (4, 'DABJ010', 'Quần Jeans basic Slim DABJ010', 108, 550000, NULL, NULL, 'TORANO', 'Quần Jeans basic Slim CABJ010/2', 5, 1, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711810727/1702810256808_52169110354_87bd6ccaa0_o_abf9f4cabd204376b1d1cba50d2deec9_master.jpg.webp', 'IMAGE_4', b'1', '2024-05-14 10:47:36', '2024-05-14 10:47:36'),
@@ -1956,7 +1956,8 @@ INSERT INTO `products` (`id`, `product_code`, `product_name`, `cat_id`, `price`,
 (67, 'EWCW007', 'Áo khoác gió 1 lớp mũ liền EWCW007', 89, 50000, NULL, NULL, 'TORANO', 'Áo khoác gió 1 lớp mũ liền chống nước giá siêu tốt của nhà Torano đã cập bến.\r\n', 4, 3, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711810212/1704189991841_ewcw007-1_c8b1f230ddb2408daa72728d0ecee531_master.jpg.webp', 'IMAGE_5', b'1', '2024-05-14 10:47:36', '2024-05-14 10:47:36'),
 (68, 'EWTE003', 'Áo len kẻ ngang cổ tròn 2.EWTE003', 91, 520000, NULL, NULL, 'TORANO', '', 4, 2, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711810003/1708267758762_ewte003-10_53297045794_o_af9bd1f2fa8246dab498a75b2a976f04_master.jpg.jpg', 'IMAGE_5', b'1', '2024-05-14 10:47:36', '2024-05-14 10:47:36'),
 (69, 'EWTW003', 'Áo nỉ trơn basic vải hiệu ứng 3.EWTW003', 95, 380000, NULL, NULL, 'TORANO', '', 5, 3, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711810052/1707657567773_tw003-bs001-6_53291471625_o_1f620c3d758e41d696fb128d159744a2_master.jpg.webp', 'IMAGE_5', b'1', '2024-05-14 10:47:36', '2024-05-14 10:47:36'),
-(71, 'TP004', 'Áo polo phối màu color-block 1.TP004', 100, 450000, NULL, NULL, 'TORANO', 'Áo polo phối màu color-block TP004', 4, 1, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711811025/tp004_45415f65d7bc4f4c8d52f4893d682a43_master.jpg.webp', 'IMAGE_1', b'1', '2024-05-14 10:47:36', '2024-05-14 10:47:36');
+(71, 'TP004', 'Áo polo phối màu color-block 1.TP004', 100, 450000, NULL, NULL, 'TORANO', 'Áo polo phối màu color-block TP004', 4, 1, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711811025/tp004_45415f65d7bc4f4c8d52f4893d682a43_master.jpg.webp', 'IMAGE_1', b'1', '2024-05-14 10:47:36', '2024-05-14 10:47:36'),
+(81, 'test', 'test', 88, 1, 1, NULL, 'test', 'test', NULL, NULL, NULL, 'IMAGE_4', b'1', '2024-08-12 10:20:46', '2024-08-12 10:33:40');
 
 -- --------------------------------------------------------
 
@@ -2546,7 +2547,7 @@ INSERT INTO `products_detail` (`id`, `product_id`, `code`, `color_id`, `size`, `
 (609, 25, 'ESBK00202CT00RB_BE-31', 3, 'SIZE_31', 999, b'1', '2024-05-14 10:47:45', '2024-05-16 12:28:59'),
 (610, 25, 'ESBK00202CT00RB_BE-32', 3, 'SIZE_32', 999, b'1', '2024-05-14 10:47:45', '2024-05-16 12:28:59'),
 (611, 25, 'ESBK00202CT00RB_BE-33', 3, 'SIZE_33', 999, b'1', '2024-05-14 10:47:45', '2024-05-16 12:28:59'),
-(613, 1, 'DSBI01302LI00SB_BE-30', 3, 'SIZE_30', 999, b'1', '2024-05-14 10:47:45', '2024-08-06 12:45:59'),
+(613, 1, 'DSBI01302LI00SB_BE-30', 3, 'SIZE_30', 999, b'1', '2024-05-14 10:47:45', '2024-08-12 11:19:29'),
 (614, 1, 'DSBI01302LI00SB_BE-31', 3, 'SIZE_31', 991, b'1', '2024-05-14 10:47:45', '2024-08-06 12:45:59'),
 (615, 1, 'DSBI01302LI00SB_BE-32', 3, 'SIZE_32', 999, b'1', '2024-05-14 10:47:45', '2024-08-06 12:45:59'),
 (616, 1, 'DSBI01302LI00SB_BE-33', 3, 'SIZE_33', 999, b'1', '2024-05-14 10:47:45', '2024-08-06 12:45:59'),
@@ -2904,13 +2905,13 @@ ALTER TABLE `invoices_history`
 -- AUTO_INCREMENT cho bảng `jwt_tokens`
 --
 ALTER TABLE `jwt_tokens`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=580;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=588;
 
 --
 -- AUTO_INCREMENT cho bảng `products`
 --
 ALTER TABLE `products`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=81;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=82;
 
 --
 -- AUTO_INCREMENT cho bảng `products_detail`

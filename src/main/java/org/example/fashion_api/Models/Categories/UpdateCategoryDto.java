@@ -18,4 +18,6 @@ public class UpdateCategoryDto   {
 
     @NotNull
     private String catName;
+
+    private Long catParent;
 }

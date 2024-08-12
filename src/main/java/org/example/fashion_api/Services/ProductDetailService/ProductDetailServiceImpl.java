@@ -6,8 +6,10 @@ import org.example.fashion_api.Exception.AlreadyExistException;
 import org.example.fashion_api.Exception.BadRequestException;
 import org.example.fashion_api.Exception.NotFoundException;
 import org.example.fashion_api.Mapper.ProductDetailMapper;
+import org.example.fashion_api.Models.Colors.Color;
 import org.example.fashion_api.Models.Products.Product;
 import org.example.fashion_api.Models.ProductsDetails.*;
+import org.example.fashion_api.Repositories.ColorRepo;
 import org.example.fashion_api.Repositories.InvoiceDetailRepo;
 import org.example.fashion_api.Repositories.ProductDetailRepo;
 import org.example.fashion_api.Repositories.ProductRepo;
@@ -26,6 +28,7 @@ public class ProductDetailServiceImpl implements ProductDetailService{
     private final ProductDetailMapper productDetailMapper;
     private final RedisService redisService;
     private final ProductRepo productRepo;
+    private final ColorRepo colorRepo;
 
     @Override
     public List<ProductDetailRes> findAllProductDetails(Long productId) throws JsonProcessingException {
@@ -58,6 +61,7 @@ public class ProductDetailServiceImpl implements ProductDetailService{
 
     @Override
     public ProductDetailRes updateProductDetail(Long productDetailId, UpdateProductDetailDto dto){
+
         ProductDetail currenProductDetail = productDetailRepo.findById(productDetailId).orElseThrow(()-> new NotFoundException(productDetailId.toString()));
 
         if(!Objects.equals(productDetailId, currenProductDetail.getId()) && productDetailRepo.existsByCode(dto.getCode())){
@@ -71,8 +75,12 @@ public class ProductDetailServiceImpl implements ProductDetailService{
             }
         }
 
-
         ProductDetail productDetail = productDetailMapper.updateProductDetailToProductDetail(dto,currenProductDetail);
+        System.out.println(productDetail);
+
+        Color color = colorRepo.findById(dto.getColorId()).orElseThrow(()-> new NotFoundException(dto.getColorId().toString()));
+        productDetail.setColor(color);
+
         productDetailRepo.save(productDetail);
         return productDetailMapper.productDetailToProductDetailRes(productDetail);
     }

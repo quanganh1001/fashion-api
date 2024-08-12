@@ -29,4 +29,7 @@ public class UpdateProductDto  {
 
     @NotNull
     private Boolean isActivated;
+
+    @NotNull
+    private Long catId;
 }

@@ -35,6 +35,5 @@ public interface ProductDetailMapper {
     @Mapping(target = "color.id", source = "colorId")
     ProductDetail createProductDetailToProductDetail(CreateProductDetailDto createProductDetailDto, @MappingTarget ProductDetail productDetail);
 
-
     ProductDetail updateProductDetailToProductDetail(UpdateProductDetailDto updateProductDetailDto, @MappingTarget ProductDetail productDetail);
 }

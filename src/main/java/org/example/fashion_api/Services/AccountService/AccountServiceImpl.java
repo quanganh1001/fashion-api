@@ -46,28 +46,33 @@ public class AccountServiceImpl implements AccountService {
     private final JwtTokenRepo jwtTokenRepo;
 
     @Override
-    public JwtTokenRes Login(AccountLoginDto loginRequest) {
-        Optional<Account> optionalAccount = Optional.empty();
-        String subject = null;
+    public JwtTokenRes AdminLogin(AccountLoginDto loginRequest) {
+        Account existingAccount = authenticateAccount(loginRequest, List.of("ROLE_EMPLOYEE", "ROLE_MANAGER"));
+        return jwtService.tokenRes(existingAccount);
+    }
 
+    @Override
+    public JwtTokenRes CustomerLogin(AccountLoginDto loginRequest) {
+        Account existingAccount = authenticateAccount(loginRequest, null);
+        return jwtService.tokenRes(existingAccount);
+    }
 
-        optionalAccount = accountRepo.findByPhone(loginRequest.getUsername());
-
-        if (optionalAccount.isPresent()) {
-            subject = loginRequest.getUsername();
-        }
+    private Account authenticateAccount(AccountLoginDto loginRequest, List<String> validRoles) {
+        Optional<Account> optionalAccount = accountRepo.findByPhone(loginRequest.getUsername());
 
         if (optionalAccount.isEmpty()) {
             optionalAccount = accountRepo.findByEmail(loginRequest.getUsername());
-            subject = loginRequest.getUsername();
         }
-
 
         if (optionalAccount.isEmpty()) {
             throw new BadCredentialsException();
         }
 
         Account existingAccount = optionalAccount.get();
+
+        if (validRoles != null && !validRoles.contains(existingAccount.getRole().name())) {
+            throw new BadCredentialsException();
+        }
 
         if (!passwordEncoder.matches(loginRequest.getPassword(), existingAccount.getPassword())) {
             throw new BadCredentialsException();
@@ -78,15 +83,14 @@ public class AccountServiceImpl implements AccountService {
         }
 
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
-                subject, loginRequest.getPassword(),
+                loginRequest.getUsername(), loginRequest.getPassword(),
                 List.of(new SimpleGrantedAuthority(existingAccount.getRole().name()))
         );
 
         authenticationManager.authenticate(authenticationToken);
-
         SecurityContextHolder.getContext().setAuthentication(authenticationToken);
 
-        return jwtService.tokenRes(existingAccount);
+        return existingAccount;
     }
 
     @Override

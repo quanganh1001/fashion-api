@@ -10,9 +10,11 @@ import java.util.List;
 
 
 public interface AccountService {
-    JwtTokenRes Login(AccountLoginDto user);
+    JwtTokenRes CustomerLogin(AccountLoginDto user);
 
-    ResponseEntity<?> getAllAccount(String keyword, int page, int limit,String role);
+    JwtTokenRes AdminLogin(AccountLoginDto loginRequest);
+
+    ResponseEntity<?> getAllAccount(String keyword, int page, int limit, String role);
 
     AccountRes getAccount(Long accountId);
 

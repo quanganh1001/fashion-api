@@ -27,8 +27,14 @@ public class AuthController {
 
     @PostMapping("/login")
     @Operation(summary = "Login", description = "This is a login API")
-    public ResponseEntity<JwtTokenRes> login(@Valid @RequestBody AccountLoginDto loginRequest) {
-        return new ResponseEntity<>(accountService.Login(loginRequest), HttpStatus.OK);
+    public ResponseEntity<JwtTokenRes> customerLogin(@Valid @RequestBody AccountLoginDto loginRequest) {
+        return new ResponseEntity<>(accountService.CustomerLogin(loginRequest), HttpStatus.OK);
+    }
+
+    @PostMapping("/admin/login")
+    @Operation(summary = "Login", description = "This is a login API")
+    public ResponseEntity<JwtTokenRes> adminLogin(@Valid @RequestBody AccountLoginDto loginRequest) {
+        return new ResponseEntity<>(accountService.AdminLogin(loginRequest), HttpStatus.OK);
     }
 
     @DeleteMapping("/logout")

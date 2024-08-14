@@ -23,3 +23,6 @@
 # Router: 
  - Admin: http://localhost:3000/admin
  - Home: http://localhost:3000/
+ - Login:
+   http://localhost:3000/login
+   http://localhost:3000/login-admin

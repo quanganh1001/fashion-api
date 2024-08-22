@@ -26,7 +26,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 
@@ -46,20 +45,20 @@ public class InvoiceServiceImpl implements InvoiceService {
 
 
     @Override
-    public PageInvoiceRes getAllInvoices(String keyword, int page, int pageSize, Long accountId, InvoiceStatusEnum invoiceStatus) {
+    public PageInvoiceRes getAllInvoicesOnline(String keyword, int page, int pageSize, Long accountId, InvoiceStatusEnum invoiceStatus) {
         if (page < 0) {
             page = 0;
         }
-
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-
 
         PageRequest pageRequest = PageRequest.of(page, pageSize, Sort.by("created_at").descending());
 
         Page<Invoice> pageInvoices;
 
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
         boolean isManager = authentication.getAuthorities().stream()
                 .anyMatch(authority -> authority.getAuthority().equals("ROLE_MANAGER"));
+
 
         if (!isManager) {
             Account account = accountService.getAccountFromAuthentication();
@@ -69,16 +68,16 @@ public class InvoiceServiceImpl implements InvoiceService {
 
         if (accountId != null && accountId == 0) {
             if (invoiceStatus != null) {
-                pageInvoices = invoiceRepo.searchInvoicesWithStatus(keyword, invoiceStatus.name(), pageRequest);
+                pageInvoices = invoiceRepo.searchInvoicesWithStatusOnline(keyword, invoiceStatus.name(), pageRequest);
             } else {
-                pageInvoices = invoiceRepo.searchInvoices(keyword, pageRequest);
+                pageInvoices = invoiceRepo.searchInvoicesOnline(keyword, pageRequest);
             }
 
         } else {
             if (invoiceStatus != null) {
-                pageInvoices = invoiceRepo.searchInvoicesByAccountWithStatus(accountId, keyword, invoiceStatus.name(), pageRequest);
+                pageInvoices = invoiceRepo.searchInvoicesByAccountWithStatusOnline(accountId, keyword, invoiceStatus.name(), pageRequest);
             } else {
-                pageInvoices = invoiceRepo.searchInvoicesByAccount(accountId, keyword, pageRequest);
+                pageInvoices = invoiceRepo.searchInvoicesByAccountOnline(accountId, keyword, pageRequest);
             }
         }
 
@@ -94,6 +93,35 @@ public class InvoiceServiceImpl implements InvoiceService {
                 .invoices(invoicesRes)
                 .build();
     }
+
+    @Override
+    public PageInvoiceRes getAllInvoicesAtStore(String keyword, int page, int limit, Long orderSource ) {
+        if (page < 0) {
+            page = 0;
+        }
+
+        PageRequest pageRequest = PageRequest.of(page, limit, Sort.by("created_at").descending());
+
+        Page<Invoice> pageInvoices;
+
+        if (orderSource != 0){
+            pageInvoices = invoiceRepo.searchInvoicesByStore(keyword,orderSource,pageRequest);
+        }else {
+            pageInvoices = invoiceRepo.searchAllInvoicesAtStore(keyword,pageRequest);
+        }
+
+        List<InvoiceRes> invoicesRes = invoiceMapper.toResList(pageInvoices.getContent());
+
+        long totalInvoices = pageInvoices.getTotalElements();
+
+        return PageInvoiceRes.builder()
+                .currentPage(page + 1)
+                .totalPages(pageInvoices.getTotalPages())
+                .totalItems(totalInvoices)
+                .invoices(invoicesRes)
+                .build();
+    }
+
 
     @Override
     @Transactional
@@ -120,15 +148,21 @@ public class InvoiceServiceImpl implements InvoiceService {
     }
 
     @Override
-    public InvoiceRes getById(Long invoiceId) {
-        return invoiceMapper.invoiceToInvoiceRes(invoiceRepo.findById(invoiceId)
+    public InvoiceRes getInvoiceOnlineById(Long invoiceId) {
+        return invoiceMapper.invoiceToInvoiceRes(invoiceRepo.findByIdAndOrderSourceIsNull(invoiceId)
+                .orElseThrow(() -> new NotFoundException("Invoice")));
+    }
+
+    @Override
+    public InvoiceRes getInvoiceAtStoreById(Long invoiceId, Long store) {
+        return invoiceMapper.invoiceToInvoiceRes(invoiceRepo.findByIdAndOrderSourceId(invoiceId,store)
                 .orElseThrow(() -> new NotFoundException("Invoice")));
     }
 
     @Override
     @Transactional
     public void updateShippingFee(Long invoiceId, Long shippingFee) {
-        Invoice invoice = invoiceRepo.findById(invoiceId).orElseThrow(() -> new NotFoundException("Invoice"));
+        Invoice invoice = invoiceRepo.findByIdAndOrderSourceIsNull(invoiceId).orElseThrow(() -> new NotFoundException("Invoice"));
 
         invoice.setShippingFee(shippingFee);
 
@@ -144,7 +178,7 @@ public class InvoiceServiceImpl implements InvoiceService {
     @Override
     @Transactional
     public void deleteInvoice(Long invoiceId) {
-        Invoice invoice = invoiceRepo.findById(invoiceId).orElseThrow(() -> new NotFoundException("Invoice"));
+        Invoice invoice = invoiceRepo.findByIdAndOrderSourceIsNull(invoiceId).orElseThrow(() -> new NotFoundException("Invoice"));
         invoiceRepo.delete(invoice);
     }
 
@@ -173,7 +207,7 @@ public class InvoiceServiceImpl implements InvoiceService {
     @Override
     @Transactional
     public void updateStatus(Long invoiceId, InvoiceStatusEnum status) {
-        Invoice currentInvoice = invoiceRepo.findById(invoiceId).orElseThrow(() -> new NotFoundException("Invoice"));
+        Invoice currentInvoice = invoiceRepo.findByIdAndOrderSourceIsNull(invoiceId).orElseThrow(() -> new NotFoundException("Invoice"));
 
         if (currentInvoice.getAccount() == null){
             throw new BadRequestException("Please divide the order to the staff first.");
@@ -195,7 +229,7 @@ public class InvoiceServiceImpl implements InvoiceService {
 
     @Override
     public InvoiceRes updateInvoice(Long invoiceId, UpdateInvoiceDto dto) {
-        Invoice currentInvoice = invoiceRepo.findById(invoiceId).orElseThrow(() -> new NotFoundException("Invoice"));
+        Invoice currentInvoice = invoiceRepo.findByIdAndOrderSourceIsNull(invoiceId).orElseThrow(() -> new NotFoundException("Invoice"));
         var newAccountId = dto.getAccountId();
         var currentAccount = currentInvoice.getAccount();
 
@@ -255,6 +289,8 @@ public class InvoiceServiceImpl implements InvoiceService {
                 .totalItems(invoicesPage.getTotalElements())
                 .build();
     }
+
+
 
     private void updateDateTime(Invoice currentInvoice, int value) {
         if(currentInvoice.getInvoiceStatus().getValue() != value && value == 3){

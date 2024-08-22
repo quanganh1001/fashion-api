@@ -9,6 +9,7 @@ import org.example.fashion_api.Enum.InvoiceStatusEnum;
 import org.example.fashion_api.Models.Accounts.Account;
 import org.example.fashion_api.Models.BaseEntity;
 import org.example.fashion_api.Models.InvoicesDetails.InvoiceDetail;
+import org.example.fashion_api.Models.StoresAddress.StoresAddress;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -61,6 +62,10 @@ public class Invoice extends BaseEntity {
     @ManyToOne
     @JoinColumn(name = "account_id")
     private Account account;
+
+    @ManyToOne
+    @JoinColumn(name = "order_source")
+    private StoresAddress orderSource;
 
     @OneToMany(mappedBy = "invoice", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
     @JsonIgnore

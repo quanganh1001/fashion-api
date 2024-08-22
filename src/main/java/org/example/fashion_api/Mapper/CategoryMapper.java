@@ -15,6 +15,7 @@ import java.util.List;
 public interface CategoryMapper {
 
     @Mapping(target = "catBackground", ignore = true)
+    @Mapping(target = "catParent.id", source = "catParent")
     Category updateCategoryDtoToCategory(UpdateCategoryDto updateCategoryDto, @MappingTarget Category category);
 
 

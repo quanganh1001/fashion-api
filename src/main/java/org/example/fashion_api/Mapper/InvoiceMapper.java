@@ -26,6 +26,7 @@ public interface InvoiceMapper {
     @Mapping(target = "accountId", source = "account.id")
     @Mapping(target = "accountName", source = "account.name")
     @Mapping(target = "invoicesDetails", source = "invoicesDetails")
+    @Mapping(target = "store", source = "orderSource.name",defaultValue = "online")
     InvoiceRes invoiceToInvoiceRes(Invoice invoice);
 
     @Mapping(target = "invoicesDetails", ignore = true)

@@ -37,22 +37,39 @@ public class InvoiceController {
     private final InvoiceDetailService invoiceDetailService;
     private final InvoiceHistoryService invoiceHistoryService;
 
-    @Operation(summary = "get all Invoices (role MANAGER,EMPLOYEE)")
+    @Operation(summary = "get all Invoices Online (role MANAGER,EMPLOYEE)")
     @PreAuthorize("hasAnyRole('MANAGER','EMPLOYEE')")
-    @GetMapping()
-    public ResponseEntity<PageInvoiceRes> findAll(@RequestParam(defaultValue = "1") int page,
+    @GetMapping("/online")
+    public ResponseEntity<PageInvoiceRes> findAllOnline(@RequestParam(defaultValue = "1") int page,
                                   @RequestParam(defaultValue = "10") int limit,
                                   @RequestParam(defaultValue = "") String keyword,
                                   @RequestParam(required = false) Long accountId,
                                   @RequestParam(required = false) InvoiceStatusEnum invoiceStatus){
-        return ResponseEntity.ok(invoiceService.getAllInvoices(keyword, page-1, limit, accountId, invoiceStatus));
+        return ResponseEntity.ok(invoiceService.getAllInvoicesOnline(keyword, page-1, limit, accountId, invoiceStatus));
+    }
+
+    @Operation(summary = "get all Invoices At Store (role MANAGER,EMPLOYEE)")
+    @PreAuthorize("hasAnyRole('MANAGER','EMPLOYEE')")
+    @GetMapping("/store")
+    public ResponseEntity<PageInvoiceRes> findAllAtStore(@RequestParam(defaultValue = "1") int page,
+                                                  @RequestParam(defaultValue = "10") int limit,
+                                                  @RequestParam(defaultValue = "") String keyword,
+                                                  @RequestParam(defaultValue = "0") Long orderSource){
+        return ResponseEntity.ok(invoiceService.getAllInvoicesAtStore(keyword, page-1, limit, orderSource));
     }
 
     @Operation(summary = "get Invoice (role MANAGER,EMPLOYEE)")
     @PreAuthorize("hasAnyRole('MANAGER','EMPLOYEE')")
-    @GetMapping("{invoiceId}")
-    public ResponseEntity<InvoiceRes> findById(@PathVariable Long invoiceId){
-        return ResponseEntity.ok(invoiceService.getById(invoiceId));
+    @GetMapping("/online/{invoiceId}")
+    public ResponseEntity<InvoiceRes> getInvoiceOnlineById(@PathVariable Long invoiceId){
+        return ResponseEntity.ok(invoiceService.getInvoiceOnlineById(invoiceId));
+    }
+
+    @Operation(summary = "get Invoice (role MANAGER,EMPLOYEE)")
+    @PreAuthorize("hasAnyRole('MANAGER','EMPLOYEE')")
+    @GetMapping("/store/{invoiceId}")
+    public ResponseEntity<InvoiceRes> getInvoiceAtStoreById(@PathVariable Long invoiceId,@RequestParam Long store){
+        return ResponseEntity.ok(invoiceService.getInvoiceAtStoreById(invoiceId,store));
     }
 
 

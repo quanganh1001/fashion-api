@@ -43,6 +43,8 @@ public class InvoiceRes {
 
     private String accountName;
 
+    private String store;
+
     private List<InvoiceDetailRes> invoicesDetails;
 
 }

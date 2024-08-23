@@ -32,6 +32,9 @@ public interface InvoiceMapper {
     @Mapping(target = "invoicesDetails", ignore = true)
     Invoice checkoutDtoToInvoice(CheckoutDto checkoutDto, @MappingTarget Invoice invoice);
 
+    @Mapping(target = "orderSource.id", source = "store")
+    Invoice createInvoiceDtoToInvoice(CreateInvoiceDto checkoutDto, @MappingTarget Invoice invoice);
+
     @Mapping(target = "isPaid", source = "isPaid")
     @Mapping(target = "account.id", source = "accountId")
     Invoice updateInvoiceToInvoice(UpdateInvoiceDto updateInvoiceDto, @MappingTarget Invoice invoice);

@@ -39,13 +39,11 @@ public class Invoice extends BaseEntity {
 
     private String customerNote;
 
-    @NotNull
     private Long totalPrice;
 
     @NotNull
-    private Long shippingFee;
+    private Long shippingFee = 0L;
 
-    @NotNull
     private Long totalBill;
 
     private LocalDateTime successfulDate;
@@ -75,6 +73,9 @@ public class Invoice extends BaseEntity {
 
     @PrePersist
     public void prePersist() {
+        if(address == null ){
+            address = "Mua tại quầy";
+        }
         if(totalPrice == null)
             totalPrice = 0L;
 

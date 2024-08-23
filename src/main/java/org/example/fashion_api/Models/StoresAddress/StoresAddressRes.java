@@ -9,6 +9,7 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 public class StoresAddressRes {
+    private Long id;
     private String name;
     private String address;
     private String time;

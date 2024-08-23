@@ -33,4 +33,6 @@ public interface InvoiceService {
     PageInvoiceRes viewPurchasedOrders(int page,int limit);
 
     PageInvoiceRes getAllInvoicesAtStore(String keyword, int i, int limit, Long orderSource);
+
+    void createInvoiceAtStore(CreateInvoiceDto createInvoiceDto);
 }

@@ -125,6 +125,12 @@ public class InvoiceController {
         }
     }
 
+    @PostMapping("/createInvoice")
+    @Operation(summary = "create invoice", description = "create invoice at store")
+    public void checkoutByCash(@Valid @RequestBody CreateInvoiceDto createInvoiceDto){
+           invoiceService.createInvoiceAtStore(createInvoiceDto);
+    }
+
 
     @Operation(summary = "update status invoice (role MANAGER,EMPLOYEE)")
     @PreAuthorize("hasAnyRole('MANAGER','EMPLOYEE')")

@@ -4,6 +4,9 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import lombok.*;
+import org.example.fashion_api.Models.InvoicesDetails.InvoiceDetailDto;
+
+import java.util.List;
 
 @Setter
 @Getter
@@ -17,21 +20,10 @@ public class CreateInvoiceDto {
     @Pattern(regexp = "^[0-9]{10}$", message = "Số điện thoại không đúng")
     private String phone;
 
-    @NotBlank(message = "Địa chỉ không được để trống")
-    private String address;
-
     private String note;
 
-    private String customerNote;
+    private Long store;
 
-    @NotNull
-    private Long totalPrice;
+    private List<InvoiceDetailDto> invoicesDetails;
 
-    @NotNull
-    private Long shippingFee;
-
-    @NotNull
-    private Long totalBill;
-
-    private Boolean isPaid ;
 }

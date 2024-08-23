@@ -122,6 +122,21 @@ public class InvoiceServiceImpl implements InvoiceService {
                 .build();
     }
 
+    @Override
+    public void createInvoiceAtStore(CreateInvoiceDto createInvoiceDto) {
+        Invoice invoice = invoiceMapper.createInvoiceDtoToInvoice(createInvoiceDto, new Invoice());
+
+        invoice.setIsPaid(true);
+        invoice.setInvoiceStatus(InvoiceStatusEnum.SUCCESS);
+
+        invoiceHistoryService.setNameVarForTrigger();
+        Invoice newInvoice = invoiceRepo.save(invoice);
+
+        for (InvoiceDetailDto invoiceDetail : createInvoiceDto.getInvoicesDetails()) {
+            invoiceDetailService.createInvoiceDetail(newInvoice.getId(), invoiceDetail.getProductDetailId());
+        }
+    }
+
 
     @Override
     @Transactional

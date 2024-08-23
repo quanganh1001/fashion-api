@@ -90,12 +90,13 @@ public class InvoiceDetailServiceImpl implements InvoiceDetailService{
     @Transactional
     public void changeQuantity(Long invoiceDetailId, int quantity) {
         InvoiceDetail invoiceDetail = invoiceDetailRepo.findById(invoiceDetailId).orElseThrow(()->new NotFoundException("Invoice"));
-
-        invoiceDetail.setQuantity(quantity);
-
         invoiceHistoryService.setNameVarForTrigger();
-
-        invoiceDetailRepo.save(invoiceDetail);
+        if (quantity == 0){
+            invoiceDetailRepo.delete(invoiceDetail);
+        }else {
+            invoiceDetail.setQuantity(quantity);
+            invoiceDetailRepo.save(invoiceDetail);
+        }
     }
 
     @Override

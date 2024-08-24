@@ -15,13 +15,14 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @Entity
 @Table(name = "top_products")
-public class TopProductStored extends BaseEntity {
+public class TopProductStored  {
+    @Id
+    private Long id;
     private String imageBackground;
     private String productName;
-    private Long product_detail_id;
+    private Long productDetailId;
     private String size;
     private String colorName;
     private Double totalSales;
     private Integer totalQuantitySold;
-    private LocalDate confirmationDate;
 }

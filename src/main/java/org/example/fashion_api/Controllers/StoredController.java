@@ -27,8 +27,9 @@ public class StoredController {
     @PreAuthorize("hasAnyRole('MANAGER')")
     @GetMapping("/topProduct")
     public ResponseEntity<List<TopProductStored>> selectTopProduct(@RequestParam LocalDate startDate,
-                                                                   @RequestParam LocalDate endDate) throws JsonProcessingException {
-        return ResponseEntity.ok(storedService.findTopProduct(startDate,endDate));
+                                                                   @RequestParam LocalDate endDate,
+                                                                   @RequestParam(defaultValue = "-1") Long store) throws JsonProcessingException {
+        return ResponseEntity.ok(storedService.findTopProduct(startDate,endDate,store));
     }
 
     @Operation(summary = "Get sales sent by date")
@@ -43,7 +44,8 @@ public class StoredController {
     @PreAuthorize("hasAnyRole('MANAGER')")
     @GetMapping("/salesSuccess")
     public ResponseEntity<SalesStored> salesSuccess(@RequestParam LocalDate startDate,
-                                                 @RequestParam LocalDate endDate) throws JsonProcessingException {
-        return ResponseEntity.ok(storedService.findSalesSuccess(startDate,endDate));
+                                                 @RequestParam LocalDate endDate,
+                                                    @RequestParam(defaultValue = "-1") Long store) throws JsonProcessingException {
+        return ResponseEntity.ok(storedService.findSalesSuccess(startDate,endDate,store));
     }
 }

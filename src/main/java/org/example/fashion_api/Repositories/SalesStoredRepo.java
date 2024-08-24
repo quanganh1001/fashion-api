@@ -14,7 +14,11 @@ public interface SalesStoredRepo extends JpaRepository<SalesStored,Long> {
             nativeQuery = true)
     SalesStored findSaleSentStored(@Param("startDate") LocalDate startDate, @Param("endDate") LocalDate endDate);
 
-    @Query(value = "CALL GetSalesSuccess(:startDate,:endDate)",
+    @Query(value = "CALL GetAllSalesSuccess(:startDate,:endDate)",
             nativeQuery = true)
-    SalesStored findSaleSuccessStored(@Param("startDate") LocalDate startDate, @Param("endDate") LocalDate endDate);
+    SalesStored findAllSaleSuccess(@Param("startDate") LocalDate startDate, @Param("endDate") LocalDate endDate);
+
+    @Query(value = "CALL GetSalesSuccessAtStore(:startDate,:endDate,:store)",
+            nativeQuery = true)
+    SalesStored findSaleSuccessAtStore(@Param("startDate") LocalDate startDate, @Param("endDate") LocalDate endDate,@Param("store") Long store);
 }

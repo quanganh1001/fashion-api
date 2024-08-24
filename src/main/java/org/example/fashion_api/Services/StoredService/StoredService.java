@@ -9,9 +9,9 @@ import java.util.List;
 
 public interface StoredService {
 
-    List<TopProductStored> findTopProduct(LocalDate startDate, LocalDate endDate) throws JsonProcessingException;
+    List<TopProductStored> findTopProduct(LocalDate startDate, LocalDate endDate,Long store) throws JsonProcessingException;
 
     SalesStored findSalesSent(LocalDate startDate, LocalDate endDate) throws JsonProcessingException;
 
-    SalesStored findSalesSuccess(LocalDate startDate, LocalDate endDate) throws JsonProcessingException;
+    SalesStored findSalesSuccess(LocalDate startDate, LocalDate endDate,Long store) throws JsonProcessingException;
 }

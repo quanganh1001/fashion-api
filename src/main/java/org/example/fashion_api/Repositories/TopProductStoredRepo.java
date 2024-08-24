@@ -11,6 +11,9 @@ import java.util.List;
 
 @Repository
 public interface TopProductStoredRepo extends JpaRepository<TopProductStored,Long> {
-    @Query(value = "CALL GetTopProduct(:startDate, :endDate)", nativeQuery = true)
-    List<TopProductStored> findTopProduct(@Param("startDate") LocalDate startDate, @Param("endDate") LocalDate endDate);
+    @Query(value = "CALL GetTopProductByStore(:startDate, :endDate, :store)", nativeQuery = true)
+    List<TopProductStored> findTopProductByStore(@Param("startDate") LocalDate startDate, @Param("endDate") LocalDate endDate,@Param("store") Long store);
+
+    @Query(value = "CALL GetAllTopProduct(:startDate, :endDate)", nativeQuery = true)
+    List<TopProductStored> findAllTopProduct(@Param("startDate") LocalDate startDate, @Param("endDate") LocalDate endDate);
 }

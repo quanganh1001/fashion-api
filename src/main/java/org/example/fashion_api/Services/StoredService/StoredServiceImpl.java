@@ -19,12 +19,15 @@ public class StoredServiceImpl implements StoredService {
 
 
     @Override
-    public List<TopProductStored> findTopProduct(LocalDate startDate, LocalDate endDate) throws JsonProcessingException {
-        if (startDate == null || endDate == null){
-            startDate = LocalDate.now().minusDays(365);
-            endDate = LocalDate.now();
+    public List<TopProductStored> findTopProduct(LocalDate startDate, LocalDate endDate,Long store) throws JsonProcessingException {
+        if (store == 0){
+            return topProductStoredRepo.findAllTopProduct(startDate,endDate);
+        }else if (store == -1) {
+            return topProductStoredRepo.findTopProductByStore(startDate,endDate,null);
+        }else {
+            return topProductStoredRepo.findTopProductByStore(startDate,endDate,store);
         }
-        return topProductStoredRepo.findTopProduct(startDate,endDate);
+
     }
 
     @Override
@@ -33,8 +36,15 @@ public class StoredServiceImpl implements StoredService {
     }
 
     @Override
-    public SalesStored findSalesSuccess(LocalDate startDate, LocalDate endDate) throws JsonProcessingException {
-        return salesStoredRepo.findSaleSuccessStored(startDate,endDate);
+    public SalesStored findSalesSuccess(LocalDate startDate, LocalDate endDate,Long store) throws JsonProcessingException {
+        if (store == 0){
+            return salesStoredRepo.findAllSaleSuccess(startDate,endDate);
+        }else if (store == -1) {
+            return salesStoredRepo.findSaleSuccessAtStore(startDate,endDate,null);
+        }else {
+            return salesStoredRepo.findSaleSuccessAtStore(startDate,endDate,store);
+        }
+
     }
 
 

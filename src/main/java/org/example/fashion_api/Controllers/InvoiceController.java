@@ -2,26 +2,15 @@ package org.example.fashion_api.Controllers;
 
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.apache.http.HttpRequest;
-import org.apache.http.client.methods.HttpTrace;
 import org.example.fashion_api.Enum.InvoiceStatusEnum;
-import org.example.fashion_api.Exception.NotFoundException;
-import org.example.fashion_api.Models.Colors.ColorDto;
 import org.example.fashion_api.Models.Invoices.*;
-import org.example.fashion_api.Models.InvoicesDetails.InvoiceDetail;
-import org.example.fashion_api.Models.InvoicesDetails.InvoiceDetailDto;
 import org.example.fashion_api.Models.InvoicesDetails.InvoiceDetailRes;
 import org.example.fashion_api.Models.InvoicesHistory.InvoiceHistoryRes;
-import org.example.fashion_api.Repositories.InvoiceRepo;
-import org.example.fashion_api.Services.ColorService.ColorService;
 import org.example.fashion_api.Services.InvoiceDetailService.InvoiceDetailService;
 import org.example.fashion_api.Services.InvoiceHistoryService.InvoiceHistoryService;
 import org.example.fashion_api.Services.InvoiceService.InvoiceService;
-import org.example.fashion_api.Services.VnpayService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -68,8 +57,8 @@ public class InvoiceController {
     @Operation(summary = "get Invoice (role MANAGER,EMPLOYEE)")
     @PreAuthorize("hasAnyRole('MANAGER','EMPLOYEE')")
     @GetMapping("/store/{invoiceId}")
-    public ResponseEntity<InvoiceRes> getInvoiceAtStoreById(@PathVariable Long invoiceId,@RequestParam Long store){
-        return ResponseEntity.ok(invoiceService.getInvoiceAtStoreById(invoiceId,store));
+    public ResponseEntity<InvoiceRes> getInvoiceAtStoreById(@PathVariable Long invoiceId){
+        return ResponseEntity.ok(invoiceService.getInvoiceAtStoreById(invoiceId));
     }
 
 
@@ -126,8 +115,9 @@ public class InvoiceController {
     }
 
     @PostMapping("/createInvoice")
-    @Operation(summary = "create invoice", description = "create invoice at store")
-    public void checkoutByCash(@Valid @RequestBody CreateInvoiceDto createInvoiceDto){
+    @PreAuthorize("hasAnyRole('MANAGER','EMPLOYEE')")
+    @Operation(summary = "create invoice", description = "create invoice at store (role MANAGER,EMPLOYEE)")
+    public void createInvoiceAtStore(@Valid @RequestBody CreateInvoiceDto createInvoiceDto){
            invoiceService.createInvoiceAtStore(createInvoiceDto);
     }
 

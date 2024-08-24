@@ -45,10 +45,10 @@ public class InvoiceDetailServiceImpl implements InvoiceDetailService{
         Invoice invoice = invoiceRepo.findById(invoiceId).orElseThrow(()
                 ->new NotFoundException("Invoice not found"));
 
-        if( (invoice.getInvoiceStatus() != InvoiceStatusEnum.NEW &&
+        if( ((invoice.getInvoiceStatus() != InvoiceStatusEnum.NEW &&
                 invoice.getInvoiceStatus() != InvoiceStatusEnum.CANCEL &&
                 invoice.getInvoiceStatus() != InvoiceStatusEnum.PROCESS) ||
-                invoice.getIsPaid()){
+                invoice.getIsPaid()) && invoice.getOrderSource() == null){
             throw new BadRequestException("Order created or paid cannot add products");
         }
 

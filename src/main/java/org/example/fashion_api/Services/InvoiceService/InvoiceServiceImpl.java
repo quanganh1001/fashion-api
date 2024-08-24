@@ -124,14 +124,16 @@ public class InvoiceServiceImpl implements InvoiceService {
 
     @Override
     public void createInvoiceAtStore(CreateInvoiceDto createInvoiceDto) {
-        Invoice invoice = invoiceMapper.createInvoiceDtoToInvoice(createInvoiceDto, new Invoice());
+        Account account = accountService.getAccountFromAuthentication();
 
+        Invoice invoice = invoiceMapper.createInvoiceDtoToInvoice(createInvoiceDto, new Invoice());
+        invoice.setAccount(account);
         invoice.setIsPaid(true);
         invoice.setInvoiceStatus(InvoiceStatusEnum.SUCCESS);
 
+
         invoiceHistoryService.setNameVarForTrigger();
         Invoice newInvoice = invoiceRepo.save(invoice);
-
         for (InvoiceDetailDto invoiceDetail : createInvoiceDto.getInvoicesDetails()) {
             invoiceDetailService.createInvoiceDetail(newInvoice.getId(), invoiceDetail.getProductDetailId());
         }
@@ -169,8 +171,8 @@ public class InvoiceServiceImpl implements InvoiceService {
     }
 
     @Override
-    public InvoiceRes getInvoiceAtStoreById(Long invoiceId, Long store) {
-        return invoiceMapper.invoiceToInvoiceRes(invoiceRepo.findByIdAndOrderSourceId(invoiceId,store)
+    public InvoiceRes getInvoiceAtStoreById(Long invoiceId) {
+        return invoiceMapper.invoiceToInvoiceRes(invoiceRepo.findById(invoiceId)
                 .orElseThrow(() -> new NotFoundException("Invoice")));
     }
 

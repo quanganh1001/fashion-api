@@ -18,7 +18,7 @@ public interface InvoiceService {
 
     InvoiceRes getInvoiceOnlineById(Long invoiceId);
 
-    InvoiceRes getInvoiceAtStoreById(Long invoiceId,Long store);
+    InvoiceRes getInvoiceAtStoreById(Long invoiceId);
 
     void updateShippingFee(Long invoiceId, Long shippingFee);
 

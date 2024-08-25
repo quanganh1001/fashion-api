@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th8 24, 2024 lúc 09:25 AM
+-- Thời gian đã tạo: Th8 25, 2024 lúc 09:16 AM
 -- Phiên bản máy phục vụ: 10.4.32-MariaDB
 -- Phiên bản PHP: 8.2.12
 
@@ -27,34 +27,12 @@ DELIMITER $$
 --
 -- Thủ tục
 --
-DROP PROCEDURE IF EXISTS `GetSalesSent`$$
-CREATE DEFINER=`root`@`localhost` PROCEDURE `GetSalesSent` (IN `startDate` DATE, IN `endDate` DATE)   BEGIN
+DROP PROCEDURE IF EXISTS `GetAllSalesSuccess`$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `GetAllSalesSuccess` (IN `startDate` DATE, IN `endDate` DATE)   BEGIN
     SELECT
         FLOOR(RAND() * 1000000000) AS `id`,
         SUM(`id`.`total_price`) AS `total_sales`,
-        COUNT(DISTINCT `i`.`id`) AS `total_invoices`,
-        `i`.`confirmation_date` AS `date`,
-        `i`.`created_at` AS `created_at`,
-        `i`.`updated_at` AS `updated_at`
-    FROM
-        `invoices_detail` `id`
-        JOIN `invoices` `i`
-        ON `id`.`invoice_id` = `i`.`id`
-    WHERE
-        `i`.`confirmation_date` IS NOT NULL
-        AND `i`.`confirmation_date` BETWEEN startDate AND endDate;
-    
-END$$
-
-DROP PROCEDURE IF EXISTS `GetSalesSuccess`$$
-CREATE DEFINER=`root`@`localhost` PROCEDURE `GetSalesSuccess` (IN `startDate` DATE, IN `endDate` DATE)   BEGIN
-    SELECT
-        FLOOR(RAND() * 1000000000) AS `id`,
-        SUM(`id`.`total_price`) AS `total_sales`,
-        COUNT(DISTINCT `i`.`id`) AS `total_invoices`,
-        `i`.`successful_date` AS `date`,
-        `i`.`created_at` AS `created_at`,
-        `i`.`updated_at` AS `updated_at`
+        COUNT(DISTINCT `i`.`id`) AS `total_invoices`
     FROM
         `invoices_detail` `id`
         JOIN `invoices` `i`
@@ -64,8 +42,8 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `GetSalesSuccess` (IN `startDate` DA
         AND `i`.`successful_date` BETWEEN startDate AND endDate;
 END$$
 
-DROP PROCEDURE IF EXISTS `GetTopProduct`$$
-CREATE DEFINER=`root`@`localhost` PROCEDURE `GetTopProduct` (IN `startDate` DATE, IN `endDate` DATE)   BEGIN
+DROP PROCEDURE IF EXISTS `GetAllTopProduct`$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `GetAllTopProduct` (IN `startDate` DATE, IN `endDate` DATE)   BEGIN
 SELECT
     FLOOR(RAND() * 1000000000) AS `id`,
     `p`.`image_background` AS `image_background`,
@@ -73,9 +51,6 @@ SELECT
     `pd`.`id` AS `product_detail_id`,
     `pd`.`size` AS `size`,
     `c`.`name` AS `color_name`,
-    `i`.`confirmation_date` AS `confirmation_date`,
-    `i`.`created_at` AS `created_at`,
-    `i`.`updated_at` AS `updated_at`,
     SUM(`id`.`total_price`) AS `total_sales`,
     SUM(`id`.`quantity`) AS `total_quantity_sold`
 FROM
@@ -110,8 +85,94 @@ GROUP BY
     `pd`.`size`,
     `c`.`name`
 ORDER BY
-    SUM(`id`.`total_price`) DESC
-LIMIT 10;
+    SUM(`id`.`total_price`) DESC LIMIT 10;
+
+
+END$$
+
+DROP PROCEDURE IF EXISTS `GetSalesSent`$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `GetSalesSent` (IN `startDate` DATE, IN `endDate` DATE)   BEGIN
+    SELECT
+        FLOOR(RAND() * 1000000000) AS `id`,
+        SUM(`id`.`total_price`) AS `total_sales`,
+        COUNT(DISTINCT `i`.`id`) AS `total_invoices`
+    FROM
+        `invoices_detail` `id`
+        JOIN `invoices` `i`
+        ON `id`.`invoice_id` = `i`.`id`
+    WHERE
+        `i`.`confirmation_date` IS NOT NULL
+        AND `i`.`confirmation_date` BETWEEN startDate AND endDate
+        AND i.order_source IS NULL;
+    
+END$$
+
+DROP PROCEDURE IF EXISTS `GetSalesSuccessAtStore`$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `GetSalesSuccessAtStore` (IN `startDate` DATE, IN `endDate` DATE, IN `store` INT)   BEGIN
+    SELECT
+        FLOOR(RAND() * 1000000000) AS `id`,
+        SUM(`id`.`total_price`) AS `total_sales`,
+        COUNT(DISTINCT `i`.`id`) AS `total_invoices`
+    FROM
+        `invoices_detail` `id`
+        JOIN `invoices` `i`
+        ON `id`.`invoice_id` = `i`.`id`
+    WHERE
+        `i`.`successful_date` IS NOT NULL
+        AND `i`.`successful_date` BETWEEN startDate AND endDate
+         AND (
+        (store IS NULL AND i.order_source IS NULL) 
+        OR (store IS NOT NULL AND i.order_source = store));
+END$$
+
+DROP PROCEDURE IF EXISTS `GetTopProductByStore`$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `GetTopProductByStore` (IN `startDate` DATE, IN `endDate` DATE, IN `store` INT)   BEGIN
+SELECT
+    FLOOR(RAND() * 1000000000) AS `id`,
+    `p`.`image_background` AS `image_background`,
+    `p`.`product_name` AS `product_name`,
+    `pd`.`id` AS `product_detail_id`,
+    `pd`.`size` AS `size`,
+    `c`.`name` AS `color_name`,
+    SUM(`id`.`total_price`) AS `total_sales`,
+    SUM(`id`.`quantity`) AS `total_quantity_sold`
+FROM
+    (
+        (
+            (
+                (
+                    `fashion_api_project`.`invoices_detail` `id`
+                JOIN `fashion_api_project`.`invoices` `i`
+                ON
+                    (`id`.`invoice_id` = `i`.`id`)
+                )
+            JOIN `fashion_api_project`.`products_detail` `pd`
+            ON
+                (`id`.`product_detail_id` = `pd`.`id`)
+            )
+        JOIN `fashion_api_project`.`products` `p`
+        ON
+            (`pd`.`product_id` = `p`.`id`)
+        )
+    JOIN `fashion_api_project`.`colors` `c`
+    ON
+        (`pd`.`color_id` = `c`.`id`)
+    )
+WHERE
+    `i`.`confirmation_date` IS NOT NULL
+     AND i.confirmation_date BETWEEN startDate AND endDate
+    AND (
+        (store IS NULL AND i.order_source IS NULL) 
+        OR (store IS NOT NULL AND i.order_source = store))
+GROUP BY
+    `p`.`image_background`,
+    `p`.`product_name`,
+    `pd`.`id`,
+    `pd`.`size`,
+    `c`.`name`
+ORDER BY
+    SUM(`id`.`total_price`) DESC LIMIT 10;
+
 
 END$$
 
@@ -1027,7 +1088,8 @@ INSERT INTO `invoices` (`id`, `invoice_code`, `name`, `phone`, `address`, `note`
 (232, 'V34YZA3H', 'Steve Scott', '0978901239', '4444 Cedar St', 'Note 47', 'Custom Note 47', 'ORDER_CREATED', 400000, 0, 400000, b'0', '2024-08-06 12:52:45', '2024-08-08 13:46:21', 0, 8, NULL, '2024-08-06', NULL),
 (233, 'W45ZAB4I', 'Tina Mitchell', '0989012350', '4545 Willow St', 'Note 48', 'Custom Note 48', 'RETURN', 480000, 0, 480000, b'1', '2024-07-12 02:18:15', '2024-08-08 13:46:21', 0, 1, NULL, '2024-07-12', NULL),
 (234, 'X56ABC5J', 'Ursula Lopez', '0990123461', '4646 Fir St', 'Note 49', 'Custom Note 49', 'CANCEL', 550000, 0, 550000, b'0', '2024-07-23 03:52:58', '2024-07-23 03:52:58', 0, 2, NULL, NULL, NULL),
-(235, 'Y67BCD6K', 'Victor Young', '0364100196', '4747 Redwood St', 'Note 50', 'Custom Note 50', 'ORDER_CREATED', 380000, 0, 380000, b'1', '2024-07-02 19:30:08', '2024-08-22 14:06:14', 0, 4, NULL, '2024-08-22', NULL);
+(235, 'Y67BCD6K', 'Victor Young', '0364100196', '4747 Redwood St', 'Note 50', 'Custom Note 50', 'ORDER_CREATED', 380000, 0, 380000, b'1', '2024-07-02 19:30:08', '2024-08-22 14:06:14', 0, 4, NULL, '2024-08-22', NULL),
+(253, 'SEEDCZTG', 'quang anh', '0365151822', 'Mua tại quầy', 'tét', NULL, 'SUCCESS', 990000, 0, 990000, b'1', '2024-08-24 15:21:11', '2024-08-24 15:21:11', 0, 1, 2, NULL, NULL);
 
 --
 -- Bẫy `invoices`
@@ -1365,7 +1427,8 @@ INSERT INTO `invoices_detail` (`id`, `invoice_id`, `product_detail_id`, `price`,
 (646, 207, 426, 480000, 1, 480000, '2024-08-07 09:44:13', '2024-08-07 09:44:13'),
 (647, 57, 704, 750000, 1, 750000, '2024-08-07 10:00:04', '2024-08-07 10:00:04'),
 (648, 25, 704, 750000, 1, 750000, '2024-08-07 10:02:42', '2024-08-07 10:02:42'),
-(651, 213, 703, 750000, 1, 750000, '2024-08-07 10:40:51', '2024-08-07 10:40:51');
+(651, 213, 703, 750000, 1, 750000, '2024-08-07 10:40:51', '2024-08-07 10:40:51'),
+(668, 253, 691, 990000, 1, 990000, '2024-08-24 15:21:11', '2024-08-24 15:21:11');
 
 --
 -- Bẫy `invoices_detail`
@@ -2034,7 +2097,9 @@ INSERT INTO `invoices_history` (`id`, `invoice_id`, `content`, `created_at`, `up
 (1196, 251, 'quang anh đã tạo đơn hàng: <br>Mã đơn: MPOVXJEA,<br>Tên khách hàng: test,<br>Số điện thoại: 0365151822,<br>Địa chỉ: Mua tại quầy,<br>Trạng thái thanh toán: Đã thanh toán', '2024-08-24 07:06:17', '2024-08-24 07:06:17'),
 (1197, 251, 'quang anh đã thêm sản phẩm: DABJ00401CT00SB_NV-33 (giá = 550,000 VND)', '2024-08-24 07:06:17', '2024-08-24 07:06:17'),
 (1198, 251, 'quang anh đã thêm sản phẩm: DABJ90401CT19SB_NV-33 (giá = 550,000 VND)', '2024-08-24 07:06:17', '2024-08-24 07:06:17'),
-(1199, 252, 'quang anh đã tạo đơn hàng: <br>Mã đơn: LAFPGGOP,<br>Tên khách hàng: quang anh,<br>Số điện thoại: 0365151822,<br>Địa chỉ: Mua tại quầy,<br>Trạng thái thanh toán: Đã thanh toán', '2024-08-24 07:20:28', '2024-08-24 07:20:28');
+(1199, 252, 'quang anh đã tạo đơn hàng: <br>Mã đơn: LAFPGGOP,<br>Tên khách hàng: quang anh,<br>Số điện thoại: 0365151822,<br>Địa chỉ: Mua tại quầy,<br>Trạng thái thanh toán: Đã thanh toán', '2024-08-24 07:20:28', '2024-08-24 07:20:28'),
+(1213, 253, 'quang anh đã tạo đơn hàng: <br>Mã đơn: SEEDCZTG,<br>Tên khách hàng: quang anh,<br>Số điện thoại: 0365151822,<br>Địa chỉ: Mua tại quầy,<br>Trạng thái thanh toán: Đã thanh toán', '2024-08-24 15:21:11', '2024-08-24 15:21:11'),
+(1214, 253, 'quang anh đã thêm sản phẩm: DWCT00161PE00RB_NV-S (giá = 990,000 VND)', '2024-08-24 15:21:11', '2024-08-24 15:21:11');
 
 -- --------------------------------------------------------
 
@@ -2063,8 +2128,8 @@ INSERT INTO `jwt_tokens` (`id`, `token`, `expiration_date`, `refresh_token`, `ac
 (531, 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJuZ3V5ZW5xdWFuZ2FuaCIsInBob25lIjoiMDM2NTE1MTgyMiIsInJvbGUiOiJST0xFX0VNUExPWUVFIiwiaWF0IjoxNzIyOTQ3NDUxLCJleHAiOjE3MjI5NDgwNTF9.nFEdpbXTF0tUkGwyB8DcIDtotql2UBxIxvWTifMPH9s', '2024-08-06 19:40:51', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJuZ3V5ZW5xdWFuZ2FuaCIsInBob25lIjoiMDM2NTE1MTgyMiIsInJvbGUiOiJST0xFX0VNUExPWUVFIiwiaWF0IjoxNzIyOTQ3NDUxLCJleHAiOjE3MjM1NTIyNTF9.vMzV_eI2Nf0Gezi8VaHIOCJtvRbAcJfamr3z3O6nF3U', 2, '2024-08-13 19:30:51', 0, '2024-08-06 12:30:51', '2024-08-06 12:30:51'),
 (594, 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJuZ3V5ZW5xdWFuZ2FuaCIsInBob25lIjoiMDM2NDQzMTEzMiIsInJvbGUiOiJST0xFX0NVU1RPTUVSIiwiaWF0IjoxNzIzNjE1ODYyLCJleHAiOjE3MjM2MTY0NjJ9._JJ6h33VnSzwfuuacPA0cjuZ49N9cEWW_eN1Fl5yqXI', '2024-08-14 13:21:02', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJuZ3V5ZW5xdWFuZ2FuaCIsInBob25lIjoiMDM2NDQzMTEzMiIsInJvbGUiOiJST0xFX0NVU1RPTUVSIiwiaWF0IjoxNzIzNjE1ODYyLCJleHAiOjE3MjQyMjA2NjJ9.6_ydijRk3w8x9_ImQIvYo_BUVtAXTZ0EVuqxUukuTcY', 14, '2024-08-21 13:11:02', 0, '2024-08-14 06:11:02', '2024-08-14 06:11:02'),
 (612, 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJuZ3V5ZW5xdWFuZ2FuaCIsInBob25lIjoiMDM2NDQzMTEzMiIsInJvbGUiOiJST0xFX0NVU1RPTUVSIiwiaWF0IjoxNzIzNjQyMDcxLCJleHAiOjE3MjM2NDI2NzF9.ZpxdaVYfmIjqOs-l42QYUTJH5ECfwUnX52yzUVD-nno', '2024-08-14 20:37:51', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJuZ3V5ZW5xdWFuZ2FuaCIsInBob25lIjoiMDM2NDQzMTEzMiIsInJvbGUiOiJST0xFX0NVU1RPTUVSIiwiaWF0IjoxNzIzNjQyMDcxLCJleHAiOjE3MjQyNDY4NzF9.xA1m7aFyMxhu1fmSBq3qudQU7aClOoA2GRoI-iMHw1c', 14, '2024-08-21 20:27:51', 0, '2024-08-14 13:27:51', '2024-08-14 13:27:51'),
-(641, 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJuZ3V5ZW5xdWFuZ2FuaCIsInBob25lIjoiMDM2NDEwMDE5NiIsInJvbGUiOiJST0xFX01BTkFHRVIiLCJpYXQiOjE3MjQ0ODM4NzYsImV4cCI6MTcyNDQ4NDQ3Nn0.IOcc0rLqFYPZJBSX6kZa7UpndFz19ghKwEIPMWn2AbY', '2024-08-24 14:27:56', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJuZ3V5ZW5xdWFuZ2FuaCIsInBob25lIjoiMDM2NDEwMDE5NiIsInJvbGUiOiJST0xFX01BTkFHRVIiLCJpYXQiOjE3MjQ0ODM4NzYsImV4cCI6MTcyNTA4ODY3Nn0.jVPbbQSEIkXAmTWTUrDNjq02ONFNR6ZxC_rx_ub5QXw', 1, '2024-09-23 14:17:56', 0, '2024-08-24 06:26:00', '2024-08-24 07:17:56'),
-(643, 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJuZ3V5ZW5xdWFuZ2FuaCIsInBob25lIjoiMDM2NDEwMDE5NiIsInJvbGUiOiJST0xFX01BTkFHRVIiLCJpYXQiOjE3MjQ0ODI3NzEsImV4cCI6MTcyNDQ4MzM3MX0.e3OCg6EwTAQ6s7G85JI1WFVdkt53L2ql-K54BvUAuVo', '2024-08-24 14:09:31', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJuZ3V5ZW5xdWFuZ2FuaCIsInBob25lIjoiMDM2NDEwMDE5NiIsInJvbGUiOiJST0xFX01BTkFHRVIiLCJpYXQiOjE3MjQ0ODI3NzEsImV4cCI6MTcyNTA4NzU3MX0.ToPmLam_orZ8TYMkFY21SaTAwUQbyzIlqQG0fOHtdfI', 1, '2024-08-31 13:59:31', 0, '2024-08-24 06:59:31', '2024-08-24 06:59:31');
+(657, 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJuZ3V5ZW5xdWFuZ2FuaCIsInBob25lIjoiMDM2NDEwMDE5NiIsInJvbGUiOiJST0xFX01BTkFHRVIiLCJpYXQiOjE3MjQ1MTQwNTEsImV4cCI6MTcyNDUxNDY1MX0.dlZPgjWZJha6p7YoknMeITY4Rt86gh-oKwPz0G6hLjA', '2024-08-24 22:50:51', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJuZ3V5ZW5xdWFuZ2FuaCIsInBob25lIjoiMDM2NDEwMDE5NiIsInJvbGUiOiJST0xFX01BTkFHRVIiLCJpYXQiOjE3MjQ1MTQwNTEsImV4cCI6MTcyNTExODg1MX0.IyLyj1XT14Z3TvsBCUuUHo1vif3zBC_ZRIqrX7_JsDw', 1, '2024-08-31 22:40:51', 0, '2024-08-24 15:40:51', '2024-08-24 15:40:51'),
+(658, 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJuZ3V5ZW5xdWFuZ2FuaCIsInBob25lIjoiMDM2NDEwMDE5NiIsInJvbGUiOiJST0xFX01BTkFHRVIiLCJpYXQiOjE3MjQ1MTUyODIsImV4cCI6MTcyNDUxNTg4Mn0.E3N3jfbnPIQpWY7OU9HTZfOFAZ_rQ-fS6Vqy5GK0S4Y', '2024-08-24 23:11:22', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJuZ3V5ZW5xdWFuZ2FuaCIsInBob25lIjoiMDM2NDEwMDE5NiIsInJvbGUiOiJST0xFX01BTkFHRVIiLCJpYXQiOjE3MjQ1MTUyODIsImV4cCI6MTcyNTEyMDA4Mn0.aqTxLjy8c-A_xdFXjgBGmqVBoM2j22BAj4TsmJCBo4o', 1, '2024-09-23 23:01:22', 0, '2024-08-24 15:51:31', '2024-08-24 16:01:22');
 
 -- --------------------------------------------------------
 
@@ -3133,25 +3198,25 @@ ALTER TABLE `imgs_product`
 -- AUTO_INCREMENT cho bảng `invoices`
 --
 ALTER TABLE `invoices`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=253;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=254;
 
 --
 -- AUTO_INCREMENT cho bảng `invoices_detail`
 --
 ALTER TABLE `invoices_detail`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=668;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=669;
 
 --
 -- AUTO_INCREMENT cho bảng `invoices_history`
 --
 ALTER TABLE `invoices_history`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1213;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1215;
 
 --
 -- AUTO_INCREMENT cho bảng `jwt_tokens`
 --
 ALTER TABLE `jwt_tokens`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=644;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=659;
 
 --
 -- AUTO_INCREMENT cho bảng `products`

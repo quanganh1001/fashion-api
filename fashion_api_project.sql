@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th10 10, 2024 lúc 04:13 PM
+-- Thời gian đã tạo: Th10 11, 2024 lúc 06:17 PM
 -- Phiên bản máy phục vụ: 10.4.32-MariaDB
 -- Phiên bản PHP: 8.2.12
 
@@ -972,7 +972,7 @@ INSERT INTO `invoices` (`id`, `invoice_code`, `name`, `phone`, `address`, `note`
 (24, 'EAEUPXUE', 'quang anh', '0365151822', '4dvsdsf', '', 's', 'NEW', 990000, 0, 990000, b'0', '2024-05-14 10:47:02', '2024-06-15 13:55:03', 0, NULL, NULL, NULL, NULL),
 (25, 'EIIMQTNF', 'quang anh', '0365151822', '4dvsdsf', '', 'd', 'SUCCESS', 1150000, 30000, 1180000, b'0', '2024-05-14 10:47:02', '2024-08-22 14:33:04', 0, 1, 3, '2024-05-14', '2024-05-14'),
 (26, 'EXAWZYY2', 'quang anh', '0365151822', '4dvsdsf', '', 's', 'NEW', 990000, 0, 990000, b'0', '2024-05-14 10:47:02', '2024-06-15 13:55:03', 0, 1, NULL, NULL, NULL),
-(27, 'EYCDR8PC', 'nguyễn quang anh', '0999999999', 'số 18 ngõ 222 tựu liệt,thanh trì, hà nội', '                        fsd', NULL, 'NEW', 0, 0, 0, b'0', '2024-05-14 10:47:02', '2024-08-01 10:45:22', 0, 2, NULL, NULL, NULL),
+(27, 'EYCDR8PC', 'nguyễn quang anh', '0999999999', 'số 18 ngõ 222 tựu liệt,thanh trì, hà nội', '                        fsd', NULL, 'NEW', 380000, 0, 380000, b'0', '2024-05-14 10:47:02', '2024-10-11 15:14:03', 0, 2, NULL, NULL, NULL),
 (28, 'F6GYDSV1', 'nguyễn quang anh', '0365151821', 'số 18 ngõ 222 tựu liệt,thanh trì, hà nội', '', NULL, 'SUCCESS', 0, 0, 0, b'0', '2024-05-14 10:47:02', '2024-08-22 14:33:04', 0, 1, 3, '2024-08-22', '2024-08-22'),
 (29, 'GB4ENHC1', 'nguyễn quang anh', '0999999999', 'số 18 ngõ 222 tựu liệt,thanh trì, hà nội', '', 'dfs', 'CANCEL', 0, 0, 0, b'0', '2024-05-14 10:47:02', '2024-08-01 10:45:22', 0, 1, NULL, NULL, NULL),
 (30, 'GCRM2OC5', 'quang anh', '0365151822', '4dvsdsf', '', 'sd', 'NEW', NULL, 30000, 380000, b'0', '2024-05-14 10:47:02', '2024-06-15 13:55:03', 0, 1, NULL, NULL, NULL),
@@ -1086,7 +1086,8 @@ INSERT INTO `invoices` (`id`, `invoice_code`, `name`, `phone`, `address`, `note`
 (233, 'W45ZAB4I', 'Tina Mitchell', '0989012350', '4545 Willow St', 'Note 48', 'Custom Note 48', 'RETURN', 480000, 0, 480000, b'1', '2024-07-12 02:18:15', '2024-08-08 13:46:21', 0, 1, NULL, '2024-07-12', NULL),
 (234, 'X56ABC5J', 'Ursula Lopez', '0990123461', '4646 Fir St', 'Note 49', 'Custom Note 49', 'CANCEL', 550000, 0, 550000, b'0', '2024-07-23 03:52:58', '2024-07-23 03:52:58', 0, 2, NULL, NULL, NULL),
 (235, 'Y67BCD6K', 'Victor Young', '0364100196', '4747 Redwood St', 'Note 50', 'Custom Note 50', 'ORDER_CREATED', 380000, 0, 380000, b'1', '2024-07-02 19:30:08', '2024-08-22 14:06:14', 0, 4, NULL, '2024-08-22', NULL),
-(253, 'SEEDCZTG', 'quang anh', '0365151822', 'Mua tại quầy', 'tét', NULL, 'SUCCESS', 990000, 0, 990000, b'1', '2024-08-24 15:21:11', '2024-08-24 15:21:11', 0, 1, 2, NULL, NULL);
+(253, 'SEEDCZTG', 'quang anh', '0365151822', 'Mua tại quầy', 'tét', NULL, 'SUCCESS', 990000, 0, 990000, b'1', '2024-08-24 15:21:11', '2024-08-24 15:21:11', 0, 1, 2, NULL, NULL),
+(254, '5QVJQZYF', 'quang anh', '0364100196', 'dsva', NULL, '', 'NEW', 604000, 0, 604000, b'0', '2024-10-11 15:42:59', '2024-10-11 15:42:59', 0, NULL, NULL, NULL, NULL);
 
 --
 -- Bẫy `invoices`
@@ -1425,7 +1426,11 @@ INSERT INTO `invoices_detail` (`id`, `invoice_id`, `product_detail_id`, `price`,
 (647, 57, 704, 750000, 1, 750000, '2024-08-07 10:00:04', '2024-08-07 10:00:04'),
 (648, 25, 704, 750000, 1, 750000, '2024-08-07 10:02:42', '2024-08-07 10:02:42'),
 (651, 213, 703, 750000, 1, 750000, '2024-08-07 10:40:51', '2024-08-07 10:40:51'),
-(668, 253, 691, 990000, 1, 990000, '2024-08-24 15:21:11', '2024-08-24 15:21:11');
+(668, 253, 691, 990000, 1, 990000, '2024-08-24 15:21:11', '2024-08-24 15:21:11'),
+(669, 27, 625, 380000, 1, 380000, '2024-10-11 15:14:03', '2024-10-11 15:14:03'),
+(670, 254, 409, 42000, 1, 42000, '2024-10-11 15:42:59', '2024-10-11 15:42:59'),
+(671, 254, 413, 42000, 1, 42000, '2024-10-11 15:42:59', '2024-10-11 15:42:59'),
+(672, 254, 763, 520000, 1, 520000, '2024-10-11 15:42:59', '2024-10-11 15:42:59');
 
 --
 -- Bẫy `invoices_detail`
@@ -2096,7 +2101,12 @@ INSERT INTO `invoices_history` (`id`, `invoice_id`, `content`, `created_at`, `up
 (1198, 251, 'quang anh đã thêm sản phẩm: DABJ90401CT19SB_NV-33 (giá = 550,000 VND)', '2024-08-24 07:06:17', '2024-08-24 07:06:17'),
 (1199, 252, 'quang anh đã tạo đơn hàng: <br>Mã đơn: LAFPGGOP,<br>Tên khách hàng: quang anh,<br>Số điện thoại: 0365151822,<br>Địa chỉ: Mua tại quầy,<br>Trạng thái thanh toán: Đã thanh toán', '2024-08-24 07:20:28', '2024-08-24 07:20:28'),
 (1213, 253, 'quang anh đã tạo đơn hàng: <br>Mã đơn: SEEDCZTG,<br>Tên khách hàng: quang anh,<br>Số điện thoại: 0365151822,<br>Địa chỉ: Mua tại quầy,<br>Trạng thái thanh toán: Đã thanh toán', '2024-08-24 15:21:11', '2024-08-24 15:21:11'),
-(1214, 253, 'quang anh đã thêm sản phẩm: DWCT00161PE00RB_NV-S (giá = 990,000 VND)', '2024-08-24 15:21:11', '2024-08-24 15:21:11');
+(1214, 253, 'quang anh đã thêm sản phẩm: DWCT00161PE00RB_NV-S (giá = 990,000 VND)', '2024-08-24 15:21:11', '2024-08-24 15:21:11'),
+(1215, 27, 'quang anh đã thêm sản phẩm: DSBI01302LI00SB_LB-32 (giá = 380,000 VND)', '2024-10-11 15:14:03', '2024-10-11 15:14:03'),
+(1216, 254, 'quang anh đã tạo đơn hàng: <br>Mã đơn: 5QVJQZYF,<br>Tên khách hàng: quang anh,<br>Số điện thoại: 0364100196,<br>Địa chỉ: dsva,<br>Trạng thái thanh toán: Chưa thanh toán', '2024-10-11 15:42:59', '2024-10-11 15:42:59'),
+(1217, 254, 'quang anh đã thêm sản phẩm: DATB92071BA00SB_WH-40 (giá = 42,000 VND)', '2024-10-11 15:42:59', '2024-10-11 15:42:59'),
+(1218, 254, 'quang anh đã thêm sản phẩm: DATB92071BA00SB_LB-39 (giá = 42,000 VND)', '2024-10-11 15:42:59', '2024-10-11 15:42:59'),
+(1219, 254, 'quang anh đã thêm sản phẩm: EWTE00311AC08SB_BL-S (giá = 520,000 VND)', '2024-10-11 15:42:59', '2024-10-11 15:42:59');
 
 -- --------------------------------------------------------
 
@@ -2125,8 +2135,8 @@ INSERT INTO `jwt_tokens` (`id`, `token`, `expiration_date`, `refresh_token`, `ac
 (531, 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJuZ3V5ZW5xdWFuZ2FuaCIsInBob25lIjoiMDM2NTE1MTgyMiIsInJvbGUiOiJST0xFX0VNUExPWUVFIiwiaWF0IjoxNzIyOTQ3NDUxLCJleHAiOjE3MjI5NDgwNTF9.nFEdpbXTF0tUkGwyB8DcIDtotql2UBxIxvWTifMPH9s', '2024-08-06 19:40:51', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJuZ3V5ZW5xdWFuZ2FuaCIsInBob25lIjoiMDM2NTE1MTgyMiIsInJvbGUiOiJST0xFX0VNUExPWUVFIiwiaWF0IjoxNzIyOTQ3NDUxLCJleHAiOjE3MjM1NTIyNTF9.vMzV_eI2Nf0Gezi8VaHIOCJtvRbAcJfamr3z3O6nF3U', 2, '2024-08-13 19:30:51', 0, '2024-08-06 12:30:51', '2024-08-06 12:30:51'),
 (594, 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJuZ3V5ZW5xdWFuZ2FuaCIsInBob25lIjoiMDM2NDQzMTEzMiIsInJvbGUiOiJST0xFX0NVU1RPTUVSIiwiaWF0IjoxNzIzNjE1ODYyLCJleHAiOjE3MjM2MTY0NjJ9._JJ6h33VnSzwfuuacPA0cjuZ49N9cEWW_eN1Fl5yqXI', '2024-08-14 13:21:02', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJuZ3V5ZW5xdWFuZ2FuaCIsInBob25lIjoiMDM2NDQzMTEzMiIsInJvbGUiOiJST0xFX0NVU1RPTUVSIiwiaWF0IjoxNzIzNjE1ODYyLCJleHAiOjE3MjQyMjA2NjJ9.6_ydijRk3w8x9_ImQIvYo_BUVtAXTZ0EVuqxUukuTcY', 14, '2024-08-21 13:11:02', 0, '2024-08-14 06:11:02', '2024-08-14 06:11:02'),
 (612, 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJuZ3V5ZW5xdWFuZ2FuaCIsInBob25lIjoiMDM2NDQzMTEzMiIsInJvbGUiOiJST0xFX0NVU1RPTUVSIiwiaWF0IjoxNzIzNjQyMDcxLCJleHAiOjE3MjM2NDI2NzF9.ZpxdaVYfmIjqOs-l42QYUTJH5ECfwUnX52yzUVD-nno', '2024-08-14 20:37:51', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJuZ3V5ZW5xdWFuZ2FuaCIsInBob25lIjoiMDM2NDQzMTEzMiIsInJvbGUiOiJST0xFX0NVU1RPTUVSIiwiaWF0IjoxNzIzNjQyMDcxLCJleHAiOjE3MjQyNDY4NzF9.xA1m7aFyMxhu1fmSBq3qudQU7aClOoA2GRoI-iMHw1c', 14, '2024-08-21 20:27:51', 0, '2024-08-14 13:27:51', '2024-08-14 13:27:51'),
-(661, 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJuZ3V5ZW5xdWFuZ2FuaCIsInBob25lIjoiMDM2NDEwMDE5NiIsInJvbGUiOiJST0xFX01BTkFHRVIiLCJpYXQiOjE3Mjg1Njk1MDYsImV4cCI6MTcyODU3MDEwNn0.KOJBXcS5ZtiYwSi_qqvazRmEId31d3yRnzkTnburzAY', '2024-10-10 21:21:46', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJuZ3V5ZW5xdWFuZ2FuaCIsInBob25lIjoiMDM2NDEwMDE5NiIsInJvbGUiOiJST0xFX01BTkFHRVIiLCJpYXQiOjE3Mjg1Njk1MDYsImV4cCI6MTcyOTE3NDMwNn0.U13fnrAZTolX009-z2HQ0ws3TKinKzpeF0DcLkiSePs', 1, '2024-11-09 21:11:46', 0, '2024-10-10 11:37:56', '2024-10-10 14:11:46'),
-(664, 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJuZ3V5ZW5xdWFuZ2FuaCIsInBob25lIjoiMDM2NDEwMDE5NiIsInJvbGUiOiJST0xFX01BTkFHRVIiLCJpYXQiOjE3Mjg1NjY4NzYsImV4cCI6MTcyODU2NzQ3Nn0.7D8BxMy8rmysA9Ous9IPBqjlPtfwoaZCJYlBrTkszrM', '2024-10-10 20:37:56', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJuZ3V5ZW5xdWFuZ2FuaCIsInBob25lIjoiMDM2NDEwMDE5NiIsInJvbGUiOiJST0xFX01BTkFHRVIiLCJpYXQiOjE3Mjg1NjY4NzYsImV4cCI6MTcyOTE3MTY3Nn0.nLl3qaDodKm35dawmYJebAArd6eMq_6hPpaBVqrTAHk', 1, '2024-10-17 20:27:56', 0, '2024-10-10 13:27:56', '2024-10-10 13:27:56');
+(667, 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJuZ3V5ZW5xdWFuZ2FuaCIsInBob25lIjoiMDM2NDEwMDE5NiIsInJvbGUiOiJST0xFX01BTkFHRVIiLCJpYXQiOjE3Mjg2NTkwNjMsImV4cCI6MTcyODY1OTY2M30.e8gR9tWJ7djrnhCcXchC9dqqNmOEbA3sN9Vz0J_VJNY', '2024-10-11 22:14:23', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJuZ3V5ZW5xdWFuZ2FuaCIsInBob25lIjoiMDM2NDEwMDE5NiIsInJvbGUiOiJST0xFX01BTkFHRVIiLCJpYXQiOjE3Mjg2NTkwNjMsImV4cCI6MTcyOTI2Mzg2M30.hrArVo6QSbF5vEJoq4vgtbE-Hr0zwIKusKJ06hgUbUw', 1, '2024-10-18 22:04:23', 0, '2024-10-11 15:04:23', '2024-10-11 15:04:23'),
+(668, 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJuZ3V5ZW5xdWFuZ2FuaCIsInBob25lIjoiMDM2NDEwMDE5NiIsInJvbGUiOiJST0xFX01BTkFHRVIiLCJpYXQiOjE3Mjg2NjMzMjUsImV4cCI6MTcyODY2MzkyNX0.G2K_0lFpAaqrn5nm9Mgr0G7tHofgePqliQfWw6afN_s', '2024-10-11 23:25:25', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJuZ3V5ZW5xdWFuZ2FuaCIsInBob25lIjoiMDM2NDEwMDE5NiIsInJvbGUiOiJST0xFX01BTkFHRVIiLCJpYXQiOjE3Mjg2NjMzMjUsImV4cCI6MTcyOTI2ODEyNX0.tvpXvEBLOJAC3O_8OS2FvFqbeZkB5fzZYSnqExHRI8E', 1, '2024-11-10 23:15:25', 0, '2024-10-11 15:14:31', '2024-10-11 16:15:25');
 
 -- --------------------------------------------------------
 
@@ -2244,7 +2254,7 @@ CREATE TABLE `products_detail` (
   `color_id` int(11) NOT NULL,
   `size` varchar(10) NOT NULL,
   `quantity` int(11) DEFAULT NULL,
-  `img_background` varchar(255) DEFAULT NULL,
+  `image_background` varchar(255) DEFAULT NULL,
   `is_activated` bit(1) DEFAULT b'1',
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
@@ -2254,7 +2264,7 @@ CREATE TABLE `products_detail` (
 -- Đang đổ dữ liệu cho bảng `products_detail`
 --
 
-INSERT INTO `products_detail` (`id`, `product_id`, `code`, `color_id`, `size`, `quantity`, `img_background`, `is_activated`, `created_at`, `updated_at`) VALUES
+INSERT INTO `products_detail` (`id`, `product_id`, `code`, `color_id`, `size`, `quantity`, `image_background`, `is_activated`, `created_at`, `updated_at`) VALUES
 (1, 51, 'ESTP03872PE00SB_BL-S', 4, 'SIZE_S', 0, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711811636/tp038-1.jpeg.webp', b'1', '2024-05-14 10:47:45', '2024-10-10 13:15:39'),
 (2, 51, 'ESTP03872PE00SB_BL-M', 4, 'SIZE_M', 0, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711811636/tp038-1.jpeg.webp', b'1', '2024-05-14 10:47:45', '2024-10-10 13:15:39'),
 (3, 51, 'ESTP03872PE00SB_BL-L', 4, 'SIZE_L', 0, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711811636/tp038-1.jpeg.webp', b'1', '2024-05-14 10:47:45', '2024-10-10 13:15:39'),
@@ -2467,7 +2477,7 @@ INSERT INTO `products_detail` (`id`, `product_id`, `code`, `color_id`, `size`, `
 (241, 39, 'ESTP01272CT08SB_VCB-M', 37, 'SIZE_M', 999, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711811086/tp012_0d295f194e3f4f0eab7eede288c3a7c5_master.jpg.webp', b'1', '2024-05-14 10:47:45', '2024-10-10 12:57:58'),
 (242, 39, 'ESTP01272CT08SB_VCB-L', 37, 'SIZE_L', 999, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711811086/tp012_0d295f194e3f4f0eab7eede288c3a7c5_master.jpg.webp', b'1', '2024-05-14 10:47:45', '2024-10-10 12:57:58'),
 (243, 39, 'ESTP01272CT08SB_VCB-XL', 37, 'SIZE_XL', 999, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711811086/tp012_0d295f194e3f4f0eab7eede288c3a7c5_master.jpg.webp', b'1', '2024-05-14 10:47:45', '2024-10-10 12:57:58');
-INSERT INTO `products_detail` (`id`, `product_id`, `code`, `color_id`, `size`, `quantity`, `img_background`, `is_activated`, `created_at`, `updated_at`) VALUES
+INSERT INTO `products_detail` (`id`, `product_id`, `code`, `color_id`, `size`, `quantity`, `image_background`, `is_activated`, `created_at`, `updated_at`) VALUES
 (244, 14, 'DSTP65072CT04SB_BL-S', 4, 'SIZE_S', 998, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711811057/4_485c2d0480d84e4b983817d401d0c65d_master.jpg.jpg', b'1', '2024-05-14 10:47:45', '2024-10-10 11:59:28'),
 (245, 14, 'DSTP65072CT04SB_BL-M', 4, 'SIZE_M', 999, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711811057/4_485c2d0480d84e4b983817d401d0c65d_master.jpg.jpg', b'1', '2024-05-14 10:47:45', '2024-10-10 11:59:28'),
 (246, 14, 'DSTP65072CT04SB_BL-L', 4, 'SIZE_L', 997, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711811057/4_485c2d0480d84e4b983817d401d0c65d_master.jpg.jpg', b'1', '2024-05-14 10:47:45', '2024-10-10 11:59:28'),
@@ -2668,7 +2678,7 @@ INSERT INTO `products_detail` (`id`, `product_id`, `code`, `color_id`, `size`, `
 (472, 8, 'DABK90601CT00SB_CN-29', 8, 'SIZE_29', 999, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711810587/1702808414184_dabk906-2_bac3936bf9d84867b4992915c17c55e4_master.jpg.webp', b'1', '2024-05-14 10:47:45', '2024-10-10 11:46:47'),
 (473, 8, 'DABK90601CT00SB_CN-30', 8, 'SIZE_30', 999, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711810587/1702808414184_dabk906-2_bac3936bf9d84867b4992915c17c55e4_master.jpg.webp', b'1', '2024-05-14 10:47:45', '2024-10-10 11:46:47'),
 (474, 8, 'DABK90601CT00SB_CN-31', 8, 'SIZE_31', 999, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711810587/1702808414184_dabk906-2_bac3936bf9d84867b4992915c17c55e4_master.jpg.webp', b'1', '2024-05-14 10:47:45', '2024-10-10 11:46:47');
-INSERT INTO `products_detail` (`id`, `product_id`, `code`, `color_id`, `size`, `quantity`, `img_background`, `is_activated`, `created_at`, `updated_at`) VALUES
+INSERT INTO `products_detail` (`id`, `product_id`, `code`, `color_id`, `size`, `quantity`, `image_background`, `is_activated`, `created_at`, `updated_at`) VALUES
 (475, 8, 'DABK90601CT00SB_CN-32', 8, 'SIZE_32', 998, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711810587/1702808414184_dabk906-2_bac3936bf9d84867b4992915c17c55e4_master.jpg.webp', b'1', '2024-05-14 10:47:45', '2024-10-10 11:46:47'),
 (476, 8, 'DABK90601CT00SB_CN-33', 8, 'SIZE_33', 999, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711810587/1702808414184_dabk906-2_bac3936bf9d84867b4992915c17c55e4_master.jpg.webp', b'1', '2024-05-14 10:47:45', '2024-10-10 11:46:47'),
 (477, 8, 'DABK90601CT00SB_BL-31', 4, 'SIZE_31', 999, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711810579/1702808414165_dabk906-6_927e60d4ebbb4678b0d68f10ab3a54a2_master.jpg.webp', b'1', '2024-05-14 10:47:45', '2024-10-10 11:47:23'),
@@ -2731,11 +2741,11 @@ INSERT INTO `products_detail` (`id`, `product_id`, `code`, `color_id`, `size`, `
 (534, 4, 'DABJ01001CT00SB_BU-31', 7, 'SIZE_31', 999, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711810727/1702810256808_52169110354_87bd6ccaa0_o_abf9f4cabd204376b1d1cba50d2deec9_master.jpg.webp', b'1', '2024-05-14 10:47:45', '2024-10-10 11:40:28'),
 (535, 4, 'DABJ01001CT00SB_BU-32', 7, 'SIZE_32', 999, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711810727/1702810256808_52169110354_87bd6ccaa0_o_abf9f4cabd204376b1d1cba50d2deec9_master.jpg.webp', b'1', '2024-05-14 10:47:45', '2024-10-10 11:40:28'),
 (536, 4, 'DABJ01001CT00SB_BU-33', 7, 'SIZE_33', 999, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711810727/1702810256808_52169110354_87bd6ccaa0_o_abf9f4cabd204376b1d1cba50d2deec9_master.jpg.webp', b'1', '2024-05-14 10:47:45', '2024-10-10 11:40:28'),
-(537, 5, 'DABJ90301CT16SB_NV-33', 33, 'SIZE_33', 999, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711810748/1702810455348_dabj903_bf925f25f2c244aeb43a9c4430f64ef8_master.jpg.webp', b'1', '2024-05-14 10:47:45', '2024-10-10 11:41:27'),
-(538, 5, 'DABJ90301CT16SB_NV-32', 33, 'SIZE_32', 999, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711810748/1702810455348_dabj903_bf925f25f2c244aeb43a9c4430f64ef8_master.jpg.webp', b'1', '2024-05-14 10:47:45', '2024-10-10 11:41:27'),
-(539, 5, 'DABJ90301CT16SB_NV-31', 33, 'SIZE_31', 999, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711810748/1702810455348_dabj903_bf925f25f2c244aeb43a9c4430f64ef8_master.jpg.webp', b'1', '2024-05-14 10:47:45', '2024-10-10 11:41:27'),
-(540, 5, 'DABJ90301CT16SB_NV-30', 33, 'SIZE_30', 999, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711810748/1702810455348_dabj903_bf925f25f2c244aeb43a9c4430f64ef8_master.jpg.webp', b'1', '2024-05-14 10:47:45', '2024-10-10 11:41:27'),
-(541, 5, 'DABJ90301CT16SB_NV-29', 33, 'SIZE_29', 997, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711810748/1702810455348_dabj903_bf925f25f2c244aeb43a9c4430f64ef8_master.jpg.webp', b'1', '2024-05-14 10:47:45', '2024-10-10 11:41:27'),
+(537, 5, 'DABJ90301CT16SB_LB-33', 22, 'SIZE_33', 999, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711810748/1702810455348_dabj903_bf925f25f2c244aeb43a9c4430f64ef8_master.jpg.webp', b'1', '2024-05-14 10:47:45', '2024-10-11 15:16:53'),
+(538, 5, 'DABJ90301CT16SB_LB-32', 22, 'SIZE_32', 999, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711810748/1702810455348_dabj903_bf925f25f2c244aeb43a9c4430f64ef8_master.jpg.webp', b'1', '2024-05-14 10:47:45', '2024-10-11 15:17:00'),
+(539, 5, 'DABJ90301CT16SB_LB-31', 22, 'SIZE_31', 999, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711810748/1702810455348_dabj903_bf925f25f2c244aeb43a9c4430f64ef8_master.jpg.webp', b'1', '2024-05-14 10:47:45', '2024-10-11 15:17:07'),
+(540, 5, 'DABJ90301CT16SB_LB-30', 22, 'SIZE_30', 999, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711810748/1702810455348_dabj903_bf925f25f2c244aeb43a9c4430f64ef8_master.jpg.webp', b'1', '2024-05-14 10:47:45', '2024-10-11 15:17:23'),
+(541, 5, 'DABJ90301CT16SB_LB-29', 22, 'SIZE_29', 997, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711810748/1702810455348_dabj903_bf925f25f2c244aeb43a9c4430f64ef8_master.jpg.webp', b'1', '2024-05-14 10:47:45', '2024-10-11 15:17:59'),
 (542, 7, 'DABJ90801CT19SB_DBU-29', 10, 'SIZE_29', 997, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711810768/1702810648513_bj908-2_53198051989_o_d8c0aeb3be18470c95b4e19e4481b38d_master.jpg.webp', b'1', '2024-05-14 10:47:45', '2024-10-10 11:43:31'),
 (543, 7, 'DABJ90801CT19SB_DBU-30', 10, 'SIZE_30', 998, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711810768/1702810648513_bj908-2_53198051989_o_d8c0aeb3be18470c95b4e19e4481b38d_master.jpg.webp', b'1', '2024-05-14 10:47:45', '2024-10-10 11:43:31'),
 (544, 7, 'DABJ90801CT19SB_DBU-31', 10, 'SIZE_31', 999, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711810768/1702810648513_bj908-2_53198051989_o_d8c0aeb3be18470c95b4e19e4481b38d_master.jpg.webp', b'1', '2024-05-14 10:47:45', '2024-10-10 11:43:31'),
@@ -2867,7 +2877,7 @@ INSERT INTO `products_detail` (`id`, `product_id`, `code`, `color_id`, `size`, `
 (672, 16, 'DWBS01203CV00SB_BL-M', 4, 'SIZE_M', 999, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711810230/1703928526215_bs012-3_52615554827_o_cdf36ab14e2948ab984bbfe0c18c72ed_master.jpg.webp', b'1', '2024-05-14 10:47:45', '2024-10-10 12:06:46'),
 (673, 16, 'DWBS01203CV00SB_BL-L', 4, 'SIZE_L', 999, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711810230/1703928526215_bs012-3_52615554827_o_cdf36ab14e2948ab984bbfe0c18c72ed_master.jpg.webp', b'1', '2024-05-14 10:47:45', '2024-10-10 12:06:46'),
 (674, 16, 'DWBS01203CV00SB_BL-XL', 4, 'SIZE_XL', 999, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711810230/1703928526215_bs012-3_52615554827_o_cdf36ab14e2948ab984bbfe0c18c72ed_master.jpg.webp', b'1', '2024-05-14 10:47:45', '2024-10-10 12:06:46');
-INSERT INTO `products_detail` (`id`, `product_id`, `code`, `color_id`, `size`, `quantity`, `img_background`, `is_activated`, `created_at`, `updated_at`) VALUES
+INSERT INTO `products_detail` (`id`, `product_id`, `code`, `color_id`, `size`, `quantity`, `image_background`, `is_activated`, `created_at`, `updated_at`) VALUES
 (675, 16, 'DWBS01203CV00SB_NV-S', 33, 'SIZE_S', 999, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711810228/1703928526208_bs012-4_52616554758_o_2d13878e693346e18cfb465e5e5d92aa_master.jpg.webp', b'1', '2024-05-14 10:47:45', '2024-10-10 12:07:17'),
 (676, 16, 'DWBS01203CV00SB_NV-M', 33, 'SIZE_M', 999, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711810228/1703928526208_bs012-4_52616554758_o_2d13878e693346e18cfb465e5e5d92aa_master.jpg.webp', b'1', '2024-05-14 10:47:45', '2024-10-10 12:07:17'),
 (677, 16, 'DWBS01203CV00SB_NV-L', 33, 'SIZE_L', 999, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711810228/1703928526208_bs012-4_52616554758_o_2d13878e693346e18cfb465e5e5d92aa_master.jpg.webp', b'1', '2024-05-14 10:47:45', '2024-10-10 12:07:17'),
@@ -2884,12 +2894,12 @@ INSERT INTO `products_detail` (`id`, `product_id`, `code`, `color_id`, `size`, `
 (688, 67, 'EWCW00751PE00SB_BL-M', 4, 'SIZE_M', 0, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711810212/1704189991841_ewcw007-1_c8b1f230ddb2408daa72728d0ecee531_master.jpg.webp', b'1', '2024-05-14 10:47:45', '2024-10-10 13:41:37'),
 (689, 67, 'EWCW00751PE00SB_BL-L', 4, 'SIZE_L', 0, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711810212/1704189991841_ewcw007-1_c8b1f230ddb2408daa72728d0ecee531_master.jpg.webp', b'1', '2024-05-14 10:47:45', '2024-10-10 13:41:37'),
 (690, 67, 'EWCW00751PE00SB_BL-XL', 4, 'SIZE_XL', 0, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711810212/1704189991841_ewcw007-1_c8b1f230ddb2408daa72728d0ecee531_master.jpg.webp', b'1', '2024-05-14 10:47:45', '2024-10-10 13:41:37'),
-(691, 17, 'DWCT00161PE00RB_NV-S', 33, 'SIZE_S', 983, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711810200/1704190979928_ct001_51762266972_o_9bee17ad6de44acca391c7ad9847bf08_master.jpg.webp', b'1', '2024-05-14 10:47:45', '2024-10-10 12:07:51'),
-(692, 17, 'DWCT00161PE00RB_NV-M', 33, 'SIZE_M', 998, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711810200/1704190979928_ct001_51762266972_o_9bee17ad6de44acca391c7ad9847bf08_master.jpg.webp', b'1', '2024-05-14 10:47:45', '2024-10-10 12:07:51'),
-(693, 17, 'DWCT00161PE00RB_NV-L', 33, 'SIZE_L', 0, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711810200/1704190979928_ct001_51762266972_o_9bee17ad6de44acca391c7ad9847bf08_master.jpg.webp', b'1', '2024-05-14 10:47:45', '2024-10-10 12:07:51'),
-(694, 17, 'DWCT00161PE00RB_NV-XL', 33, 'SIZE_XL', 0, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711810200/1704190979928_ct001_51762266972_o_9bee17ad6de44acca391c7ad9847bf08_master.jpg.webp', b'1', '2024-05-14 10:47:45', '2024-10-10 12:07:51'),
-(695, 17, 'DWCT00161PE00RB_DGR-M', 14, 'SIZE_M', 998, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711810198/1704190979924_ct001_51762269147_o_09bc5494840e48feb5ad0b9b16c3d37b_master.jpg.webp', b'1', '2024-05-14 10:47:45', '2024-10-10 12:08:34'),
-(696, 17, 'DWCT00161PE00RB_DGR-S', 14, 'SIZE_S', 999, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711810198/1704190979924_ct001_51762269147_o_09bc5494840e48feb5ad0b9b16c3d37b_master.jpg.webp', b'1', '2024-05-14 10:47:45', '2024-10-10 12:08:34'),
+(691, 17, 'DWCT00161PE00RB_NBX-S', 32, 'SIZE_S', 983, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711810200/1704190979928_ct001_51762266972_o_9bee17ad6de44acca391c7ad9847bf08_master.jpg.webp', b'1', '2024-05-14 10:47:45', '2024-10-11 15:07:13'),
+(692, 17, 'DWCT00161PE00RB_NBX-M', 32, 'SIZE_M', 998, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711810200/1704190979928_ct001_51762266972_o_9bee17ad6de44acca391c7ad9847bf08_master.jpg.webp', b'1', '2024-05-14 10:47:45', '2024-10-11 15:07:21'),
+(693, 17, 'DWCT00161PE00RB_NBX-L', 32, 'SIZE_L', 0, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711810200/1704190979928_ct001_51762266972_o_9bee17ad6de44acca391c7ad9847bf08_master.jpg.webp', b'1', '2024-05-14 10:47:45', '2024-10-11 15:07:28'),
+(694, 17, 'DWCT00161PE00RB_NBX-XL', 32, 'SIZE_XL', 0, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711810200/1704190979928_ct001_51762266972_o_9bee17ad6de44acca391c7ad9847bf08_master.jpg.webp', b'1', '2024-05-14 10:47:45', '2024-10-11 15:07:36'),
+(695, 17, 'DWCT00161PE00RB_BL-M', 4, 'SIZE_M', 998, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711810198/1704190979924_ct001_51762269147_o_09bc5494840e48feb5ad0b9b16c3d37b_master.jpg.webp', b'1', '2024-05-14 10:47:45', '2024-10-11 15:04:50'),
+(696, 17, 'DWCT00161PE00RB_BL-S', 4, 'SIZE_S', 999, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711810198/1704190979924_ct001_51762269147_o_09bc5494840e48feb5ad0b9b16c3d37b_master.jpg.webp', b'1', '2024-05-14 10:47:45', '2024-10-11 15:05:00'),
 (697, 18, 'DWCT00431PE32SB_BL-S', 4, 'SIZE_S', 992, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711810184/1704191300171_ct004-13_52409234777_o_e7c882ac09994daaa3ef8a4b92a5614b_master.jpg.webp', b'1', '2024-05-14 10:47:45', '2024-10-10 12:09:55'),
 (698, 18, 'DWCT00431PE32SB_BL-M', 4, 'SIZE_M', 0, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711810184/1704191300171_ct004-13_52409234777_o_e7c882ac09994daaa3ef8a4b92a5614b_master.jpg.webp', b'1', '2024-05-14 10:47:45', '2024-10-10 12:09:55'),
 (699, 18, 'DWCT00431PE32SB_BL-L', 4, 'SIZE_L', 999, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711810184/1704191300171_ct004-13_52409234777_o_e7c882ac09994daaa3ef8a4b92a5614b_master.jpg.webp', b'1', '2024-05-14 10:47:45', '2024-10-10 12:09:55'),
@@ -3185,25 +3195,25 @@ ALTER TABLE `imgs_product`
 -- AUTO_INCREMENT cho bảng `invoices`
 --
 ALTER TABLE `invoices`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=254;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=255;
 
 --
 -- AUTO_INCREMENT cho bảng `invoices_detail`
 --
 ALTER TABLE `invoices_detail`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=669;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=673;
 
 --
 -- AUTO_INCREMENT cho bảng `invoices_history`
 --
 ALTER TABLE `invoices_history`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1215;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1220;
 
 --
 -- AUTO_INCREMENT cho bảng `jwt_tokens`
 --
 ALTER TABLE `jwt_tokens`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=665;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=669;
 
 --
 -- AUTO_INCREMENT cho bảng `products`

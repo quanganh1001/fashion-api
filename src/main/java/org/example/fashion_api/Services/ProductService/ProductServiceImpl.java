@@ -192,8 +192,8 @@ public class ProductServiceImpl implements ProductService {
         List<ProductRes> productResList = new ArrayList<>();
 
         if (Objects.equals(selected, "best")){
-            List<org.example.fashion_api.Models.Stored.SellingProductsView> sellingProductsView = this.sellingProductsViewRepo.findTop10ByOrderByTotalSalesDesc();
-            for (org.example.fashion_api.Models.Stored.SellingProductsView sellingProducts : sellingProductsView){
+            List<SellingProductsView> sellingProductsView = sellingProductsViewRepo.findTop10ByOrderByTotalSalesDesc();
+            for (SellingProductsView sellingProducts : sellingProductsView){
                 productResList.add(ProductRes.builder()
                         .productName(sellingProducts.getProductName())
                         .price(sellingProducts.getPrice())

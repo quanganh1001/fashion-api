@@ -26,4 +26,8 @@ public interface ProductDetailRepo extends JpaRepository<ProductDetail, Long> {
 
     List<ProductDetail> searchProductDetailByProductProductNameContainingIgnoreCaseAndIsActivatedTrue(String key);
 
+    @Modifying
+    @Query(value = "UPDATE products_detail SET image_background = :urlImage WHERE id = :productDetailId",
+            nativeQuery = true)
+    void updateCatBackground(@Param("urlImage") String urlImage, @Param("productDetailId") Long productDetailId);
 }

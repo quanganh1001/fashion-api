@@ -28,7 +28,7 @@ public interface InvoiceDetailMapper {
     @Mapping(target = "color", source = "productDetail.color.name")
     @Mapping(target = "code", source = "productDetail.code")
     @Mapping(target = "size", source = "productDetail.size")
-    @Mapping(target = "imgUrl", source = "productDetail.product.imageBackground")
+    @Mapping(target = "imgUrl", source = "productDetail.imageBackground")
     InvoiceDetailRes invoiceDetailToInvoiceDetailRes(InvoiceDetail invoiceDetails);
 
 

@@ -1,11 +1,13 @@
 package org.example.fashion_api.Services.ProductDetailService;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.example.fashion_api.Exception.AlreadyExistException;
 import org.example.fashion_api.Exception.BadRequestException;
 import org.example.fashion_api.Exception.NotFoundException;
 import org.example.fashion_api.Mapper.ProductDetailMapper;
+import org.example.fashion_api.Models.Categories.Category;
 import org.example.fashion_api.Models.Colors.Color;
 import org.example.fashion_api.Models.Products.Product;
 import org.example.fashion_api.Models.ProductsDetails.*;
@@ -13,11 +15,15 @@ import org.example.fashion_api.Repositories.ColorRepo;
 import org.example.fashion_api.Repositories.InvoiceDetailRepo;
 import org.example.fashion_api.Repositories.ProductDetailRepo;
 import org.example.fashion_api.Repositories.ProductRepo;
+import org.example.fashion_api.Services.CloudinaryService;
 import org.example.fashion_api.Services.RedisService.RedisService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -29,6 +35,7 @@ public class ProductDetailServiceImpl implements ProductDetailService{
     private final RedisService redisService;
     private final ProductRepo productRepo;
     private final ColorRepo colorRepo;
+    private final CloudinaryService cloudinaryService;
 
     @Override
     public List<ProductDetailRes> findAllProductDetails(Long productId) throws JsonProcessingException {
@@ -96,5 +103,24 @@ public class ProductDetailServiceImpl implements ProductDetailService{
         List<ProductDetail> productDetails =
         productDetailRepo.searchProductDetailByProductProductNameContainingIgnoreCaseAndIsActivatedTrue(key);
         return productDetailMapper.productDetailsToProductDetailRes(productDetails);
+    }
+
+    @Override
+    @Transactional
+    public String updateProductDetailBackground(MultipartFile file, Long productDetailId) throws IOException {
+        ProductDetail productDetail = productDetailRepo.findById(productDetailId).orElseThrow(() -> new NotFoundException(productDetailId.toString()));
+
+        cloudinaryService.deleteImageByUrl(productDetail.getImageBackground());
+
+        Map<String, Object> uploadResult = cloudinaryService.upload(file);
+
+        String urlImage = uploadResult.get("secure_url").toString();
+
+        productDetailRepo.updateCatBackground(urlImage, productDetailId);
+
+        // delete cache redis
+        redisService.clear();
+
+        return urlImage;
     }
 }

@@ -38,6 +38,6 @@ public class ProductDetail extends BaseEntity {
     @JoinColumn(name = "color_id")
     private Color color;
 
-
+    private String imageBackground;
 
 }

@@ -179,7 +179,12 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public void deleteAccount(Long accountId) {
         Account account = accountRepo.findById(accountId).orElseThrow(() -> new NotFoundException("Accounts"));
-        accountRepo.delete(account);
+        try {
+            accountRepo.delete(account);
+        }catch (Exception e){
+            throw new RuntimeException(e.getMessage());
+        }
+
     }
 
     @Override

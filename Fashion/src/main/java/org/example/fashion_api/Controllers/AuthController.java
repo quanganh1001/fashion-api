@@ -1,5 +1,6 @@
 package org.example.fashion_api.Controllers;
 
+import feign.FeignException;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -10,7 +11,8 @@ import org.example.fashion_api.Models.Accounts.AccountLoginDto;
 import org.example.fashion_api.Models.Accounts.AccountRegisterDto;
 import org.example.fashion_api.Models.Accounts.AccountRes;
 import org.example.fashion_api.Models.JwtToken.JwtTokenRes;
-import org.example.fashion_api.Services.JwtService.JwtService;
+//import org.example.fashion_api.Services.JwtService.JwtService;
+import org.example.fashion_api.Repositories.HttpClient.IdentityClient;
 import org.example.fashion_api.Services.AccountService.AccountService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,10 +20,9 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/auth")
+@RequestMapping("auth")
 public class AuthController {
     private final AccountService accountService;
-    private final JwtService jwtService;
     private final AccountMapper accountMapper;
 
 
@@ -34,6 +35,7 @@ public class AuthController {
     @PostMapping("/admin/login")
     @Operation(summary = "Login", description = "This is a login API")
     public ResponseEntity<JwtTokenRes> adminLogin(@Valid @RequestBody AccountLoginDto loginRequest) {
+        System.out.println("sdds");
         return new ResponseEntity<>(accountService.AdminLogin(loginRequest), HttpStatus.OK);
     }
 
@@ -44,11 +46,17 @@ public class AuthController {
         return ResponseEntity.ok("Logout successful");
     }
 
-    @Operation(summary = "refresh token")
-    @PutMapping("/refreshToken")
-    public ResponseEntity<JwtTokenRes> refreshToken(HttpServletRequest req, HttpServletResponse res)  {
-        return new ResponseEntity<>(jwtService.RefreshToken(req, res), HttpStatus.OK);
-    }
+//    @Operation(summary = "refresh token")
+//    @PutMapping("/refreshToken")
+//    public ResponseEntity<JwtTokenRes> refreshToken(HttpServletRequest req, HttpServletResponse res)  {
+//        var jwtTokenResResponseEntity = new JwtTokenRes();
+//        try {
+//            jwtTokenResResponseEntity = identityClient.refreshToken();
+//        }catch (FeignException.FeignClientException e){
+//            System.out.println(e.getMessage());
+//        }
+//        return ResponseEntity.ok(jwtTokenResResponseEntity);
+//    }
 
     @Operation(summary = "register")
     @PostMapping("/register")

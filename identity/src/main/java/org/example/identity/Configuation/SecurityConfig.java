@@ -1,0 +1,74 @@
+package org.example.identity.Configuation;
+
+import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+
+@Configuration
+@RequiredArgsConstructor
+@EnableGlobalMethodSecurity(prePostEnabled = true)
+public class SecurityConfig {
+//    private final AccountRepo accountRepo;
+
+    @Bean
+    public BCryptPasswordEncoder passwordEncoder(){
+        return new BCryptPasswordEncoder();
+    }
+//
+//    @Bean
+//    public UserDetailsService userDetailsService() {
+//        return subject -> {
+//            Optional<Account> accountByPhone = accountRepo.findByPhone(subject);
+//
+//            if (accountByPhone.isPresent()){
+//                return new UserCustomDetail(accountByPhone.get());
+//            }
+//
+//            Optional<Account> accountByEmail = accountRepo.findByEmail(subject);
+//            if (accountByEmail.isPresent()){
+//                return new UserCustomDetail(accountByEmail.get());
+//            }
+//
+//            throw new UsernameNotFoundException("User not found");
+//        };
+//    }
+//
+//    @Bean
+//    public AuthenticationProvider authenticationProvider() {
+//        DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
+//        daoAuthenticationProvider.setPasswordEncoder(passwordEncoder());
+//        daoAuthenticationProvider.setUserDetailsService(userDetailsService());
+//        return daoAuthenticationProvider;
+//    }
+//
+//    @Bean
+//    public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception {
+//        return configuration.getAuthenticationManager();
+//    }
+//
+//    private final JwtAuthenticationFilter jwtAuthenticationFilter;
+//
+    @Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
+        http
+                .csrf(AbstractHttpConfigurer::disable)
+                .authorizeRequests((auth) -> auth
+                        .requestMatchers(new AntPathRequestMatcher("/")).permitAll()
+                )
+                .sessionManagement(
+                        sessionManager -> sessionManager.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+//                .authenticationProvider(authenticationProvider())
+//                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
+
+        ;
+
+        return http.build();
+    }
+}

@@ -1,4 +1,9 @@
+server:
+  port: 8081
+
 spring:
+    application:
+      name: fashion-client
     datasource:
       url: ${MYSQL_HOST}
       username: ${MYSQL_USERNAME}

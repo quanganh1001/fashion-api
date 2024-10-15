@@ -1,5 +1,6 @@
 package org.example.fashion_api.Services.AccountService;
 
+import feign.FeignException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.RandomStringUtils;
@@ -7,20 +8,18 @@ import org.example.fashion_api.Enum.RoleEnum;
 import org.example.fashion_api.Exception.*;
 import org.example.fashion_api.Mapper.AccountMapper;
 import org.example.fashion_api.Models.Accounts.*;
-import org.example.fashion_api.Models.JwtToken.JwtToken;
 import org.example.fashion_api.Models.JwtToken.JwtTokenRes;
 import org.example.fashion_api.Models.MailTemplate;
 import org.example.fashion_api.Producer.MailProducer;
 import org.example.fashion_api.Repositories.AccountRepo;
-import org.example.fashion_api.Repositories.JwtTokenRepo;
-import org.example.fashion_api.Services.JwtService.JwtService;
+import org.example.fashion_api.Repositories.HttpClient.IdentityClient;
 import org.example.fashion_api.Services.RedisService.RedisService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AccessDeniedException;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -35,26 +34,49 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 public class AccountServiceImpl implements AccountService {
-
-    private final AuthenticationManager authenticationManager;
-    private final JwtService jwtService;
+    private final IdentityClient identityClient;
+//    private final AuthenticationManager authenticationManager;
+//    private final JwtService jwtService;
     private final AccountRepo accountRepo;
     private final AccountMapper accountMapper;
     private final BCryptPasswordEncoder passwordEncoder;
     private final MailProducer mailProducer;
     private final RedisService redisService;
-    private final JwtTokenRepo jwtTokenRepo;
+//    private final JwtTokenRepo jwtTokenRepo;
 
     @Override
     public JwtTokenRes AdminLogin(AccountLoginDto loginRequest) {
         Account existingAccount = authenticateAccount(loginRequest, List.of("ROLE_EMPLOYEE", "ROLE_MANAGER"));
-        return jwtService.tokenRes(existingAccount);
+
+        ResponseEntity<JwtTokenRes> responseEntity = new ResponseEntity<>(HttpStatus.OK);
+        try {
+             responseEntity =
+                    identityClient.genToken(accountMapper.accountEntityToAccountRes(existingAccount));
+        }catch (FeignException e){
+            System.out.println(e.getMessage());
+        }
+
+        // Kiểm tra mã trạng thái của ResponseEntity
+        if (responseEntity.getStatusCode().is2xxSuccessful()) {
+            return responseEntity.getBody(); // Trả về JwtTokenRes nếu thành công
+        } else {
+            throw new RuntimeException("Error: " + responseEntity.getStatusCode());
+        }
     }
 
     @Override
     public JwtTokenRes CustomerLogin(AccountLoginDto loginRequest) {
         Account existingAccount = authenticateAccount(loginRequest, null);
-        return jwtService.tokenRes(existingAccount);
+        AccountRes accountRes = accountMapper.accountEntityToAccountRes(existingAccount);
+        ResponseEntity<JwtTokenRes> responseEntity =
+                identityClient.genToken(accountRes);
+
+        // Kiểm tra mã trạng thái của ResponseEntity
+        if (responseEntity.getStatusCode().is2xxSuccessful()) {
+            return responseEntity.getBody(); // Trả về JwtTokenRes nếu thành công
+        } else {
+            throw new RuntimeException("Error: " + responseEntity.getStatusCode());
+        }
     }
 
     private Account authenticateAccount(AccountLoginDto loginRequest, List<String> validRoles) {
@@ -87,8 +109,9 @@ public class AccountServiceImpl implements AccountService {
                 List.of(new SimpleGrantedAuthority(existingAccount.getRole().name()))
         );
 
-        authenticationManager.authenticate(authenticationToken);
-        SecurityContextHolder.getContext().setAuthentication(authenticationToken);
+//        identityClient.addAuthenticate(authenticationToken);
+//        authenticationManager.authenticate(authenticationToken);
+//        SecurityContextHolder.getContext().setAuthentication(authenticationToken);
 
         return existingAccount;
     }
@@ -249,15 +272,7 @@ public class AccountServiceImpl implements AccountService {
     @Transactional
     @Override
     public void Logout(String token) {
-
-        JwtToken jwtToken = jwtTokenRepo.findByToken(token);
-
-        if (jwtToken != null) {
-            jwtTokenRepo.delete(jwtToken);
-        } else {
-            throw new BadRequestException("Token not found");
-        }
-        SecurityContextHolder.clearContext();
+        identityClient.deleteToken(token);
     }
 
     @Override
@@ -345,6 +360,21 @@ public class AccountServiceImpl implements AccountService {
     public List<AccountRes> getAllAccountEmployees() {
         List<Account> accounts = accountRepo.findAllByRole();
         return accountMapper.accountsToListAccountRes(accounts);
+    }
+
+    @Override
+    public Optional<AccountRes> getAccountByPhone(String phoneNumber) {
+        Optional<Account> account = accountRepo.findByPhone(phoneNumber);
+
+        return account.map(accountMapper::accountEntityToAccountRes);
+
+    }
+
+    @Override
+    public Optional<AccountRes> getAccountByEmail(String email) {
+        Optional<Account> account = accountRepo.findByEmail(email);
+
+        return account.map(accountMapper::accountEntityToAccountRes);
     }
 
 

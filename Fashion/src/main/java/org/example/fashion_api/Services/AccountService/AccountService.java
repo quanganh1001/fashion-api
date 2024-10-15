@@ -7,6 +7,7 @@ import org.example.fashion_api.Models.JwtToken.JwtTokenRes;
 import org.springframework.http.ResponseEntity;
 
 import java.util.List;
+import java.util.Optional;
 
 
 public interface AccountService {
@@ -44,4 +45,8 @@ public interface AccountService {
     AccountRes createAccount(CreateAccountDto createAccountDto);
 
     List<AccountRes> getAllAccountEmployees();
+
+    Optional<AccountRes> getAccountByPhone(String phoneNumber);
+
+    Optional<AccountRes> getAccountByEmail(String email);
 }

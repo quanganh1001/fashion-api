@@ -1,0 +1,25 @@
+spring:
+  application:
+    name: api-gateway
+  cloud:
+    openfeign:
+      enabled: true
+    gateway:
+      routes:
+        - id: fashion
+          uri: http://localhost:8081
+          predicates:
+            - Path=/**
+#
+        - id: identity
+          uri: http://localhost:8082
+          predicates:
+            - Path=/identity/**
+server:
+  port: 8080
+secret:
+  key: ${JWT_SECRET_KEY}
+
+jwt:
+  issuer: ${JWT_ISSUER}
+

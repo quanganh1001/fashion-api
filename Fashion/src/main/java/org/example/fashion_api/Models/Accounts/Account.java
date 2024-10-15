@@ -7,7 +7,7 @@ import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import org.example.fashion_api.Enum.RoleEnum;
 import org.example.fashion_api.Models.BaseEntity;
-import org.example.fashion_api.Models.JwtToken.JwtToken;
+//import org.example.fashion_api.Models.JwtToken.JwtToken;
 import org.example.fashion_api.Models.RedisListener;
 
 import java.util.List;
@@ -41,9 +41,9 @@ public class Account extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private RoleEnum role = RoleEnum.ROLE_CUSTOMER;
 
-    @OneToMany(mappedBy = "account",cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
-    @JsonIgnore
-    @ToString.Exclude
-    private List<JwtToken> tokens;
+//    @OneToMany(mappedBy = "account",cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
+//    @JsonIgnore
+//    @ToString.Exclude
+//    private List<JwtToken> tokens;
 
 }

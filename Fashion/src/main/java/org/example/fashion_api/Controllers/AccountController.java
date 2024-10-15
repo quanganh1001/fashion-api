@@ -12,6 +12,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequiredArgsConstructor
@@ -97,5 +98,33 @@ public class AccountController {
     @PostMapping()
     public ResponseEntity<AccountRes> createAccount(@Valid @RequestBody CreateAccountDto createAccountDto) {
         return ResponseEntity.ok(accountService.createAccount(createAccountDto));
+    }
+
+    @GetMapping("/getByPhone/{phoneNumber}")
+    public ResponseEntity<AccountRes> getUserByPhoneNumber(
+            @PathVariable String phoneNumber,
+            @RequestHeader(value = "Internal-Access-Token", required = true) String accessToken) {
+
+        // Kiểm tra token nội bộ
+        if (!"VDSDCXCVX".equals(accessToken)) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+        }
+
+        Optional<AccountRes> user = accountService.getAccountByPhone(phoneNumber);
+        return ResponseEntity.ok(user.get());
+    }
+
+    @GetMapping("/getByEmail/{email}")
+    public ResponseEntity<AccountRes> getUserByEmail(
+            @PathVariable String email,
+            @RequestHeader(value = "Internal-Access-Token", required = true) String accessToken) {
+
+        // Kiểm tra token nội bộ
+        if (!"VDSDCXCVX".equals(accessToken)) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+        }
+
+        Optional<AccountRes> user = accountService.getAccountByEmail(email);
+        return ResponseEntity.ok(user.get());
     }
 }

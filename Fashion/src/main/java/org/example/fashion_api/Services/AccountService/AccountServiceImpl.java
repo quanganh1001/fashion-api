@@ -35,51 +35,15 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class AccountServiceImpl implements AccountService {
     private final IdentityClient identityClient;
-//    private final AuthenticationManager authenticationManager;
-//    private final JwtService jwtService;
     private final AccountRepo accountRepo;
     private final AccountMapper accountMapper;
     private final BCryptPasswordEncoder passwordEncoder;
     private final MailProducer mailProducer;
     private final RedisService redisService;
-//    private final JwtTokenRepo jwtTokenRepo;
+
 
     @Override
-    public JwtTokenRes AdminLogin(AccountLoginDto loginRequest) {
-        Account existingAccount = authenticateAccount(loginRequest, List.of("ROLE_EMPLOYEE", "ROLE_MANAGER"));
-
-        ResponseEntity<JwtTokenRes> responseEntity = new ResponseEntity<>(HttpStatus.OK);
-        try {
-             responseEntity =
-                    identityClient.genToken(accountMapper.accountEntityToAccountRes(existingAccount));
-        }catch (FeignException e){
-            System.out.println(e.getMessage());
-        }
-
-        // Kiểm tra mã trạng thái của ResponseEntity
-        if (responseEntity.getStatusCode().is2xxSuccessful()) {
-            return responseEntity.getBody(); // Trả về JwtTokenRes nếu thành công
-        } else {
-            throw new RuntimeException("Error: " + responseEntity.getStatusCode());
-        }
-    }
-
-    @Override
-    public JwtTokenRes CustomerLogin(AccountLoginDto loginRequest) {
-        Account existingAccount = authenticateAccount(loginRequest, null);
-        AccountRes accountRes = accountMapper.accountEntityToAccountRes(existingAccount);
-        ResponseEntity<JwtTokenRes> responseEntity =
-                identityClient.genToken(accountRes);
-
-        // Kiểm tra mã trạng thái của ResponseEntity
-        if (responseEntity.getStatusCode().is2xxSuccessful()) {
-            return responseEntity.getBody(); // Trả về JwtTokenRes nếu thành công
-        } else {
-            throw new RuntimeException("Error: " + responseEntity.getStatusCode());
-        }
-    }
-
-    private Account authenticateAccount(AccountLoginDto loginRequest, List<String> validRoles) {
+    public AccountRes verifyLogin(AccountLoginDto loginRequest, List<String> validRoles) {
         Optional<Account> optionalAccount = accountRepo.findByPhone(loginRequest.getUsername());
 
         if (optionalAccount.isEmpty()) {
@@ -104,16 +68,7 @@ public class AccountServiceImpl implements AccountService {
             throw new AccountIsNotActivatedException();
         }
 
-        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
-                loginRequest.getUsername(), loginRequest.getPassword(),
-                List.of(new SimpleGrantedAuthority(existingAccount.getRole().name()))
-        );
-
-//        identityClient.addAuthenticate(authenticationToken);
-//        authenticationManager.authenticate(authenticationToken);
-//        SecurityContextHolder.getContext().setAuthentication(authenticationToken);
-
-        return existingAccount;
+        return accountMapper.accountEntityToAccountRes(existingAccount);
     }
 
     @Override
@@ -253,7 +208,6 @@ public class AccountServiceImpl implements AccountService {
     @Transactional
     @Override
     public void resetPass(String email) {
-        System.out.println(email);
         Account account = accountRepo.findByEmail(email).orElseThrow(() -> new NotFoundException("Email"));
 
         String newPass = RandomStringUtils.randomAlphanumeric(6);
@@ -286,7 +240,7 @@ public class AccountServiceImpl implements AccountService {
             Optional<Account> account = accountRepo.findByPhoneAndIsActivatedTrue(userName);
 
             if (account.isEmpty()) {
-                account = accountRepo.findByPhoneAndIsActivatedTrue(userName);
+                account = accountRepo.findByEmailAndIsActivatedTrue(userName);
                 if (account.isEmpty()) {
                     throw new AccessDeniedException(" Access Denied");
                 }

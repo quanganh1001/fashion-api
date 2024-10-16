@@ -6,7 +6,6 @@ import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.TokenExpiredException;
 import com.auth0.jwt.interfaces.DecodedJWT;
-import feign.FeignException;
 import jakarta.annotation.PostConstruct;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -19,7 +18,6 @@ import org.example.identity.Models.Accounts.AccountRes;
 import org.example.identity.Models.JwtToken.JwtToken;
 import org.example.identity.Models.JwtToken.JwtTokenRes;
 import org.example.identity.Repositories.JwtTokenRepo;
-//import org.example.identity.Repositories.httpClient.FashionClient;
 import org.example.identity.Repositories.httpClient.FashionClient;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
@@ -28,6 +26,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -82,14 +81,13 @@ public class JwtServiceImpl implements JwtService {
                     throw new ExpiredJwtException("Refresh token");
                 }
 
-                AccountRes accountRes = new AccountRes();
+                String phone = extractPhone(token.getRefreshToken());
+                AccountRes accountRes;
                 try {
-                    accountRes = fashionClient.getCurrentAccount();
-                }catch (FeignException.FeignClientException e){
-                    System.out.println("Không thể kết nối đến Fashion service: " + e.getMessage());
-
+                    accountRes = fashionClient.getAccountByPhone(phone);
+                } catch (Exception e) {
+                    throw new RuntimeException(e.getMessage());
                 }
-
 
                 String newToken = generateToken(accountRes);
                 String newRefreshToken = generateRefreshToken(accountRes);
@@ -103,7 +101,6 @@ public class JwtServiceImpl implements JwtService {
                 jwtTokenRepo.save(token);
                 return JwtTokenRes.builder().token(newToken).refreshToken(newRefreshToken).account(accountRes).build();
             }
-            throw new BadRequestException("Invalid credentials");
         }
         throw new BadRequestException("Invalid credentials");
     }
@@ -178,11 +175,14 @@ public class JwtServiceImpl implements JwtService {
 
     @Override
     @Transactional
-    public void deleteToken(String token){
+    public void deleteToken(String token) {
         JwtToken jwtToken = jwtTokenRepo.findByToken(token);
         jwtTokenRepo.delete(jwtToken);
     }
 
+    public String extractPhone(String token) {
+        return decodeToken(token).getClaim("phone").asString();
+    }
 }
 
 

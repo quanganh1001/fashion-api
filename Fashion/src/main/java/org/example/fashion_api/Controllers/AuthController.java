@@ -1,22 +1,18 @@
 package org.example.fashion_api.Controllers;
 
-import feign.FeignException;
 import io.swagger.v3.oas.annotations.Operation;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.example.fashion_api.Mapper.AccountMapper;
 import org.example.fashion_api.Models.Accounts.AccountLoginDto;
 import org.example.fashion_api.Models.Accounts.AccountRegisterDto;
 import org.example.fashion_api.Models.Accounts.AccountRes;
-import org.example.fashion_api.Models.JwtToken.JwtTokenRes;
-//import org.example.fashion_api.Services.JwtService.JwtService;
-import org.example.fashion_api.Repositories.HttpClient.IdentityClient;
 import org.example.fashion_api.Services.AccountService.AccountService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -25,18 +21,15 @@ public class AuthController {
     private final AccountService accountService;
     private final AccountMapper accountMapper;
 
-
-    @PostMapping("/login")
-    @Operation(summary = "Login", description = "This is a login API")
-    public ResponseEntity<JwtTokenRes> customerLogin(@Valid @RequestBody AccountLoginDto loginRequest) {
-        return new ResponseEntity<>(accountService.CustomerLogin(loginRequest), HttpStatus.OK);
-    }
-
-    @PostMapping("/admin/login")
-    @Operation(summary = "Login", description = "This is a login API")
-    public ResponseEntity<JwtTokenRes> adminLogin(@Valid @RequestBody AccountLoginDto loginRequest) {
-        System.out.println("sdds");
-        return new ResponseEntity<>(accountService.AdminLogin(loginRequest), HttpStatus.OK);
+    @PostMapping("/verifyLogin")
+    public ResponseEntity<AccountRes> verifyLogin(@RequestBody AccountLoginDto loginRequest,
+                                                  @RequestParam(value = "validRoles", required = false) List<String> validRoles,
+                                                  @RequestHeader(value = "Internal-Access-Token", required = true) String accessToken) {
+        // Kiểm tra token nội bộ
+        if (!"VDSDCXCVX".equals(accessToken)) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+        }
+        return ResponseEntity.ok(accountService.verifyLogin(loginRequest,validRoles));
     }
 
     @DeleteMapping("/logout")
@@ -45,18 +38,6 @@ public class AuthController {
         accountService.Logout(token);
         return ResponseEntity.ok("Logout successful");
     }
-
-//    @Operation(summary = "refresh token")
-//    @PutMapping("/refreshToken")
-//    public ResponseEntity<JwtTokenRes> refreshToken(HttpServletRequest req, HttpServletResponse res)  {
-//        var jwtTokenResResponseEntity = new JwtTokenRes();
-//        try {
-//            jwtTokenResResponseEntity = identityClient.refreshToken();
-//        }catch (FeignException.FeignClientException e){
-//            System.out.println(e.getMessage());
-//        }
-//        return ResponseEntity.ok(jwtTokenResResponseEntity);
-//    }
 
     @Operation(summary = "register")
     @PostMapping("/register")
@@ -69,12 +50,5 @@ public class AuthController {
     public ResponseEntity<String> resetPass(@RequestBody String email) {
         accountService.resetPass(email);
         return ResponseEntity.ok("New password has been sent to registered email");
-    }
-
-
-    @Operation(summary = "test auth")
-    @GetMapping("/checkAuth")
-    public ResponseEntity<AccountRes> checkAuth() {
-        return ResponseEntity.ok(accountMapper.accountEntityToAccountRes(accountService.getAccountFromAuthentication()));
     }
 }

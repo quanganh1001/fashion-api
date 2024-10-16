@@ -48,7 +48,6 @@ public class SecurityConfig {
                         .anyExchange().permitAll()  // Cấp quyền truy cập cho tất cả các endpoint
                 )
                 .addFilterBefore(jwtAuthenticationFilter, SecurityWebFiltersOrder.AUTHENTICATION); // Thêm
-        // JwtAuthenticationFilter
 
         return http.build();
     }

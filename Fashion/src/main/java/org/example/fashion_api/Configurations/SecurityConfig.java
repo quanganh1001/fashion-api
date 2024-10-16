@@ -73,17 +73,11 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
         http
-                .csrf(AbstractHttpConfigurer::disable)
+                .csrf(csrf -> csrf.disable())
                 .authorizeRequests((auth) -> auth
                         .requestMatchers(new AntPathRequestMatcher("/")).permitAll()
                 )
                 .addFilterBefore(customHeaderAuthenticationFilter, UsernamePasswordAuthenticationFilter.class) // Thêm bộ lọc của bạn
-
-
-//                .oauth2ResourceServer(oauth2 -> oauth2.jwt(Customizer.withDefaults()));
-//                .authenticationProvider(authenticationProvider())
-//                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
-
         ;
 
         return http.build();

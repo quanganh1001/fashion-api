@@ -43,4 +43,6 @@ public interface AccountRepo extends JpaRepository<Account, Long> {
 
     @Query(value = "SELECT * FROM accounts WHERE role = 'ROLE_MANAGER' OR role = 'ROLE_EMPLOYEE'",nativeQuery = true)
     List<Account> findAllByRole();
+
+    Optional<Account> findByEmailAndIsActivatedTrue(String userName);
 }

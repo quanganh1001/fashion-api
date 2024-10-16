@@ -3,8 +3,10 @@ package org.example.identity.Controller;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import org.example.identity.Models.Accounts.AccountLoginDto;
 import org.example.identity.Models.Accounts.AccountRes;
 import org.example.identity.Models.JwtToken.JwtTokenRes;
+import org.example.identity.Serivces.AuthService.AuthService;
 import org.example.identity.Serivces.JwtService.JwtService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +18,24 @@ import org.springframework.web.bind.annotation.*;
 public class IdentityController {
 
     private final JwtService jwtService;
+
+    private final AuthService authService;
+
+    @PostMapping("/login")
+    public ResponseEntity<JwtTokenRes> customerLogin(@RequestBody AccountLoginDto loginRequest) {
+        return new ResponseEntity<>(authService.CustomerLogin(loginRequest), HttpStatus.OK);
+    }
+
+    @PostMapping("/admin/login")
+    public ResponseEntity<JwtTokenRes> adminLogin( @RequestBody AccountLoginDto loginRequest) {
+        return new ResponseEntity<>(authService.AdminLogin(loginRequest), HttpStatus.OK);
+    }
+
+    @DeleteMapping("/logout")
+    public ResponseEntity<String> logout(@RequestBody String token) {
+        jwtService.deleteToken(token);
+        return ResponseEntity.ok("Logout successful");
+    }
 
     @PostMapping("/genToken")
     public ResponseEntity<JwtTokenRes> genToken(@RequestBody AccountRes accountRes,
@@ -54,10 +74,4 @@ public class IdentityController {
         return ResponseEntity.ok().build();
     }
 
-
-//    @PostMapping("/addAuthentication")
-//    public void refreshToken(UsernamePasswordAuthenticationToken authenticationToken)  {
-//        authenticationManager.authenticate(authenticationToken);
-//        SecurityContextHolder.getContext().setAuthentication(authenticationToken);
-//    }
 }

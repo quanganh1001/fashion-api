@@ -2,23 +2,25 @@ package org.example.apigateway.Configurations;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.reactive.config.CorsRegistry;
-import org.springframework.web.reactive.config.WebFluxConfigurer;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.reactive.CorsWebFilter;
+import org.springframework.web.cors.reactive.UrlBasedCorsConfigurationSource;
+
+import java.awt.*;
+import java.util.List;
 
 @Configuration
 public class CorsConfig {
     @Bean
-    public WebFluxConfigurer corsConfigurer() {
-        return new WebFluxConfigurer() {
-            @Override
-            public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("/**")
-                        .allowedOrigins("*") // Hoặc chỉ định các nguồn cụ thể
-                        .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS") // Chỉ định các phương thức HTTP cụ thể
-                        .allowedHeaders("*")
-                        .exposedHeaders("*")
-                        .allowCredentials(true); // Cho phép cookie và authorization headers
-            }
-        };
+    public CorsWebFilter corsConfigurer() {
+        CorsConfiguration config = new CorsConfiguration();
+        config.setAllowedOrigins(List.of("*"));
+        config.setAllowedHeaders(List.of("*"));
+        config.setAllowedMethods(List.of("*"));
+        config.setExposedHeaders(List.of("*"));
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**",config);
+
+        return new CorsWebFilter(source);
     }
 }

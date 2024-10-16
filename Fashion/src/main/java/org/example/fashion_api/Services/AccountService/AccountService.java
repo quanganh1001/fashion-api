@@ -11,9 +11,8 @@ import java.util.Optional;
 
 
 public interface AccountService {
-    JwtTokenRes CustomerLogin(AccountLoginDto user);
 
-    JwtTokenRes AdminLogin(AccountLoginDto loginRequest);
+    AccountRes verifyLogin(AccountLoginDto loginRequest, List<String> validRoles);
 
     ResponseEntity<?> getAllAccount(String keyword, int page, int limit, String role);
 

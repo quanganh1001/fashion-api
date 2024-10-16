@@ -1,15 +1,11 @@
-package org.example.apigateway.Repositories;
+package org.example.apigateway.HttpClient;
 
 import org.example.apigateway.Configurations.FeignConfig;
 import org.example.apigateway.Models.Accounts.AccountRes;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import reactor.core.publisher.Mono;
-
-import java.util.Optional;
 
 
 @FeignClient(name = "account-service",url = "http://localhost:8081", configuration = FeignConfig.class)

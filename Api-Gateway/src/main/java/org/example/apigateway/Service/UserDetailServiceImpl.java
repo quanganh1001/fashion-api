@@ -3,7 +3,7 @@ package org.example.apigateway.Service;
 import lombok.RequiredArgsConstructor;
 import org.example.apigateway.Models.Accounts.AccountRes;
 import org.example.apigateway.Models.UserCustomDetail;
-import org.example.apigateway.Repositories.AccountClient;
+import org.example.apigateway.HttpClient.AccountClient;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;

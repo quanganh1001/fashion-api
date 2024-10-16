@@ -5,7 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 
 @SpringBootApplication
-@EnableFeignClients(basePackages = "org.example.apigateway.Repositories")
+@EnableFeignClients(basePackages = "org.example.apigateway.HttpClient")
 public class ApiGatewayApplication {
 
 	public static void main(String[] args) {

@@ -5,7 +5,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.example.apigateway.Exception.ExpiredJwtException;
 import org.example.apigateway.Exception.InvalidTokenException;
 import org.example.apigateway.Models.UserCustomDetail;
-import org.example.apigateway.Repositories.IdentityClient;
+import org.example.apigateway.HttpClient.IdentityClient;
 import org.example.apigateway.Service.JwtService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.server.reactive.ServerHttpRequest;

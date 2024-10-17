@@ -1,4 +1,4 @@
-package org.example.apigateway.Repositories;
+package org.example.apigateway.HttpClient;
 
 
 import org.example.apigateway.Configurations.FeignConfig;

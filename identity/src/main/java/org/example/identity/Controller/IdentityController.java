@@ -22,12 +22,12 @@ public class IdentityController {
     private final AuthService authService;
 
     @PostMapping("/login")
-    public ResponseEntity<JwtTokenRes> customerLogin(@RequestBody AccountLoginDto loginRequest) {
+    public ResponseEntity<JwtTokenRes> customerLogin(@RequestBody AccountLoginDto loginRequest) throws Exception {
         return new ResponseEntity<>(authService.CustomerLogin(loginRequest), HttpStatus.OK);
     }
 
     @PostMapping("/admin/login")
-    public ResponseEntity<JwtTokenRes> adminLogin( @RequestBody AccountLoginDto loginRequest) {
+    public ResponseEntity<JwtTokenRes> adminLogin( @RequestBody AccountLoginDto loginRequest) throws Exception {
         return new ResponseEntity<>(authService.AdminLogin(loginRequest), HttpStatus.OK);
     }
 

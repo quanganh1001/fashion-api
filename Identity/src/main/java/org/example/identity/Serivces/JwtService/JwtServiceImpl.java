@@ -6,6 +6,7 @@ import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.TokenExpiredException;
 import com.auth0.jwt.interfaces.DecodedJWT;
+import feign.FeignException;
 import jakarta.annotation.PostConstruct;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -14,6 +15,7 @@ import lombok.RequiredArgsConstructor;
 import org.example.identity.Exception.BadRequestException;
 import org.example.identity.Exception.ExpiredJwtException;
 import org.example.identity.Exception.InvalidTokenException;
+import org.example.identity.Exception.NotFoundException;
 import org.example.identity.Models.Accounts.AccountRes;
 import org.example.identity.Models.JwtToken.JwtToken;
 import org.example.identity.Models.JwtToken.JwtTokenRes;
@@ -85,8 +87,8 @@ public class JwtServiceImpl implements JwtService {
                 AccountRes accountRes;
                 try {
                     accountRes = fashionClient.getAccountByPhone(phone);
-                } catch (Exception e) {
-                    throw new RuntimeException(e.getMessage());
+                } catch (FeignException e) {
+                    throw new NotFoundException("Account");
                 }
 
                 String newToken = generateToken(accountRes);

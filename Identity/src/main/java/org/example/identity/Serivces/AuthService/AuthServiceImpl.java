@@ -1,6 +1,8 @@
 package org.example.identity.Serivces.AuthService;
 
+import feign.FeignException;
 import lombok.RequiredArgsConstructor;
+import org.example.identity.Exception.BadCredentialsException;
 import org.example.identity.Models.Accounts.AccountLoginDto;
 import org.example.identity.Models.Accounts.AccountRes;
 import org.example.identity.Models.JwtToken.JwtTokenRes;
@@ -16,7 +18,7 @@ public class AuthServiceImpl implements AuthService {
     private final FashionClient fashionClient;
 
     @Override
-    public JwtTokenRes AdminLogin(AccountLoginDto loginRequest) {
+    public JwtTokenRes AdminLogin(AccountLoginDto loginRequest) throws Exception {
         AccountRes existingAccount = authenticateAccount(loginRequest, List.of("ROLE_EMPLOYEE", "ROLE_MANAGER"));
 
         return jwtService.tokenRes(existingAccount);
@@ -24,19 +26,19 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
-    public JwtTokenRes CustomerLogin(AccountLoginDto loginRequest) {
+    public JwtTokenRes CustomerLogin(AccountLoginDto loginRequest) throws Exception {
         AccountRes existingAccount = authenticateAccount(loginRequest, null);
 
         return jwtService.tokenRes(existingAccount);
 
     }
 
-    private AccountRes authenticateAccount(AccountLoginDto loginRequest, List<String> validRoles) {
+    private AccountRes authenticateAccount(AccountLoginDto loginRequest, List<String> validRoles) throws Exception {
         AccountRes accountRes;
         try {
             accountRes = fashionClient.verifyLogin(loginRequest, validRoles);
-        } catch (Exception e) {
-            throw new RuntimeException(e.getMessage());
+        } catch (FeignException e) {
+            throw new BadCredentialsException();
         }
 
         return accountRes;

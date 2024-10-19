@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
 
-@FeignClient(name = "account-service",url = "http://localhost:8081", configuration = FeignConfig.class)
+@FeignClient(name = "account-service",url = "${URI_FASHION}", configuration = FeignConfig.class)
 public interface AccountClient {
 
     @GetMapping(value = "/accounts/getByPhone/{phoneNumber}",produces = MediaType.APPLICATION_JSON_VALUE)

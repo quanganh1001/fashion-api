@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 
-@FeignClient(name = "fashionClient", url = "http://localhost:8081",configuration = FeignConfig.class)
+@FeignClient(name = "fashionClient", url = "${URI_FASHION}",configuration = FeignConfig.class)
 public interface FashionClient {
 
     @GetMapping(value = "/accounts/getByPhone/{phoneNumber}",produces = MediaType.APPLICATION_JSON_VALUE)

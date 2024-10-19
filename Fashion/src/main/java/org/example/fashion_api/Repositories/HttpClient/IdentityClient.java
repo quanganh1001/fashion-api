@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-@FeignClient(name = "identityClient",url = "http://localhost:8082",configuration = FeignConfig.class)
+@FeignClient(name = "identityClient",url = "${URI_IDENTITY}",configuration = FeignConfig.class)
 public interface IdentityClient {
     @PostMapping(value = "/identity/genToken", produces = MediaType.APPLICATION_JSON_VALUE)
     ResponseEntity<JwtTokenRes> genToken(@RequestBody AccountRes accountRes);

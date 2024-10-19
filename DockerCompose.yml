@@ -1,4 +1,3 @@
-version: '2.23.3'
 services:
   mysql8-container:
     container_name: mysql8-container-api
@@ -8,7 +7,8 @@ services:
     ports:
       - 3306:3306
     volumes:
-      - ./fashion_api_project.sql:/docker-entrypoint-initdb.d/fashion_api_project.sql
+      - ./Fashion/fashion_api_project.sql:/docker-entrypoint-initdb.d/fashion_api_project.sql
+      - ./Identity/JwtToken.sql:/docker-entrypoint-initdb.d/JwtToken.sql
     networks:
       - fashion-api-network
 
@@ -34,11 +34,11 @@ services:
     networks:
       - fashion-api-network
 
-  fashion-spring-boot-container:
-    container_name: fashion-api-spring-container
+  fashion:
+    container_name: fashion
     build:
       context: .
-      dockerfile: ./DockerfileJavaSpring
+      dockerfile: ./Fashion/DockerfileJavaSpring
     environment:
       TZ: "Asia/Ho_Chi_Minh"
       MYSQL_HOST: jdbc:mysql://mysql8-container-api:3306/fashion_api_project?useSSL=false&serverTimezone=UTC
@@ -68,9 +68,72 @@ services:
       CLOUD_SECRET: kmkIN1OYarMbUDxotQK51o8W5FM
       CLOUD_API: 478174116475553
       CLOUD_NAME: dmmvhjl0m
+      URI_FASHION: http://fashion:8081
+      URI_IDENTITY: http://identity-service:8082
 
     ports:
+      - 8081:8081
+    networks:
+      - fashion-api-network
+
+  identity-service:
+    container_name: identity-service
+    build:
+      context: .
+      dockerfile: ./Identity/DockerfileJavaSpring
+    environment:
+      TZ: "Asia/Ho_Chi_Minh"
+      MYSQL_HOST_IDENTITY: jdbc:mysql://mysql8-container-api:3306/JwtToken?useSSL=false&serverTimezone=UTC
+      MYSQL_USERNAME: root
+      MYSQL_PASSWORD: quanganh123
+      JWT_SECRET_KEY: e82c73692e6fa99b1770cfd6605bfc5b9ec3a12b362d9de5459a2612191497c4
+      JWT_ISSUER: nguyenquanganh
+      URI_FASHION: http://fashion:8081
+      URI_IDENTITY: http://identity-service:8082
+    ports:
+      - 8082:8082
+    networks:
+      - fashion-api-network
+
+  api-gateway-service:
+    container_name: api-gateway-service
+    build:
+      context: .
+      dockerfile: ./Api-Gateway/DockerfileJavaSpring
+    environment:
+      TZ: "Asia/Ho_Chi_Minh"
+      JWT_SECRET_KEY: e82c73692e6fa99b1770cfd6605bfc5b9ec3a12b362d9de5459a2612191497c4
+      JWT_ISSUER: nguyenquanganh
+      URI_FASHION: http://fashion:8081
+      URI_IDENTITY: http://identity-service:8082
+    ports:
       - 8080:8080
+    networks:
+      - fashion-api-network
+
+  send-mail-service:
+    container_name: send-mail-service
+    build:
+      context: .
+      dockerfile: ./SendMail/DockerfileJavaSpring
+    environment:
+      TZ: "Asia/Ho_Chi_Minh"
+      RABBITMQ_HOST: rabbitmq
+      RABBITMQ_PORT: 5672
+      RABBITMQ_USERNAME: guest
+      RABBITMQ_PASSWORD: guest
+      SPRING_MAIL_HOST: smtp.gmail.com
+      SPRING_MAIL_PORT: 587
+      SPRING_MAIL_USERNAME: quanganhnguyen100196@gmail.com
+      SPRING_MAIL_PASSWORD: xoje kkze axwa zzni
+      RABBITMQ_MAIL_EXCHANGE: mail.exchange
+      RABBITMQ_MAIL_QUEUE: mail.queue
+      RABBITMQ_MAIL_KEY: mail.routingKey
+      RABBITMQ_DEAD_LETTER_EXCHANGE: dead_letter.exchange
+      RABBITMQ_DEAD_LETTER_QUEUE: dead_letter.queue
+      RABBITMQ_DEAD_LETTER_KEY: dead_letter.key
+    ports:
+      - 8083:8083
     networks:
       - fashion-api-network
 

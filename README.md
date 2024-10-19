@@ -3,7 +3,7 @@
 
 # Hướng dẫn sử dụng:
   1. Clone dự án fashion-api từ github về: git clone https://github.com/quanganh1001/fashion-api.git
-  2. Clone dự án fashion-frontend từ github về: git clone https://github.com/quanganh1001/fashion-api.git
+  2. Clone dự án fashion-frontend từ github về: git clone https://github.com/quanganh1001/fashion-fronend.git
   3. Chạy dự án fashion-api trên Docker: docker-compose -f DockerCompose.yaml up -d
   4. Chạy dự án fashion-frontend sử dụng ReactJS
   5. Truy cập http://localhost:3000/

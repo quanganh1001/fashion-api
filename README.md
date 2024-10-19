@@ -1,5 +1,5 @@
 # Công Nghệ:
- Spring Boot Framework, MySQL, Redis, JWT, Rabbitmq, Cloudinary, Spring Mail, VNpay, Docker, Swagger
+ Spring Boot Framework, Spring Cloud, MySQL, Redis, JWT, Rabbitmq, Cloudinary, Spring Mail, VNpay, Docker
 
 # Hướng dẫn sử dụng:
   1. Clone dự án fashion-api từ github về: git clone https://github.com/quanganh1001/fashion-api.git

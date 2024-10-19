@@ -7,7 +7,6 @@
   3. Chạy dự án fashion-api trên Docker: docker-compose -f DockerCompose.yaml up -d
   4. Chạy dự án fashion-frontend sử dụng ReactJS
   5. Truy cập http://localhost:3000/
-     Hoặc có thể Test api bằng Swagger: http://localhost:8080/swagger-ui/index.html
     
 # Tài khoản đăng nhập:
   - Admin:

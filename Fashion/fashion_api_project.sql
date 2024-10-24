@@ -2,10 +2,10 @@
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th10 11, 2024 lúc 06:17 PM
--- Phiên bản máy phục vụ: 10.4.32-MariaDB
--- Phiên bản PHP: 8.2.12
+-- Máy chủ: mysql8-container-api
+-- Thời gian đã tạo: Th10 23, 2024 lúc 12:44 PM
+-- Phiên bản máy phục vụ: 10.4.28-MariaDB-1:10.4.28+maria~ubu2004
+-- Phiên bản PHP: 8.2.8
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -424,7 +424,6 @@ CREATE TABLE `imgs_product` (
 --
 
 INSERT INTO `imgs_product` (`id`, `product_id`, `product_detail_id`, `file_img`, `created_at`, `updated_at`) VALUES
-(3, 51, 1, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711811636/tp038-1.jpeg.webp', '2024-05-14 10:46:32', '2024-10-10 11:11:43'),
 (4, 51, 1, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711811639/tp038.jpeg.webp', '2024-05-14 10:46:32', '2024-10-10 11:11:43'),
 (5, 51, 1, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711811634/tp038-41.jpeg.webp', '2024-05-14 10:46:32', '2024-10-10 11:11:43'),
 (6, 51, 1, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711811631/tp038-42.jpeg.webp', '2024-05-14 10:46:32', '2024-10-10 11:11:43'),
@@ -684,9 +683,9 @@ INSERT INTO `imgs_product` (`id`, `product_id`, `product_detail_id`, `file_img`,
 (380, 33, 1, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711810466/1702803852491_estp026-2_8be997547b86427abb4dfb61fc15a5bf_master.jpg.webp', '2024-05-14 10:46:32', '2024-10-10 11:11:43'),
 (381, 33, 1, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711810468/1702803942376_estb026-22_52823803520_o_718ac96b8e95469db8a8ef74a023c2dc_master.jpg.webp', '2024-05-14 10:46:32', '2024-10-10 11:11:43'),
 (382, 33, 1, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711810471/1702803942380_estb026-17_52823400941_o_28946e8fe13e4123ae9010a5d2004bcd_master.jpg.webp', '2024-05-14 10:46:32', '2024-10-10 11:11:43'),
-(383, 33, 1, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711810474/1702803942386_estb026-11_52822828632_o_fb5c8442ec4146618cca5021c9f98643_master.jpg.webp', '2024-05-14 10:46:32', '2024-10-10 11:11:43');
+(383, 33, 1, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711810474/1702803942386_estb026-11_52822828632_o_fb5c8442ec4146618cca5021c9f98643_master.jpg.webp', '2024-05-14 10:46:32', '2024-10-10 11:11:43'),
+(384, 11, 1, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711810477/1702806015784_52659779297_47f3c457bc_o_a51ef16f093348b6b4f3cf870e85e08d_master.jpg.webp', '2024-05-14 10:46:32', '2024-10-10 11:11:43');
 INSERT INTO `imgs_product` (`id`, `product_id`, `product_detail_id`, `file_img`, `created_at`, `updated_at`) VALUES
-(384, 11, 1, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711810477/1702806015784_52659779297_47f3c457bc_o_a51ef16f093348b6b4f3cf870e85e08d_master.jpg.webp', '2024-05-14 10:46:32', '2024-10-10 11:11:43'),
 (385, 11, 1, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711810479/1702806015791_52660278521_2f6709e709_o_5d182bb3af21461d92187ab883f3e1db_master.jpg.webp', '2024-05-14 10:46:32', '2024-10-10 11:11:43'),
 (386, 11, 1, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711810482/1702806015796_52660277426_dc504ee577_o_21bd4f09db1d40e68e692253e8796e4b_master.jpg.webp', '2024-05-14 10:46:32', '2024-10-10 11:11:43'),
 (387, 11, 1, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711810485/1702806015800_52660278786_9ba122257e_o_929bf419522b4ae0ae7e2c6a6fb1b46d_master.jpg.webp', '2024-05-14 10:46:32', '2024-10-10 11:11:43'),
@@ -2219,7 +2218,7 @@ INSERT INTO `products` (`id`, `product_code`, `product_name`, `cat_id`, `price`,
 (48, 'ESTP028', 'Áo polo trơn bo kẻ cổ V, in logo ngực ESTP028', 98, 420000, NULL, NULL, 'TORANO', '', 5, 4, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711811570/tp028---bk004-_11__9246a1d8b0184518abd852704bd4fa02_master.jpg.webp', 'IMAGE_1', b'1', '2024-05-14 10:47:36', '2024-05-14 10:47:36'),
 (49, 'ESTP032', 'Áo polo trơn bo kẻ ESTP032', 98, 400000, NULL, NULL, 'TORANO', '', 4, 3, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711811526/estp032-3_f94042405af64ca581ca72c753b53b51_master.jpg.webp', 'IMAGE_1', b'1', '2024-05-14 10:47:36', '2024-05-14 10:47:36'),
 (50, 'ESTP033', 'Áo polo trơn bo kẻ phối viền cổ ESTP033', 98, 420000, NULL, NULL, 'TORANO', 'Áo polo trơn bo kẻ phối viền cổ cao cấp', 4, 1, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711811351/m1t1_9a04e0331596472281861b7f44cc3ca2_master.jpg.webp', 'IMAGE_1', b'1', '2024-05-14 10:47:36', '2024-05-14 10:47:36'),
-(51, 'ESTP038', 'Áo Polo trơn basic đen thêu logo ngực ESTP038', 102, 330000, 200000, 39, 'TORANO', 'Áo Polo trơn TORANO cổ bẻ tay ngắn trơn, bo kẻ nhiều màu ESTP038 chính là item hoàn hảo dễ mặc dễ phối đồ cho cả nam và nữ. Khám phá ngay!!!\r\n\r\n+ Chất vải có độ co giãn tốt, thoáng khí và không phai màu.\r\n\r\n+60% Poly +35% cotton +5% Spandex\r\n\r\n+ Thấm hút mồ hôi tối đa và thoải mái khi vận động\r\n\r\n+ Thiết kế Slimfit vừa vặn tôn dáng\r\n\r\n+ Phù hợp với đi làm, đi học, đi chơi, hẹn hò, du lịch...\r\n\r\n+ Áo có 4 size : S – M –L – XL\r\n\r\nHướng dẫn sử dụng và bảo quản:\r\n\r\n+ Giặt ở nhiệt độ bình thường, với đồ có màu tương tự.\r\n\r\n+ Không được dùng hóa chất tẩy.\r\n\r\n+ Hạn chế sử dụng máy sấy và ủi ở nhiệt độ thích hợp.\r\n\r\n+ Lộn mặt trái khi phơi tránh bị phai màu\r\n\r\nChính sách và điều kiện đổi trả của TORANO:\r\n\r\n+ Cam kết chất lượng và mẫu mã sản phẩm giống với hình ảnh.\r\n\r\n+ Cam kết được đổi trả hàng trong vòng 7 ngày.\r\n\r\n+ Hàng phải còn nguyên tem mác và chưa qua sử dụng\r\n\r\n+ Sản phẩm bị lỗi do vận chuyển và do nhà sản xuất', 5, 1, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711811636/tp038-1.jpeg.webp', 'IMAGE_1', b'1', '2024-05-14 10:47:36', '2024-05-14 10:47:36'),
+(51, 'ESTP038', 'Áo Polo trơn basic đen thêu logo ngực ESTP038', 102, 330000, 200000, 39, 'TORANO', 'Áo Polo trơn TORANO cổ bẻ tay ngắn trơn, bo kẻ nhiều màu ESTP038 chính là item hoàn hảo dễ mặc dễ phối đồ cho cả nam và nữ. Khám phá ngay!!!\r\n\r\n+ Chất vải có độ co giãn tốt, thoáng khí và không phai màu.\r\n\r\n+60% Poly +35% cotton +5% Spandex\r\n\r\n+ Thấm hút mồ hôi tối đa và thoải mái khi vận động\r\n\r\n+ Thiết kế Slimfit vừa vặn tôn dáng\r\n\r\n+ Phù hợp với đi làm, đi học, đi chơi, hẹn hò, du lịch...\r\n\r\n+ Áo có 4 size : S – M –L – XL\r\n\r\nHướng dẫn sử dụng và bảo quản:\r\n\r\n+ Giặt ở nhiệt độ bình thường, với đồ có màu tương tự.\r\n\r\n+ Không được dùng hóa chất tẩy.\r\n\r\n+ Hạn chế sử dụng máy sấy và ủi ở nhiệt độ thích hợp.\r\n\r\n+ Lộn mặt trái khi phơi tránh bị phai màu\r\n\r\nChính sách và điều kiện đổi trả của TORANO:\r\n\r\n+ Cam kết chất lượng và mẫu mã sản phẩm giống với hình ảnh.\r\n\r\n+ Cam kết được đổi trả hàng trong vòng 7 ngày.\r\n\r\n+ Hàng phải còn nguyên tem mác và chưa qua sử dụng\r\n\r\n+ Sản phẩm bị lỗi do vận chuyển và do nhà sản xuất', 5, 1, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711811634/tp038-41.jpeg.webp', 'IMAGE_1', b'1', '2024-05-14 10:47:36', '2024-10-23 12:26:09'),
 (52, 'ESTP041', 'Áo Polo trơn hiệu ứng ESTP041', 102, 450000, NULL, NULL, 'TORANO', 'Áo polo nam cao cấp chống nhăn nhàu đang hot tại Torano', 4, 5, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711811461/estp041-16_4cb9d42d84e7436884bd3f4e648621ed_master.jpg.webp', 'IMAGE_1', b'1', '2024-05-14 10:47:36', '2024-05-14 10:47:36'),
 (53, 'ESTP042', 'Áo Polo trơn vải lục giác kèm logo ngực ESTP042', 102, 380000, 349000, 8, 'TORANO', 'Mẫu áo polo chất liệu cải tiến thế hệ mới mang lại cho các anh sự thoải mái cũng như vẻ ngoài lịch sự và đầy nam tính.', 5, 9, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711811418/tp042---bk004-_9__2efe604ac9324e06841cf8edc590e169_master.jpg.webp', 'IMAGE_1', b'1', '2024-05-14 10:47:36', '2024-05-14 10:47:36'),
 (54, 'ESTP047', 'Áo Polo len bo kẻ cổ 2.ESTP047', 98, 500000, NULL, NULL, 'TORANO', 'Áo polo len bo kẻ nam cao cấp chính hãng Torano. Chất vải len dệt chắc chắn, không xù và dão.', 4, 2, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711811054/5_66590d1cba6041359e8a89a1c7e0feb5_master.jpg.webp', 'IMAGE_1', b'1', '2024-05-14 10:47:36', '2024-05-14 10:47:36'),
@@ -2265,11 +2264,11 @@ CREATE TABLE `products_detail` (
 --
 
 INSERT INTO `products_detail` (`id`, `product_id`, `code`, `color_id`, `size`, `quantity`, `image_background`, `is_activated`, `created_at`, `updated_at`) VALUES
-(1, 51, 'ESTP03872PE00SB_BL-S', 4, 'SIZE_S', 0, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711811636/tp038-1.jpeg.webp', b'1', '2024-05-14 10:47:45', '2024-10-10 13:15:39'),
-(2, 51, 'ESTP03872PE00SB_BL-M', 4, 'SIZE_M', 0, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711811636/tp038-1.jpeg.webp', b'1', '2024-05-14 10:47:45', '2024-10-10 13:15:39'),
-(3, 51, 'ESTP03872PE00SB_BL-L', 4, 'SIZE_L', 0, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711811636/tp038-1.jpeg.webp', b'1', '2024-05-14 10:47:45', '2024-10-10 13:15:39'),
-(4, 51, 'ESTP03872PE00SB_BL-XL', 4, 'SIZE_XL', 998, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711811636/tp038-1.jpeg.webp', b'1', '2024-05-14 10:47:45', '2024-10-10 13:15:39'),
-(5, 51, 'ESTP03872PE00SB_BL-XXL', 4, 'SIZE_XXL', 999, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711811636/tp038-1.jpeg.webp', b'1', '2024-05-14 10:47:45', '2024-10-10 13:15:39'),
+(1, 51, 'ESTP03872PE00SB_BL-S', 4, 'SIZE_S', 0, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711811634/tp038-41.jpeg.webp', b'1', '2024-05-14 10:47:45', '2024-10-23 12:27:21'),
+(2, 51, 'ESTP03872PE00SB_BL-M', 4, 'SIZE_M', 0, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711811634/tp038-41.jpeg.webp', b'1', '2024-05-14 10:47:45', '2024-10-23 12:27:21'),
+(3, 51, 'ESTP03872PE00SB_BL-L', 4, 'SIZE_L', 0, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711811634/tp038-41.jpeg.webp', b'1', '2024-05-14 10:47:45', '2024-10-23 12:27:21'),
+(4, 51, 'ESTP03872PE00SB_BL-XL', 4, 'SIZE_XL', 998, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711811634/tp038-41.jpeg.webp', b'1', '2024-05-14 10:47:45', '2024-10-23 12:27:21'),
+(5, 51, 'ESTP03872PE00SB_BL-XXL', 4, 'SIZE_XXL', 999, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711811634/tp038-41.jpeg.webp', b'1', '2024-05-14 10:47:45', '2024-10-23 12:27:21'),
 (6, 56, 'ESTP06772TC00SB_NV-S', 33, 'SIZE_S', 999, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711811616/52866332727_2f58586473_k_7ac15a1978a04a37a6713af0bab43b09_master.jpg.jpg', b'1', '2024-05-14 10:47:45', '2024-10-10 13:26:40'),
 (7, 56, 'ESTP06772TC00SB_NV-M', 33, 'SIZE_M', 999, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711811616/52866332727_2f58586473_k_7ac15a1978a04a37a6713af0bab43b09_master.jpg.jpg', b'1', '2024-05-14 10:47:45', '2024-10-10 13:26:40'),
 (8, 56, 'ESTP06772TC00SB_NV-L', 33, 'SIZE_L', 999, 'https://res.cloudinary.com/dmmvhjl0m/image/upload/v1711811616/52866332727_2f58586473_k_7ac15a1978a04a37a6713af0bab43b09_master.jpg.jpg', b'1', '2024-05-14 10:47:45', '2024-10-10 13:26:40'),

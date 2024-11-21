@@ -5,7 +5,7 @@
   1. Clone dự án fashion-api từ github về: git clone https://github.com/quanganh1001/fashion-api.git
   2. Clone dự án fashion-frontend từ github về: git clone https://github.com/quanganh1001/fashion-fronend.git
   3. Chuyển đến thư mục chưa DockerCompose.yaml -> Chạy dự án fashion-api trên Docker: 
-     docker-compose -f DockerCompose.yaml up -d
+     docker-compose -f DockerCompose.yml up -d
   4. Chuyển đến thư mục chưa Dockerfile -> Chạy dự án fashion-frontend trên Docker:  
      - docker build -t fashion-frontend:1.0.0 .
      - docker run --name fashion-frontend -d -p 80:3000 --rm fashion-frontend:1.0.0

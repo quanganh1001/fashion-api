@@ -4,9 +4,6 @@ spring:
   application:
     name: identity-client
   datasource:
-#    url: jdbc:mysql://avnadmin:AVNS_e7EF1TDMCyqWuBERgH_@mysql-a5f5ff6-quanganhnguyen100196-5329.d.aivencloud.com:24392/JwtToken?ssl-mode=REQUIRED
-#    username: avnadmin
-#    password: AVNS_e7EF1TDMCyqWuBERgH_
     url: ${MYSQL_HOST_IDENTITY}
     username: ${MYSQL_USERNAME}
     password: ${MYSQL_IDENTITY_PASSWORD}

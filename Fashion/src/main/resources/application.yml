@@ -5,9 +5,6 @@ spring:
     application:
       name: fashion-client
     datasource:
-#      url: jdbc:mysql://mysql-2411b255-project-sem-4.c.aivencloud.com:11494/fashion_api_project?ssl-mode=REQUIRED&serverTimezone=Asia/Ho_Chi_Minh
-#      username: avnadmin
-#      password: AVNS__FUazGVFaRKJxNwUJwq
       url: ${MYSQL_HOST}
       username: ${MYSQL_USERNAME}
       password: ${MYSQL_PASSWORD}

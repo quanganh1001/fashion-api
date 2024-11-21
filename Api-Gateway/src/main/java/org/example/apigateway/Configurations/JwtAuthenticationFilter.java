@@ -46,11 +46,6 @@ public class JwtAuthenticationFilter implements WebFilter {
                             String res = identityClient.verifyToken(token,
                                     userCustomDetail.getAccount().getId());
                             if (res.equals("ok")) {
-                                UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
-                                        userCustomDetail,
-                                        null,
-                                        userCustomDetail.getAuthorities()
-                                );
 
                                 ServerHttpRequest request = exchange.getRequest().mutate()
                                         .header("X-Authenticated-User", phone)

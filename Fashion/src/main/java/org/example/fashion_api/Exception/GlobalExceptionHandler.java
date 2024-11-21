@@ -9,32 +9,32 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
-    @ExceptionHandler(FeignException.NotFound.class)
+    @ExceptionHandler(NotFoundException.class)
     public ResponseEntity<String> handleNotFound(NotFoundException e) {
         return ResponseEntity.status(e.getStatus()).body(e.getMessage());
     }
 
-    @ExceptionHandler(FeignException.BadRequest.class)
+    @ExceptionHandler(BadRequestException.class)
     public ResponseEntity<String> handleBadRequest(BadRequestException e) {
         return ResponseEntity.status(e.getStatus()).body(e.getMessage());
     }
 
-    @ExceptionHandler(FeignException.Conflict.class)
+    @ExceptionHandler(AlreadyExistException.class)
     public ResponseEntity<String> handleConflictRequest(AlreadyExistException e) {
-        return ResponseEntity.status(e.getStatus()).body(e.getMessage());
+        return ResponseEntity.status(e.getStatus()).body("EE");
     }
 
-    @ExceptionHandler(FeignException.Unauthorized.class)
+    @ExceptionHandler(BadCredentialsException.class)
     public ResponseEntity<String> handleUnauthorizedRequest(BadCredentialsException e) {
         return ResponseEntity.status(e.getStatus()).body(e.getMessage());
     }
 
-    @ExceptionHandler(FeignException.Forbidden.class)
+    @ExceptionHandler(ForbiddenException.class)
     public ResponseEntity<String> handleForbiddenRequest(ForbiddenException e) {
         return ResponseEntity.status(HttpStatus.FORBIDDEN).body(e.getMessage());
     }
 
-    @ExceptionHandler(FeignException.InternalServerError.class)
+    @ExceptionHandler(ServiceException.class)
     public ResponseEntity<String> handleInternalServerErrorRequest(ServiceException e) {
         return ResponseEntity.status(e.getStatus()).body(e.getMessage());
     }

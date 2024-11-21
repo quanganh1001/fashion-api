@@ -6,7 +6,8 @@ spring:
   datasource:
     url: ${MYSQL_HOST_IDENTITY}
     username: ${MYSQL_USERNAME}
-    password: ${MYSQL_PASSWORD}
+    password: ${MYSQL_IDENTITY_PASSWORD}
+    driver-class-name: com.mysql.cj.jdbc.Driver
 secret:
   key: ${JWT_SECRET_KEY}
 jwt:

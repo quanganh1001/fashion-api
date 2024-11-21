@@ -67,7 +67,7 @@ public class ProductController {
     @Operation(summary = "create product (role MANAGER) ")
     @PreAuthorize("hasAnyRole('MANAGER')")
     @PostMapping()
-    public ResponseEntity<ProductRes> addProduct(@Valid @RequestBody CreateProductDto createProductDTO){
+    public ResponseEntity<Long> addProduct(@Valid @RequestBody CreateProductDto createProductDTO){
         return ResponseEntity.ok(productService.addProduct(createProductDTO));
     }
 

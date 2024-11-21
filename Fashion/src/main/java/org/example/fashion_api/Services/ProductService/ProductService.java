@@ -27,7 +27,7 @@ public interface ProductService {
     void deleteProduct(Long productId);
 
     @Transactional
-    ProductRes addProduct(CreateProductDto createProductDTO);
+    Long addProduct(CreateProductDto createProductDTO);
 
 
     @Transactional

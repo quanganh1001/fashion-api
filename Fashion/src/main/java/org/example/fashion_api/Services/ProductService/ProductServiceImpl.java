@@ -125,7 +125,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     @Transactional
-    public ProductRes addProduct(CreateProductDto createProductDTO) {
+    public Long addProduct(CreateProductDto createProductDTO) {
 
         // check code and name exist
         if (productRepo.existsByProductCode(createProductDTO.getProductCode())) {
@@ -135,7 +135,7 @@ public class ProductServiceImpl implements ProductService {
         // save product
         Product product = productRepo.save(productMapper.createProductDtoToProduct(createProductDTO, new Product()));
 
-        return productMapper.productToProductRes(product);
+        return product.getId();
     }
 
 

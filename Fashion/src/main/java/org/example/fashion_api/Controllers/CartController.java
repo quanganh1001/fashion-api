@@ -2,15 +2,13 @@ package org.example.fashion_api.Controllers;
 
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
+import org.example.fashion_api.Models.Carts.CartItemDto;
 import org.example.fashion_api.Models.Carts.CartItemRes;
-import org.example.fashion_api.Models.ProductsDetails.ProductDetailRes;
 import org.example.fashion_api.Services.CartService.CartService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
@@ -57,5 +55,12 @@ public class CartController {
     public ResponseEntity<List<CartItemRes>> clearCart() {
         cartService.clearCart();
         return ResponseEntity.ok(cartService.getCart());
+    }
+
+    @PutMapping("/updateCartFromLocalToRedis")
+    @Operation(summary = "update cart from local to redis")
+    public ResponseEntity<Void> updateCartFromLocalToRedis(@RequestBody List<CartItemDto> listCartJson) {
+        cartService.updateCartFromLocalToRedis(listCartJson);
+        return ResponseEntity.ok().build();
     }
 }

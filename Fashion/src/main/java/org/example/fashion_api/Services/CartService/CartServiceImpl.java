@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.example.fashion_api.Mapper.ProductDetailMapper;
 import org.example.fashion_api.Models.Accounts.Account;
 import org.example.fashion_api.Models.Carts.CartItem;
+import org.example.fashion_api.Models.Carts.CartItemDto;
 import org.example.fashion_api.Models.Carts.CartItemRes;
 import org.example.fashion_api.Models.ProductsDetails.ProductDetailRes;
 import org.example.fashion_api.Repositories.CartRepo;
@@ -111,6 +112,17 @@ public class CartServiceImpl implements CartService {
         cartItem.setItems(new HashMap<>());
         cartRepo.save(cartItem);
     }
+
+    @Override
+    public void updateCartFromLocalToRedis(List<CartItemDto> listCart) {
+        clearCart();
+        for (CartItemDto cartItemDto : listCart) {
+            addCart(cartItemDto.getId(), cartItemDto.getQuantity());
+        }
+
+
+    }
+
 
     public CartItem getCartItem() {
         Account account = accountService.getAccountFromAuthentication();

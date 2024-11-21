@@ -1,10 +1,9 @@
 package org.example.fashion_api.Services.CartService;
 
+import org.example.fashion_api.Models.Carts.CartItemDto;
 import org.example.fashion_api.Models.Carts.CartItemRes;
-import org.example.fashion_api.Models.ProductsDetails.ProductDetailRes;
 
 import java.util.List;
-import java.util.Map;
 
 public interface CartService {
 
@@ -19,4 +18,6 @@ public interface CartService {
     Integer getTotalItems();
 
     void clearCart();
+
+    void updateCartFromLocalToRedis(List<CartItemDto> listCart);
 }

@@ -38,7 +38,6 @@ public class CustomHeaderAuthenticationFilter extends OncePerRequestFilter {
             SecurityContextHolder.getContext().setAuthentication(authentication);
 
             Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-            System.out.println(auth);
         }
 
         filterChain.doFilter(request, response);

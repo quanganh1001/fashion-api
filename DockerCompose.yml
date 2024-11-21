@@ -1,28 +1,28 @@
 services:
-  mysql8-container:
-    container_name: mysql8-container-api
-    image: mariadb:10.4.28
-    environment:
-      MYSQL_ROOT_PASSWORD: quanganh123
-    ports:
-      - 3306:3306
-    volumes:
-      - ./Fashion/fashion_api_project.sql:/docker-entrypoint-initdb.d/fashion_api_project.sql
-      - ./Identity/JwtToken.sql:/docker-entrypoint-initdb.d/JwtToken.sql
-    networks:
-      - fashion-api-network
-
-  phpmyadmin8-container:
-    image: phpmyadmin/phpmyadmin:latest
-    container_name: phpmyadmin8-container-api
-    depends_on:
-      - mysql8-container
-    ports:
-      - "8100:80"
-    environment:
-      PMA_HOST: mysql8-container-api
-    networks:
-      - fashion-api-network
+#  mysql8-container:
+#    container_name: mysql8-container-api
+#    image: mariadb:10.4.28
+#    environment:
+#      MYSQL_ROOT_PASSWORD: quanganh123
+#    ports:
+#      - 3306:3306
+#    volumes:
+#      - ./Fashion/fashion_api_project.sql:/docker-entrypoint-initdb.d/fashion_api_project.sql
+#      - ./Identity/JwtToken.sql:/docker-entrypoint-initdb.d/JwtToken.sql
+#    networks:
+#      - fashion-api-network
+#
+#  phpmyadmin8-container:
+#    image: phpmyadmin/phpmyadmin:latest
+#    container_name: phpmyadmin8-container-api
+#    depends_on:
+#      - mysql8-container
+#    ports:
+#      - "8100:80"
+#    environment:
+#      PMA_HOST: mysql8-container-api
+#    networks:
+#      - fashion-api-network
 
   redis-container:
     image: docker.io/redis:7.2.3
@@ -41,9 +41,9 @@ services:
       dockerfile: ./Fashion/DockerfileJavaSpring
     environment:
       TZ: "Asia/Ho_Chi_Minh"
-      MYSQL_HOST: jdbc:mysql://mysql8-container-api:3306/fashion_api_project?useSSL=false&serverTimezone=UTC
-      MYSQL_USERNAME: root
-      MYSQL_PASSWORD: quanganh123
+      MYSQL_HOST: jdbc:mysql://mysql-2411b255-project-sem-4.c.aivencloud.com:11494/fashion_api_project?ssl-mode=REQUIRED&serverTimezone=Asia/Ho_Chi_Minh
+      MYSQL_USERNAME: avnadmin
+      MYSQL_PASSWORD: AVNS__FUazGVFaRKJxNwUJwq
       REDIS_HOST: redis-container-api
       REDIS_PORT: 6379
       RABBITMQ_HOST: rabbitmq
@@ -83,9 +83,9 @@ services:
       dockerfile: ./Identity/DockerfileJavaSpring
     environment:
       TZ: "Asia/Ho_Chi_Minh"
-      MYSQL_HOST_IDENTITY: jdbc:mysql://mysql8-container-api:3306/JwtToken?useSSL=false&serverTimezone=UTC
-      MYSQL_USERNAME: root
-      MYSQL_PASSWORD: quanganh123
+      MYSQL_HOST_IDENTITY: jdbc:mysql://avnadmin:AVNS_e7EF1TDMCyqWuBERgH_@mysql-a5f5ff6-quanganhnguyen100196-5329.d.aivencloud.com:24392/JwtToken?ssl-mode=REQUIRED
+      MYSQL_USERNAME: avnadmin
+      MYSQL_IDENTITY_PASSWORD: AVNS_e7EF1TDMCyqWuBERgH
       JWT_SECRET_KEY: e82c73692e6fa99b1770cfd6605bfc5b9ec3a12b362d9de5459a2612191497c4
       JWT_ISSUER: nguyenquanganh
       URI_FASHION: http://fashion:8081

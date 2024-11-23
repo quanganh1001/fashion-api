@@ -59,8 +59,8 @@ public class CartController {
 
     @PutMapping("/updateCartFromLocalToRedis")
     @Operation(summary = "update cart from local to redis")
-    public ResponseEntity<Void> updateCartFromLocalToRedis(@RequestBody List<CartItemDto> listCartJson) {
+    public ResponseEntity<List<CartItemRes>> updateCartFromLocalToRedis(@RequestBody List<CartItemDto> listCartJson) {
         cartService.updateCartFromLocalToRedis(listCartJson);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok(cartService.getCart());
     }
 }

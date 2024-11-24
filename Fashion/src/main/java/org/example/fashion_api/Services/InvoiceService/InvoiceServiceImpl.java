@@ -123,6 +123,7 @@ public class InvoiceServiceImpl implements InvoiceService {
     }
 
     @Override
+    @Transactional
     public void createInvoiceAtStore(CreateInvoiceDto createInvoiceDto) {
         Account account = accountService.getAccountFromAuthentication();
 
@@ -136,6 +137,16 @@ public class InvoiceServiceImpl implements InvoiceService {
         Invoice newInvoice = invoiceRepo.save(invoice);
         for (InvoiceDetailDto invoiceDetail : createInvoiceDto.getInvoicesDetails()) {
             invoiceDetailService.createInvoiceDetail(newInvoice.getId(), invoiceDetail.getProductDetailId());
+        }
+
+        // update quantity product detail
+        for (InvoiceDetailDto invoiceDetail : createInvoiceDto.getInvoicesDetails()) {
+            ProductDetail productDetail =
+                    productDetailRepo.findById(invoiceDetail.getProductDetailId()).orElseThrow(() -> new NotFoundException(
+                    "product"));
+            int currentQuantity = productDetail.getQuantity();
+            productDetail.setQuantity(currentQuantity - invoiceDetail.getQuantity());
+            productDetailRepo.save(productDetail);
         }
     }
 

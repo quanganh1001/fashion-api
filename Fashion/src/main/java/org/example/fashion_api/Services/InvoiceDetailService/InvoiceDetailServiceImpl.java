@@ -41,7 +41,7 @@ public class InvoiceDetailServiceImpl implements InvoiceDetailService{
     }
 
     @Override
-    public InvoiceDetailRes createInvoiceDetail(Long invoiceId, Long productDetailId) {
+    public InvoiceDetailRes createInvoiceDetail(Long invoiceId, Long productDetailId, int quantity) {
         Invoice invoice = invoiceRepo.findById(invoiceId).orElseThrow(()
                 ->new NotFoundException("Invoice not found"));
 
@@ -75,7 +75,7 @@ public class InvoiceDetailServiceImpl implements InvoiceDetailService{
             invoiceDetail.setInvoice(invoice);
             invoiceDetail.setProductDetail(productDetail);
             invoiceDetail.setPrice(price);
-            invoiceDetail.setQuantity(1);
+            invoiceDetail.setQuantity(quantity);
 
         }
 

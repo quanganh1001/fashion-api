@@ -10,7 +10,7 @@ public interface InvoiceDetailService {
 
     InvoiceDetailRes getById(Long invoiceDetailId);
 
-    InvoiceDetailRes createInvoiceDetail(Long invoiceId, Long productDetailId);
+    InvoiceDetailRes createInvoiceDetail(Long invoiceId, Long productDetailId,int quantity);
 
     void changeQuantity(Long invoiceDetailId, int quantity);
 

@@ -75,7 +75,7 @@ public class InvoiceController {
     @PreAuthorize("hasAnyRole('MANAGER','EMPLOYEE')")
     @PostMapping("/{invoiceId}/createInvoiceDetail")
     public ResponseEntity<InvoiceDetailRes> createInvoiceDetail(@PathVariable Long invoiceId,Long productDetailId) {
-        return ResponseEntity.ok(invoiceDetailService.createInvoiceDetail(invoiceId,productDetailId));
+        return ResponseEntity.ok(invoiceDetailService.createInvoiceDetail(invoiceId,productDetailId,1));
     }
 
     @Operation(summary = "update shipping fee (role MANAGER,EMPLOYEE)")

@@ -136,7 +136,7 @@ public class InvoiceServiceImpl implements InvoiceService {
         invoiceHistoryService.setNameVarForTrigger();
         Invoice newInvoice = invoiceRepo.save(invoice);
         for (InvoiceDetailDto invoiceDetail : createInvoiceDto.getInvoicesDetails()) {
-            invoiceDetailService.createInvoiceDetail(newInvoice.getId(), invoiceDetail.getProductDetailId());
+            invoiceDetailService.createInvoiceDetail(newInvoice.getId(), invoiceDetail.getProductDetailId(),invoiceDetail.getQuantity());
         }
 
         // update quantity product detail
@@ -168,7 +168,7 @@ public class InvoiceServiceImpl implements InvoiceService {
         InvoiceRes invoiceRes = createInvoice(checkoutDto);
 
         for (InvoiceDetailDto invoiceDetail : checkoutDto.getInvoicesDetails()) {
-            invoiceDetailService.createInvoiceDetail(invoiceRes.getId(), invoiceDetail.getProductDetailId());
+            invoiceDetailService.createInvoiceDetail(invoiceRes.getId(), invoiceDetail.getProductDetailId(), invoiceDetail.getQuantity());
         }
 
         return "http://localhost:3000/response?success=1";
@@ -223,7 +223,7 @@ public class InvoiceServiceImpl implements InvoiceService {
 
             totalPrice += (productDetail.getProduct().getPrice() * invoiceDetail.getQuantity());
 
-            invoiceDetailService.createInvoiceDetail(invoiceRes.getId(), invoiceDetail.getProductDetailId());
+            invoiceDetailService.createInvoiceDetail(invoiceRes.getId(), invoiceDetail.getProductDetailId(),invoiceDetail.getQuantity());
         }
 
 
